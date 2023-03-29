@@ -1,27 +1,31 @@
+import 'package:fagopay/screens/core/splash_speen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-import 'screens/core/app_widget.dart';
-
-enum AppFlavor {
-  dev,
-  staging,
-  prod,
-}
-
-Future<void> boostrap(AppFlavor env) async {
-  // final prefs = await SharedPreferences.getInstance();
-  // final showLogin = prefs.getBool('showLogin') ?? false;
+void main() {
   runApp(
-    ProviderScope(
-      child: Sizer(
-        builder: ((context, orientation, deviceType) {
-          return const AppWidget(
-              // showLogin: showLogin
-              );
-        }),
-      ),
+    const ProviderScope(
+      child: AppWidget(),
     ),
   );
+}
+
+class AppWidget extends StatelessWidget {
+  const AppWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Sizer(builder: ((context, orientation, deviceType) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: const SplashScreen(),
+      );
+    }));
+  }
 }

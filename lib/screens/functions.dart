@@ -1,6 +1,6 @@
 import 'package:fagopay/repository/controllers/bill_controller.dart';
-import 'package:fagopay/screens/dashboard/bills/models/bill_post_model.dart';
-import 'package:fagopay/screens/dashboard/transactions/transaction_successful.dart';
+import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
+import 'package:fagopay/screens/individual/transactions/transaction_successful.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
