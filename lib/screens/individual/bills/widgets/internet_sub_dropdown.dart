@@ -5,10 +5,9 @@ import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
 import 'package:fagopay/screens/individual/widgets/data_dropdown.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-class InternetDropDown extends ConsumerStatefulWidget {
+class InternetDropDown extends StatefulWidget {
   bool isLoading;
   List<DataDetails>? allBanks;
   List<DropdownMenuItem<String>> dataDropdown;
@@ -23,10 +22,10 @@ class InternetDropDown extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<InternetDropDown> createState() => _InternetDropDownState();
+  State<InternetDropDown> createState() => _InternetDropDownState();
 }
 
-class _InternetDropDownState extends ConsumerState<InternetDropDown> {
+class _InternetDropDownState extends State<InternetDropDown> {
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = const [
       DropdownMenuItem(value: "", child: Text("Select Service Provider")),
@@ -70,13 +69,13 @@ class _InternetDropDownState extends ConsumerState<InternetDropDown> {
               value: selectedValue,
               items: dropdownItems,
               onChanged: (String? newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                  buyInternetFields.setBillersCode = selectedValue;
-                  if (selectedValue.isNotEmpty) {
-                    fetchDataByServiceId(selectedValue);
-                  }
-                });
+                // setState(() {
+                //   selectedValue = newValue!;
+                //   buyInternetFields.setBillersCode = selectedValue;
+                //   if (selectedValue.isNotEmpty) {
+                //     fetchDataByServiceId(selectedValue);
+                //   }
+                // });
               },
               style: const TextStyle(
                   decoration: TextDecoration.none,
@@ -104,29 +103,29 @@ class _InternetDropDownState extends ConsumerState<InternetDropDown> {
     );
   }
 
-  void fetchDataByServiceId(String serviceId) {
-    ref
-        .read(billControllerProvider.notifier)
-        .getDatabyServiceId(serviceId)
-        .then((value) {
-      if (value.code != 200) {
-        setState(() {
-          widget.isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(value.message!),
-          ),
-        );
-      } else {
-        setState(() {
-          widget.allBanks = value.dataValues!;
-          widget.dataDropdown = getDataList(widget.allBanks!);
-          widget.isLoading = false;
-        });
-      }
-    });
-  }
+  // void fetchDataByServiceId(String serviceId) {
+  //   ref
+  //       .read(billControllerProvider.notifier)
+  //       .getDatabyServiceId(serviceId)
+  //       .then((value) {
+  //     if (value.code != 200) {
+  //       setState(() {
+  //         widget.isLoading = false;
+  //       });
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(value.message!),
+  //         ),
+  //       );
+  //     } else {
+  //       setState(() {
+  //         widget.allBanks = value.dataValues!;
+  //         widget.dataDropdown = getDataList(widget.allBanks!);
+  //         widget.isLoading = false;
+  //       });
+  //     }
+  //   });
+  // }
 
   List<DropdownMenuItem<String>> getDataList(List<DataDetails> data) {
     List<DropdownMenuItem<String>> dataItems = [];

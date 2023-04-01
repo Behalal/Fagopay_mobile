@@ -12,17 +12,16 @@ import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:fagopay/screens/functions.dart';
 import 'package:fagopay/screens/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-class Internrt extends ConsumerStatefulWidget {
+class Internrt extends StatefulWidget {
   const Internrt({super.key});
 
   @override
-  ConsumerState<Internrt> createState() => _InternrtState();
+  State<Internrt> createState() => _InternrtState();
 }
 
-class _InternrtState extends ConsumerState<Internrt> {
+class _InternrtState extends State<Internrt> {
   late List<DataDetails>? allData;
   late String variationCode;
   late List<DropdownMenuItem<String>> dataDropdown;
@@ -130,7 +129,7 @@ class _InternrtState extends ConsumerState<Internrt> {
                                     buyInternetFields.setServiceid =
                                         selectedValue;
                                     if (selectedValue.isNotEmpty) {
-                                      fetchDataByServiceId(selectedValue);
+                                      // fetchDataByServiceId(selectedValue);
                                     }
                                   });
                                 },
@@ -263,9 +262,9 @@ class _InternrtState extends ConsumerState<Internrt> {
                               onChanged: (value) {
                                 buyInternetFields.setBillersCode = value;
                                 buyInternetFields.setPhone = value;
-                                if (value.length >= 11) {
-                                  verifyRouter(value);
-                                }
+                                // if (value.length >= 11) {
+                                //   verifyRouter(value);
+                                // }
                               },
                               style: const TextStyle(
                                   fontFamily: "Work Sans",
@@ -373,56 +372,56 @@ class _InternrtState extends ConsumerState<Internrt> {
                         ]))));
   }
 
-  void fetchDataByServiceId(String serviceId) {
-    ref
-        .read(billControllerProvider.notifier)
-        .getDatabyServiceId(serviceId)
-        .then((value) {
-      if (value.code != 200) {
-        setState(() {
-          isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(value.message!),
-          ),
-        );
-      } else {
-        setState(() {
-          allData = value.dataValues!;
-          log(allData![0].variationAmount);
-          dataDropdown = getDataList(allData!);
-          isLoading = false;
-        });
-      }
-    });
-  }
+  // void fetchDataByServiceId(String serviceId) {
+  //   ref
+  //       .read(billControllerProvider.notifier)
+  //       .getDatabyServiceId(serviceId)
+  //       .then((value) {
+  //     if (value.code != 200) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(value.message!),
+  //         ),
+  //       );
+  //     } else {
+  //       setState(() {
+  //         allData = value.dataValues!;
+  //         log(allData![0].variationAmount);
+  //         dataDropdown = getDataList(allData!);
+  //         isLoading = false;
+  //       });
+  //     }
+  //   });
+  // }
 
-  void verifyRouter(String routerNo) {
-    setState(() {
-      isLoading = true;
-    });
-    ref
-        .read(billControllerProvider.notifier)
-        .verifyInternetNo(routerNo)
-        .then((value) {
-      if (value.code != 200) {
-        setState(() {
-          isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(value.message!),
-          ),
-        );
-      } else {
-        setState(() {
-          isLoading = false;
-          verifiedUser = true;
-        });
-      }
-    });
-  }
+  // void verifyRouter(String routerNo) {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   ref
+  //       .read(billControllerProvider.notifier)
+  //       .verifyInternetNo(routerNo)
+  //       .then((value) {
+  //     if (value.code != 200) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(value.message!),
+  //         ),
+  //       );
+  //     } else {
+  //       setState(() {
+  //         isLoading = false;
+  //         verifiedUser = true;
+  //       });
+  //     }
+  //   });
+  // }
 
   List<DropdownMenuItem<String>> getDataList(List<DataDetails> data) {
     List<DropdownMenuItem<String>> dataItems = [];

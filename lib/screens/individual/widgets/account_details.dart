@@ -2,20 +2,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-class AccountDetails extends ConsumerStatefulWidget {
+class AccountDetails extends StatefulWidget {
   String action;
   Map<String, dynamic>? accountDetails;
   AccountDetails(
       {super.key, required this.action, required this.accountDetails});
 
   @override
-  ConsumerState<AccountDetails> createState() => _AccountDetailsState();
+  State<AccountDetails> createState() => _AccountDetailsState();
 }
 
-class _AccountDetailsState extends ConsumerState<AccountDetails> {
+class _AccountDetailsState extends State<AccountDetails> {
   @override
   Widget build(BuildContext context) {
     //ref.watch();

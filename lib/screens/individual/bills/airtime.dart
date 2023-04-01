@@ -5,17 +5,16 @@ import 'package:fagopay/screens/individual/bills/data.dart';
 import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
 import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-class BuyAirtime extends ConsumerStatefulWidget {
+class BuyAirtime extends StatefulWidget {
   const BuyAirtime({super.key});
 
   @override
-  ConsumerState<BuyAirtime> createState() => _BuyAirtimeState();
+  State<BuyAirtime> createState() => _BuyAirtimeState();
 }
 
-class _BuyAirtimeState extends ConsumerState<BuyAirtime> {
+class _BuyAirtimeState extends State<BuyAirtime> {
   late bool mtnActive;
   late bool airtelActive;
   late bool gloActive;

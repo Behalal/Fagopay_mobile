@@ -1,34 +1,40 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
+
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/individual/bills/airtime.dart';
 import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
-import 'package:fagopay/screens/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:sizer/sizer.dart';
 
-class ConfirmTransactions extends ConsumerWidget {
-  String action;
-  Widget backRoute;
-  ConfirmTransactions(
-      {super.key, required this.action, required this.backRoute});
+class ConfirmTransactions extends StatelessWidget {
+   String? action;
+   Widget? backRoute;
 
-  static final DateTime now = DateTime.now();
-  static final DateFormat formatter = DateFormat('dd/MM/yyyy');
-  final String formatted = formatter.format(now);
+  static  DateTime now = DateTime.now();
+  static  DateFormat formatter = DateFormat('dd/MM/yyyy');
+   String formatted = formatter.format(now);
 
-  late String transactionType;
-  late String toLabel = "";
+   String transactionType = "";
+   String toLabel = "";
+
+  ConfirmTransactions({
+    Key? key,
+     this.action,
+     this.backRoute,
+     this.transactionType = "",
+      this.toLabel = "",
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var data = getDataType(action);
+  Widget build(BuildContext context) {
+    var data = getDataType(action!);
     // print(data.amount);
     return Scaffold(
       body: SingleChildScrollView(
@@ -270,7 +276,7 @@ class ConfirmTransactions extends ConsumerWidget {
               SizedBox(
                 height: 3.h,
               ),
-              if (action.contains('bank'))
+              // if (action.contains('bank'))
                 Container(
                   decoration: DottedDecoration(
                       linePosition: LinePosition.bottom,
@@ -304,11 +310,11 @@ class ConfirmTransactions extends ConsumerWidget {
                     ),
                   ),
                 ),
-              if (action.contains('bank'))
+              // if (action.contains('bank'))
                 SizedBox(
                   height: 3.h,
                 ),
-              if (action.contains('bank'))
+              // if (action.contains('bank'))
                 Container(
                   decoration: DottedDecoration(
                       linePosition: LinePosition.bottom,
@@ -384,7 +390,7 @@ class ConfirmTransactions extends ConsumerWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
                   child: GestureDetector(
-                    onTap: () => showPinModal(context, action, ref),
+                    // onTap: () => showPinModal(context, action, ref),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
@@ -414,9 +420,9 @@ class ConfirmTransactions extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
                 child: GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => backRoute)),
+                  // onTap: () => Navigator.of(context).pushReplacement(
+                  //     MaterialPageRoute(
+                  //         builder: (BuildContext context) => backRoute)),
                   child: Container(
                     padding:
                         EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),

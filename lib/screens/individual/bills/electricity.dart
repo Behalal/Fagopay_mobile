@@ -9,17 +9,16 @@ import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-class Electricity extends ConsumerStatefulWidget {
+class Electricity extends StatefulWidget {
   const Electricity({super.key});
 
   @override
-  ConsumerState<Electricity> createState() => _ElectricityState();
+  State<Electricity> createState() => _ElectricityState();
 }
 
-class _ElectricityState extends ConsumerState<Electricity> {
+class _ElectricityState extends State<Electricity> {
   late bool verifiedMeter;
   late TextEditingController meterNoController;
   late TextEditingController amountController;
@@ -80,8 +79,8 @@ class _ElectricityState extends ConsumerState<Electricity> {
                             if (value.length >= 11 &&
                                 buyElectricityFields.serviceid.isNotEmpty &&
                                 buyElectricityFields.variationCode.isNotEmpty) {
-                              verifyMeterNo(buyElectricityFields.serviceid,
-                                  value, buyElectricityFields.variationCode);
+                              // verifyMeterNo(buyElectricityFields.serviceid,
+                              //     value, buyElectricityFields.variationCode);
                             }
                           },
                           style: const TextStyle(
@@ -246,20 +245,20 @@ class _ElectricityState extends ConsumerState<Electricity> {
                     ]))));
   }
 
-  void verifyMeterNo(String serviceID, String billerCode, String type) {
-    ref
-        .read(billControllerProvider.notifier)
-        .verifyMeterNo(serviceID, billerCode, type)
-        .then((value) {
-      if (value.code != 200) {
-        setState(() {
-          verifiedMeter = false;
-        });
-      } else {
-        setState(() {
-          verifiedMeter = true;
-        });
-      }
-    });
-  }
+  // void verifyMeterNo(String serviceID, String billerCode, String type) {
+  //   ref
+  //       .read(billControllerProvider.notifier)
+  //       .verifyMeterNo(serviceID, billerCode, type)
+  //       .then((value) {
+  //     if (value.code != 200) {
+  //       setState(() {
+  //         verifiedMeter = false;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         verifiedMeter = true;
+  //       });
+  //     }
+  //   });
+  // }
 }

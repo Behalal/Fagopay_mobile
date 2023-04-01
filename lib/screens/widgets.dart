@@ -3,7 +3,6 @@ import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
@@ -31,11 +30,11 @@ class Loading extends StatelessWidget {
 
 class PinCodeModal extends StatefulWidget {
   final String action;
-  final WidgetRef ref;
+  // final WidgetRef ref;
   const PinCodeModal({
     super.key,
     required this.action,
-    required this.ref,
+    // required this.ref,
   });
 
   @override
@@ -168,31 +167,31 @@ class _PinCodeModalState extends State<PinCodeModal> {
                             ),
                           );
                         } else {
-                          if (widget.action == "buy_airtime") {
-                            setState(() {
-                              buyAirtime(
-                                  context, widget.ref, pincontroller.text);
-                            });
-                          } else if (widget.action == 'buy_data') {
-                            setState(() {
-                              buyData(context, widget.ref, pincontroller.text);
-                            });
-                          } else if (widget.action == 'buy_light') {
-                            setState(() {
-                              buyElectricity(
-                                  context, widget.ref, pincontroller.text);
-                            });
-                          } else if (widget.action == 'buy_internet') {
-                            setState(() {
-                              buyInternet(
-                                  context, widget.ref, pincontroller.text);
-                            });
-                          } else if (widget.action == 'tv') {
-                            setState(() {
-                              cableSubscription(
-                                  context, widget.ref, pincontroller.text);
-                            });
-                          }
+                          // if (widget.action == "buy_airtime") {
+                          //   setState(() {
+                          //     buyAirtime(
+                          //         context, widget.ref, pincontroller.text);
+                          //   });
+                          // } else if (widget.action == 'buy_data') {
+                          //   setState(() {
+                          //     buyData(context, widget.ref, pincontroller.text);
+                          //   });
+                          // } else if (widget.action == 'buy_light') {
+                          //   setState(() {
+                          //     buyElectricity(
+                          //         context, widget.ref, pincontroller.text);
+                          //   });
+                          // } else if (widget.action == 'buy_internet') {
+                          //   setState(() {
+                          //     buyInternet(
+                          //         context, widget.ref, pincontroller.text);
+                          //   });
+                          // } else if (widget.action == 'tv') {
+                          //   setState(() {
+                          //     cableSubscription(
+                          //         context, widget.ref, pincontroller.text);
+                          //   });
+                          // }
                         }
                       }),
                       child: AuthButtons(text: "Pay", form: true)),
@@ -230,18 +229,18 @@ class _PinCodeModalState extends State<PinCodeModal> {
 
 // show modal sheet
 
-Future showPinModal(BuildContext context, String action, WidgetRef ref) {
-  return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      // shape: const ShapeBorder().add(),
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true,
-      builder: (BuildContext context) {
-        //
-        return PinCodeModal(
-          action: action,
-          ref: ref,
-        ); //whatever you're returning, does not have to be a Container
-      });
-}
+// Future showPinModal(BuildContext context, String action, WidgetRef ref) {
+//   return showModalBottomSheet(
+//       backgroundColor: Colors.transparent,
+//       // shape: const ShapeBorder().add(),
+//       context: context,
+//       isScrollControlled: true,
+//       isDismissible: true,
+//       builder: (BuildContext context) {
+//         //
+//         return PinCodeModal(
+//           action: action,
+//           ref: ref,
+//         ); //whatever you're returning, does not have to be a Container
+//       });
+// }

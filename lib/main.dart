@@ -1,13 +1,10 @@
 import 'package:fagopay/screens/core/splash_speen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
   runApp(
-    const ProviderScope(
-      child: AppWidget(),
-    ),
+    const AppWidget(),
   );
 }
 

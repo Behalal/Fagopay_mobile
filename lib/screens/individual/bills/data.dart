@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/models/data_model.dart';
-import 'package:fagopay/repository/controllers/bill_controller.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/individual/bills/airtime.dart';
@@ -9,17 +8,16 @@ import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart
 import 'package:fagopay/screens/individual/widgets/data_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
-class BuyData extends ConsumerStatefulWidget {
+class BuyData extends StatefulWidget {
   const BuyData({super.key});
 
   @override
-  ConsumerState<BuyData> createState() => _BuyDataState();
+  State<BuyData> createState() => _BuyDataState();
 }
 
-class _BuyDataState extends ConsumerState<BuyData> {
+class _BuyDataState extends State<BuyData> {
   late bool mtnActive;
   late bool isLoading;
   late bool airtelActive;
@@ -136,24 +134,24 @@ class _BuyDataState extends ConsumerState<BuyData> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
-                            onTap: (() {
-                              setState(() {
-                                // final progress1 = ProgressHUD.of(context);
-                                isLoading = true;
-                                mtnActive = true;
-                                airtelActive = false;
-                                gloActive = false;
-                                etisatActive = false;
-                                buyDataFields.setServiceid = "mtn-data";
-                                // if (isLoading) {
-                                //   progress1!.show();
-                                // }
-                                fetchDataByServiceId(
-                                    buyDataFields.serviceid, context);
+                            onTap: () {
+                              // setState(() {
+                              //   // final progress1 = ProgressHUD.of(context);
+                              //   isLoading = true;
+                              //   mtnActive = true;
+                              //   airtelActive = false;
+                              //   gloActive = false;
+                              //   etisatActive = false;
+                              //   buyDataFields.setServiceid = "mtn-data";
+                              //   // if (isLoading) {
+                              //   //   progress1!.show();
+                              //   // }
+                              //   fetchDataByServiceId(
+                              //       buyDataFields.serviceid, context);
 
-                                // progress1!.dismiss();
-                              });
-                            }),
+                              //   // progress1!.dismiss();
+                              // });
+                            },
                             child: Container(
                               width: 20.w,
                               decoration: BoxDecoration(
@@ -170,18 +168,18 @@ class _BuyDataState extends ConsumerState<BuyData> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: (() {
-                              setState(() {
-                                isLoading = true;
-                                mtnActive = false;
-                                airtelActive = true;
-                                gloActive = false;
-                                etisatActive = false;
-                                buyDataFields.setServiceid = "airtel-data";
-                                fetchDataByServiceId(
-                                    buyDataFields.serviceid, context);
-                              });
-                            }),
+                            onTap: () {
+                              // setState(() {
+                              //   isLoading = true;
+                              //   mtnActive = false;
+                              //   airtelActive = true;
+                              //   gloActive = false;
+                              //   etisatActive = false;
+                              //   buyDataFields.setServiceid = "airtel-data";
+                              //   fetchDataByServiceId(
+                              //       buyDataFields.serviceid, context);
+                              // });
+                            },
                             child: Container(
                               width: 20.w,
                               decoration: BoxDecoration(
@@ -199,18 +197,18 @@ class _BuyDataState extends ConsumerState<BuyData> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: (() {
-                              setState(() {
-                                isLoading = true;
-                                mtnActive = false;
-                                airtelActive = false;
-                                gloActive = true;
-                                etisatActive = false;
-                                buyDataFields.setServiceid = "glo-data";
-                                fetchDataByServiceId(
-                                    buyDataFields.serviceid, context);
-                              });
-                            }),
+                            onTap: () {
+                              // setState(() {
+                              //   isLoading = true;
+                              //   mtnActive = false;
+                              //   airtelActive = false;
+                              //   gloActive = true;
+                              //   etisatActive = false;
+                              //   buyDataFields.setServiceid = "glo-data";
+                              //   fetchDataByServiceId(
+                              //       buyDataFields.serviceid, context);
+                              // });
+                            },
                             child: Container(
                               width: 20.w,
                               decoration: BoxDecoration(
@@ -227,18 +225,18 @@ class _BuyDataState extends ConsumerState<BuyData> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: (() {
-                              setState(() {
-                                isLoading = true;
-                                mtnActive = false;
-                                airtelActive = false;
-                                gloActive = false;
-                                etisatActive = true;
-                                buyDataFields.setServiceid = "etisalat-data";
-                                fetchDataByServiceId(
-                                    buyDataFields.serviceid, context);
-                              });
-                            }),
+                            onTap: () {
+                              // setState(() {
+                              //   isLoading = true;
+                              //   mtnActive = false;
+                              //   airtelActive = false;
+                              //   gloActive = false;
+                              //   etisatActive = true;
+                              //   buyDataFields.setServiceid = "etisalat-data";
+                              //   fetchDataByServiceId(
+                              //       buyDataFields.serviceid, context);
+                              // });
+                            },
                             child: Container(
                               width: 20.w,
                               decoration: BoxDecoration(
@@ -499,30 +497,30 @@ class _BuyDataState extends ConsumerState<BuyData> {
     );
   }
 
-  void fetchDataByServiceId(String serviceId, BuildContext context) {
-    ref
-        .read(billControllerProvider.notifier)
-        .getDatabyServiceId(serviceId)
-        .then((value) {
-      if (value.code != 200) {
-        setState(() {
-          isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(value.message!),
-          ),
-        );
-      } else {
-        print('here');
-        allData = value.dataValues!;
-        dataDropdown = getBankList(allData!);
-        setState(() {
-          isLoading = false;
-        });
-      }
-    });
-  }
+  // void fetchDataByServiceId(String serviceId, BuildContext context) {
+  //   ref
+  //       .read(billControllerProvider.notifier)
+  //       .getDatabyServiceId(serviceId)
+  //       .then((value) {
+  //     if (value.code != 200) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text(value.message!),
+  //         ),
+  //       );
+  //     } else {
+  //       print('here');
+  //       allData = value.dataValues!;
+  //       dataDropdown = getBankList(allData!);
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //     }
+  //   });
+  // }
 
   List<DropdownMenuItem<String>> getBankList(List<DataDetails> data) {
     List<DropdownMenuItem<String>> dataItems = [];

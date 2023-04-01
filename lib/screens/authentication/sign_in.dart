@@ -1,7 +1,6 @@
 // import 'dart:ui';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/repository/controllers/login_controller_provider.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/authentication/widgets/email_phone_input.dart';
@@ -10,20 +9,19 @@ import 'package:fagopay/screens/authentication/widgets/password_input.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sizer/sizer.dart';
 
 import '../constants/colors.dart';
 import '../individual/home/dashboard_home.dart';
 
-class SignIn extends ConsumerStatefulWidget {
+class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SignIn> createState() => _MyAppState();
+  State<SignIn> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<SignIn> with InputValidatorMixin {
+class _MyAppState extends State<SignIn> with InputValidatorMixin {
   bool isHiddenPassword = true;
   bool? isChecked = false;
 
@@ -193,92 +191,92 @@ class _MyAppState extends ConsumerState<SignIn> with InputValidatorMixin {
                       width: 280,
                       height: 50,
                       child: GestureDetector(
-                        onTap: (() {
-                          final progress = ProgressHUD.of(context);
-                          progress!.show();
-                          if (_isLoading != true) {
-                            if (emailController.text.isEmpty ||
-                                passwordController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Kindly insert all fields',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              );
-                              progress.dismiss();
-                            } else {
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              ref
-                                  .read(loginControllerProvider.notifier)
-                                  .login(emailController.text,
-                                      passwordController.text)
-                                  .then((value) {
-                                if (value.code != 200) {
-                                  setState(() {
-                                    _isLoading = false;
-                                  });
-                                  progress.dismiss();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        value.error!,
-                                        style: const TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  storage.tokenSave(value.token);
+                        onTap: () {
+                          // final progress = ProgressHUD.of(context);
+                          // progress!.show();
+                          // if (_isLoading != true) {
+                          //   if (emailController.text.isEmpty ||
+                          //       passwordController.text.isEmpty) {
+                          //     ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(
+                          //         content: Text(
+                          //           'Kindly insert all fields',
+                          //           style: TextStyle(
+                          //             fontFamily: "Work Sans",
+                          //             fontSize: 10,
+                          //             fontWeight: FontWeight.w400,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     );
+                          //     progress.dismiss();
+                          //   } else {
+                          //     setState(() {
+                          //       _isLoading = true;
+                          //     });
+                          //     ref
+                          //         .read(loginControllerProvider.notifier)
+                          //         .login(emailController.text,
+                          //             passwordController.text)
+                          //         .then((value) {
+                          //       if (value.code != 200) {
+                          //         setState(() {
+                          //           _isLoading = false;
+                          //         });
+                          //         progress.dismiss();
+                          //         ScaffoldMessenger.of(context).showSnackBar(
+                          //           SnackBar(
+                          //             content: Text(
+                          //               value.error!,
+                          //               style: const TextStyle(
+                          //                 fontFamily: "Work Sans",
+                          //                 fontSize: 10,
+                          //                 fontWeight: FontWeight.w400,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         );
+                          //       } else {
+                          //         storage.tokenSave(value.token);
 
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                        'Login Successfully',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                          //         ScaffoldMessenger.of(context).showSnackBar(
+                          //           const SnackBar(
+                          //             content: Text(
+                          //               'Login Successfully',
+                          //               style: TextStyle(
+                          //                 fontFamily: "Work Sans",
+                          //                 fontSize: 10,
+                          //                 fontWeight: FontWeight.w400,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         );
 
-                                  ref
-                                      .read(loginControllerProvider.notifier)
-                                      .getUserDetails()
-                                      .then((value) {
-                                    Future.delayed(
-                                        const Duration(milliseconds: 1000), () {
-                                      progress.dismiss();
-                                      setState(() {
-                                        userFullDetails = value;
-                                        Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                DashboardHome(
-                                              userDetails: value,
-                                            ),
-                                          ),
-                                        );
-                                      });
-                                    });
-                                  });
-                                }
-                              });
-                            }
-                          }
-                        }),
+                          //         ref
+                          //             .read(loginControllerProvider.notifier)
+                          //             .getUserDetails()
+                          //             .then((value) {
+                          //           Future.delayed(
+                          //               const Duration(milliseconds: 1000), () {
+                          //             progress.dismiss();
+                          //             setState(() {
+                          // userFullDetails = value;
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => DashboardHome(
+                                userDetails: User(
+                                    firstName: 'Chinese', lastName: 'Test'),
+                              ),
+                            ),
+                          );
+                          //             });
+                          //           });
+                          //         });
+                          //       }
+                          //     });
+                          //   }
+                          // }
+                        },
                         child: AuthButtons(
                           color: (_isLoading) ? signInPlaceholder : null,
                           imageWidth: (_isLoading) ? 50 : null,
