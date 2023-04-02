@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/login_controller.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
@@ -30,7 +31,8 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   bool? isChecked = false;
   bool _isLoading = false;
 
-  LoginController loginController = Get.put(LoginController());
+  final _loginController = Get.find<LoginController>();
+  final _userController = Get.find<UserController>();
 
   void _togglePasswordView() {
     setState(() {
@@ -40,8 +42,8 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
 
   @override
   void dispose() {
-    loginController.emailController.clear();
-    loginController.passwordController.clear();
+    _loginController.emailController.clear();
+    _loginController.passwordController.clear();
     super.dispose();
   }
 
@@ -163,7 +165,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                       left: 12.w,
                       right: 12.w,
                       child: EmailPhone(
-                        controller: loginController.emailController,
+                        controller: _loginController.emailController,
                       ),
                     ),
                     Positioned(
@@ -171,7 +173,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                       left: 12.w,
                       right: 12.w,
                       child: PasswordInput(
-                        controller: loginController.passwordController,
+                        controller: _loginController.passwordController,
                         obscure: isHiddenPassword,
                         suffixIcon: InkWell(
                           onTap: _togglePasswordView,
@@ -202,9 +204,9 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                             final progress = ProgressHUD.of(context);
                             progress!.show();
                             if (_isLoading != true) {
-                              if (loginController
+                              if (_loginController
                                       .emailController.text.isEmpty ||
-                                  loginController
+                                  _loginController
                                       .passwordController.text.isEmpty) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
@@ -291,7 +293,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   }
 
   Future<void> loginUser(BuildContext context) async {
-    final response = await loginController.loginUser();
+    final response = await _loginController.loginUser();
     if (!mounted) return;
     final progress = ProgressHUD.of(context);
     setState(() {
@@ -337,7 +339,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   }
 
   Future<void> getUserDetails(BuildContext context) async {
-    final response = await loginController.getUserDetails();
+    final response = await _loginController.getUserDetails();
     if (!mounted) return;
     final progress = ProgressHUD.of(context);
     setState(() {
@@ -345,11 +347,15 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     });
     progress?.dismiss();
     if (!mounted) return;
-    final jsonBodyData = response['data']['userdetail'];
-    final user = User.fromJson(jsonBodyData);
+    final userjsonBodyData = response['data']['userdetail'];
+    final userAccountjsonBodyData = response['data']['accountdetail'];
+    final userDetails = User.fromJson(userjsonBodyData);
+    _userController.setUser = userDetails;
+    final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (BuildContext context) => DashboardHome(
-        userDetails: user,
+        userDetails: userDetails,
+        accountDetails: userAccountDetails,
       ),
     ));
   }

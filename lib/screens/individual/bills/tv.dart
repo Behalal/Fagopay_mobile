@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
-import 'package:fagopay/screens/individual/bills/widgets/tv_sub_dropdown.dart';
-import 'package:fagopay/screens/individual/bills/widgets/tv_subscriptions.dart';
-import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
+import '../../constants/currency.dart';
+import 'widgets/tv_sub_dropdown.dart';
+import 'widgets/tv_subscriptions.dart';
+import '../transactions/confirm_transaction.dart';
+import '../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

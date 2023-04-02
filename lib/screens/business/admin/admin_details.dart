@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
-import 'package:fagopay/screens/business/admin/all_admin.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import '../../constants/colors.dart';
+import '../../constants/currency.dart';
+import 'all_admin.dart';
+import '../../individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';

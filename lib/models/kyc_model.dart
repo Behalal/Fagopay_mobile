@@ -1,6 +1,6 @@
 class KycDetails {
   // Creating a Field/Property
-  late int accountType;
+  late String accountType;
   late String verification;
   late String id;
   late String? companyName;
@@ -58,13 +58,13 @@ class KycDetails {
 
   // Creating the getter method
   // to get input from Field/Property
-  int get getAccountType {
+  String get getAccountType {
     return accountType;
   }
 
   // Creating the setter method
   // to set the input in Field/Property
-  set setAccountType(int name) {
+  set setAccountType(String name) {
     accountType = name;
   }
 

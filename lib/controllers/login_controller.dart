@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/networking/network_helper.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../service/constants/constants.dart';
+import '../service/networking/network_helper.dart';
+import '../service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +31,6 @@ class LoginController extends GetxController {
 
   Future<dynamic> getUserDetails() async {
     final token = await SecureStorage.readUserToken();
-
     try {
       final responseData = await NetworkHelper.getRequest(
         url: "${BaseAPI.userPath}dashboard",
@@ -40,7 +39,6 @@ class LoginController extends GetxController {
           "Authorization": "Bearer $token"
         },
       );
-
       return responseData;
     } catch (e) {
       log(e.toString());

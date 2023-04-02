@@ -1,6 +1,6 @@
-import 'package:fagopay/repository/controllers/bill_controller.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
-import 'package:fagopay/screens/individual/transactions/transaction_successful.dart';
+import '../repository/controllers/bill_controller.dart';
+import 'individual/bills/models/bill_post_model.dart';
+import 'individual/transactions/transaction_successful.dart';
 import 'package:flutter/material.dart';
 
 // void buyAirtime(BuildContext context, WidgetRef ref, String pin) {

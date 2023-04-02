@@ -1,20 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
-import 'package:fagopay/screens/individual/widgets/account_details.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:fagopay/models/user_model/user.dart';
+import 'package:fagopay/screens/constants/colors.dart';
+import 'package:fagopay/screens/constants/currency.dart';
+
 class FundWallet extends StatefulWidget {
   // final String action;
-  final Map<String, dynamic>? accountDetails;
+  final AccountDetail accountDetails;
+
   const FundWallet({
-    super.key,
-    this.accountDetails,
-  });
+    Key? key,
+    required this.accountDetails,
+  }) : super(key: key);
 
   @override
   State<FundWallet> createState() => _FundWalletState();
@@ -24,7 +24,7 @@ class _FundWalletState extends State<FundWallet> {
   @override
   Widget build(BuildContext context) {
     print(
-        "new balance is $currencySymbol ${widget.accountDetails?['balance'] ?? ''}.00");
+        "new balance is $currencySymbol ${widget.accountDetails.balance ?? ''}.00");
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
@@ -65,8 +65,8 @@ class _FundWalletState extends State<FundWallet> {
                                     ),
                                     SizedBox(height: 1.h),
                                     AutoSizeText(
-                                      (widget.accountDetails!.isNotEmpty &&
-                                              widget.accountDetails != null)
+                                      (widget.accountDetails.accountNumber!
+                                              .isNotEmpty)
                                           ? "$currencySymbol 1,000,000.00"
                                           : "${currencySymbol}0.00",
                                       style: const TextStyle(
@@ -96,8 +96,8 @@ class _FundWalletState extends State<FundWallet> {
                                     ),
                                     SizedBox(height: 1.h),
                                     AutoSizeText(
-                                      (widget.accountDetails!.isNotEmpty &&
-                                              widget.accountDetails != null)
+                                      (widget.accountDetails.accountNumber!
+                                              .isNotEmpty)
                                           ? "$currencySymbol 300,000.00"
                                           : "${currencySymbol}0.00",
                                       style: const TextStyle(
@@ -146,9 +146,9 @@ class _FundWalletState extends State<FundWallet> {
                                         ),
                                         SizedBox(height: 2.h),
                                         AutoSizeText(
-                                          (widget.accountDetails!.isNotEmpty &&
-                                                  widget.accountDetails != null)
-                                              ? "$currencySymbol ${widget.accountDetails!['balance']}"
+                                          (widget.accountDetails.accountNumber!
+                                                  .isNotEmpty)
+                                              ? "$currencySymbol ${widget.accountDetails.balance}"
                                               : "${currencySymbol}0.00",
                                           style: const TextStyle(
                                             fontFamily: "Work Sans",
@@ -169,9 +169,9 @@ class _FundWalletState extends State<FundWallet> {
                                           CrossAxisAlignment.end,
                                       children: [
                                         AutoSizeText(
-                                          (widget.accountDetails!.isNotEmpty &&
-                                                  widget.accountDetails != null)
-                                              ? " ${widget.accountDetails!['bank_name']}"
+                                          (widget.accountDetails.accountNumber!
+                                                  .isNotEmpty)
+                                              ? " ${widget.accountDetails.bankName}"
                                               : "",
                                           style: const TextStyle(
                                             fontFamily: "Work Sans",
@@ -182,9 +182,9 @@ class _FundWalletState extends State<FundWallet> {
                                         ),
                                         SizedBox(height: 3.h),
                                         AutoSizeText(
-                                          (widget.accountDetails!.isNotEmpty &&
-                                                  widget.accountDetails != null)
-                                              ? " ${widget.accountDetails!['account_number']}"
+                                          (widget.accountDetails.accountNumber!
+                                                  .isNotEmpty)
+                                              ? " ${widget.accountDetails.accountNumber}"
                                               : "",
                                           style: const TextStyle(
                                             fontFamily: "Work Sans",
@@ -304,7 +304,7 @@ class _FundWalletState extends State<FundWallet> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     AutoSizeText(
-                                      widget.accountDetails?['bank_name'] ?? "",
+                                      widget.accountDetails.bankName ?? "",
                                       style: const TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 14,
@@ -314,8 +314,7 @@ class _FundWalletState extends State<FundWallet> {
                                     ),
                                     SizedBox(height: 2.h),
                                     AutoSizeText(
-                                      widget.accountDetails?['account_name'] ??
-                                          "",
+                                      widget.accountDetails.accountName ?? "",
                                       style: const TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 14,
@@ -331,8 +330,8 @@ class _FundWalletState extends State<FundWallet> {
                                             MainAxisAlignment.end,
                                         children: [
                                           AutoSizeText(
-                                            widget.accountDetails?[
-                                                    'account_number'] ??
+                                            widget.accountDetails
+                                                    .accountNumber ??
                                                 "",
                                             style: const TextStyle(
                                               decoration:

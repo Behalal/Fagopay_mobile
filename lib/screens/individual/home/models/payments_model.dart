@@ -1,10 +1,11 @@
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/individual/requests/requests.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-import '../../../../models/user_model/user.dart';
+import '../../../../controllers/user_controller.dart';
+import '../../../constants/colors.dart';
+import '../../requests/requests.dart';
+import '../../transactions/fago_to_bank.dart';
 
 class PaymentModel {
   Widget image;
@@ -18,19 +19,25 @@ class PaymentModel {
   });
 }
 
+final _userController = Get.find<UserController>();
+
 List<PaymentModel> paymentContents = [
-  // PaymentModel(
-  //   description: 'Send Money',
-  //   image: SvgPicture.asset(
-  //     'assets/icons/send-bold.svg',
-  //     height: 25,
-  //     width: 25,
-  //     theme: const SvgTheme(
-  //       currentColor: fagoPrimaryColor,
-  //     ),
-  //   ),
-  //   route: FagoToBank(userDetails: userFullDetails,),
-  // ),
+  PaymentModel(
+    description: 'Send Money',
+    image: SvgPicture.asset(
+      'assets/icons/send-bold.svg',
+      height: 25,
+      width: 25,
+      theme: const SvgTheme(
+        currentColor: fagoPrimaryColor,
+      ),
+    ),
+    route: Obx(
+      () => FagoToBank(
+        userDetails: _userController.user!,
+      ),
+    ),
+  ),
   PaymentModel(
     description: 'Scan and Pay',
     image: SvgPicture.asset(

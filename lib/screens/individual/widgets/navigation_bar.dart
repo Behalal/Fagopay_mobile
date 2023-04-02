@@ -1,6 +1,7 @@
-import 'package:fagopay/screens/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../constants/colors.dart';
 
 class FagoNavigationBar extends StatefulWidget {
   const FagoNavigationBar({super.key});

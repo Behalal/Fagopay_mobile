@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/functions/functions.dart';
-import 'package:fagopay/models/register_request/register.model.dart';
-import 'package:fagopay/repository/controllers/login_controller_provider.dart';
-import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
-import 'package:fagopay/screens/authentication/account_creation/setup_passcode.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
+import '../../../functions/functions.dart';
+import '../../../models/register_request/register.model.dart';
+import '../../../repository/controllers/login_controller_provider.dart';
+import 'select_verification_type.dart';
+import 'setup_passcode.dart';
+import 'widgets/current_step.dart';
+import '../widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

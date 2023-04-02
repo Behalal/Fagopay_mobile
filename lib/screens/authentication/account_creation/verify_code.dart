@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
-import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/widgets.dart';
+import 'individual_details.dart';
+import 'select_verification_type.dart';
+import 'widgets/current_step.dart';
+import '../../constants/colors.dart';
+import '../../widgets.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:pin_code_fields/pin_code_fields.dart';

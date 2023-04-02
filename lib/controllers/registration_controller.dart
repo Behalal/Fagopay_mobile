@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:fagopay/functions/functions.dart';
-import 'package:fagopay/models/register_request/register.model.dart';
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/networking/network_helper.dart';
+import '../functions/functions.dart';
+import '../models/register_request/register.model.dart';
+import '../service/constants/constants.dart';
+import '../service/networking/network_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -10,16 +10,16 @@ class SalesModel {
 }
 
 List<SalesModel> salesContent = [
-    SalesModel(
-        accountType: "Sales Account",
-        bankAccount: "2038173855 | GTB",
-        balance: "900,340.00"),
-    SalesModel(
-        accountType: "Sales Account",
-        bankAccount: "2038173855 | GTB",
-        balance: "900,340.00"),
-    SalesModel(
-        accountType: "Sales Account",
-        bankAccount: "2038173855 | GTB",
-        balance: "900,340.00"),
-  ];
+  SalesModel(
+      accountType: "Sales Account",
+      bankAccount: "2038173855 | GTB",
+      balance: "900,340.00"),
+  SalesModel(
+      accountType: "Sales Account",
+      bankAccount: "2038173855 | GTB",
+      balance: "900,340.00"),
+  SalesModel(
+      accountType: "Sales Account",
+      bankAccount: "2038173855 | GTB",
+      balance: "900,340.00"),
+];

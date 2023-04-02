@@ -1,6 +1,6 @@
-import 'package:fagopay/screens/individual/widgets/account_details.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
-import 'package:fagopay/screens/individual/widgets/transaction_form.dart';
+import '../widgets/account_details.dart';
+import '../widgets/head_style_extra_pages.dart';
+import '../widgets/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

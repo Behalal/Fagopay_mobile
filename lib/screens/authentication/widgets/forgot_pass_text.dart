@@ -1,5 +1,5 @@
-import 'package:fagopay/screens/authentication/forgot_password_screen.dart';
-import 'package:fagopay/screens/constants/colors.dart';
+import '../forgot_password_screen.dart';
+import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ForgotPassText extends StatelessWidget {

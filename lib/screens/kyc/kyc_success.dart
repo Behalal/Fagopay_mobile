@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/sign_in.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
+import '../authentication/sign_in.dart';
+import '../authentication/widgets/auth_buttons.dart';
+import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';

@@ -1,13 +1,13 @@
-import 'package:fagopay/models/bank_model.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/repository/controllers/login_controller_provider.dart';
-import 'package:fagopay/screens/authentication/sign_in.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
-import 'package:fagopay/screens/individual/widgets/account_details.dart';
-import 'package:fagopay/screens/individual/widgets/banks_dropdown.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
-import 'package:fagopay/screens/individual/widgets/transaction_form.dart';
-import 'package:fagopay/screens/widgets.dart';
+import '../../../models/bank_model.dart';
+import '../../../models/user_model/user.dart';
+import '../../../repository/controllers/login_controller_provider.dart';
+import '../../authentication/sign_in.dart';
+import '../home/dashboard_home.dart';
+import '../widgets/account_details.dart';
+import '../widgets/banks_dropdown.dart';
+import '../widgets/head_style_extra_pages.dart';
+import '../widgets/transaction_form.dart';
+import '../../widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

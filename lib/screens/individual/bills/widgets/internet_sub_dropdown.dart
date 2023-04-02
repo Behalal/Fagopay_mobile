@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/data_model.dart';
-import 'package:fagopay/repository/controllers/bill_controller.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
-import 'package:fagopay/screens/individual/widgets/data_dropdown.dart';
+import '../../../../models/data_model.dart';
+import '../../../../repository/controllers/bill_controller.dart';
+import '../../../constants/colors.dart';
+import '../models/bill_post_model.dart';
+import '../../widgets/data_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

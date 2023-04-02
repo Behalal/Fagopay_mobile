@@ -1,11 +1,11 @@
-import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/business_box.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/personal_box.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/terms_and_cond.dart';
-import 'package:fagopay/screens/authentication/sign_in.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
+import 'select_verification_type.dart';
+import 'widgets/business_box.dart';
+import 'widgets/current_step.dart';
+import 'widgets/personal_box.dart';
+import 'widgets/terms_and_cond.dart';
+import '../sign_in.dart';
+import '../widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

@@ -1,12 +1,12 @@
-import 'package:fagopay/models/kyc_model.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/kyc/face_verify.dart';
-import 'package:fagopay/screens/kyc/kyc_details.dart';
+import '../../models/kyc_model.dart';
+import '../authentication/account_creation/widgets/current_step.dart';
+import '../authentication/widgets/auth_buttons.dart';
+import 'face_verify.dart';
+import 'kyc_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
-import 'package:fagopay/screens/kyc/kyc1.dart';
+import 'kyc1.dart';
 
 import '../constants/colors.dart';
 

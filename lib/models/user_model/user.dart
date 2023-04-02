@@ -81,7 +81,7 @@ class AccountDetail {
   String? accountType;
   String? status;
   String? currency;
-  String? balance;
+  int? balance;
 
   AccountDetail({
     this.accountNumber,
@@ -94,12 +94,12 @@ class AccountDetail {
   });
 
   static AccountDetail fromJson(json) => AccountDetail(
-        accountNumber: json['accountNumber'] as String?,
-        accountName: json['accountName'] as String?,
-        bankName: json['bankName'] as String?,
-        accountType: json['accountType'] as String?,
+        accountNumber: json['account_number'] as String?,
+        accountName: json['account_name'] as String?,
+        bankName: json['bank_name'] as String?,
+        accountType: json['account_type'] as String?,
         status: json['status'] as String?,
         currency: json['currency'] as String?,
-        balance: json['balance'] as String?,
+        balance: json['balance'] as int?,
       );
 }

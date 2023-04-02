@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/kyc/kyc2.dart';
-import 'package:fagopay/screens/kyc/kyc_details.dart';
+import '../authentication/account_creation/widgets/current_step.dart';
+import 'kyc2.dart';
+import 'kyc_details.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';

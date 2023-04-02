@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
+import '../../constants/colors.dart';
+import '../../constants/currency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
 

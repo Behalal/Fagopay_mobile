@@ -1,19 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
-import 'package:fagopay/screens/business/home/models/actions.model.dart';
-import 'package:fagopay/screens/business/home/models/sales.model.dart';
-import 'package:fagopay/screens/individual/home/widgets/dashboard_details.dart';
-import 'package:fagopay/screens/individual/widgets/navigation_bar.dart';
-import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../models/user_model/user.dart';
+import '../../constants/colors.dart';
+import '../../constants/currency.dart';
+import '../../functions.dart';
+import '../../individual/widgets/navigation_bar.dart';
+import 'models/actions.model.dart';
+import 'models/sales.model.dart';
 
 class BusinessHome extends StatefulWidget {
   User userDetails;

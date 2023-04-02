@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/functions.dart';
+import 'authentication/widgets/auth_buttons.dart';
+import 'constants/colors.dart';
+import 'functions.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

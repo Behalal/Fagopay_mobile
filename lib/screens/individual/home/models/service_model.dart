@@ -1,12 +1,12 @@
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/individual/bills/data.dart';
-import 'package:fagopay/screens/individual/bills/electricity.dart';
-import 'package:fagopay/screens/individual/bills/internet.dart';
-import 'package:fagopay/screens/individual/bills/tv.dart';
-import 'package:fagopay/screens/individual/requests/requests.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
+import '../../../../models/user_model/user.dart';
+import '../../../constants/colors.dart';
+import '../../bills/data.dart';
+import '../../bills/electricity.dart';
+import '../../bills/internet.dart';
+import '../../bills/tv.dart';
+import '../../requests/requests.dart';
+import '../../transactions/fago_to_bank.dart';
+import '../../transactions/fago_to_fago.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

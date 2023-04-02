@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/functions/functions.dart';
-import 'package:fagopay/models/register_request/register.model.dart';
-import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
-import 'package:fagopay/screens/authentication/account_creation/setup_password.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/authentication/account_creation/widgets/user_details.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
+import '../../../functions/functions.dart';
+import '../../../models/register_request/register.model.dart';
+import 'select_verification_type.dart';
+import 'setup_password.dart';
+import 'widgets/current_step.dart';
+import 'widgets/user_details.dart';
+import '../widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,11 +20,11 @@ class IndividualDetails extends StatefulWidget {
 class _IndividualDetailsState extends State<IndividualDetails> {
   late bool isLoading;
   late String identifier;
-    TextEditingController firstname = TextEditingController();
-    TextEditingController lastname = TextEditingController();
-    TextEditingController email = TextEditingController();
-    TextEditingController referral = TextEditingController();
-    Functions function = Functions();
+  TextEditingController firstname = TextEditingController();
+  TextEditingController lastname = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController referral = TextEditingController();
+  Functions function = Functions();
 
   @override
   void initState() {
@@ -36,8 +36,6 @@ class _IndividualDetailsState extends State<IndividualDetails> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -48,7 +46,8 @@ class _IndividualDetailsState extends State<IndividualDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CurrentStep(step: "3", backRoute: const SelectVerificationType()),
+                CurrentStep(
+                    step: "3", backRoute: const SelectVerificationType()),
                 SizedBox(height: 5.h),
                 Padding(
                     padding: EdgeInsets.only(left: 2.5.w),
@@ -89,7 +88,8 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                   height: 5.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
                   child: GestureDetector(
                     onTap: () {
                       if (firstname.text.isEmpty ||
@@ -131,14 +131,15 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                         registrationData.setEmail = email.text;
                         registrationData.setLastname = lastname.text;
                         registrationData.setReferral = referral.text;
-    
+
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 const SetupPassword()));
                       }
                     },
                     child: AuthButtons(
-                        hasImage: (isLoading) ? "assets/images/loader.gif" : null,
+                        hasImage:
+                            (isLoading) ? "assets/images/loader.gif" : null,
                         color: (isLoading) ? signInPlaceholder : null,
                         imageWidth: (isLoading) ? 50 : null,
                         imageheight: (isLoading) ? 30 : null,

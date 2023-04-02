@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/business/customers/customer.dart';
-import 'package:fagopay/screens/individual/widgets/business_form.dart';
-import 'package:fagopay/screens/individual/widgets/business_warning.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
+import 'customer.dart';
+import '../../individual/widgets/business_form.dart';
+import '../../individual/widgets/business_warning.dart';
+import '../../individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';

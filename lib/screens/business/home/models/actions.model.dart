@@ -1,5 +1,5 @@
-import 'package:fagopay/screens/business/admin/all_admin.dart';
-import 'package:fagopay/screens/business/customers/customer.dart';
+import '../../admin/all_admin.dart';
+import '../../customers/customer.dart';
 import 'package:flutter/cupertino.dart';
 
 class ActionsModel {

@@ -1,11 +1,11 @@
-import 'package:fagopay/screens/authentication/account_creation/widgets/current_step.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/kyc/kyc2.dart';
-import 'package:fagopay/screens/kyc/kyc_details.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../authentication/account_creation/widgets/current_step.dart';
+import '../authentication/widgets/auth_buttons.dart';
 import '../constants/colors.dart';
+import 'kyc2.dart';
+import 'kyc_details.dart';
 
 class FaceVerify extends StatefulWidget {
   const FaceVerify({super.key});

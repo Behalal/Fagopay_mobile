@@ -1,4 +1,4 @@
-import 'package:fagopay/screens/constants/colors.dart';
+import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class EmailPhone extends StatelessWidget {
