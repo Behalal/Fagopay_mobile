@@ -61,18 +61,18 @@ class _FagoToBankState extends State<FagoToBank> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
-                        stage: 50,
-                        pageName: "Bank Transfer",
-                        backRoute: DashboardHome(userDetails: userFullDetails),
-                      ),
+                      // ProgressStyle(
+                      //   stage: 50,
+                      //   pageName: "Bank Transfer",
+                      //   backRoute: DashboardHome(userDetails: userFullDetails),
+                      // ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      AccountDetails(
-                        action: "spend",
-                        accountDetails: userDetails.accountDetails!,
-                      ),
+                      // AccountDetails(
+                      //   action: "spend",
+                      //   accountDetails: userDetails.accountDetails!,
+                      // ),
                       SizedBox(
                         height: 2.h,
                       ),

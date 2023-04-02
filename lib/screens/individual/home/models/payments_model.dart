@@ -19,18 +19,18 @@ class PaymentModel {
 }
 
 List<PaymentModel> paymentContents = [
-  PaymentModel(
-    description: 'Send Money',
-    image: SvgPicture.asset(
-      'assets/icons/send-bold.svg',
-      height: 25,
-      width: 25,
-      theme: const SvgTheme(
-        currentColor: fagoPrimaryColor,
-      ),
-    ),
-    route: FagoToBank(userDetails: userFullDetails,),
-  ),
+  // PaymentModel(
+  //   description: 'Send Money',
+  //   image: SvgPicture.asset(
+  //     'assets/icons/send-bold.svg',
+  //     height: 25,
+  //     width: 25,
+  //     theme: const SvgTheme(
+  //       currentColor: fagoPrimaryColor,
+  //     ),
+  //   ),
+  //   route: FagoToBank(userDetails: userFullDetails,),
+  // ),
   PaymentModel(
     description: 'Scan and Pay',
     image: SvgPicture.asset(

@@ -19,16 +19,16 @@ class ServiceModel {
 }
 
 List<ServiceModel> serviceContent = [
-  ServiceModel(
-    description: 'Bank Transfer',
-    image: SvgPicture.asset(
-      'assets/icons/bank.svg',
-      height: 20,
-      width: 20,
-      color: fagoPrimaryColor,
-    ),
-    route: FagoToBank( userDetails: userFullDetails),
-  ),
+  // ServiceModel(
+  //   description: 'Bank Transfer',
+  //   image: SvgPicture.asset(
+  //     'assets/icons/bank.svg',
+  //     height: 20,
+  //     width: 20,
+  //     color: fagoPrimaryColor,
+  //   ),
+  //   route: FagoToBank( userDetails: userFullDetails),
+  // ),
   ServiceModel(
     description: 'Send Fago User',
     image: SvgPicture.asset(

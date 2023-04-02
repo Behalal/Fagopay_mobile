@@ -1,94 +1,105 @@
-import 'dart:convert';
-import 'dart:developer';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+class UserModel {
+  User? userdetail;
+  AccountDetail? accountdetail;
+
+  UserModel({
+    this.userdetail,
+    this.accountdetail,
+  });
+
+  static UserModel fromJson(json) => UserModel(
+        userdetail: json['userdetail'] as User?,
+        accountdetail: json['accountdetail'] as AccountDetail?,
+      );
+}
 
 class User {
-  int? code;
   String? id;
   String? email;
   String? phone;
   String? firstName;
+  String? middleName;
   String? lastName;
   String? gender;
   String? dateOfBirth;
   String? identifier;
   String? referralCode;
   String? referralBy;
+  int? bvnVerified;
+  String? emailVerifiedAt;
+  String? recoveryMode;
+  String? ipAddress;
   String? bvnId;
-  String? nextOfKin;
-  int? accountType;
   int? kycVerified;
   String? deviceId;
-  String? message;
-  dynamic accountDetails;
 
-  User(
-      {this.code,
-      this.id,
-      this.email,
-      this.phone,
-      this.firstName,
-      this.lastName,
-      this.gender,
-      this.dateOfBirth,
-      this.identifier,
-      this.referralCode,
-      this.referralBy,
-      this.bvnId,
-      this.nextOfKin,
-      this.accountType,
-      this.kycVerified,
-      this.deviceId,
-      this.message,
-      this.accountDetails});
+  User({
+    this.id,
+    this.email,
+    this.phone,
+    this.firstName,
+    this.middleName,
+    this.lastName,
+    this.gender,
+    this.dateOfBirth,
+    this.identifier,
+    this.referralCode,
+    this.referralBy,
+    this.bvnVerified,
+    this.emailVerifiedAt,
+    this.recoveryMode,
+    this.ipAddress,
+    this.bvnId,
+    this.kycVerified,
+    this.deviceId,
+  });
 
-  factory User.fromReqBody(String body) {
-    Map<String, dynamic> json = jsonDecode(body);
-
-    var data = json['body']['data'];
-    var message = json['message'];
-    var userdetails = (data != null) ? data['userdetail'] : null;
-
-    return User(
-      code: json['status_code'],
-      id: (userdetails != null) ? userdetails['id'] : null,
-      email: (userdetails != null) ? userdetails['email'] : null,
-      firstName: (userdetails != null) ? userdetails['first_name'] : null,
-      phone: (userdetails != null) ? userdetails['firstname'] : null,
-      gender: (userdetails != null) ? userdetails['gender'] : null,
-      dateOfBirth: (userdetails != null) ? userdetails['date_of_birth'] : null,
-      identifier: (userdetails != null) ? userdetails['identifier'] : null,
-      referralCode: (userdetails != null) ? userdetails['referal_code'] : null,
-      referralBy: (userdetails != null) ? userdetails['referal_by'] : null,
-      bvnId: (userdetails != null) ? userdetails['bvn_id'] : null,
-      nextOfKin: (userdetails != null) ? userdetails['nextofkin'] : null,
-      accountType: (userdetails != null) ? userdetails['account_type'] : null,
-      kycVerified: (userdetails != null) ? userdetails['kyc_verified'] : null,
-      deviceId: (userdetails != null) ? userdetails['device_id'] : null,
-      message: (message != null) ? message : null,
-      accountDetails: (data != null) ? data['accountdetail'] : null,
-    );
-  }
-
-  void printAttributes() {
-    log("code: $code\n");
-    log("id: $id\n");
-    log("email: $email\n");
-    log("phone: $phone\n");
-    log("name: $firstName\n");
-    log("lastname: $lastName\n");
-    log("firstname: $firstName\n");
-    log("dateofBirth: $dateOfBirth\n");
-    log("identifier: $identifier\n");
-    log("referralCode: $referralCode\n");
-    log("referralBy: $referralBy\n");
-    log("bvnId: $bvnId\n");
-    log("nextOfKin: $nextOfKin\n");
-    log("accountType: $accountType\n");
-    log("kycVerified: $kycVerified\n");
-    log("deviceId: $deviceId\n");
-    log("gender: $gender\n");
-    log("accountDetails: $accountDetails\n");
-  }
+  static User fromJson(json) => User(
+        id: json['id'] as String?,
+        firstName: json['first_name'] as String?,
+        middleName: json['middle_name'] as String?,
+        lastName: json['last_name'] as String?,
+        email: json['email'] as String?,
+        gender: json['gender'] as String?,
+        phone: json['phone_number'] as String?,
+        dateOfBirth: json['date_of_birth'] as String?,
+        identifier: json['identifier'] as String?,
+        bvnVerified: json['bvn_verified'] as int?,
+        bvnId: json['bvn_id'] as String?,
+        kycVerified: json['kyc_verified'] as int?,
+        referralCode: json['referal_code'] as String?,
+        referralBy: json['referal_by'] as String?,
+        ipAddress: json['ipaddress'] as String?,
+      );
 }
 
-User userFullDetails = User();
+class AccountDetail {
+  String? accountNumber;
+  String? accountName;
+  String? bankName;
+  String? accountType;
+  String? status;
+  String? currency;
+  String? balance;
+
+  AccountDetail({
+    this.accountNumber,
+    this.accountName,
+    this.bankName,
+    this.accountType,
+    this.status,
+    this.currency,
+    this.balance,
+  });
+
+  static AccountDetail fromJson(json) => AccountDetail(
+        accountNumber: json['accountNumber'] as String?,
+        accountName: json['accountName'] as String?,
+        bankName: json['bankName'] as String?,
+        accountType: json['accountType'] as String?,
+        status: json['status'] as String?,
+        currency: json['currency'] as String?,
+        balance: json['balance'] as String?,
+      );
+}

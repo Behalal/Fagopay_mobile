@@ -164,24 +164,24 @@ class _DashboardHomeState extends State<DashboardHome> {
                 if ((widget.userDetails.kycVerified == null)
                     ? widget.userDetails.kycVerified == 0
                     : widget.userDetails.kycVerified! < 1)
-                  Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                    child: GestureDetector(onTap: () {
-                      KycDetailsValue.setAccountType =
-                          widget.userDetails.accountType!;
-                      log(KycDetailsValue.getAccountType.toString());
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              const Kyc_verfication(),
-                        ),
-                      );
-                    }),
-                    // SizedBox(
-                    //   height: 0.h,
-                    // ),
-                  ),
+                  // Padding(
+                  //   padding:
+                  //       EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                  //   child: GestureDetector(onTap: () {
+                  //     KycDetailsValue.setAccountType =
+                  //         widget.userDetails.accountType!;
+                  //     log(KycDetailsValue.getAccountType.toString());
+                  //     Navigator.of(context).pushReplacement(
+                  //       MaterialPageRoute(
+                  //         builder: (BuildContext context) =>
+                  //             const Kyc_verfication(),
+                  //       ),
+                  //     );
+                  //   }),
+                  //   // SizedBox(
+                  //   //   height: 0.h,
+                  //   // ),
+                  // ),
                 SizedBox(
                   height: 0.h,
                 ),

@@ -32,11 +32,11 @@ class _BusinessHomeState extends State<BusinessHome> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            DashBoardDetails(
-              firstname: widget.userDetails.firstName ,
-              accountType: 1,
-              accountDetails: widget.userDetails.accountDetails,
-            ),
+            // DashBoardDetails(
+            //   firstname: widget.userDetails.firstName ,
+            //   accountType: 1,
+            //   accountDetails: widget.userDetails.accountDetails,
+            // ),
             SizedBox(
               height: 2.h,
             ),

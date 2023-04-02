@@ -28,14 +28,14 @@ class _AllAdminState extends State<AllAdmin> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
-                        stage: 0,
-                        width: 4,
-                        pageName: "Account Admins",
-                        backRoute: BusinessHome(
-                          userDetails: userFullDetails,
-                        ),
-                      ),
+                      // ProgressStyle(
+                      //   stage: 0,
+                      //   width: 4,
+                      //   pageName: "Account Admins",
+                      //   backRoute: BusinessHome(
+                      //     userDetails: userFullDetails,
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 3.h,
                       ),

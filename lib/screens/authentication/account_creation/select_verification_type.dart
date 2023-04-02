@@ -303,11 +303,9 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
 
   void setUserAccount(BuildContext context) async {
     final res = await registrationController.selectAccountType();
-
     setState(() {
       _isLoading = true;
     });
-
     if (res.statusCode == 200) {
       setState(() {
         _isLoading = false;

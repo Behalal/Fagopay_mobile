@@ -29,13 +29,13 @@ class _CustomerPageState extends State<CustomerPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProgressStyle(
-                      stage: 0,
-                      pageName: "My Customers",
-                      backRoute: BusinessHome(
-                        userDetails: userFullDetails,
-                      ),
-                    ),
+                    // ProgressStyle(
+                    //   stage: 0,
+                    //   pageName: "My Customers",
+                    //   backRoute: BusinessHome(
+                    //     userDetails: userFullDetails,
+                    //   ),
+                    // ),
                     SizedBox(
                       height: 3.h,
                     ),

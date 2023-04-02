@@ -33,11 +33,11 @@ class _FundWalletState extends State<FundWallet> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
-                        stage: 50,
-                        pageName: "Fund Wallet",
-                        backRoute: DashboardHome(userDetails: userFullDetails),
-                      ),
+                      // ProgressStyle(
+                      //   stage: 50,
+                      //   pageName: "Fund Wallet",
+                      //   backRoute: DashboardHome(userDetails: userFullDetails),
+                      // ),
                       SizedBox(
                         height: 3.h,
                       ),

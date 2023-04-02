@@ -4,12 +4,12 @@ import 'package:sizer/sizer.dart';
 
 void main() {
   runApp(
-    const AppWidget(),
+    const FagoPay(),
   );
 }
 
-class AppWidget extends StatelessWidget {
-  const AppWidget({
+class FagoPay extends StatelessWidget {
+  const FagoPay({
     Key? key,
   }) : super(key: key);
 

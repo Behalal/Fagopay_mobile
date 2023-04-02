@@ -31,7 +31,7 @@ class RegistrationController extends GetxController {
 
       return responseData;
     } catch (e) {
-      print(e);
+      throw Exception('Error: $e');
     }
   }
 }
