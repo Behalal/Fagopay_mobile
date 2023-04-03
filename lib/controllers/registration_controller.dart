@@ -22,13 +22,11 @@ class RegistrationController extends GetxController {
     try {
       var requestBody = jsonEncode(
           {'account_type': accountType, typeKey: userAuthDataController.text});
-
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}register",
         headers: BaseAPI.headers,
         body: requestBody,
       );
-
       return responseData;
     } catch (e) {
       throw Exception('Error: $e');

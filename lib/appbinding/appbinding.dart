@@ -6,7 +6,7 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     // Get.put(RegistrationController(), permanent: true);
-    Get.put(LoginController(), permanent: true);
-    Get.put(UserController(), permanent: true);
+    Get.lazyPut(() => LoginController());
+    Get.lazyPut(() => UserController());
   }
 }
