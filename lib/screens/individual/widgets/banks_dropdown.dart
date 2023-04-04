@@ -1,19 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../constants/colors.dart';
-import '../transactions/models/bank_model.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../constants/colors.dart';
+
 class SelectBank extends StatefulWidget {
-  List<DropdownMenuItem<String>> bankdropdown;
-  VoidCallback onChanged;
-  String selectedValue;
-  SelectBank({
-    super.key,
+  final List<DropdownMenuItem<String>> bankdropdown;
+  final Function(String?)? onChanged;
+  final String selectedValue;
+
+  const SelectBank({
+    Key? key,
     required this.bankdropdown,
-    required this.onChanged,
+    this.onChanged,
     required this.selectedValue,
-  });
+  }) : super(key: key);
 
   @override
   State<SelectBank> createState() => _SelectBankState();
@@ -67,7 +69,7 @@ class _SelectBankState extends State<SelectBank> {
               alignment: AlignmentDirectional.centerStart,
               value: widget.selectedValue,
               items: dropdownItems,
-              onChanged: ((value) {}),
+              onChanged: widget.onChanged,
               style: const TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 14,

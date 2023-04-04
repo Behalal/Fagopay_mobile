@@ -43,7 +43,7 @@ class BvnVerificationState extends State<BvnVerification> {
               children: [
                 CurrentStep(
                   step: "2",
-                  backRoute: const Kyc_verfication(),
+                  backRoute: const KycVerfication(accountType: 'individual',),
                 ),
                 SizedBox(
                   height: 4.h,

@@ -1,4 +1,6 @@
-import '../../../../models/user_model/user.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:get/get.dart';
+
 import '../../../constants/colors.dart';
 import '../../bills/data.dart';
 import '../../bills/electricity.dart';
@@ -18,17 +20,22 @@ class ServiceModel {
   ServiceModel({required this.image, this.description, required this.route});
 }
 
+final _userController = Get.find<UserController>();
+
 List<ServiceModel> serviceContent = [
-  // ServiceModel(
-  //   description: 'Bank Transfer',
-  //   image: SvgPicture.asset(
-  //     'assets/icons/bank.svg',
-  //     height: 20,
-  //     width: 20,
-  //     color: fagoPrimaryColor,
-  //   ),
-  //   route: FagoToBank( userDetails: userFullDetails),
-  // ),
+  ServiceModel(
+    description: 'Bank Transfer',
+    image: SvgPicture.asset(
+      'assets/icons/bank.svg',
+      height: 20,
+      width: 20,
+      color: fagoPrimaryColor,
+    ),
+    route: FagoToBank(
+      userDetails: _userController.user!,
+      accountDetails: _userController.userAccountDetails!,
+    ),
+  ),
   ServiceModel(
     description: 'Send Fago User',
     image: SvgPicture.asset(

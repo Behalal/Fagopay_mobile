@@ -352,12 +352,17 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     final userDetails = User.fromJson(userjsonBodyData);
     _userController.setUser = userDetails;
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (BuildContext context) => DashboardHome(
-        userDetails: userDetails,
-        accountDetails: userAccountDetails,
-      ),
-    ));
+    _userController.setUserAccountDetails = userAccountDetails;
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => DashboardHome(
+            userDetails: userDetails,
+            accountDetails: userAccountDetails,
+          ),
+        ),
+      );
+    });
   }
 }
 

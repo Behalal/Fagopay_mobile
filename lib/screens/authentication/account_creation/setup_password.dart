@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:get/get.dart';
 import '../../../functions/functions.dart';
-import '../../../models/register_request/register.model.dart';
-import '../../../repository/controllers/login_controller_provider.dart';
 import 'select_verification_type.dart';
 import 'setup_passcode.dart';
 import 'widgets/current_step.dart';
@@ -9,7 +11,6 @@ import '../widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../service/secure_storage/secure_storage.dart';
 
 class SetupPassword extends StatefulWidget {
@@ -20,47 +21,26 @@ class SetupPassword extends StatefulWidget {
 }
 
 class _SetupPasswordState extends State<SetupPassword> {
-  late bool passvisibility;
-  late bool confirmpassvisibility;
-
-  late bool _isLoading;
-  late bool passRequirementMet;
-
-  late bool upto8Characters;
-  late bool numbers;
-  late bool lowerCase;
-  late bool upperCase;
-  late bool symbolSpecial;
-
-  final TextEditingController password = TextEditingController();
-  final TextEditingController confirmPassword = TextEditingController();
-
-  final String id = registrationData.getId;
-  final String firstname = registrationData.getFirstname;
-  final String lastname = registrationData.getlastname;
-  final String email = registrationData.getEmail;
-  final String referral = registrationData.getReferral;
+  bool _passvisibility = false;
+  bool _confirmpassvisibility = false;
+  bool _isLoading = false;
+  bool _passRequirementMet = false;
+  bool _upto8Characters = false;
+  bool _numbers = false;
+  bool _lowerCase = false;
+  bool _upperCase = false;
+  bool _symbolSpecial = false;
   Functions function = Functions();
-  SecureStorage storage = SecureStorage();
-
-  @override
-  void initState() {
-    passvisibility = false;
-    confirmpassvisibility = false;
-    passRequirementMet = false;
-
-    _isLoading = false;
-
-    upto8Characters = false;
-    numbers = false;
-    lowerCase = false;
-    upperCase = false;
-    symbolSpecial = false;
-    super.initState();
-  }
+  final _registrationController = Get.find<RegistrationController>();
 
   @override
   void dispose() {
+    
+    _registrationController.lastname.clear();
+    _registrationController.email.clear();
+    _registrationController.referral.clear();
+    _registrationController.password.clear();
+    _registrationController.confirmPassword.clear();
     super.dispose();
   }
 
@@ -76,7 +56,8 @@ class _SetupPasswordState extends State<SetupPassword> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CurrentStep(step: "4", backRoute: const SelectVerificationType()),
+                CurrentStep(
+                    step: "4", backRoute: const SelectVerificationType()),
                 SizedBox(height: 5.h),
                 Padding(
                     padding: EdgeInsets.only(left: 2.5.w),
@@ -114,70 +95,71 @@ class _SetupPasswordState extends State<SetupPassword> {
                   height: 56,
                   width: 341,
                   child: TextFormField(
-                    controller: password,
+                    controller: _registrationController.password,
                     onChanged: ((value) {
                       if (value.length >= 8) {
                         setState(() {
-                          upto8Characters = true;
+                          _upto8Characters = true;
                         });
                       } else {
                         setState(() {
-                          upto8Characters = false;
+                          _upto8Characters = false;
                         });
                       }
-    
+
                       if (function.checkLoweCase(value)) {
                         setState(() {
-                          lowerCase = true;
+                          _lowerCase = true;
                         });
                       } else {
                         setState(() {
-                          lowerCase = false;
+                          _lowerCase = false;
                         });
                       }
-    
+
                       if (function.checknumbers(value)) {
                         setState(() {
-                          numbers = true;
+                          _numbers = true;
                         });
                       } else {
                         setState(() {
-                          numbers = false;
+                          _numbers = false;
                         });
                       }
-    
+
                       if (function.checkUpperCase(value)) {
                         setState(() {
-                          upperCase = true;
+                          _upperCase = true;
                         });
                       } else {
                         setState(() {
-                          upperCase = false;
+                          _upperCase = false;
                         });
                       }
-    
+
                       if (function.specialCharacters(value)) {
                         setState(() {
-                          symbolSpecial = true;
+                          _symbolSpecial = true;
                         });
                       } else {
                         setState(() {
-                          symbolSpecial = false;
+                          _symbolSpecial = false;
                         });
                       }
-    
+
                       if (checkRequirement(value) &&
-                          value == confirmPassword.text) {
+                          value ==
+                              _registrationController.confirmPassword.text) {
                         setState(() {
-                          passRequirementMet = true;
+                          _passRequirementMet = true;
                         });
                       } else {
                         setState(() {
-                          passRequirementMet = false;
+                          _passRequirementMet = false;
                         });
                       }
                     }),
-                    obscureText: !passvisibility,
+                    obscureText: !_passvisibility,
                     enableSuggestions: false,
                     autocorrect: false,
                     style: const TextStyle(
@@ -207,9 +189,10 @@ class _SetupPasswordState extends State<SetupPassword> {
                           color: signInPlaceholder,
                         ),
                         prefixIcon: const Image(
-                            image: AssetImage("assets/images/password_icon.png")),
+                            image:
+                                AssetImage("assets/images/password_icon.png")),
                         suffixIcon: IconButton(
-                          icon: (passvisibility)
+                          icon: (_passvisibility)
                               ? const Icon(
                                   Icons.visibility_off,
                                   size: 20,
@@ -220,7 +203,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                                 ),
                           onPressed: () {
                             setState(() {
-                              passvisibility = !passvisibility;
+                              _passvisibility = !_passvisibility;
                             });
                           },
                         )),
@@ -233,20 +216,21 @@ class _SetupPasswordState extends State<SetupPassword> {
                   height: 56,
                   width: 341,
                   child: TextFormField(
-                    controller: confirmPassword,
+                    controller: _registrationController.confirmPassword,
                     onChanged: (value) {
-                      if (value != password.text &&
-                          !checkRequirement(password.text)) {
+                      if (value != _registrationController.password.text &&
+                          !checkRequirement(
+                              _registrationController.password.text)) {
                         setState(() {
-                          passRequirementMet = false;
+                          _passRequirementMet = false;
                         });
                       } else {
                         setState(() {
-                          passRequirementMet = true;
+                          _passRequirementMet = true;
                         });
                       }
                     },
-                    obscureText: !confirmpassvisibility,
+                    obscureText: !_confirmpassvisibility,
                     enableSuggestions: false,
                     autocorrect: false,
                     style: const TextStyle(
@@ -276,9 +260,10 @@ class _SetupPasswordState extends State<SetupPassword> {
                           color: signInPlaceholder,
                         ),
                         prefixIcon: const Image(
-                            image: AssetImage("assets/images/password_icon.png")),
+                            image:
+                                AssetImage("assets/images/password_icon.png")),
                         suffixIcon: IconButton(
-                          icon: (confirmpassvisibility)
+                          icon: (_confirmpassvisibility)
                               ? const Icon(
                                   Icons.visibility_off,
                                   size: 20,
@@ -289,7 +274,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                                 ),
                           onPressed: () {
                             setState(() {
-                              confirmpassvisibility = !confirmpassvisibility;
+                              _confirmpassvisibility = !_confirmpassvisibility;
                             });
                           },
                         )),
@@ -316,7 +301,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                             children: [
                               Icon(
                                 Icons.check_circle_outline_sharp,
-                                color: (upto8Characters)
+                                color: (_upto8Characters)
                                     ? requirementMet
                                     : requirementNotMet,
                                 size: 15,
@@ -337,38 +322,39 @@ class _SetupPasswordState extends State<SetupPassword> {
                         )),
                     SizedBox(width: 0.7.w),
                     Container(
-                        width: 40.w,
-                        height: 4.h,
-                        decoration: const BoxDecoration(
-                            color: passGuideBg,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 1.h, horizontal: 0.4.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.check_circle_outline_sharp,
-                                color: (lowerCase)
-                                    ? requirementMet
-                                    : requirementNotMet,
-                                size: 15,
+                      width: 40.w,
+                      height: 4.h,
+                      decoration: const BoxDecoration(
+                          color: passGuideBg,
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 1.h, horizontal: 0.4.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline_sharp,
+                              color: (_lowerCase)
+                                  ? requirementMet
+                                  : requirementNotMet,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 35.w,
+                              child: const AutoSizeText(
+                                "One lower case character",
+                                style: TextStyle(
+                                    fontFamily: "Nunito",
+                                    color: black,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400),
                               ),
-                              SizedBox(
-                                width: 35.w,
-                                child: const AutoSizeText(
-                                  "One lower case character",
-                                  style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      color: black,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              )
-                            ],
-                          ),
-                        ))
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(
@@ -392,7 +378,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                             children: [
                               Icon(
                                 Icons.check_circle_outline_sharp,
-                                color: (upperCase)
+                                color: (_upperCase)
                                     ? requirementMet
                                     : requirementNotMet,
                                 size: 15,
@@ -416,39 +402,40 @@ class _SetupPasswordState extends State<SetupPassword> {
                       width: 1.w,
                     ),
                     Container(
-                        width: 25.w,
-                        height: 4.h,
-                        decoration: const BoxDecoration(
-                            color: passGuideBg,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 1.h, horizontal: 0.4.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.check_circle_outline_sharp,
-                                color: (numbers)
-                                    ? requirementMet
-                                    : requirementNotMet,
-                                size: 15,
+                      width: 25.w,
+                      height: 4.h,
+                      decoration: const BoxDecoration(
+                          color: passGuideBg,
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 1.h, horizontal: 0.4.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline_sharp,
+                              color: (_numbers)
+                                  ? requirementMet
+                                  : requirementNotMet,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                              child: const AutoSizeText(
+                                "One number",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: "Nunito",
+                                    color: black,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w400),
                               ),
-                              SizedBox(
-                                width: 20.w,
-                                child: const AutoSizeText(
-                                  "One number",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontFamily: "Nunito",
-                                      color: black,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
@@ -465,7 +452,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                       children: [
                         Icon(
                           Icons.check_circle_outline_sharp,
-                          color: (symbolSpecial)
+                          color: (_symbolSpecial)
                               ? requirementMet
                               : requirementNotMet,
                           size: 15,
@@ -488,63 +475,33 @@ class _SetupPasswordState extends State<SetupPassword> {
                   height: 10.h,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
                   child: GestureDetector(
-                    onTap: () {
-                      // if (password.text.isEmpty || confirmPassword.text.isEmpty) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Kindly enter your password'),
-                      //     ),
-                      //   );
-                      // } else if (password.text != confirmPassword.text) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Password does not match'),
-                      //     ),
-                      //   );
-                      // } else {
-                      //   setState(() {
-                      //     _isLoading = true;
-                      //   });
-                      //   ref
-                      //       .read(loginControllerProvider.notifier)
-                      //       .registerDetails(id, firstname, lastname, email,
-                      //           password.text, confirmPassword.text, referral)
-                      //       .then((value) {
-                      //     if (value.code != null && value.code != 200) {
-                      //       setState(() {
-                      //         _isLoading = false;
-                      //       });
-                      //       ScaffoldMessenger.of(context).showSnackBar(
-                      //         SnackBar(
-                      //           content: Text(value.error!),
-                      //         ),
-                      //       );
-                      //     } else {
-                      //       // registrationData.setId = value.identifier!;
-                      //       storage.tokenSave(value.token);
-                      //       ScaffoldMessenger.of(context).showSnackBar(
-                      //         const SnackBar(
-                      //           content: Text('Registration successful'),
-                      //         ),
-                      //       );
-                      //       Future.delayed(const Duration(seconds: 3), () {
-                      //         setState(() {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const SetupPassCode()));
-                              // });
-                      //       });
-                      //     }
-                      //   });
-                      // }
+                    onTap: () async {
+                      if (_registrationController.password.text.isEmpty ||
+                          _registrationController
+                              .confirmPassword.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Kindly enter your password'),
+                          ),
+                        );
+                      } else if (_registrationController.password.text !=
+                          _registrationController.confirmPassword.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Password does not match'),
+                          ),
+                        );
+                      } else {
+                        await registerUserDetails(context);
+                      }
                     },
                     child: AuthButtons(
                         hasImage:
                             (_isLoading) ? "assets/images/loader.gif" : null,
-                        color: (_isLoading || !passRequirementMet)
+                        color: (_isLoading || !_passRequirementMet)
                             ? signInPlaceholder
                             : null,
                         imageWidth: (_isLoading) ? 50 : null,
@@ -568,5 +525,40 @@ class _SetupPasswordState extends State<SetupPassword> {
         value.length >= 8);
 
     return met;
+  }
+
+  Future<void> registerUserDetails(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    final response = await _registrationController.registerDetails();
+    final jsonBody = jsonDecode(response.body);
+    final userToken = jsonBody['token'];
+    if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = false;
+      });
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${jsonBody['data']['error'][0]}'),
+        ),
+      );
+      return;
+    }
+    SecureStorage.setUserToken(userToken);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Registration successful'),
+      ),
+    );
+    Future.delayed(const Duration(seconds: 2), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const SetupPassCode(),
+          ),
+        );
+    });
   }
 }

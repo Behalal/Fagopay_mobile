@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../models/user_model/user.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:get/get.dart';
 import '../../constants/colors.dart';
-import '../home/dashboard_home.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -17,6 +18,8 @@ class TransactionSuccessful extends StatefulWidget {
 }
 
 class _TransactionSuccessfulState extends State<TransactionSuccessful> {
+  final _userUcontroller = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,9 +171,14 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                   )),
               InkWell(
                 onTap: () {
-                  // Navigator.of(context).pop(MaterialPageRoute(
-                  //     builder: (BuildContext context) =>
-                  //          DashboardHome(userDetails:User(),)));
+                  Navigator.of(context).pop(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => DashboardHome(
+                        userDetails: _userUcontroller.user!,
+                        accountDetails: _userUcontroller.userAccountDetails!,
+                      ),
+                    ),
+                  );
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },

@@ -1,14 +1,22 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../constants/colors.dart';
-import '../../constants/currency.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:fagopay/models/user_model/user.dart';
+
+import '../../constants/colors.dart';
+import '../../constants/currency.dart';
+
 class AccountDetails extends StatefulWidget {
-  String action;
-  Map<String, dynamic>? accountDetails;
-  AccountDetails(
-      {super.key, required this.action, required this.accountDetails});
+  final String action;
+  final AccountDetail accountDetails;
+
+  const AccountDetails({
+    Key? key,
+    required this.action,
+    required this.accountDetails,
+  }) : super(key: key);
 
   @override
   State<AccountDetails> createState() => _AccountDetailsState();
@@ -19,7 +27,7 @@ class _AccountDetailsState extends State<AccountDetails> {
   Widget build(BuildContext context) {
     //ref.watch();
     print(
-        "acct balance is $currencySymbol ${widget.accountDetails!['balance']}.00");
+        "acct balance is $currencySymbol ${widget.accountDetails.balance}.00");
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -44,8 +52,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   ),
                   SizedBox(height: 1.h),
                   AutoSizeText(
-                    (widget.accountDetails!.isNotEmpty &&
-                            widget.accountDetails != null)
+                    (widget.accountDetails.accountNumber != "")
                         ? "$currencySymbol 1,000,000.00"
                         : "${currencySymbol}0.00",
                     style: const TextStyle(
@@ -75,8 +82,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   ),
                   SizedBox(height: 1.h),
                   AutoSizeText(
-                    (widget.accountDetails!.isNotEmpty &&
-                            widget.accountDetails != null)
+                    (widget.accountDetails.accountNumber != "")
                         ? "$currencySymbol 300,000.00"
                         : "${currencySymbol}0.00",
                     style: const TextStyle(
@@ -122,9 +128,8 @@ class _AccountDetailsState extends State<AccountDetails> {
                       ),
                       SizedBox(height: 2.h),
                       AutoSizeText(
-                        (widget.accountDetails!.isNotEmpty &&
-                                widget.accountDetails != null)
-                            ? "$currencySymbol ${widget.accountDetails!['balance']}"
+                        (widget.accountDetails.accountNumber != "")
+                            ? "$currencySymbol ${widget.accountDetails.balance}"
                             : "${currencySymbol}0.00",
                         style: const TextStyle(
                           fontFamily: "Work Sans",
@@ -143,10 +148,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       AutoSizeText(
-                        (widget.accountDetails!.isNotEmpty &&
-                                widget.accountDetails != null)
-                            ? "Wema"
-                            : "",
+                        widget.accountDetails.accountName != "" ? "Wema" : "",
                         style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 14,
@@ -156,8 +158,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                       ),
                       SizedBox(height: 3.h),
                       AutoSizeText(
-                        (widget.accountDetails!.isNotEmpty &&
-                                widget.accountDetails != null)
+                        widget.accountDetails.accountNumber != ""
                             ? "2346389056"
                             : "",
                         style: const TextStyle(

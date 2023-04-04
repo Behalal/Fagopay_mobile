@@ -1,17 +1,30 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../models/register_request/register.model.dart';
+import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:get/get.dart';
 import '../sign_in.dart';
 import '../widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class SuccessAccountCreation extends StatelessWidget {
+class SuccessAccountCreation extends StatefulWidget {
   const SuccessAccountCreation({super.key});
 
   @override
+  State<SuccessAccountCreation> createState() => _SuccessAccountCreationState();
+}
+
+class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
+  final _registrationController = Get.find<RegistrationController>();
+
+  @override
+  void dispose() {
+    _registrationController.firstname.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String name = registrationData.firstname;
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -68,7 +81,7 @@ class SuccessAccountCreation extends StatelessWidget {
                 child: SizedBox(
                   width: 50.w,
                   child: AutoSizeText(
-                    "Hello $name!",
+                    "Hello ${_registrationController.firstname.text}!",
                     style: const TextStyle(
                       fontFamily: "Work Sans",
                       fontSize: 22,

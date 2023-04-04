@@ -32,10 +32,9 @@ List<PaymentModel> paymentContents = [
         currentColor: fagoPrimaryColor,
       ),
     ),
-    route: Obx(
-      () => FagoToBank(
-        userDetails: _userController.user!,
-      ),
+    route: FagoToBank(
+      userDetails: _userController.user!,
+      accountDetails: _userController.userAccountDetails!,
     ),
   ),
   PaymentModel(

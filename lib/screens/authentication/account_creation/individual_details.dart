@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:get/get.dart';
 import '../../../functions/functions.dart';
-import '../../../models/register_request/register.model.dart';
 import 'select_verification_type.dart';
 import 'setup_password.dart';
 import 'widgets/current_step.dart';
@@ -18,21 +19,9 @@ class IndividualDetails extends StatefulWidget {
 }
 
 class _IndividualDetailsState extends State<IndividualDetails> {
-  late bool isLoading;
-  late String identifier;
-  TextEditingController firstname = TextEditingController();
-  TextEditingController lastname = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController referral = TextEditingController();
+  bool isLoading = false;
   Functions function = Functions();
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    isLoading = false;
-    identifier = registrationData.id;
-    super.initState();
-  }
+  final _registrationController = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +68,10 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                   ),
                 ),
                 UserData(
-                  firstname: firstname,
-                  lastname: lastname,
-                  email: email,
-                  referrer: referral,
+                  firstname: _registrationController.firstname,
+                  lastname: _registrationController.lastname,
+                  email: _registrationController.email,
+                  referrer: _registrationController.referral,
                 ),
                 SizedBox(
                   height: 5.h,
@@ -92,9 +81,9 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
                   child: GestureDetector(
                     onTap: () {
-                      if (firstname.text.isEmpty ||
-                          lastname.text.isEmpty ||
-                          email.text.isEmpty) {
+                      if (_registrationController.firstname.text.isEmpty ||
+                          _registrationController.lastname.text.isEmpty ||
+                          _registrationController.email.text.isEmpty) {
                         // SweetAlertV2.show(context,
                         //     title: "Kindly Insert all fields",
                         //     style: SweetAlertV2Style.error,
@@ -110,7 +99,8 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                             ),
                           ),
                         );
-                      } else if (!function.validateEmail(email.text)) {
+                      } else if (!function
+                          .validateEmail(_registrationController.email.text)) {
                         // SweetAlertV2.show(context,
                         //     title: "Invalid email address sent",
                         //     style: SweetAlertV2Style.error,
@@ -127,14 +117,16 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                           ),
                         );
                       } else {
-                        registrationData.setFirstname = firstname.text;
-                        registrationData.setEmail = email.text;
-                        registrationData.setLastname = lastname.text;
-                        registrationData.setReferral = referral.text;
-
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        // registrationData.setFirstname = firstname.text;
+                        // registrationData.setEmail = email.text;
+                        // registrationData.setLastname = lastname.text;
+                        // registrationData.setReferral = referral.text;
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                const SetupPassword()));
+                                const SetupPassword(),
+                          ),
+                        );
                       }
                     },
                     child: AuthButtons(

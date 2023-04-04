@@ -1,17 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../models/data_model.dart';
-import '../../authentication/widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'airtime.dart';
-import 'models/bill_post_model.dart';
-import '../transactions/confirm_transaction.dart';
-import '../widgets/data_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../models/data_model.dart';
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
+import '../transactions/confirm_transaction.dart';
+import '../widgets/data_dropdown.dart';
+import 'airtime.dart';
+import 'models/bill_post_model.dart';
+
 class BuyData extends StatefulWidget {
-  const BuyData({super.key});
+  const BuyData({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<BuyData> createState() => _BuyDataState();

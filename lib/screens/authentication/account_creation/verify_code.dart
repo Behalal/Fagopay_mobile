@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'individual_details.dart';
+import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
+import 'package:get/get.dart';
 import 'select_verification_type.dart';
 import 'widgets/current_step.dart';
 import '../../constants/colors.dart';
@@ -24,11 +26,7 @@ class VerifyCodeSent extends StatefulWidget {
 
 class _VerifyCodeSentState extends State<VerifyCodeSent> {
   bool isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _registrationController = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -114,39 +112,17 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
                             fieldWidth: 50,
                             activeFillColor: Colors.white,
                           ),
-                          onChanged: (String value) {
-                            // if (value.length == 6) {
-                            //   setState(() {
-                            //     isLoading = true;
-                            //   });
-                            //   ref
-                            //       .read(loginControllerProvider.notifier)
-                            //       .validateCode(identifier, value)
-                            //       .then((response) {
-                            //     if (response.code != null &&
-                            //         response.code != 200) {
-                            //       setState(() {
-                            //         isLoading = false;
-                            //       });
-                            //       ScaffoldMessenger.of(context).showSnackBar(
-                            //         SnackBar(
-                            //           content: Text(response.error!),
-                            //         ),
-                            //       );
-                            //     } else {
-                            //       Future.delayed(const Duration(seconds: 3), () {
-                            //         setState(() {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const IndividualDetails(),
-                              ),
-                            );
-                            //         });
-                            //       });
-                            //     }
-                            //   });
-                            // }
+                          onChanged: (String value) async {
+                            if (value.length == 6) {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              await validateUserOtp(
+                                context,
+                                userIdentifier: widget.userIdentifier,
+                                code: value,
+                              );
+                            }
                           },
                         )),
                     SizedBox(
@@ -231,5 +207,33 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
         ),
       ),
     );
+  }
+
+  Future<void> validateUserOtp(BuildContext context,
+      {required String userIdentifier, required String code}) async {
+    final response =
+        await _registrationController.validateCode(userIdentifier, code);
+    if (response.statusCode != 200) {
+      setState(() {
+        isLoading = false;
+      });
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('OTP is Invalid'),
+        ),
+      );
+      return;
+    }
+
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const IndividualDetails(),
+          ),
+        );
+      });
+    });
   }
 }

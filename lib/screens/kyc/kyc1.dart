@@ -1,20 +1,25 @@
-import '../../models/kyc_model.dart';
-import '../authentication/account_creation/widgets/current_step.dart';
-import 'business_verify.dart';
-import 'kyc2.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../authentication/account_creation/widgets/current_step.dart';
 import '../constants/colors.dart';
+import 'business_verify.dart';
+import 'kyc2.dart';
 
-class Kyc_verfication extends StatefulWidget {
-  const Kyc_verfication({super.key});
+class KycVerfication extends StatefulWidget {
+  final String accountType;
+
+  const KycVerfication({
+    Key? key,
+    required this.accountType,
+  }) : super(key: key);
 
   @override
-  State<Kyc_verfication> createState() => Kyc_verficationstate();
+  State<KycVerfication> createState() => KycVerficationstate();
 }
 
-class Kyc_verficationstate extends State<Kyc_verfication> {
+class KycVerficationstate extends State<KycVerfication> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -61,7 +66,7 @@ class Kyc_verficationstate extends State<Kyc_verfication> {
                 SizedBox(
                   height: 2.h,
                 ),
-                if (KycDetailsValue.getAccountType == 2)
+                if (widget.accountType == 'individual')
                   const Text(
                     "Secure your Identity",
                     textAlign: TextAlign.start,
@@ -75,7 +80,7 @@ class Kyc_verficationstate extends State<Kyc_verfication> {
                 SizedBox(
                   height: 1.h,
                 ),
-                if (KycDetailsValue.getAccountType == 2)
+                if (widget.accountType == 'business')
                   Padding(
                     padding: EdgeInsets.only(left: 0.5.w),
                     child: GestureDetector(
@@ -140,7 +145,8 @@ class Kyc_verficationstate extends State<Kyc_verfication> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 4.h, vertical: 3),
                                       decoration: const BoxDecoration(
-                                          color: fagoSecondaryColorWithOpacity10,
+                                          color:
+                                              fagoSecondaryColorWithOpacity10,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20))),
                                       child: const Text(
@@ -180,7 +186,7 @@ class Kyc_verficationstate extends State<Kyc_verfication> {
                 SizedBox(
                   height: 8.h,
                 ),
-                if (KycDetailsValue.getAccountType == 1)
+                if (widget.accountType == 'business')
                   const Text(
                     "Secure your Business",
                     textAlign: TextAlign.start,
@@ -191,11 +197,11 @@ class Kyc_verficationstate extends State<Kyc_verfication> {
                       color: fagoSecondaryColor,
                     ),
                   ),
-                if (KycDetailsValue.getAccountType == 1)
+                if (widget.accountType == 'business')
                   SizedBox(
                     height: 2.h,
                   ),
-                if (KycDetailsValue.getAccountType == 1)
+                if (widget.accountType == 'business')
                   Padding(
                     padding: EdgeInsets.only(left: 0.5.w),
                     child: GestureDetector(
@@ -260,7 +266,8 @@ class Kyc_verficationstate extends State<Kyc_verfication> {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 4.h, vertical: 3),
                                       decoration: const BoxDecoration(
-                                          color: fagoSecondaryColorWithOpacity10,
+                                          color:
+                                              fagoSecondaryColorWithOpacity10,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(20))),
                                       child: const Text(

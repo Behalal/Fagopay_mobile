@@ -1,17 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../constants/colors.dart';
+
 class FagoTransactionForm extends StatelessWidget {
-  String? accountName;
-  String page;
-  Widget cancelRoute;
-  FagoTransactionForm(
-      {super.key,
-      required this.page,
-      required this.cancelRoute,
-      this.accountName});
+  final String? accountName;
+  final String page;
+  final Widget cancelRoute;
+  
+  const FagoTransactionForm({
+    Key? key,
+    this.accountName,
+    required this.page,
+    required this.cancelRoute,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,6 @@
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:get/get.dart';
+
 import '../widgets/account_details.dart';
 import '../widgets/head_style_extra_pages.dart';
 import '../widgets/transaction_form.dart';
@@ -12,6 +15,8 @@ class FagoToFago extends StatefulWidget {
 }
 
 class _FagoToFagoState extends State<FagoToFago> {
+  final _userController = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,14 +40,14 @@ class _FagoToFagoState extends State<FagoToFago> {
               ),
               AccountDetails(
                 action: "spend",
-                accountDetails: const {},
+                accountDetails: _userController.userAccountDetails!,
               ),
               SizedBox(
                 height: 2.h,
               ),
-              FagoTransactionForm(
+              const FagoTransactionForm(
                 page: "phone",
-                cancelRoute: const FagoToFago(),
+                cancelRoute: FagoToFago(),
               ),
             ],
           ),

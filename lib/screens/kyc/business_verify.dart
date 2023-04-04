@@ -41,7 +41,7 @@ class BusinessVerifyState extends State<BusinessVerify> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CurrentStep(step: "2", backRoute: const Kyc_verfication()),
+                CurrentStep(step: "2", backRoute: const KycVerfication(accountType: 'business',)),
                 SizedBox(
                   height: 2.h,
                 ),

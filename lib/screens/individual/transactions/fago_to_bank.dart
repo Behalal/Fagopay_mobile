@@ -1,48 +1,44 @@
-import '../../../models/bank_model.dart';
-import '../../../models/user_model/user.dart';
-import '../../../repository/controllers/login_controller_provider.dart';
-import '../../authentication/sign_in.dart';
-import '../home/dashboard_home.dart';
-import '../widgets/account_details.dart';
-import '../widgets/banks_dropdown.dart';
-import '../widgets/head_style_extra_pages.dart';
-import '../widgets/transaction_form.dart';
-import '../../widgets.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../../repository/controllers/transaction_controller.dart';
+import 'package:fagopay/models/bank_model.dart';
+import 'package:fagopay/models/user_model/user.dart';
+import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/screens/individual/widgets/account_details.dart';
+import 'package:fagopay/screens/individual/widgets/banks_dropdown.dart';
+import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import 'package:fagopay/screens/individual/widgets/transaction_form.dart';
+import 'package:fagopay/screens/widgets.dart';
 
 class FagoToBank extends StatefulWidget {
-  User userDetails;
-  FagoToBank({super.key, required this.userDetails});
+  final User userDetails;
+  final AccountDetail accountDetails;
+
+  const FagoToBank({
+    Key? key,
+    required this.userDetails,
+    required this.accountDetails,
+  }) : super(key: key);
 
   @override
   State<FagoToBank> createState() => _FagoToBankState();
 }
 
 class _FagoToBankState extends State<FagoToBank> {
-  late List<BankDetails>? allBanks;
-  late List<DropdownMenuItem<String>> bankDropdown;
-  late bool isLoading;
-  late User userDetails;
-  late String? accountName;
-  late String? selectedBank;
+  List<BankDetails> allBanks = [];
+  List<DropdownMenuItem<String>> bankDropdown = [];
+  bool isLoading = true;
+  String? accountName = "";
+  String selectedBank = "";
+  final _transactionController = Get.find<TransactionController>();
 
   @override
   void initState() {
-    accountName = null;
-    isLoading = true;
-    allBanks = [];
-    bankDropdown = [];
-    selectedBank = "";
-    userDetails = widget.userDetails;
     super.initState();
-
-    // Future.delayed(const Duration(seconds: 1000), () {
-    //   callUserDetailsProvider();
-    //   callBankProvider();
-    // });
+    callBankProvider();
   }
 
   @override
@@ -61,33 +57,41 @@ class _FagoToBankState extends State<FagoToBank> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ProgressStyle(
-                      //   stage: 50,
-                      //   pageName: "Bank Transfer",
-                      //   backRoute: DashboardHome(userDetails: userFullDetails),
-                      // ),
+                      ProgressStyle(
+                        stage: 50,
+                        pageName: "Bank Transfer",
+                        backRoute: DashboardHome(
+                          userDetails: widget.userDetails,
+                          accountDetails: widget.accountDetails,
+                        ),
+                      ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      // AccountDetails(
-                      //   action: "spend",
-                      //   accountDetails: userDetails.accountDetails!,
-                      // ),
+                      AccountDetails(
+                        action: "spend",
+                        accountDetails: widget.accountDetails,
+                      ),
                       SizedBox(
                         height: 2.h,
                       ),
                       SelectBank(
-                        bankdropdown: getBankList(allBanks!),
-                        onChanged: (() {}),
+                        bankdropdown: getBankList(allBanks),
+                        onChanged: (selectedValue) {
+                          print(selectedValue);
+                        },
                         selectedValue: "",
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
                       FagoTransactionForm(
-                        accountName: accountName,
+                        accountName: widget.accountDetails.accountName,
                         page: "bank",
-                        cancelRoute: FagoToBank(userDetails: userDetails,),
+                        cancelRoute: FagoToBank(
+                          userDetails: widget.userDetails,
+                          accountDetails: widget.accountDetails,
+                        ),
                       ),
                     ],
                   ),
@@ -141,40 +145,27 @@ class _FagoToBankState extends State<FagoToBank> {
   //   });
   // }
 
-  // void callBankProvider() {
-  //   ref
-  //       .read(transactionControllerProvider.notifier)
-  //       .getAllBanks()
-  //       .then((banksValue) {
-  //     if (banksValue.code != null && banksValue.code != 200) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(banksValue.message!),
-  //         ),
-  //       );
-  //     } else {
-  //       // Future.delayed(const Duration(seconds: 4), () {
-  //       setState(() {
-  //         isLoading = false;
-  //         allBanks = banksValue.banks!;
-  //       });
-  //       // });
-  //     }
-  //   });
-  // }
+  void callBankProvider() async {
+    final responseData = await _transactionController.getAllBanks();
+    List<BankDetails> banks = responseData['data']
+        .map<BankDetails>((bankDetail) => BankDetails.fromJson(bankDetail))
+        .toList();
+    setState(() {
+      isLoading = false;
+      allBanks = banks;
+    });
+  }
 
   List<DropdownMenuItem<String>> getBankList(List<BankDetails> banks) {
-    List<DropdownMenuItem<String>> bankItems = [];
-    bankItems.add(
-      const DropdownMenuItem(value: "", child: Text("Select Bank")),
-    );
+    final allBanks = banks.map((bank) {
+      return DropdownMenuItem(
+          value: bank.bankCode, child: Text('${bank.bankName}'));
+    }).toList();
 
-    for (var i = 0; i < banks.length; i++) {
-      bankItems.add(
-        DropdownMenuItem(
-            value: banks[i].bankCode, child: Text(banks[i].bankName)),
-      );
-    }
+    List<DropdownMenuItem<String>> bankItems = [
+      const DropdownMenuItem(value: "", child: Text("Select Bank")),
+      ...allBanks
+    ];
 
     return bankItems;
   }

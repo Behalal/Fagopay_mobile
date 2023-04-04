@@ -198,7 +198,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                   child: AuthButtons(
                       form: false,
                       text: "Continue",
-                      route: const Kyc_verfication()),
+                      route: const KycVerfication(accountType: 'individual',)),
                 )
               ],
             ),

@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/screens/individual/home/widgets/dashboard_details.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -12,8 +14,14 @@ import 'models/actions.model.dart';
 import 'models/sales.model.dart';
 
 class BusinessHome extends StatefulWidget {
-  User userDetails;
-  BusinessHome({super.key, required this.userDetails});
+  final User userDetails;
+  final AccountDetail accountDetails;
+
+  const BusinessHome({
+    Key? key,
+    required this.userDetails,
+    required this.accountDetails,
+  }) : super(key: key);
 
   @override
   State<BusinessHome> createState() => _BusinessHomeState();
@@ -28,11 +36,11 @@ class _BusinessHomeState extends State<BusinessHome> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            // DashBoardDetails(
-            //   firstname: widget.userDetails.firstName ,
-            //   accountType: 1,
-            //   accountDetails: widget.userDetails.accountDetails,
-            // ),
+            DashBoardDetails(
+              user: widget.userDetails,
+              accountType: "Business",
+              accountDetails: widget.accountDetails,
+            ),
             SizedBox(
               height: 2.h,
             ),
@@ -114,7 +122,7 @@ class _BusinessHomeState extends State<BusinessHome> {
                               height: 53,
                               decoration: DottedDecoration(
                                   color: blackWithOpacity5,
-                                  dash: [2, 2, 2],
+                                  dash: const [2, 2, 2],
                                   linePosition: LinePosition.right),
                             ),
                             SizedBox(width: 2.w),

@@ -1,5 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/authentication/sign_in.dart';
+import 'package:fagopay/screens/business/home/home.dart';
+import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -9,15 +13,15 @@ import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/individual/home/wallets/fund_wallet.dart';
 
 class DashBoardDetails extends StatefulWidget {
-  final String? firstname;
+  final User user;
   final String? accountType;
-  final AccountDetail? accountDetails;
+  final AccountDetail accountDetails;
 
   const DashBoardDetails({
     Key? key,
-    this.firstname,
+    required this.user,
     this.accountType,
-    this.accountDetails,
+    required this.accountDetails,
   }) : super(key: key);
 
   @override
@@ -25,17 +29,11 @@ class DashBoardDetails extends StatefulWidget {
 }
 
 class _DashBoardDetailsState extends State<DashBoardDetails> {
-  late bool balanceVisible;
-
-  @override
-  void initState() {
-    balanceVisible = true;
-    super.initState();
-  }
+  bool balanceVisible = true;
+  String notVisibleText = "******";
 
   @override
   Widget build(BuildContext context) {
-    String notVisibleText = "******";
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +134,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                           children: [
                                             const TextSpan(text: 'Hello'),
                                             TextSpan(
-                                              text: ' ${widget.firstname}',
+                                              text: ' ${widget.user.firstName}',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w700,
                                               ),
@@ -145,21 +143,69 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         ),
                                       ),
                                       SizedBox(width: 1.h),
-                                      Stack(
-                                        alignment: AlignmentDirectional.center,
-                                        children: const [
-                                          Image(
-                                            image: AssetImage(
-                                                "assets/images/box.png"),
-                                            height: 20,
-                                            width: 20,
+                                      PopupMenuButton<String>(
+                                        offset: const Offset(0, 50),
+                                        initialValue: widget.accountType ==
+                                                "Individual"
+                                            ? AccountType.individual.toString()
+                                            : AccountType.business.toString(),
+                                        onSelected: (selectedItem) {
+                                          if (selectedItem ==
+                                              AccountType.business.toString()) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BusinessHome(
+                                                  userDetails: widget.user,
+                                                  accountDetails:
+                                                      widget.accountDetails,
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DashboardHome(
+                                                userDetails: widget.user,
+                                                accountDetails:
+                                                    widget.accountDetails,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        itemBuilder: (BuildContext context) =>
+                                            <PopupMenuEntry<String>>[
+                                          PopupMenuItem<String>(
+                                            value: AccountType.individual
+                                                .toString(),
+                                            child: const Text('Individual'),
                                           ),
-                                          Icon(
-                                            Icons.keyboard_arrow_down_rounded,
-                                            color: white,
-                                            size: 15,
-                                          )
+                                          PopupMenuItem<String>(
+                                            value:
+                                                AccountType.business.toString(),
+                                            child: const Text('Business'),
+                                          ),
                                         ],
+                                        child: Stack(
+                                          alignment:
+                                              AlignmentDirectional.center,
+                                          children: const [
+                                            Image(
+                                              image: AssetImage(
+                                                  "assets/images/box.png"),
+                                              height: 20,
+                                              width: 20,
+                                            ),
+                                            Icon(
+                                              Icons.keyboard_arrow_down_rounded,
+                                              color: white,
+                                              size: 15,
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -175,7 +221,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 4, vertical: 3),
                                       child: AutoSizeText(
-                                        widget.accountDetails!.accountType!,
+                                        widget.accountType!,
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontFamily: "Work Sans",
@@ -201,10 +247,20 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                               SizedBox(
                                 width: 2.w,
                               ),
-                              const Icon(
-                                Icons.notifications,
-                                size: 20,
-                                color: white,
+                              GestureDetector(
+                                onTap: () {
+                                  SecureStorage.deleteUserIdentifier();
+                                  SecureStorage.deleteUserToken();
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => const SignIn()),
+                                      (route) => false);
+                                },
+                                child: const Icon(
+                                  Icons.notifications,
+                                  size: 20,
+                                  color: white,
+                                ),
                               ),
                             ],
                           )
@@ -234,15 +290,19 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                       children: [
                         AutoSizeText(
                           (balanceVisible)
-                              ? ((widget.accountDetails == null)
+                              ? ((widget.accountDetails.balance.toString() ==
+                                      "")
                                   ? "$currencySymbol 0.00"
-                                  : "$currencySymbol ${widget.accountDetails!.balance}.00")
+                                  : "$currencySymbol ${widget.accountDetails.balance}.00")
                               : notVisibleText,
                           style: const TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
                               color: white),
+                        ),
+                        SizedBox(
+                          width: 2.w,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -267,7 +327,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        if (widget.accountDetails != null)
+                        if (widget.accountDetails.accountName != "")
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +337,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   AutoSizeText(
-                                    widget.accountDetails!.bankName!,
+                                    widget.accountDetails.bankName!,
                                     style: const TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 10,
@@ -288,12 +348,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                     width: 1.5.w,
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      setState(() {});
-                                      print(
-                                        widget.accountDetails!.balance,
-                                      );
-                                    },
+                                    onTap: () {},
                                     child: const Icon(
                                       Icons.copy,
                                       color: white,
@@ -306,7 +361,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 height: 0.2.h,
                               ),
                               AutoSizeText(
-                                widget.accountDetails!.accountNumber!,
+                                widget.accountDetails.accountNumber!,
                                 style: const TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 10,
@@ -321,7 +376,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                             onTap: (() {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (BuildContext context) => FundWallet(
-                                        accountDetails: widget.accountDetails!,
+                                        accountDetails: widget.accountDetails,
                                       )));
                             }),
                             child: Row(
@@ -359,3 +414,5 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
     );
   }
 }
+
+enum AccountType { individual, business }

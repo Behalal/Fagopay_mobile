@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
 import 'select_type.dart';
@@ -27,12 +28,12 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
   TextEditingController controller = TextEditingController();
   Functions function = Functions();
 
-  RegistrationController registrationController =
+  final RegistrationController _registrationController =
       Get.put(RegistrationController());
 
   @override
   void dispose() {
-    registrationController.userAuthDataController.clear();
+    _registrationController.userAuthDataController.clear();
     super.dispose();
   }
 
@@ -177,7 +178,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                         width: 80.w,
                         child: TextFormField(
                           controller:
-                              registrationController.userAuthDataController,
+                              _registrationController.userAuthDataController,
                           style: const TextStyle(
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w400,
@@ -249,7 +250,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                     child: GestureDetector(
                       onTap: () {
                         if (_isLoading != true) {
-                          if (registrationController
+                          if (_registrationController
                               .userAuthDataController.text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -260,7 +261,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                           }
 
                           if (usePhone &&
-                              !function.validatePhone(registrationController
+                              !function.validatePhone(_registrationController
                                   .userAuthDataController.text)) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -272,7 +273,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                           }
 
                           if (useEmail &&
-                              !function.validateEmail(registrationController
+                              !function.validateEmail(_registrationController
                                   .userAuthDataController.text)) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -302,7 +303,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
   }
 
   void setUserAccount(BuildContext context) async {
-    final res = await registrationController.selectAccountType();
+    final res = await _registrationController.selectAccountType();
     setState(() {
       _isLoading = true;
     });
@@ -312,6 +313,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
       });
       final jsonBody = jsonDecode(res.body);
       final registeredUserIdentifier = jsonBody['data']['identifier'];
+      SecureStorage.setUserIdentifier(registeredUserIdentifier);
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -323,7 +325,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
           builder: (BuildContext context) => VerifyCodeSent(
               userIdentifier: registeredUserIdentifier,
               userVerificationData:
-                  registrationController.userAuthDataController.text),
+                  _registrationController.userAuthDataController.text),
         ),
       );
     } else {
