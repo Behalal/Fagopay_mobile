@@ -193,12 +193,12 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                         right: 10.w,
                         child: const ForgotPassText()),
                     Positioned(
-                      top: 86.h,
+                      top: 85.h,
                       left: 12.w,
                       right: 12.w,
                       child: SizedBox(
                         width: 280,
-                        height: 50,
+                        height: 55,
                         child: GestureDetector(
                           onTap: () async {
                             final progress = ProgressHUD.of(context);
@@ -238,7 +238,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                       ),
                     ),
                     Positioned(
-                      top: 92.h,
+                      top: 91.h,
                       left: 12.w,
                       right: 12.w,
                       child: SizedBox(

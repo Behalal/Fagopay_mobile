@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../constants/colors.dart';
 
@@ -36,7 +35,11 @@ class _FagoNavigationBarState extends State<FagoNavigationBar> {
               ),
               label: "Transactions"),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset('assets/icons/center_dock_icon.svg'),
+            icon: Image.asset(
+              'assets/images/home_nav_logo.png',
+              height: 50,
+              width: 50,
+            ),
             label: "",
           ),
           const BottomNavigationBarItem(

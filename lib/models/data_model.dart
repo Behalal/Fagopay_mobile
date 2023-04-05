@@ -6,20 +6,13 @@ class DataDetails {
   String name;
   String variationAmount;
 
-  DataDetails(
-      {required this.variationCode,
-      required this.name,
-      required this.variationAmount});
+  DataDetails({required this.variationCode, required this.name, required this.variationAmount});
 
-  factory DataDetails.fromReqBody(String body) {
-    Map<String, dynamic> json = jsonDecode(body);
-
-    var code = json['variation_code'];
-    var name = json['name'];
-    var amount = json['variation_amount'];
-    return DataDetails(
-        variationCode: code, name: name, variationAmount: amount);
-  }
+  static DataDetails fromJson(json) => DataDetails(
+        variationCode: json['variation_code'] as String,
+        name: json['name'] as String,
+        variationAmount: json['variation_amount'] as String,
+      );
 }
 
 class Data {
@@ -41,7 +34,7 @@ class Data {
 
     final List<DataDetails> bankList = [];
     for (var i = 0; i < bodyData.length; i++) {
-      DataDetails eachbank = DataDetails.fromReqBody(jsonEncode(bodyData![i]));
+      DataDetails eachbank = DataDetails.fromJson(jsonEncode(bodyData![i]));
       bankList.add(eachbank);
     }
 

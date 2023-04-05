@@ -63,7 +63,7 @@ class _OnboardingState extends State<Onboarding> {
                               ),
                             ),
                             SizedBox(
-                              height: 1.5.h,
+                              height: 3.h,
                             ),
                             SizedBox(
                               width: 80.w,
@@ -127,7 +127,7 @@ class _OnboardingState extends State<Onboarding> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
+            padding: const EdgeInsets.only(bottom: 45.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

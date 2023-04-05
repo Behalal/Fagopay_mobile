@@ -83,7 +83,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                 child: SizedBox(
                   width: 70.w,
                   child: AutoSizeText(
-                    "You have successfully purchased airtime worth ${widget.amount} for the number ${widget.number}",
+                    "You have successfully purchased ${widget.action} worth ${widget.amount} for the number ${widget.number}",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontFamily: "Work Sans",
@@ -170,18 +170,14 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                     ),
                   )),
               InkWell(
-                onTap: () {
-                  Navigator.of(context).pop(
+                onTap: () => Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => DashboardHome(
+                      builder: (context) => DashboardHome(
                         userDetails: _userUcontroller.user!,
-                        accountDetails: _userUcontroller.userAccountDetails!,
+                        accountDetails: _userUcontroller.userAccountDetails,
                       ),
                     ),
-                  );
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                },
+                    (Route<dynamic> route) => false),
                 child: const AutoSizeText(
                   "Go to Dashboard",
                   textAlign: TextAlign.center,

@@ -3,33 +3,33 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/screens/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
-import 'package:fagopay/screens/individual/bills/airtime.dart';
 import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 
 class ConfirmTransactions extends StatelessWidget {
-   String? action;
-   Widget? backRoute;
+  String? action;
+  Widget? backRoute;
 
-  static  DateTime now = DateTime.now();
-  static  DateFormat formatter = DateFormat('dd/MM/yyyy');
-   String formatted = formatter.format(now);
+  static DateTime now = DateTime.now();
+  static DateFormat formatter = DateFormat('dd/MM/yyyy');
+  String formatted = formatter.format(now);
 
-   String transactionType = "";
-   String toLabel = "";
+  String transactionType = "";
+  String toLabel = "";
 
   ConfirmTransactions({
     Key? key,
-     this.action,
-     this.backRoute,
-     this.transactionType = "",
-      this.toLabel = "",
+    this.action,
+    this.backRoute,
+    this.transactionType = "",
+    this.toLabel = "",
   }) : super(key: key);
 
   @override
@@ -45,9 +45,9 @@ class ConfirmTransactions extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProgressStyle(
-                  stage: 100,
-                  pageName: "Confirm Transfer",
-                  backRoute: const BuyAirtime()),
+                stage: 100,
+                pageName: "Confirm Transfer",
+              ),
               SizedBox(
                 height: 3.h,
               ),
@@ -277,77 +277,77 @@ class ConfirmTransactions extends StatelessWidget {
                 height: 3.h,
               ),
               // if (action.contains('bank'))
-                Container(
-                  decoration: DottedDecoration(
-                      linePosition: LinePosition.bottom,
-                      color: transactionKeys,
-                      dash: const [3, 3]),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        AutoSizeText(
-                          "Bank Account",
-                          style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: transactionKeys),
-                        ),
-                        AutoSizeText(
-                          "United Bank of Africa",
-                          style: TextStyle(
+              Container(
+                decoration: DottedDecoration(
+                    linePosition: LinePosition.bottom,
+                    color: transactionKeys,
+                    dash: const [3, 3]),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      AutoSizeText(
+                        "Bank Account",
+                        style: TextStyle(
                             fontFamily: "Work Sans",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: fagoSecondaryColor,
-                          ),
-                        )
-                      ],
-                    ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: transactionKeys),
+                      ),
+                      AutoSizeText(
+                        "United Bank of Africa",
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      )
+                    ],
                   ),
                 ),
+              ),
               // if (action.contains('bank'))
-                SizedBox(
-                  height: 3.h,
-                ),
+              SizedBox(
+                height: 3.h,
+              ),
               // if (action.contains('bank'))
-                Container(
-                  decoration: DottedDecoration(
-                      linePosition: LinePosition.bottom,
-                      color: transactionKeys,
-                      dash: const [3, 3]),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const AutoSizeText(
-                          "Transfer Fee",
-                          style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: transactionKeys),
-                        ),
-                        AutoSizeText(
-                          "$currencySymbol 24.04",
-                          style: const TextStyle(
+              Container(
+                decoration: DottedDecoration(
+                    linePosition: LinePosition.bottom,
+                    color: transactionKeys,
+                    dash: const [3, 3]),
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AutoSizeText(
+                        "Transfer Fee",
+                        style: TextStyle(
                             fontFamily: "Work Sans",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: fagoSecondaryColor,
-                          ),
-                        )
-                      ],
-                    ),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: transactionKeys),
+                      ),
+                      AutoSizeText(
+                        "$currencySymbol 24.04",
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      )
+                    ],
                   ),
                 ),
+              ),
               SizedBox(
                 height: 3.h,
               ),
@@ -390,7 +390,7 @@ class ConfirmTransactions extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
                   child: GestureDetector(
-                    // onTap: () => showPinModal(context, action, ref),
+                    onTap: () => showPinModal(context, action!),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
@@ -420,18 +420,18 @@ class ConfirmTransactions extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
                 child: GestureDetector(
-                  // onTap: () => Navigator.of(context).pushReplacement(
-                  //     MaterialPageRoute(
-                  //         builder: (BuildContext context) => backRoute)),
+                  onTap: () => Navigator.of(context).pop(),
                   child: Container(
                     padding:
                         EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        color: white,
-                        border: Border.all(color: fagoSecondaryColor),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(25))),
+                      color: white,
+                      border: Border.all(color: fagoSecondaryColor),
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(25),
+                      ),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [

@@ -11,7 +11,6 @@ import 'package:fagopay/screens/individual/widgets/account_details.dart';
 import 'package:fagopay/screens/individual/widgets/banks_dropdown.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:fagopay/screens/individual/widgets/transaction_form.dart';
-import 'package:fagopay/screens/widgets.dart';
 
 class FagoToBank extends StatefulWidget {
   final User userDetails;
@@ -30,7 +29,7 @@ class FagoToBank extends StatefulWidget {
 class _FagoToBankState extends State<FagoToBank> {
   List<BankDetails> allBanks = [];
   List<DropdownMenuItem<String>> bankDropdown = [];
-  bool isLoading = true;
+  // bool isLoading = true;
   String? accountName = "";
   String selectedBank = "";
   final _transactionController = Get.find<TransactionController>();
@@ -48,55 +47,56 @@ class _FagoToBankState extends State<FagoToBank> {
         FocusScope.of(context).unfocus();
       }),
       child: Scaffold(
-        body: (isLoading)
-            ? const Loading()
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ProgressStyle(
-                        stage: 50,
-                        pageName: "Bank Transfer",
-                        backRoute: DashboardHome(
-                          userDetails: widget.userDetails,
-                          accountDetails: widget.accountDetails,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      AccountDetails(
-                        action: "spend",
-                        accountDetails: widget.accountDetails,
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      SelectBank(
-                        bankdropdown: getBankList(allBanks),
-                        onChanged: (selectedValue) {
-                          print(selectedValue);
-                        },
-                        selectedValue: "",
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      FagoTransactionForm(
-                        accountName: widget.accountDetails.accountName,
-                        page: "bank",
-                        cancelRoute: FagoToBank(
-                          userDetails: widget.userDetails,
-                          accountDetails: widget.accountDetails,
-                        ),
-                      ),
-                    ],
+        body:
+            // (isLoading)
+            //     ? const Loading():
+            SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProgressStyle(
+                  stage: 50,
+                  pageName: "Bank Transfer",
+                  backRoute: DashboardHome(
+                    userDetails: widget.userDetails,
+                    accountDetails: widget.accountDetails,
                   ),
                 ),
-              ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                AccountDetails(
+                  action: "spend",
+                  accountDetails: widget.accountDetails,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                SelectBank(
+                  bankdropdown: getBankList(allBanks),
+                  onChanged: (selectedValue) {
+                    print(selectedValue);
+                  },
+                  selectedValue: "",
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                FagoTransactionForm(
+                  accountName: widget.accountDetails.accountName,
+                  page: "bank",
+                  cancelRoute: FagoToBank(
+                    userDetails: widget.userDetails,
+                    accountDetails: widget.accountDetails,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -151,7 +151,7 @@ class _FagoToBankState extends State<FagoToBank> {
         .map<BankDetails>((bankDetail) => BankDetails.fromJson(bankDetail))
         .toList();
     setState(() {
-      isLoading = false;
+      // isLoading = false;
       allBanks = banks;
     });
   }
@@ -159,13 +159,16 @@ class _FagoToBankState extends State<FagoToBank> {
   List<DropdownMenuItem<String>> getBankList(List<BankDetails> banks) {
     final allBanks = banks.map((bank) {
       return DropdownMenuItem(
-          value: bank.bankCode, child: Text('${bank.bankName}'));
+        value: bank.bankCode,
+        child: Text('${bank.bankName}'),
+      );
     }).toList();
 
     List<DropdownMenuItem<String>> bankItems = [
       const DropdownMenuItem(value: "", child: Text("Select Bank")),
-      ...allBanks
     ];
+
+    bankItems.addAll(allBanks);
 
     return bankItems;
   }

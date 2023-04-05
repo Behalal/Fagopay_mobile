@@ -55,7 +55,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(
-                          height: 2.h,
+                          height: 3.h,
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -93,29 +93,16 @@ class _DashboardHomeState extends State<DashboardHome> {
                                     }
                                   },
                                   child: Container(
-                                    height: 12.h,
-                                    width: 20.w,
+                                    height: 10.h,
+                                    width: 21.w,
                                     padding: EdgeInsets.symmetric(
-                                      vertical: 1.5.h,
-                                      horizontal: 1.5.w,
-                                    ),
+                                        vertical: 1.h, horizontal: 1.5.w),
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: fagoSecondaryColor,
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(5),
-                                      ),
-                                    ),
-                                    // child: Column(
-                                    //   mainAxisAlignment: MainAxisAlignment.center,
-                                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                                    //   children: [
-                                    //     paymentContents[i].image,
-                                    //     SizedBox(
-                                    //       height: 1.h,
-                                    //     ),
-
+                                        border: Border.all(
+                                          color: fagoSecondaryColor,
+                                        ),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(5))),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -126,15 +113,17 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         SizedBox(
                                           height: 1.h,
                                         ),
-                                        AutoSizeText(
-                                          paymentContents[i].description,
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          style: const TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 4,
-                                            color: inactiveTab,
+                                        SizedBox(
+                                          width: 20.w,
+                                          child: AutoSizeText(
+                                            paymentContents[i].description,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 9,
+                                              color: inactiveTab,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -155,116 +144,122 @@ class _DashboardHomeState extends State<DashboardHome> {
                         SizedBox(
                           height: 1.h,
                         ),
-                        if (widget.userDetails.kycVerified == 0)
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 5.w, vertical: 2.h),
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const KycVerfication(
-                                      accountType: 'individual',
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                height: 180,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 18, vertical: 15),
-                                width: Get.width,
-                                decoration: BoxDecoration(
-                                  color: fagoPrimaryColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(8),
-                                        color: const Color(0xFFC61F2A),
-                                        height: 35,
-                                        width: 35,
-                                        child: SvgPicture.asset(
-                                          'assets/icons/bi_shield-lock.svg',
+                        widget.userDetails.kycVerified == 0
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5.w, vertical: 2.h),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            const KycVerfication(
+                                          accountType: 'individual',
                                         ),
                                       ),
+                                    );
+                                  },
+                                  child: Container(
+                                    height: 180,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18, vertical: 15),
+                                    width: Get.width,
+                                    decoration: BoxDecoration(
+                                      color: fagoPrimaryColor,
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    SizedBox(
-                                      width: 2.w,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Text(
-                                            'Attention ${widget.userDetails.firstName}!',
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.white,
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            color: const Color(0xFFC61F2A),
+                                            height: 35,
+                                            width: 35,
+                                            child: SvgPicture.asset(
+                                              'assets/icons/bi_shield-lock.svg',
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 2.5.h,
-                                          ),
-                                          Text(
-                                            'Complete your KYC requirements to access our banking services. It will help secure & protect your account from impersonation.',
-                                            style: TextStyle(
-                                              fontSize: 10.sp,
-                                              color: Colors.white,
-                                            ),
-                                            softWrap: true,
-                                          ),
-                                          SizedBox(
-                                            height: 2.h,
-                                          ),
-                                          Row(
+                                        ),
+                                        SizedBox(
+                                          width: 2.w,
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
                                             children: [
-                                              LinearPercentIndicator(
-                                                padding: EdgeInsets.zero,
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.51,
-                                                lineHeight: 8.0,
-                                                percent: 0.8,
-                                                backgroundColor: Colors.white,
-                                                progressColor:
-                                                    const Color(0xFFC61F2A),
+                                              Text(
+                                                'Attention ${widget.userDetails.firstName}!',
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                               SizedBox(
-                                                width: 5.w,
+                                                height: 2.5.h,
                                               ),
                                               Text(
-                                                '80%',
+                                                'Complete your KYC requirements to access our banking services. It will help secure & protect your account from impersonation.',
                                                 style: TextStyle(
                                                   fontSize: 10.sp,
                                                   color: Colors.white,
                                                 ),
+                                                softWrap: true,
+                                              ),
+                                              SizedBox(
+                                                height: 2.h,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  LinearPercentIndicator(
+                                                    padding: EdgeInsets.zero,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.51,
+                                                    lineHeight: 8.0,
+                                                    percent: 0.8,
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    progressColor:
+                                                        const Color(0xFFC61F2A),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.w,
+                                                  ),
+                                                  Text(
+                                                    '80%',
+                                                    style: TextStyle(
+                                                      fontSize: 10.sp,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(
+                                          width: 2.w,
+                                        ),
+                                        SvgPicture.asset(
+                                            'assets/icons/arrow-right.svg'),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      width: 2.w,
-                                    ),
-                                    SvgPicture.asset(
-                                        'assets/icons/arrow-right.svg'),
-                                  ],
+                                  ),
                                 ),
+                                // SizedBox(
+                                //   height: 0.h,
+                                // ),
+                              )
+                            : SizedBox(
+                                height: 2.5.h,
                               ),
-                            ),
-                            // SizedBox(
-                            //   height: 0.h,
-                            // ),
-                          ),
                         SizedBox(
                           height: 0.h,
                         ),
@@ -375,14 +370,15 @@ class _DashboardHomeState extends State<DashboardHome> {
                             height: 80,
                             width: Get.width,
                             decoration: BoxDecoration(
-                                color: fagoPrimaryColor,
-                                borderRadius: BorderRadius.circular(8)),
+                              color: fagoPrimaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
       bottomNavigationBar: const FagoNavigationBar(),

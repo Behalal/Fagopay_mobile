@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
+import 'package:fagopay/screens/individual/transactions/transaction_successful.dart';
+import 'package:get/get.dart';
 import 'authentication/widgets/auth_buttons.dart';
 import 'constants/colors.dart';
-import 'functions.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -30,7 +35,7 @@ class Loading extends StatelessWidget {
 
 class PinCodeModal extends StatefulWidget {
   final String action;
-  // final WidgetRef ref;
+
   const PinCodeModal({
     super.key,
     required this.action,
@@ -43,6 +48,7 @@ class PinCodeModal extends StatefulWidget {
 
 class _PinCodeModalState extends State<PinCodeModal> {
   final TextEditingController pincontroller = TextEditingController();
+  final _billController = Get.find<BillController>();
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +164,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 30.w),
                   child: GestureDetector(
-                      onTap: (() {
+                      onTap: () async {
                         if (pincontroller.text.length != 4 ||
                             pincontroller.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -167,6 +173,18 @@ class _PinCodeModalState extends State<PinCodeModal> {
                             ),
                           );
                         } else {
+                          if (widget.action == "buy_airtime") {
+                            await buyAirtime(context, pincontroller.text);
+                            return;
+                          }
+                          if (widget.action == "buy_data") {
+                            await buyData(context, pincontroller.text);
+                            return;
+                          }
+                          if (widget.action == "buy_light") {
+                            await buyElectricity(context, pincontroller.text);
+                            return;
+                          }
                           // if (widget.action == "buy_airtime") {
                           //   setState(() {
                           //     buyAirtime(
@@ -193,7 +211,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                           //   });
                           // }
                         }
-                      }),
+                      },
                       child: AuthButtons(text: "Pay", form: true)),
                 ),
                 SizedBox(
@@ -225,22 +243,113 @@ class _PinCodeModalState extends State<PinCodeModal> {
       ),
     );
   }
+
+  Future<void> buyAirtime(BuildContext context, String pinCode) async {
+    final response = await _billController.buyAirtime(pinCode);
+    final jsonBody = jsonDecode(response.body);
+
+    if (!mounted) return;
+
+    if (response.statusCode != 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${jsonBody['data']['error']}'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Airtime Purchase Successful'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => TransactionSuccessful(
+          amount: buyAirtimeFields.amount,
+          number: buyAirtimeFields.getphone,
+          action: 'airtime',
+        ),
+      ));
+    }
+  }
+
+  Future<void> buyData(BuildContext context, String pinCode) async {
+    final response = await _billController.buyData(pinCode);
+    final jsonBody = jsonDecode(response.body);
+
+    if (!mounted) return;
+
+    if (response.statusCode != 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${jsonBody['data']['error']}'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Databundle Purchase Successful'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: buyDataFields.amount,
+            number: buyDataFields.getphone,
+            action: 'data',
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> buyElectricity(BuildContext context, String pinCode) async {
+    final response = await _billController.buyElectricity(pinCode);
+    final jsonBody = jsonDecode(response.body);
+
+    if (!mounted) return;
+
+    if (response.statusCode != 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${jsonBody['data']['error']}'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Electricity Purchase Successful'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: buyElectricityFields.amount,
+            number: buyElectricityFields.getphone,
+            action: 'electricity',
+          ),
+        ),
+      );
+    }
+  }
 }
 
 // show modal sheet
 
-// Future showPinModal(BuildContext context, String action, WidgetRef ref) {
-//   return showModalBottomSheet(
-//       backgroundColor: Colors.transparent,
-//       // shape: const ShapeBorder().add(),
-//       context: context,
-//       isScrollControlled: true,
-//       isDismissible: true,
-//       builder: (BuildContext context) {
-//         //
-//         return PinCodeModal(
-//           action: action,
-//           ref: ref,
-//         ); //whatever you're returning, does not have to be a Container
-//       });
-// }
+Future showPinModal(
+  BuildContext context,
+  String action,
+) {
+  return showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      // shape: const ShapeBorder().add(),
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      builder: (BuildContext context) {
+        //
+        return PinCodeModal(
+          action: action,
+          // ref: ref,
+        ); //whatever you're returning, does not have to be a Container
+      });
+}

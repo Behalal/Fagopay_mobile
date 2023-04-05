@@ -31,11 +31,11 @@ class _SelectBankState extends State<SelectBank> {
     super.initState();
   }
 
-  List<DropdownMenuItem<String>> get dropdownItems {
-    List<DropdownMenuItem<String>> menuItems = widget.bankdropdown;
+  // List<DropdownMenuItem<String>> get dropdownItems {
+  //   List<DropdownMenuItem<String>> menuItems = widget.bankdropdown;
 
-    return menuItems;
-  }
+  //   return menuItems;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +63,16 @@ class _SelectBankState extends State<SelectBank> {
               borderRadius: const BorderRadius.all(Radius.circular(5))),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-            child: DropdownButton(
-              underline: const SizedBox(),
+            child: DropdownButtonFormField(
               isExpanded: true,
               alignment: AlignmentDirectional.centerStart,
               value: widget.selectedValue,
-              items: dropdownItems,
+              items: widget.bankdropdown,
               onChanged: widget.onChanged,
+              decoration: const InputDecoration(
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+              ),
               style: const TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 14,
