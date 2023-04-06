@@ -340,8 +340,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
     final response = await _billController.buyInternet(pinCode);
     final jsonBody = jsonDecode(response.body);
 
-    print(jsonBody);
-
     if (!mounted) return;
 
     if (response.statusCode != 200) {
