@@ -154,7 +154,8 @@ class _BuyDataState extends State<BuyData> {
                                 decoration: BoxDecoration(
                                     border: (_mtnActive)
                                         ? Border.all(
-                                            color: fagoBlue, width: 2.0)
+                                            color: fagoSecondaryColor,
+                                            width: 2.0)
                                         : null,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(5))),

@@ -224,7 +224,7 @@ class _FundWalletState extends State<FundWallet> {
                             ),
                           ),
                           Container(
-                            width: 33.w,
+                            width: 30.w,
                             decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
@@ -232,13 +232,15 @@ class _FundWalletState extends State<FundWallet> {
                             child: const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 6),
-                              child: AutoSizeText(
-                                "Recommended",
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 7,
-                                  fontWeight: FontWeight.w500,
-                                  color: verificationCodeText,
+                              child: FittedBox(
+                                child: AutoSizeText(
+                                  "Recommended",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 7,
+                                    fontWeight: FontWeight.w500,
+                                    color: verificationCodeText,
+                                  ),
                                 ),
                               ),
                             ),

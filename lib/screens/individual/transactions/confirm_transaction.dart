@@ -273,43 +273,43 @@ class ConfirmTransactions extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 3.h,
-              ),
+              // SizedBox(
+              //   height: 3.h,
+              // ),
               // if (action.contains('bank'))
-              Container(
-                decoration: DottedDecoration(
-                    linePosition: LinePosition.bottom,
-                    color: transactionKeys,
-                    dash: const [3, 3]),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      AutoSizeText(
-                        "Bank Account",
-                        style: TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: transactionKeys),
-                      ),
-                      AutoSizeText(
-                        "United Bank of Africa",
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: fagoSecondaryColor,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              // Container(
+              //   decoration: DottedDecoration(
+              //       linePosition: LinePosition.bottom,
+              //       color: transactionKeys,
+              //       dash: const [3, 3]),
+              //   child: Padding(
+              //     padding:
+              //         EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: const [
+              //         AutoSizeText(
+              //           "Bank Account",
+              //           style: TextStyle(
+              //               fontFamily: "Work Sans",
+              //               fontSize: 14,
+              //               fontWeight: FontWeight.w400,
+              //               color: transactionKeys),
+              //         ),
+              //         AutoSizeText(
+              //           "United Bank of Africa",
+              //           style: TextStyle(
+              //             fontFamily: "Work Sans",
+              //             fontSize: 16,
+              //             fontWeight: FontWeight.w700,
+              //             color: fagoSecondaryColor,
+              //           ),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
               // if (action.contains('bank'))
               SizedBox(
                 height: 3.h,

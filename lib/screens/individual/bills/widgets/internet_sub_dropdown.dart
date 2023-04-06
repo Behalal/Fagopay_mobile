@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:get/get.dart';
 import '../../../../models/data_model.dart';
-import '../../../../repository/controllers/bill_controller.dart';
 import '../../../constants/colors.dart';
 import '../models/bill_post_model.dart';
 import '../../widgets/data_dropdown.dart';
@@ -8,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class InternetDropDown extends StatefulWidget {
-  bool isLoading;
+  // bool isLoading;
   List<DataDetails>? allBanks;
   List<DropdownMenuItem<String>> dataDropdown;
   TextEditingController amountController;
 
   InternetDropDown({
     super.key,
-    required this.isLoading,
+    // required this.isLoading,
     required this.allBanks,
     required this.dataDropdown,
     required this.amountController,
@@ -32,11 +33,12 @@ class _InternetDropDownState extends State<InternetDropDown> {
       DropdownMenuItem(value: "smile-direct", child: Text("Smile-Direct")),
       DropdownMenuItem(value: "spectranet", child: Text("Spectranet")),
     ];
-
     return menuItems;
   }
 
+  final _billController = Get.find<BillController>();
   String selectedValue = "";
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,7 +55,7 @@ class _InternetDropDownState extends State<InternetDropDown> {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 1.h,
         ),
         Container(
           width: 90.w,
@@ -69,13 +71,14 @@ class _InternetDropDownState extends State<InternetDropDown> {
               value: selectedValue,
               items: dropdownItems,
               onChanged: (String? newValue) {
-                // setState(() {
-                //   selectedValue = newValue!;
-                //   buyInternetFields.setBillersCode = selectedValue;
-                //   if (selectedValue.isNotEmpty) {
-                //     fetchDataByServiceId(selectedValue);
-                //   }
-                // });
+                setState(() {
+                  selectedValue = newValue!;
+                  buyInternetFields.setBillersCode = selectedValue;
+                  print(newValue);
+                  if (selectedValue.isNotEmpty) {
+                    fetchDataByServiceId(newValue);
+                  }
+                });
               },
               style: const TextStyle(
                   decoration: TextDecoration.none,
@@ -103,27 +106,38 @@ class _InternetDropDownState extends State<InternetDropDown> {
     );
   }
 
+  Future<void> fetchDataByServiceId(String serviceId) async {
+    final response = await _billController.getDatabyServiceId(serviceId);
+    // List<DataDetails> x = response['data']['variation']
+    //     .map<DataDetails>((variation) => DataDetails.fromJson(variation))
+    //     .toList();
+
+    print(response);
+
+    //     if (value.code != 200) {
+    //   setState(() {
+    //     widget.isLoading = false;
+    //   });
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text(value.message!),
+    //     ),
+    //   );
+    // } else {
+    // setState(() {
+    //   widget.allBanks = x;
+    //   widget.dataDropdown = getDataList(widget.allBanks!);
+    //   widget.isLoading = false;
+    // });
+    // }
+  }
+
   // void fetchDataByServiceId(String serviceId) {
   //   ref
   //       .read(billControllerProvider.notifier)
   //       .getDatabyServiceId(serviceId)
   //       .then((value) {
-  //     if (value.code != 200) {
-  //       setState(() {
-  //         widget.isLoading = false;
-  //       });
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(value.message!),
-  //         ),
-  //       );
-  //     } else {
-  //       setState(() {
-  //         widget.allBanks = value.dataValues!;
-  //         widget.dataDropdown = getDataList(widget.allBanks!);
-  //         widget.isLoading = false;
-  //       });
-  //     }
+
   //   });
   // }
 

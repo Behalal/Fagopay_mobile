@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/bill_controller.dart';
 import 'package:get/get.dart';
@@ -21,6 +23,7 @@ class Electricity extends StatefulWidget {
 
 class _ElectricityState extends State<Electricity> {
   bool _verifiedMeter = false;
+  String verrifiedMeterUser = "";
   final _billController = Get.find<BillController>();
 
   @override
@@ -74,48 +77,65 @@ class _ElectricityState extends State<Electricity> {
                 SizedBox(
                   height: 1.h,
                 ),
-                SizedBox(
-                  width: 90.w,
-                  child: TextFormField(
-                    controller: _billController.meterNoController,
-                    onChanged: (value) {
-                      if (value.length >= 11 &&
-                          buyElectricityFields.serviceid.isNotEmpty &&
-                          buyElectricityFields.variationCode.isNotEmpty) {
-                        verifyMeterNo(buyElectricityFields.serviceid, value,
-                            buyElectricityFields.variationCode);
-                      }
-                    },
-                    style: const TextStyle(
-                        fontFamily: "Work Sans",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: signInPlaceholder),
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                        borderSide: const BorderSide(
-                          color: textBoxBorderColor,
-                          width: 1.0,
-                        ),
-                      ),
-                      border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          borderSide: BorderSide(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      width: 90.w,
+                      child: TextFormField(
+                        controller: _billController.meterNoController,
+                        onChanged: (value) {
+                          if (value.length >= 11 &&
+                              buyElectricityFields.serviceid.isNotEmpty &&
+                              buyElectricityFields.variationCode.isNotEmpty) {
+                            verifyMeterNo(buyElectricityFields.serviceid, value,
+                                buyElectricityFields.variationCode);
+                          }
+                        },
+                        style: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 4.w, vertical: 1.h),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: const BorderSide(
                               color: textBoxBorderColor,
                               width: 1.0,
-                              style: BorderStyle.solid)),
-                      hintText: "Enter Meter Number",
-                      hintStyle: const TextStyle(
-                        fontFamily: "Work Sans",
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: signInPlaceholder,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: textBoxBorderColor,
+                                  width: 1.0,
+                                  style: BorderStyle.solid)),
+                          hintText: "Enter Meter Number",
+                          hintStyle: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 0.5.h,
+                    ),
+                    Text(
+                      ' $verrifiedMeterUser',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
+                    )
+                  ],
                 ),
                 // SizedBox(
                 //   height: 0.5.h,
@@ -169,7 +189,7 @@ class _ElectricityState extends State<Electricity> {
                   ),
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 1.h,
                 ),
                 SizedBox(
                   width: 90.w,
@@ -197,7 +217,7 @@ class _ElectricityState extends State<Electricity> {
                               color: textBoxBorderColor,
                               width: 1.0,
                               style: BorderStyle.solid)),
-                      hintText: "Amount to send",
+                      hintText: "Enter phone number",
                       hintStyle: const TextStyle(
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
@@ -220,7 +240,7 @@ class _ElectricityState extends State<Electricity> {
                   ),
                 ),
                 SizedBox(
-                  height: 2.h,
+                  height: 1.h,
                 ),
                 SizedBox(
                   width: 90.w,
@@ -287,7 +307,8 @@ class _ElectricityState extends State<Electricity> {
                     }),
                     child: AuthButtons(
                         form: true,
-                        color: (_verifiedMeter) ? null : inactiveTab,
+                        color:
+                            _verifiedMeter ? fagoSecondaryColor : inactiveTab,
                         text: "Continue",
                         route: ConfirmTransactions(
                           backRoute: const Electricity(),
@@ -306,12 +327,16 @@ class _ElectricityState extends State<Electricity> {
   void verifyMeterNo(String serviceID, String billerCode, String type) async {
     final response =
         await _billController.verifyMeterNo(serviceID, billerCode, type);
+    final jsonBodyData = jsonDecode(response.body);
+    final customerDetail = jsonBodyData['data']['customer_detail'];
     if (response.statusCode != 200) {
       setState(() {
+        verrifiedMeterUser = "";
         _verifiedMeter = false;
       });
     } else {
       setState(() {
+        verrifiedMeterUser = customerDetail['Customer_Name'];
         _verifiedMeter = true;
       });
     }

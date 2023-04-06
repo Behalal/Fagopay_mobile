@@ -9,7 +9,7 @@ class FagoTransactionForm extends StatelessWidget {
   final String? accountName;
   final String page;
   final Widget cancelRoute;
-  
+
   const FagoTransactionForm({
     Key? key,
     this.accountName,
@@ -75,38 +75,38 @@ class FagoTransactionForm extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 0.5.h,
-        ),
-        if (accountName != null)
-          Container(
-            width: 90.w,
-            decoration: const BoxDecoration(
-                color: fagoSecondaryColorWithOpacity10,
-                borderRadius: BorderRadius.all(Radius.circular(5))),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Image(image: AssetImage("assets/images/account.png")),
-                  SizedBox(
-                    width: 2.w,
-                  ),
-                  AutoSizeText(
-                    accountName!,
-                    style: const TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: welcomeText,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        // SizedBox(
+        //   height: 0.5.h,
+        // ),
+        // if (accountName != null)
+        //   Container(
+        //     width: 90.w,
+        //     decoration: const BoxDecoration(
+        //         color: fagoSecondaryColorWithOpacity10,
+        //         borderRadius: BorderRadius.all(Radius.circular(5))),
+        //     child: Padding(
+        //       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+        //       child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.start,
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         children: [
+        //           const Image(image: AssetImage("assets/images/account.png")),
+        //           SizedBox(
+        //             width: 2.w,
+        //           ),
+        //           AutoSizeText(
+        //             accountName!,
+        //             style: const TextStyle(
+        //               fontFamily: "Work Sans",
+        //               fontSize: 14,
+        //               fontWeight: FontWeight.w500,
+        //               color: welcomeText,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
         SizedBox(
           height: 2.h,
         ),

@@ -68,7 +68,7 @@ class _ElectricityProviderState extends State<ElectricityProvider> {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 1.h,
         ),
         Container(
           width: 90.w,

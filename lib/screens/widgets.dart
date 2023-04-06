@@ -185,6 +185,10 @@ class _PinCodeModalState extends State<PinCodeModal> {
                             await buyElectricity(context, pincontroller.text);
                             return;
                           }
+                          if (widget.action == "buy_internet") {
+                            await buyInternet(context, pincontroller.text);
+                            return;
+                          }
                           // if (widget.action == "buy_airtime") {
                           //   setState(() {
                           //     buyAirtime(
@@ -326,6 +330,38 @@ class _PinCodeModalState extends State<PinCodeModal> {
             amount: buyElectricityFields.amount,
             number: buyElectricityFields.getphone,
             action: 'electricity',
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> buyInternet(BuildContext context, String pinCode) async {
+    final response = await _billController.buyInternet(pinCode);
+    final jsonBody = jsonDecode(response.body);
+
+    print(jsonBody);
+
+    if (!mounted) return;
+
+    if (response.statusCode != 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${jsonBody['data']['error']}'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Internet Subscription Purchase Successful'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: buyInternetFields.amount,
+            number: buyInternetFields.billersCode,
+            action: 'Internet Subscription',
           ),
         ),
       );

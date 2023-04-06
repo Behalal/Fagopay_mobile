@@ -118,6 +118,30 @@ class BillController extends GetxController {
     }
   }
 
+  Future<dynamic> verifyRouter(String billersCode) async {
+    final token = await SecureStorage.readUserToken();
+
+    var requestBody = jsonEncode({
+      "billersCode": billersCode,
+    });
+
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.billPath}verify-smile-number",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
   Future<dynamic> buyElectricity(String transactionPin) async {
     final token = await SecureStorage.readUserToken();
     String amount = buyElectricityFields.amount;
@@ -138,6 +162,38 @@ class BillController extends GetxController {
     try {
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.billPath}electricity-purchase",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
+  Future<dynamic> buyInternet(String transactionPin) async {
+    final token = await SecureStorage.readUserToken();
+    String amount = buyInternetFields.amount;
+    String serviceID = buyInternetFields.serviceid;
+    String billerCode = buyInternetFields.billersCode;
+    String variationCode = buyInternetFields.variationCode;
+
+    var requestBody = jsonEncode({
+      "serviceID": serviceID,
+      "amount": double.parse(amount).toInt(),
+      "variation_code": variationCode,
+      "billersCode": billerCode,
+      "transaction_pin": transactionPin
+    });
+
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.billPath}internet-subscription",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Authorization": "Bearer $token"
