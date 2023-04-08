@@ -49,25 +49,20 @@ class PinCodeModal extends StatefulWidget {
 class _PinCodeModalState extends State<PinCodeModal> {
   final TextEditingController pincontroller = TextEditingController();
   final _billController = Get.find<BillController>();
+  String _isLoading = "2";
+
+  // @override
+  // void dispose() {
+  //   pincontroller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100.w,
-      height: 65.h,
-      decoration: const BoxDecoration(
-        color: white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
+    return _isLoading == "2"
+        ? Container(
             width: 100.w,
+            height: 65.h,
             decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
@@ -76,176 +71,204 @@ class _PinCodeModalState extends State<PinCodeModal> {
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 1.5.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w),
-                  child: Container(
-                    width: 30.w,
-                    decoration: BoxDecoration(
-                        color: stepsColor,
-                        border: Border.all(width: 1.5, color: stepsColor)),
-                  ),
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: SizedBox(
-                    width: 80.w,
-                    child: const AutoSizeText(
-                      "input your transaction authentication code to confirm this transfer",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: fagoPrimaryColor),
+                Container(
+                  width: 100.w,
+                  decoration: const BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 3.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: PinCodeTextField(
-                    controller: pincontroller,
-                    appContext: context,
-                    obscureText: true,
-                    length: 4,
-                    onChanged: ((value) {
-                      // if (value.length != 4 || value.isEmpty) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Kindly enter your pin'),
-                      //     ),
-                      //   );
-                      // } else {
-                      //   if (widget.action == "buy_airtime") {
-                      //     setState(() {
-                      //       buyAirtime(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'buy_data') {
-                      //     setState(() {
-                      //       buyData(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'buy_light') {
-                      //     setState(() {
-                      //       buyElectricity(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'buy_internet') {
-                      //     setState(() {
-                      //       buyInternet(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'tv') {
-                      //     setState(() {
-                      //       cableSubscription(context, widget.ref, value);
-                      //     });
-                      //   }
-                      // }
-                    }),
-                    keyboardType: TextInputType.number,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      fieldHeight: 45,
-                      fieldWidth: 45,
-                      activeFillColor: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 1.5.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: Container(
+                          width: 30.w,
+                          decoration: BoxDecoration(
+                              color: stepsColor,
+                              border:
+                                  Border.all(width: 1.5, color: stepsColor)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        child: SizedBox(
+                          width: 80.w,
+                          child: const AutoSizeText(
+                            "Input your transaction authentication code to confirm this transfer",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                color: fagoPrimaryColor),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        child: PinCodeTextField(
+                          controller: pincontroller,
+                          appContext: context,
+                          obscureText: true,
+                          length: 4,
+                          onChanged: ((value) {
+                            // if (value.length != 4 || value.isEmpty) {
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //     const SnackBar(
+                            //       content: Text('Kindly enter your pin'),
+                            //     ),
+                            //   );
+                            // } else {
+                            //   if (widget.action == "buy_airtime") {
+                            //     setState(() {
+                            //       buyAirtime(context, widget.ref, value);
+                            //     });
+                            //   } else if (widget.action == 'buy_data') {
+                            //     setState(() {
+                            //       buyData(context, widget.ref, value);
+                            //     });
+                            //   } else if (widget.action == 'buy_light') {
+                            //     setState(() {
+                            //       buyElectricity(context, widget.ref, value);
+                            //     });
+                            //   } else if (widget.action == 'buy_internet') {
+                            //     setState(() {
+                            //       buyInternet(context, widget.ref, value);
+                            //     });
+                            //   } else if (widget.action == 'tv') {
+                            //     setState(() {
+                            //       cableSubscription(context, widget.ref, value);
+                            //     });
+                            //   }
+                            // }
+                          }),
+                          keyboardType: TextInputType.number,
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(5),
+                            fieldHeight: 45,
+                            fieldWidth: 45,
+                            activeFillColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: GestureDetector(
+                            onTap: () async {
+                              if (pincontroller.text.length != 4 ||
+                                  pincontroller.text.isEmpty) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Kindly enter your pin'),
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  _isLoading = "1";
+                                });
+                                if (widget.action == "buy_airtime") {
+                                  await buyAirtime(context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "buy_data") {
+                                  await buyData(context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "buy_light") {
+                                  await buyElectricity(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "buy_internet") {
+                                  await buyInternet(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+
+                                if (widget.action == "tv") {
+                                  await buyCableSubscription(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+                                // if (widget.action == "buy_airtime") {
+                                //   setState(() {
+                                //     buyAirtime(
+                                //         context, widget.ref, pincontroller.text);
+                                //   });
+                                // } else if (widget.action == 'buy_data') {
+                                //   setState(() {
+                                //     buyData(context, widget.ref, pincontroller.text);
+                                //   });
+                                // } else if (widget.action == 'buy_light') {
+                                //   setState(() {
+                                //     buyElectricity(
+                                //         context, widget.ref, pincontroller.text);
+                                //   });
+                                // } else if (widget.action == 'buy_internet') {
+                                //   setState(() {
+                                //     buyInternet(
+                                //         context, widget.ref, pincontroller.text);
+                                //   });
+                                // } else if (widget.action == 'tv') {
+                                //   setState(() {
+                                //     cableSubscription(
+                                //         context, widget.ref, pincontroller.text);
+                                //   });
+                                // }
+                              }
+                            },
+                            child: AuthButtons(text: "Pay", form: true)),
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w),
-                  child: GestureDetector(
-                      onTap: () async {
-                        if (pincontroller.text.length != 4 ||
-                            pincontroller.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Kindly enter your pin'),
-                            ),
-                          );
-                        } else {
-                          if (widget.action == "buy_airtime") {
-                            await buyAirtime(context, pincontroller.text);
-                            return;
-                          }
-                          if (widget.action == "buy_data") {
-                            await buyData(context, pincontroller.text);
-                            return;
-                          }
-                          if (widget.action == "buy_light") {
-                            await buyElectricity(context, pincontroller.text);
-                            return;
-                          }
-                          if (widget.action == "buy_internet") {
-                            await buyInternet(context, pincontroller.text);
-                            return;
-                          }
-                          // if (widget.action == "buy_airtime") {
-                          //   setState(() {
-                          //     buyAirtime(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'buy_data') {
-                          //   setState(() {
-                          //     buyData(context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'buy_light') {
-                          //   setState(() {
-                          //     buyElectricity(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'buy_internet') {
-                          //   setState(() {
-                          //     buyInternet(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'tv') {
-                          //   setState(() {
-                          //     cableSubscription(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // }
-                        }
-                      },
-                      child: AuthButtons(text: "Pay", form: true)),
-                ),
-                SizedBox(
-                  height: 0.5.h,
+                NumericKeyboard(
+                  onKeyboardTap: ((text) {
+                    setState(() {
+                      pincontroller.text = pincontroller.text + text;
+                    });
+                  }),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  textColor: black,
+                  rightIcon: const Icon(
+                    Icons.backspace_outlined,
+                    size: 25,
+                  ),
+                  rightButtonFn: (() {
+                    setState(() {
+                      pincontroller.text = pincontroller.text
+                          .substring(0, pincontroller.text.length - 1);
+                    });
+                  }),
                 )
               ],
             ),
-          ),
-          NumericKeyboard(
-            onKeyboardTap: ((text) {
-              setState(() {
-                pincontroller.text = pincontroller.text + text;
-              });
-            }),
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            textColor: black,
-            rightIcon: const Icon(
-              Icons.backspace_outlined,
-              size: 25,
-            ),
-            rightButtonFn: (() {
-              setState(() {
-                pincontroller.text = pincontroller.text
-                    .substring(0, pincontroller.text.length - 1);
-              });
-            }),
           )
-        ],
-      ),
-    );
+        : const Center(
+            child: Loading(),
+          );
   }
 
   Future<void> buyAirtime(BuildContext context, String pinCode) async {
@@ -255,12 +278,18 @@ class _PinCodeModalState extends State<PinCodeModal> {
     if (!mounted) return;
 
     if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${jsonBody['data']['error']}'),
         ),
       );
     } else {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Airtime Purchase Successful'),
@@ -283,12 +312,18 @@ class _PinCodeModalState extends State<PinCodeModal> {
     if (!mounted) return;
 
     if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${jsonBody['data']['error']}'),
         ),
       );
     } else {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Databundle Purchase Successful'),
@@ -313,12 +348,18 @@ class _PinCodeModalState extends State<PinCodeModal> {
     if (!mounted) return;
 
     if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${jsonBody['data']['error']}'),
         ),
       );
     } else {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Electricity Purchase Successful'),
@@ -343,12 +384,18 @@ class _PinCodeModalState extends State<PinCodeModal> {
     if (!mounted) return;
 
     if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${jsonBody['data']['error']}'),
         ),
       );
     } else {
+      setState(() {
+        _isLoading = "1";
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Internet Subscription Purchase Successful'),
@@ -360,6 +407,43 @@ class _PinCodeModalState extends State<PinCodeModal> {
             amount: buyInternetFields.amount,
             number: buyInternetFields.billersCode,
             action: 'Internet Subscription',
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> buyCableSubscription(
+      BuildContext context, String pinCode) async {
+    final response = await _billController.buyCableSubscription(pinCode);
+    final jsonBody = jsonDecode(response.body);
+
+    if (!mounted) return;
+
+    if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = "1";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${jsonBody['data']['error']}'),
+        ),
+      );
+    } else {
+      setState(() {
+        _isLoading = "1";
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Cable Subscription Purchase Successful'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: buyTvCableFields.amount,
+            number: buyTvCableFields.billersCode,
+            action: 'Cable Subscription',
           ),
         ),
       );

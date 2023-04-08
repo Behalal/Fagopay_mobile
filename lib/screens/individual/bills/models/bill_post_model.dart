@@ -1,7 +1,7 @@
 class BuyAirtimeFields {
-  late String _phone;
-  late String _serviceid;
-  late String _amount;
+  String _phone = "";
+  String _serviceid = "";
+  String _amount = "";
 
   String get amount => _amount;
 
@@ -23,12 +23,12 @@ class BuyAirtimeFields {
 }
 
 class BuyDataFields {
-  late String _phone;
-  late String _serviceid;
-  late String _amount;
-  late String _variationCode;
-  late String _billersCode;
-  late String _name;
+  String _phone = "";
+  String _serviceid = "";
+  String _amount = "";
+  String _variationCode = "";
+  String _billersCode = "";
+  String _name = "";
 
   String get name => _name;
 
@@ -71,3 +71,4 @@ BuyAirtimeFields buyAirtimeFields = BuyAirtimeFields();
 BuyDataFields buyDataFields = BuyDataFields();
 BuyDataFields buyElectricityFields = BuyDataFields();
 BuyDataFields buyInternetFields = BuyDataFields();
+BuyDataFields buyTvCableFields = BuyDataFields();

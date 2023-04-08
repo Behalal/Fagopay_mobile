@@ -76,7 +76,7 @@ class _InternetDropDownState extends State<InternetDropDown> {
                   buyInternetFields.setBillersCode = selectedValue;
                   print(newValue);
                   if (selectedValue.isNotEmpty) {
-                    fetchDataByServiceId(newValue);
+                    // fetchDataByServiceId(newValue);
                   }
                 });
               },
@@ -105,41 +105,6 @@ class _InternetDropDownState extends State<InternetDropDown> {
       ],
     );
   }
-
-  Future<void> fetchDataByServiceId(String serviceId) async {
-    final response = await _billController.getDatabyServiceId(serviceId);
-    // List<DataDetails> x = response['data']['variation']
-    //     .map<DataDetails>((variation) => DataDetails.fromJson(variation))
-    //     .toList();
-
-    print(response);
-
-    //     if (value.code != 200) {
-    //   setState(() {
-    //     widget.isLoading = false;
-    //   });
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text(value.message!),
-    //     ),
-    //   );
-    // } else {
-    // setState(() {
-    //   widget.allBanks = x;
-    //   widget.dataDropdown = getDataList(widget.allBanks!);
-    //   widget.isLoading = false;
-    // });
-    // }
-  }
-
-  // void fetchDataByServiceId(String serviceId) {
-  //   ref
-  //       .read(billControllerProvider.notifier)
-  //       .getDatabyServiceId(serviceId)
-  //       .then((value) {
-
-  //   });
-  // }
 
   List<DropdownMenuItem<String>> getDataList(List<DataDetails> data) {
     List<DropdownMenuItem<String>> dataItems = [];
