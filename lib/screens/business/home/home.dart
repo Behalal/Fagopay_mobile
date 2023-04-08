@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/screens/business/sales/add_sales_account.dart';
+import 'package:fagopay/screens/business/sales/all_sales.dart';
 import 'package:fagopay/screens/individual/home/widgets/dashboard_details.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -58,30 +60,33 @@ class _BusinessHomeState extends State<BusinessHome> {
                         color: inactiveTab,
                         fontWeight: FontWeight.w500),
                   ),
-                  Container(
-                    // width: 106,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                    decoration: const BoxDecoration(
-                        color: fagoSecondaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(25))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/add_grp.png"),
-                        SizedBox(
-                          width: 1.5.w,
-                        ),
-                        const AutoSizeText(
-                          "Add Account",
-                          style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 10,
-                              color: white,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ],
+                  InkWell(
+                    onTap: () => goToPage(context, const AddSalesAccount()),
+                    child: Container(
+                      // width: 106,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                      decoration: const BoxDecoration(
+                          color: fagoSecondaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(25))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset("assets/images/add_grp.png"),
+                          SizedBox(
+                            width: 1.5.w,
+                          ),
+                          const AutoSizeText(
+                            "Add Account",
+                            style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 10,
+                                color: white,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -99,66 +104,72 @@ class _BusinessHomeState extends State<BusinessHome> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     for (int i = 0; i < salesContent.length; i++) ...[
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 2.w, vertical: 1.5.h),
-                        decoration: const BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: blackWithOpacity,
-                                  offset: Offset.zero,
-                                  spreadRadius: 2,
-                                  blurRadius: 8),
-                            ]),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image.asset("assets/images/bank_icon.png"),
-                            SizedBox(width: 2.w),
-                            Container(
-                              height: 53,
-                              decoration: DottedDecoration(
-                                  color: blackWithOpacity5,
-                                  dash: const [2, 2, 2],
-                                  linePosition: LinePosition.right),
-                            ),
-                            SizedBox(width: 2.w),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const AutoSizeText(
-                                  "Sales Account",
-                                  style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 12,
-                                      color: inactiveTab,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(height: 1.h),
-                                const AutoSizeText(
-                                  "2038173855 | GTB",
-                                  style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 12,
-                                      color: inactiveTab,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                SizedBox(height: 1.h),
-                                AutoSizeText(
-                                  "${currencySymbol}900,340.00",
-                                  style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 18,
-                                      color: black,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ],
-                            )
-                          ],
+                      InkWell(
+                        onTap: () {
+                          goToPage(context, const AllSales());
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 2.w, vertical: 1.5.h),
+                          decoration: const BoxDecoration(
+                              color: white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: blackWithOpacity,
+                                    offset: Offset.zero,
+                                    spreadRadius: 2,
+                                    blurRadius: 8),
+                              ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset("assets/images/bank_icon.png"),
+                              SizedBox(width: 2.w),
+                              Container(
+                                height: 53,
+                                decoration: DottedDecoration(
+                                    color: blackWithOpacity5,
+                                    dash: const [2, 2, 2],
+                                    linePosition: LinePosition.right),
+                              ),
+                              SizedBox(width: 2.w),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const AutoSizeText(
+                                    "Sales Account",
+                                    style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        color: inactiveTab,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(height: 1.h),
+                                  const AutoSizeText(
+                                    "2038173855 | GTB",
+                                    style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        color: inactiveTab,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  SizedBox(height: 1.h),
+                                  AutoSizeText(
+                                    "${currencySymbol}900,340.00",
+                                    style: const TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 18,
+                                        color: black,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                       if (i != (salesContent.length - 1))

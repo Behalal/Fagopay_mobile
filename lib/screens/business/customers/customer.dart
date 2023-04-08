@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/business/widgets/boxes.dart';
+import 'package:fagopay/screens/business/widgets/load_more.dart';
 import '../../../models/user_model/user.dart';
 import '../../constants/colors.dart';
 import 'add_customers.dart';
@@ -265,154 +267,10 @@ class _CustomerPageState extends State<CustomerPage> {
                     )
                   ])),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 3.h),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 1.h),
-            decoration: const BoxDecoration(
-                color: fagoSecondaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/chart.png"),
-                const AutoSizeText(
-                  "Load More",
-                  style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 14,
-                      color: white,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-          ),
-        ));
+        bottomNavigationBar: const LoadMore()
+        
+      );
   }
 }
 
-class CustomerBox extends StatelessWidget {
-  String? firstBoxImage;
-  String firstBoxMainValue;
-  String firstBoxDescription;
-  String? secondBoxImage;
-  String secondBoxMainValue;
-  String secondBoxDescription;
-  
-  CustomerBox({
-    Key? key,
-    required this.firstBoxDescription,
-    required this.firstBoxMainValue,
-    required this.secondBoxDescription,
-    required this.secondBoxMainValue,
-    this.firstBoxImage,
-    this.secondBoxImage
 
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 43.w,
-          height: 15.h,
-          padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
-          decoration:
-              const BoxDecoration(color: fagoSecondaryColorWithOpacity10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 1.5.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 4.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if ( firstBoxImage != null ) Image.asset(firstBoxImage!),
-                    SizedBox(width: 1.5.w),
-                     AutoSizeText(
-                      firstBoxMainValue,
-                      style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 32,
-                          color: fagoSecondaryColor,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 1.5.h,
-              ),
-               AutoSizeText(
-                firstBoxDescription,
-                textAlign: TextAlign.justify,
-                style: const TextStyle(
-                    fontFamily: "Work Sans",
-                    fontSize: 12,
-                    color: inactiveTab,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: 43.w,
-          height: 15.h,
-          padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
-          decoration:
-              const BoxDecoration(color: fagoSecondaryColorWithOpacity10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 1.5.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 4.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if (secondBoxImage != null) Image.asset(secondBoxImage!),
-                    SizedBox(width: 1.5.w),
-                     AutoSizeText(
-                      secondBoxMainValue,
-                      textAlign: TextAlign.justify,
-                      style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 32,
-                          color: fagoSecondaryColor,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 1.5.h,
-              ),
-               AutoSizeText(
-                secondBoxDescription,
-                textAlign: TextAlign.justify,
-                style: const TextStyle(
-                    fontFamily: "Work Sans",
-                    fontSize: 12,
-                    color: inactiveTab,
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        )
-      ],
-    );
-  }
-}
