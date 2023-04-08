@@ -17,15 +17,17 @@ class FagoPay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: ((context, orientation, deviceType) {
-      return GetMaterialApp(
-        initialBinding: AppBinding(),
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: const SplashScreen(),
-      );
-    }));
+    return Sizer(
+      builder: ((context, orientation, deviceType) {
+        return GetMaterialApp(
+          initialBinding: AppBinding(),
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: const SplashScreen(),
+        );
+      }),
+    );
   }
 }
