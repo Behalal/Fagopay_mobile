@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
+import '../../../../controllers/bill_controller.dart';
 import 'package:get/get.dart';
 import '../../../../models/data_model.dart';
 import '../../../constants/colors.dart';

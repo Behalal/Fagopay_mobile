@@ -1,8 +1,9 @@
-import 'appbinding/appbinding.dart';
-import 'screens/core/splash_speen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import 'appbinding/appbinding.dart';
+import 'screens/core/splash_speen.dart';
 
 void main() {
   runApp(

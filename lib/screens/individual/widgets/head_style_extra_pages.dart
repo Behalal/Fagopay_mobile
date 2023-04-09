@@ -1,23 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fagopay/screens/functions.dart';
-
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../constants/colors.dart';
+
 class ProgressStyle extends StatelessWidget {
-  Widget? backRoute;
-  String pageName;
-  int stage;
-  double? width;
-  String? icon;
-  ProgressStyle({
-    super.key,
-    required this.pageName,
+  final Widget? backRoute;
+  final String pageName;
+  final int stage;
+  final double? width;
+  final String? icon;
+  
+  const ProgressStyle({
+    Key? key,
     this.backRoute,
+    required this.pageName,
     required this.stage,
     this.width,
     this.icon,
-  });
+  }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class ProgressStyle extends StatelessWidget {
           if (icon == null)
             SizedBox(
               width: 8.w,
-            ) ,
+            ),
           Text(
             pageName,
             textAlign: TextAlign.center,

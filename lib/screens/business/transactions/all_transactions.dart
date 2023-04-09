@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/business/transactions/new_transaction.dart';
-import 'package:fagopay/screens/business/widgets/load_more.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/functions.dart';
+import 'new_transaction.dart';
+import '../widgets/load_more.dart';
+import '../../constants/colors.dart';
+import '../../functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

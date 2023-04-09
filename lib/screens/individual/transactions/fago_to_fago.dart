@@ -1,4 +1,4 @@
-import 'package:fagopay/controllers/user_controller.dart';
+import '../../../controllers/user_controller.dart';
 import 'package:get/get.dart';
 
 import '../widgets/account_details.dart';
@@ -30,7 +30,7 @@ class _FagoToFagoState extends State<FagoToFago> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 50,
                 pageName: "Fago P2P",
                 // backRoute: const DashboardHome(),

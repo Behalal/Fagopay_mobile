@@ -1,9 +1,9 @@
-import 'package:fagopay/screens/business/suppliers/all_supplies.dart';
-import 'package:fagopay/screens/business/transactions/all_transactions.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../admin/all_admin.dart';
 import '../../customers/customer.dart';
-import 'package:flutter/cupertino.dart';
+import '../../suppliers/all_supplies.dart';
+import '../../transactions/all_transactions.dart';
 
 class ActionsModel {
   String actionImage;

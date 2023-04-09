@@ -1,12 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dotted_decoration/dotted_decoration.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import 'all_admin.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:sizer/sizer.dart';
 
 class AdminDetails extends StatefulWidget {
@@ -27,10 +24,10 @@ class _AdminDetailsState extends State<AdminDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProgressStyle(
+                const ProgressStyle(
                   stage: 0,
                   pageName: "Admin Accounts",
-                  backRoute: const AllAdmin(),
+                  backRoute: AllAdmin(),
                 ),
                 SizedBox(
                   height: 3.h,

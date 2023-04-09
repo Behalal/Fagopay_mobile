@@ -44,7 +44,7 @@ class ConfirmTransactions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 100,
                 pageName: "Confirm Transfer",
               ),

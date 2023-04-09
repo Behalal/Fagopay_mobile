@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/business/widgets/load_more.dart';
+import '../widgets/load_more.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 

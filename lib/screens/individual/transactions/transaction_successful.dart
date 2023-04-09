@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import '../../../controllers/user_controller.dart';
+import '../home/dashboard_home.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +31,11 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 65.w,
-                child: const AutoSizeText(
+              const SizedBox(
+                // width: 65.w,
+                child: AutoSizeText(
                   "Transaction Successful",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Work Sans",
                     fontSize: 22,
@@ -62,10 +63,11 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
               ),
               Padding(
                 padding: EdgeInsets.only(left: 8.w),
-                child: SizedBox(
-                  width: 80.w,
-                  child: const AutoSizeText(
+                child: const SizedBox(
+                  // width: 80.w,
+                  child: AutoSizeText(
                     "Transaction Successful",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontFamily: "Work Sans",
                       fontSize: 22,

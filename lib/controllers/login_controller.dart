@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();

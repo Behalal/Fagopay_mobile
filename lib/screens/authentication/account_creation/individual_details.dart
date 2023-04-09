@@ -1,15 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
+import '../../constants/colors.dart';
+import '../widgets/auth_buttons.dart';
 import 'select_verification_type.dart';
 import 'setup_password.dart';
 import 'widgets/current_step.dart';
 import 'widgets/user_details.dart';
-import '../widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class IndividualDetails extends StatefulWidget {
   const IndividualDetails({super.key});

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../../../service/secure_storage/secure_storage.dart';
 import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
 import 'select_type.dart';

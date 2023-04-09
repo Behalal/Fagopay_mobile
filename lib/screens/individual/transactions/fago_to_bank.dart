@@ -6,7 +6,6 @@ import 'package:sizer/sizer.dart';
 
 import 'package:fagopay/models/bank_model.dart';
 import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:fagopay/screens/individual/widgets/account_details.dart';
 import 'package:fagopay/screens/individual/widgets/banks_dropdown.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
@@ -30,8 +29,8 @@ class _FagoToBankState extends State<FagoToBank> {
   List<BankDetails> allBanks = [];
   List<DropdownMenuItem<String>> bankDropdown = [];
   // bool isLoading = true;
-  String? accountName = "";
-  String selectedBank = "";
+  // String? accountName = "";
+  String selectedBankValue = "";
   final _transactionController = Get.find<TransactionController>();
 
   @override
@@ -43,9 +42,7 @@ class _FagoToBankState extends State<FagoToBank> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (() {
-        FocusScope.of(context).unfocus();
-      }),
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body:
             // (isLoading)
@@ -57,13 +54,13 @@ class _FagoToBankState extends State<FagoToBank> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ProgressStyle(
+                const ProgressStyle(
                   stage: 50,
                   pageName: "Bank Transfer",
-                  backRoute: DashboardHome(
-                    userDetails: widget.userDetails,
-                    accountDetails: widget.accountDetails,
-                  ),
+                  // backRoute: DashboardHome(
+                  //   userDetails: widget.userDetails,
+                  //   accountDetails: widget.accountDetails,
+                  // ),
                 ),
                 SizedBox(
                   height: 2.h,
@@ -78,7 +75,9 @@ class _FagoToBankState extends State<FagoToBank> {
                 SelectBank(
                   bankdropdown: getBankList(allBanks),
                   onChanged: (selectedValue) {
-                    print(selectedValue);
+                    setState(() {
+                      selectedBankValue = selectedValue!;
+                    });
                   },
                   selectedValue: "",
                 ),
@@ -87,6 +86,7 @@ class _FagoToBankState extends State<FagoToBank> {
                 ),
                 FagoTransactionForm(
                   accountName: widget.accountDetails.accountName,
+                  selectedBankValue: selectedBankValue,
                   page: "bank",
                   cancelRoute: FagoToBank(
                     userDetails: widget.userDetails,

@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/business/transactions/all_transactions.dart';
+import 'all_transactions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../authentication/widgets/auth_buttons.dart';
@@ -48,10 +46,10 @@ class _NewTransactionState extends State<NewTransaction> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "Add Transaction",
-                backRoute: const AllTransaction(),
+                backRoute: AllTransaction(),
               ),
               SizedBox(
                 height: 4.h,

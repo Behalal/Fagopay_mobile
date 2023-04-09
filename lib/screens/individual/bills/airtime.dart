@@ -1,13 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../controllers/bill_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
+import '../transactions/confirm_transaction.dart';
 import 'data.dart';
 import 'models/bill_post_model.dart';
-import '../transactions/confirm_transaction.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class BuyAirtime extends StatefulWidget {
   const BuyAirtime({super.key});

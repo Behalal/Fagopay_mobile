@@ -1,9 +1,9 @@
-import 'package:fagopay/controllers/bill_controller.dart';
-import 'package:fagopay/controllers/transaction_controller.dart';
-
-import '../controllers/login_controller.dart';
-import '../controllers/user_controller.dart';
 import 'package:get/get.dart';
+
+import '../controllers/bill_controller.dart';
+import '../controllers/login_controller.dart';
+import '../controllers/transaction_controller.dart';
+import '../controllers/user_controller.dart';
 
 class AppBinding extends Bindings {
   @override

@@ -39,7 +39,7 @@ class _RequestHomeState extends State<RequestHome> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 0,
                         pageName: "Request Money",
                         // backRoute: DashboardHome(

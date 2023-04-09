@@ -31,15 +31,8 @@ class _SelectBankState extends State<SelectBank> {
     super.initState();
   }
 
-  // List<DropdownMenuItem<String>> get dropdownItems {
-  //   List<DropdownMenuItem<String>> menuItems = widget.bankdropdown;
-
-  //   return menuItems;
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // print(widget.bankdropdown);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +47,7 @@ class _SelectBankState extends State<SelectBank> {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 0.5.h,
         ),
         Container(
           width: 90.w,

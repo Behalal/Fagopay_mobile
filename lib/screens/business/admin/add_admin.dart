@@ -1,13 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../authentication/widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'all_admin.dart';
-import '../customers/customer.dart';
-import '../../individual/widgets/business_form.dart';
-import '../../individual/widgets/business_warning.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
+import '../../individual/widgets/business_warning.dart';
+import '../../individual/widgets/head_style_extra_pages.dart';
+import 'all_admin.dart';
 
 class AddAdmin extends StatefulWidget {
   const AddAdmin({super.key});
@@ -28,11 +27,11 @@ class _AddAdminState extends State<AddAdmin> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 50,
                         width: 4,
                         pageName: "Add Admin",
-                        backRoute: const AllAdmin(),
+                        backRoute: AllAdmin(),
                       ),
                       SizedBox(
                         height: 3.h,
@@ -73,8 +72,8 @@ class _AddAdminState extends State<AddAdmin> {
                               fontSize: 14,
                               color: signInPlaceholder),
                           decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 4.w, vertical: 1.h),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5.0),
                               borderSide: const BorderSide(
@@ -83,7 +82,8 @@ class _AddAdminState extends State<AddAdmin> {
                               ),
                             ),
                             border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
                                 borderSide: BorderSide(
                                     color: textBoxBorderColor,
                                     width: 1.0,
@@ -104,12 +104,15 @@ class _AddAdminState extends State<AddAdmin> {
                             color: fagoSecondaryColorWithOpacity10,
                             borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 4.w, vertical: 1.h),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Image(image: AssetImage("assets/images/account.png")),
+                              const Image(
+                                  image:
+                                      AssetImage("assets/images/account.png")),
                               SizedBox(
                                 width: 2.w,
                               ),
@@ -126,11 +129,14 @@ class _AddAdminState extends State<AddAdmin> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 5.h,),
+                      SizedBox(
+                        height: 5.h,
+                      ),
                       const BusinessWarning(
                         boxBackground: fagoGreenColorWithOpacity10,
                         warningImage: "assets/images/green_warning.png",
-                        warning: "By clicking on submit, I consent to add this user to my business page and may have access to whichever ofmy business account I add them to.",
+                        warning:
+                            "By clicking on submit, I consent to add this user to my business page and may have access to whichever ofmy business account I add them to.",
                       ),
                       SizedBox(
                         height: 4.h,

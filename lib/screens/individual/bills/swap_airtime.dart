@@ -44,7 +44,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 50,
                         pageName: "Swap Airtime",
                         // backRoute: const DashboardHome(),

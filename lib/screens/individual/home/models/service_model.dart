@@ -1,4 +1,4 @@
-import 'package:fagopay/controllers/user_controller.dart';
+import '../../../../controllers/user_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../constants/colors.dart';

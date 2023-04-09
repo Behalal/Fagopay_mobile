@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/registration_controller.dart';
-import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
+import '../../../controllers/registration_controller.dart';
+import 'individual_details.dart';
 import 'package:get/get.dart';
 import 'select_verification_type.dart';
 import 'widgets/current_step.dart';

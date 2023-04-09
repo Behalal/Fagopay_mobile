@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -249,12 +247,12 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  SecureStorage.deleteUserIdentifier();
-                                  SecureStorage.deleteUserToken();
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) => const SignIn()),
-                                      (route) => false);
+                                  // SecureStorage.deleteUserIdentifier();
+                                  // SecureStorage.deleteUserToken();
+                                  // Navigator.of(context).pushAndRemoveUntil(
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => const SignIn()),
+                                  //     (route) => false);
                                 },
                                 child: const Icon(
                                   Icons.notifications,
@@ -374,10 +372,13 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                           padding: EdgeInsets.only(right: 10.w),
                           child: GestureDetector(
                             onTap: (() {
-                              Navigator.of(context).push(MaterialPageRoute(
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
                                   builder: (BuildContext context) => FundWallet(
-                                        accountDetails: widget.accountDetails,
-                                      )));
+                                    accountDetails: widget.accountDetails,
+                                  ),
+                                ),
+                              );
                             }),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,

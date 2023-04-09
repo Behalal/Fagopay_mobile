@@ -7,14 +7,14 @@ import '../../individual/widgets/business_warning.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
 import 'customer.dart';
 
-class AddCustomer extends StatefulWidget {
-  const AddCustomer({super.key});
+class AddSupplies extends StatefulWidget {
+  const AddSupplies({super.key});
 
   @override
-  State<AddCustomer> createState() => _AddCustomerState();
+  State<AddSupplies> createState() => _AddSuppliesState();
 }
 
-class _AddCustomerState extends State<AddCustomer> {
+class _AddSuppliesState extends State<AddSupplies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class _AddCustomerState extends State<AddCustomer> {
                     const ProgressStyle(
                       stage: 50,
                       width: 4,
-                      pageName: "My Customers",
+                      pageName: "My Supplies",
                       backRoute: CustomerPage(),
                     ),
                     SizedBox(

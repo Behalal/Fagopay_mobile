@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
-import 'package:fagopay/screens/individual/transactions/transaction_successful.dart';
+import '../controllers/bill_controller.dart';
+import 'individual/bills/models/bill_post_model.dart';
+import 'individual/transactions/transaction_successful.dart';
 import 'package:get/get.dart';
 import 'authentication/widgets/auth_buttons.dart';
 import 'constants/colors.dart';
@@ -39,7 +39,6 @@ class PinCodeModal extends StatefulWidget {
   const PinCodeModal({
     super.key,
     required this.action,
-    // required this.ref,
   });
 
   @override
@@ -126,37 +125,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                           appContext: context,
                           obscureText: true,
                           length: 4,
-                          onChanged: ((value) {
-                            // if (value.length != 4 || value.isEmpty) {
-                            //   ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(
-                            //       content: Text('Kindly enter your pin'),
-                            //     ),
-                            //   );
-                            // } else {
-                            //   if (widget.action == "buy_airtime") {
-                            //     setState(() {
-                            //       buyAirtime(context, widget.ref, value);
-                            //     });
-                            //   } else if (widget.action == 'buy_data') {
-                            //     setState(() {
-                            //       buyData(context, widget.ref, value);
-                            //     });
-                            //   } else if (widget.action == 'buy_light') {
-                            //     setState(() {
-                            //       buyElectricity(context, widget.ref, value);
-                            //     });
-                            //   } else if (widget.action == 'buy_internet') {
-                            //     setState(() {
-                            //       buyInternet(context, widget.ref, value);
-                            //     });
-                            //   } else if (widget.action == 'tv') {
-                            //     setState(() {
-                            //       cableSubscription(context, widget.ref, value);
-                            //     });
-                            //   }
-                            // }
-                          }),
+                          onChanged: (value) {},
                           keyboardType: TextInputType.number,
                           pinTheme: PinTheme(
                             shape: PinCodeFieldShape.box,
@@ -209,31 +178,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                       context, pincontroller.text);
                                   return;
                                 }
-                                // if (widget.action == "buy_airtime") {
-                                //   setState(() {
-                                //     buyAirtime(
-                                //         context, widget.ref, pincontroller.text);
-                                //   });
-                                // } else if (widget.action == 'buy_data') {
-                                //   setState(() {
-                                //     buyData(context, widget.ref, pincontroller.text);
-                                //   });
-                                // } else if (widget.action == 'buy_light') {
-                                //   setState(() {
-                                //     buyElectricity(
-                                //         context, widget.ref, pincontroller.text);
-                                //   });
-                                // } else if (widget.action == 'buy_internet') {
-                                //   setState(() {
-                                //     buyInternet(
-                                //         context, widget.ref, pincontroller.text);
-                                //   });
-                                // } else if (widget.action == 'tv') {
-                                //   setState(() {
-                                //     cableSubscription(
-                                //         context, widget.ref, pincontroller.text);
-                                //   });
-                                // }
                               }
                             },
                             child: AuthButtons(text: "Pay", form: true)),
@@ -467,7 +411,6 @@ Future showPinModal(
         //
         return PinCodeModal(
           action: action,
-          // ref: ref,
         ); //whatever you're returning, does not have to be a Container
       });
 }

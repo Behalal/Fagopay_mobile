@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 import '../authentication/account_creation/select_type.dart';
 import '../authentication/sign_in.dart';
 import '../authentication/widgets/auth_buttons.dart';
 import '../constants/colors.dart';
 import 'content_model.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});

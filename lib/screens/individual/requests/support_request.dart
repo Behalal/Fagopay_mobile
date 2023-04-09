@@ -21,10 +21,10 @@ class SupportRequest extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                           stage: 50,
                           pageName: "Support Request",
-                          backRoute: const MakeRequest()),
+                          backRoute: MakeRequest()),
                       SizedBox(
                         height: 2.h,
                       ),

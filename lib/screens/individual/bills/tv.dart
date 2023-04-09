@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
-import 'package:fagopay/models/data_model.dart';
-import 'package:fagopay/screens/functions.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
+import '../../../controllers/bill_controller.dart';
+import '../../../models/data_model.dart';
+import '../../functions.dart';
+import 'models/bill_post_model.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import '../../authentication/widgets/auth_buttons.dart';
@@ -61,7 +61,7 @@ class _TVSubscriptionState extends State<TVSubscription> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 50,
                         pageName: "Cable Subscription",
                         // backRoute: const DashboardHome(),

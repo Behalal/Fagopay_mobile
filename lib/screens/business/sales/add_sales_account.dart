@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/individual/widgets/business_warning.dart';
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../individual/widgets/business_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

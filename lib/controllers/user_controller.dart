@@ -1,5 +1,6 @@
-import '../models/user_model/user.dart';
 import 'package:get/get.dart';
+
+import '../models/user_model/user.dart';
 
 class UserController extends GetxController {
   final Rx<User?> _user = Rx(null);

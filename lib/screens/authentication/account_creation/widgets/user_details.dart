@@ -1,6 +1,7 @@
-import '../../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../constants/colors.dart';
 
 class UserData extends StatelessWidget {
   TextEditingController firstname;
