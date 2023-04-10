@@ -343,7 +343,6 @@ class _MakeRequestState extends State<MakeRequest> {
         _transactionController.amountController.text,
         _transactionController.dexcriptionController.text);
     final jsonBody = jsonDecode(response.body);
-    if (!mounted) return;
     if (response.statusCode == 200) {
       progress.dismiss();
       Fluttertoast.showToast(
@@ -355,6 +354,7 @@ class _MakeRequestState extends State<MakeRequest> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+      if (!mounted) return;
       Navigator.of(context).pop();
       return;
     }

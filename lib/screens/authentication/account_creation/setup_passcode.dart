@@ -247,7 +247,6 @@ class _SetupPassCodeState extends State<SetupPassCode> {
       // );
       return;
     }
-    if (!mounted) return;
     Fluttertoast.showToast(
       msg: "Pin successfully set",
       toastLength: Toast.LENGTH_LONG,

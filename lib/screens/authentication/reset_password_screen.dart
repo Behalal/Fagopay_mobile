@@ -163,7 +163,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     final response = await _loginController.createNewPassword(widget.pinCode,
         _passwordController.text, _confirmPasswordController.text);
     final jsonBody = jsonDecode(response.body);
-    if (!mounted) return;
     if (response.statusCode == 200) {
       progress.dismiss();
       Fluttertoast.showToast(

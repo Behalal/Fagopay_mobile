@@ -55,9 +55,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(
-                          height: 3.h,
-                        ),
+                        // SizedBox(
+                        //   height: 3.h,
+                        // ),
                         Padding(
                           padding: EdgeInsets.only(
                             left: 5.w,

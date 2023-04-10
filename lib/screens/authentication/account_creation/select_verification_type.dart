@@ -342,7 +342,6 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
       final jsonBody = jsonDecode(res.body);
       final registeredUserIdentifier = jsonBody['data']['identifier'];
       SecureStorage.setUserIdentifier(registeredUserIdentifier);
-      if (!mounted) return;
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
       //     content: Text('${jsonBody['message']}'),
@@ -357,6 +356,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => VerifyCodeSent(
@@ -370,7 +370,6 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         _isLoading = false;
       });
       final jsonBody = jsonDecode(res.body);
-      if (!mounted) return;
       Fluttertoast.showToast(
         msg: "${jsonBody['message']}",
         toastLength: Toast.LENGTH_LONG,

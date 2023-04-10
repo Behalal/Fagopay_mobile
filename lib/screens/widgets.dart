@@ -229,9 +229,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
   Future<void> buyAirtime(BuildContext context, String pinCode) async {
     final response = await _billController.buyAirtime(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
+    // if (!mounted) return;
     if (response.statusCode != 200) {
       setState(() {
         _isLoading = "1";
@@ -268,6 +266,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       //     content: Text('Airtime Purchase Successful'),
       //   ),
       // );
+    if (!mounted) return;
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (BuildContext context) => TransactionSuccessful(
           amount: buyAirtimeFields.amount,
@@ -281,9 +280,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
   Future<void> buyData(BuildContext context, String pinCode) async {
     final response = await _billController.buyData(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
       setState(() {
         _isLoading = "1";
@@ -320,6 +316,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       //     content: Text('Databundle Purchase Successful'),
       //   ),
       // );
+    if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -335,9 +332,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
   Future<void> buyElectricity(BuildContext context, String pinCode) async {
     final response = await _billController.buyElectricity(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
       setState(() {
         _isLoading = "1";
@@ -374,6 +368,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       //     content: Text('Electricity Purchase Successful'),
       //   ),
       // );
+    if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -389,9 +384,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
   Future<void> buyInternet(BuildContext context, String pinCode) async {
     final response = await _billController.buyInternet(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
       setState(() {
         _isLoading = "1";
@@ -428,6 +420,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       //     content: Text('Internet Subscription Purchase Successful'),
       //   ),
       // );
+    if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -444,9 +437,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
       BuildContext context, String pinCode) async {
     final response = await _billController.buyCableSubscription(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
       setState(() {
         _isLoading = "1";
@@ -483,6 +473,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       //     content: Text('Cable Subscription Purchase Successful'),
       //   ),
       // );
+    if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(

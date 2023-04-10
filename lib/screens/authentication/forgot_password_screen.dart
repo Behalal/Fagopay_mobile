@@ -186,7 +186,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     progress!.show();
     final response = await _loginController.forgotPassword(email);
     final jsonBody = jsonDecode(response.body);
-    if (!mounted) return;
     if (response.statusCode == 200) {
       progress.dismiss();
       Fluttertoast.showToast(
@@ -198,6 +197,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+    if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => RecoverPasswordOTPScreen(

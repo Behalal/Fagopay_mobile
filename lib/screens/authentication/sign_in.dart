@@ -303,9 +303,8 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   }
 
   Future<void> loginUser(BuildContext context) async {
+      final progress = ProgressHUD.of(context);
     final response = await _loginController.loginUser();
-    if (!mounted) return;
-    final progress = ProgressHUD.of(context);
     setState(() {
       _isLoading = true;
     });
@@ -334,6 +333,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       //     ),
       //   ),
       // );
+      if (!mounted) return;
       await getUserDetails(context);
       return;
     }
@@ -367,14 +367,12 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   }
 
   Future<void> getUserDetails(BuildContext context) async {
-    final response = await _loginController.getUserDetails();
-    if (!mounted) return;
     final progress = ProgressHUD.of(context);
+    final response = await _loginController.getUserDetails();
     setState(() {
       _isLoading = false;
     });
     progress?.dismiss();
-    if (!mounted) return;
     final userjsonBodyData = response['data']['userdetail'];
     final userAccountjsonBodyData = response['data']['accountdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
@@ -382,6 +380,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
     // Future.delayed(const Duration(seconds: 1), () {
+    if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (BuildContext context) => DashboardHome(
