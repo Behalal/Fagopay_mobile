@@ -255,7 +255,7 @@ class _InternrtState extends State<Internrt> {
                           width: 90.w,
                           child: TextFormField(
                             controller: _billController.meterNoController,
-                            // maxLength: 14,
+                            keyboardType: TextInputType.number,
                             onChanged: (value) {
                               buyInternetFields.setBillersCode = value;
                               buyInternetFields.setPhone = value;

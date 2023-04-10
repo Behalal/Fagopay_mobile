@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../../controllers/bill_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../../controllers/bill_controller.dart';
 import '../../../../models/data_model.dart';
 import '../../../constants/colors.dart';
-import '../models/bill_post_model.dart';
 import '../../widgets/data_dropdown.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import '../models/bill_post_model.dart';
 
 class InternetDropDown extends StatefulWidget {
   // bool isLoading;

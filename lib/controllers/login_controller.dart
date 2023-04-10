@@ -46,4 +46,41 @@ class LoginController extends GetxController {
       throw Exception('Error fetching user details');
     }
   }
+
+  Future<dynamic> forgotPassword(String email) async {
+    var requestBody = jsonEncode({
+      'username': email,
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.userPath}forgot-password",
+        headers: BaseAPI.headers,
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
+  Future<dynamic> createNewPassword(
+      String otp, String password, String confirmedPassword) async {
+    var requestBody = jsonEncode({
+      'code': otp,
+      'password': password,
+      'password_confirmation': confirmedPassword,
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.userPath}create-new-password",
+        headers: BaseAPI.headers,
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
 }

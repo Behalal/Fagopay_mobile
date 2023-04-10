@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'all_supplies.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'all_supplies.dart';
 
 class AddSupplies extends StatefulWidget {
   const AddSupplies({super.key});

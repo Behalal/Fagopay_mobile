@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../controllers/registration_controller.dart';
 import 'package:get/get.dart';
 import '../../../functions/functions.dart';
@@ -35,7 +36,6 @@ class _SetupPasswordState extends State<SetupPassword> {
 
   @override
   void dispose() {
-    
     _registrationController.lastname.clear();
     _registrationController.email.clear();
     _registrationController.referral.clear();
@@ -482,17 +482,36 @@ class _SetupPasswordState extends State<SetupPassword> {
                       if (_registrationController.password.text.isEmpty ||
                           _registrationController
                               .confirmPassword.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Kindly enter your password'),
-                          ),
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text('Kindly enter your password'),
+                        //   ),
+                        // );
+
+                        Fluttertoast.showToast(
+                          msg: "Kindly enter your password",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
                       } else if (_registrationController.password.text !=
                           _registrationController.confirmPassword.text) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Password does not match'),
-                          ),
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text('Password does not match'),
+                        //   ),
+                        // );
+                        Fluttertoast.showToast(
+                          msg: "Password does not match",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
                       } else {
                         await registerUserDetails(context);
@@ -538,27 +557,45 @@ class _SetupPasswordState extends State<SetupPassword> {
       setState(() {
         _isLoading = false;
       });
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['data']['error'][0]}'),
-        ),
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error'][0]}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // if (!mounted) return;
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['data']['error'][0]}'),
+      //   ),
+      // );
       return;
     }
     SecureStorage.setUserToken(userToken);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Registration successful'),
-      ),
+    Fluttertoast.showToast(
+      msg: "Registration successful",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('Registration successful'),
+    //   ),
+    // );
     Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SetupPassCode(),
-          ),
-        );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const SetupPassCode(),
+        ),
+      );
     });
   }
 }

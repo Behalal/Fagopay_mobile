@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import '../screens/individual/bills/models/bill_post_model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class BillController extends GetxController {
   TextEditingController phoneController = TextEditingController();

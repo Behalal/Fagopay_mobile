@@ -1,11 +1,11 @@
-import '../../../controllers/user_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../controllers/user_controller.dart';
 import '../widgets/account_details.dart';
 import '../widgets/head_style_extra_pages.dart';
 import '../widgets/transaction_form.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class FagoToFago extends StatefulWidget {
   const FagoToFago({super.key});

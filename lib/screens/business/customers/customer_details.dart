@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../widgets/boxes.dart';
-import '../../constants/colors.dart';
-import 'customer.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../constants/colors.dart';
+import '../../individual/widgets/head_style_extra_pages.dart';
+import '../widgets/boxes.dart';
+import 'customer.dart';
 
 class CustomerDetails extends StatefulWidget {
   const CustomerDetails({super.key});

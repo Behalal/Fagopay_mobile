@@ -3,15 +3,14 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/screens/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:sizer/sizer.dart';
-
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import 'package:fagopay/screens/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sizer/sizer.dart';
 
 class ConfirmTransactions extends StatelessWidget {
   final String? action;

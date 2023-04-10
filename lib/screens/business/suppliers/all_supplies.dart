@@ -1,16 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../../controllers/user_controller.dart';
-import '../home/home.dart';
-import 'add_supllies.dart';
-import 'supply_details.dart';
-import '../widgets/boxes.dart';
-import '../widgets/load_more.dart';
 import '../../constants/colors.dart';
 import '../../functions.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import 'package:get/get.dart';
+import '../home/home.dart';
+import '../widgets/boxes.dart';
+import '../widgets/load_more.dart';
+import 'add_supllies.dart';
+import 'supply_details.dart';
 
 class AllSupplies extends StatefulWidget {
   const AllSupplies({super.key});

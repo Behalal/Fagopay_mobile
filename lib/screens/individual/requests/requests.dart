@@ -69,7 +69,7 @@ class _RequestHomeState extends State<RequestHome> {
                               );
                             }),
                             child: Container(
-                              width: 40.w,
+                              width: 35.w,
                               decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),

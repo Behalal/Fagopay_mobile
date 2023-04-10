@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/bill_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -458,11 +459,20 @@ class _BuyDataState extends State<BuyData> {
                                   buyDataFields.serviceid.isEmpty ||
                                   _billsController
                                       .amountController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Kindly enter all fields'),
-                                  ),
+                                Fluttertoast.showToast(
+                                  msg: "Kindly enter all fields",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
                                 );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //     content: Text('Kindly enter all fields'),
+                                //   ),
+                                // );
                               } else {
                                 setState(() {
                                   buyDataFields.setPhone = _billsController

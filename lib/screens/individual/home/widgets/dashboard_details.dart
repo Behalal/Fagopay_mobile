@@ -269,7 +269,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 9.w, bottom: 5),
+                padding: EdgeInsets.only(left: 9.w, bottom: 15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,10 +277,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                     const AutoSizeText(
                       "Wallet Balance",
                       style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: white),
+                        fontFamily: "Work Sans",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: white,
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

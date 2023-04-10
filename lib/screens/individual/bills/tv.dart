@@ -208,6 +208,7 @@ class _TVSubscriptionState extends State<TVSubscription> {
                             }
                           },
                           controller: _billcontroller.meterNoController,
+                          keyboardType: TextInputType.number,
                           style: const TextStyle(
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w400,
@@ -297,6 +298,7 @@ class _TVSubscriptionState extends State<TVSubscription> {
                         width: 90.w,
                         child: TextFormField(
                           controller: _billcontroller.phoneController,
+                          keyboardType: TextInputType.phone,
                           style: const TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,

@@ -1,14 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../models/kyc_model.dart';
 import '../authentication/account_creation/widgets/current_step.dart';
 import '../authentication/widgets/auth_buttons.dart';
-import 'face_verify.dart';
-import 'kyc_details.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:sizer/sizer.dart';
-import 'kyc1.dart';
-
 import '../constants/colors.dart';
+import 'face_verify.dart';
+import 'kyc1.dart';
+import 'kyc_details.dart';
 
 class BvnVerification extends StatefulWidget {
   const BvnVerification({super.key});
@@ -43,7 +44,9 @@ class BvnVerificationState extends State<BvnVerification> {
               children: [
                 CurrentStep(
                   step: "2",
-                  backRoute: const KycVerfication(accountType: 'individual',),
+                  backRoute: const KycVerfication(
+                    accountType: 'individual',
+                  ),
                 ),
                 SizedBox(
                   height: 4.h,
@@ -312,11 +315,20 @@ class BvnVerificationState extends State<BvnVerification> {
                   child: GestureDetector(
                     onTap: (() {
                       if (bvnValue.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Kindly enter your BVN'),
-                          ),
+                        Fluttertoast.showToast(
+                          msg: "Kindly enter your BVN",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text('Kindly enter your BVN'),
+                        //   ),
+                        // );
                       } else {
                         KycDetailsValue.setbvn = bvnValue.text;
                         if (otpSelected) {

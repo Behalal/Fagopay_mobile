@@ -6,6 +6,7 @@ import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -454,11 +455,20 @@ class _FundWalletState extends State<FundWallet> {
                               await fundWallet(context);
                               return;
                             }
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Fill in the form properly!'),
-                              ),
+                            Fluttertoast.showToast(
+                              msg: "Fill in the form properly!",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
                             );
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   const SnackBar(
+                            //     content: Text('Fill in the form properly!'),
+                            //   ),
+                            // );
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(
@@ -546,12 +556,22 @@ class _FundWalletState extends State<FundWallet> {
       return;
     }
     progress.dismiss();
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${jsonData['data']['error'][0]}'),
-      ),
+    Fluttertoast.showToast(
+      msg: "${jsonData['data']['error'][0]}",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
+
+    // if (!mounted) return;
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text('${jsonData['data']['error'][0]}'),
+    //   ),
+    // );
   }
 
   _launchURL(String url) async {

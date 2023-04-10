@@ -229,6 +229,7 @@ class _ElectricityState extends State<Electricity> {
                       width: 90.w,
                       child: TextFormField(
                         controller: _billController.phoneController,
+                        keyboardType: TextInputType.phone,
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 14,
@@ -279,6 +280,7 @@ class _ElectricityState extends State<Electricity> {
                       width: 90.w,
                       child: TextFormField(
                         controller: _billController.amountController,
+                        keyboardType: TextInputType.number,
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 14,
