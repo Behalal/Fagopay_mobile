@@ -221,9 +221,11 @@ class _PinCodeModalState extends State<PinCodeModal> {
               ],
             ),
           )
-        : const Center(
-            child: Loading(),
-          );
+        : _isLoading == "1"
+            ? const Center(
+                child: Loading(),
+              )
+            : Container();
   }
 
   Future<void> buyAirtime(BuildContext context, String pinCode) async {
@@ -252,6 +254,20 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Airtime Purchase Successful'),
+      //   ),
+      // );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => TransactionSuccessful(
+          amount: buyAirtimeFields.amount,
+          number: buyAirtimeFields.getphone,
+          action: 'airtime',
+        ),
+      ));
       Fluttertoast.showToast(
         msg: "Airtime Purchase Successful",
         toastLength: Toast.LENGTH_LONG,
@@ -261,19 +277,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Airtime Purchase Successful'),
-      //   ),
-      // );
-    if (!mounted) return;
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => TransactionSuccessful(
-          amount: buyAirtimeFields.amount,
-          number: buyAirtimeFields.getphone,
-          action: 'airtime',
-        ),
-      ));
     }
   }
 
@@ -302,21 +305,13 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
-      Fluttertoast.showToast(
-        msg: "Databundle Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Databundle Purchase Successful'),
       //   ),
       // );
-    if (!mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -325,6 +320,15 @@ class _PinCodeModalState extends State<PinCodeModal> {
             action: 'data',
           ),
         ),
+      );
+      Fluttertoast.showToast(
+        msg: "Databundle Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }
@@ -354,21 +358,13 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
-      Fluttertoast.showToast(
-        msg: "Electricity Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Electricity Purchase Successful'),
       //   ),
       // );
-    if (!mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -377,6 +373,15 @@ class _PinCodeModalState extends State<PinCodeModal> {
             action: 'electricity',
           ),
         ),
+      );
+      Fluttertoast.showToast(
+        msg: "Electricity Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }
@@ -406,21 +411,13 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
-      Fluttertoast.showToast(
-        msg: "Internet Subscription Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Internet Subscription Purchase Successful'),
       //   ),
       // );
-    if (!mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -429,6 +426,15 @@ class _PinCodeModalState extends State<PinCodeModal> {
             action: 'Internet Subscription',
           ),
         ),
+      );
+      Fluttertoast.showToast(
+        msg: "Internet Subscription Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }
@@ -459,21 +465,13 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
-      Fluttertoast.showToast(
-        msg: "Cable Subscription Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Cable Subscription Purchase Successful'),
       //   ),
       // );
-    if (!mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -482,6 +480,15 @@ class _PinCodeModalState extends State<PinCodeModal> {
             action: 'Cable Subscription',
           ),
         ),
+      );
+      Fluttertoast.showToast(
+        msg: "Cable Subscription Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }
