@@ -1,24 +1,30 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import '../../../controllers/registration_controller.dart';
-import 'individual_details.dart';
-import 'package:get/get.dart';
-import 'select_verification_type.dart';
-import 'widgets/current_step.dart';
-import '../../constants/colors.dart';
-import '../../widgets.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:math' as math;
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../controllers/registration_controller.dart';
+import '../../constants/colors.dart';
+import '../../widgets.dart';
+import 'individual_details.dart';
+import 'select_verification_type.dart';
+import 'widgets/current_step.dart';
+
 class VerifyCodeSent extends StatefulWidget {
   const VerifyCodeSent(
-      {super.key,
+      {Key? key,
       required this.userVerificationData,
-      required this.userIdentifier});
+      this.verificationType,
+      required this.userIdentifier})
+      : super(key: key);
 
   final String userVerificationData;
+  final VerificationType? verificationType;
   final String userIdentifier;
 
   @override
@@ -240,7 +246,8 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
       setState(() {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => const IndividualDetails(),
+            builder: (BuildContext context) =>
+                IndividualDetails(verificationType: widget.verificationType),
           ),
         );
       });

@@ -1,19 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/colors.dart';
 
 class UserData extends StatelessWidget {
-  TextEditingController firstname;
-  TextEditingController lastname;
-  TextEditingController email;
-  TextEditingController referrer;
-  UserData(
-      {super.key,
+  final TextEditingController firstname;
+  final TextEditingController lastname;
+  final TextEditingController email;
+  final TextEditingController phone;
+  final TextEditingController referrer;
+
+  const UserData(
+      {Key? key,
       required this.firstname,
       required this.lastname,
       required this.email,
-      required this.referrer});
+      required this.phone,
+      required this.referrer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +122,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: email,
+                controller: phone.text == 'null' ? email : phone,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -137,7 +142,7 @@ class UserData extends StatelessWidget {
                           color: textBoxBorderColor,
                           width: 1.0,
                           style: BorderStyle.solid)),
-                  hintText: "Email",
+                  hintText: phone.text == 'null' ? "Email" : "Phone",
                   hintStyle: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,

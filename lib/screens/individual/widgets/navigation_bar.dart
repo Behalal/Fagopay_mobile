@@ -37,8 +37,8 @@ class _FagoNavigationBarState extends State<FagoNavigationBar> {
           BottomNavigationBarItem(
             icon: Image.asset(
               'assets/images/home_nav_logo.png',
-              height: 50,
-              width: 50,
+              height: 55,
+              width: 55,
             ),
             label: "",
           ),

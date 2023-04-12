@@ -38,6 +38,7 @@ class _SetupPasswordState extends State<SetupPassword> {
   void dispose() {
     _registrationController.lastname.clear();
     _registrationController.email.clear();
+    _registrationController.phone.clear();
     _registrationController.referral.clear();
     _registrationController.password.clear();
     _registrationController.confirmPassword.clear();
@@ -551,6 +552,7 @@ class _SetupPasswordState extends State<SetupPassword> {
       _isLoading = true;
     });
     final response = await _registrationController.registerDetails();
+    print(response.body);
     final jsonBody = jsonDecode(response.body);
     final userToken = jsonBody['token'];
     if (response.statusCode != 200) {

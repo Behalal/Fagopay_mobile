@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,7 +15,12 @@ import 'widgets/current_step.dart';
 import 'widgets/user_details.dart';
 
 class IndividualDetails extends StatefulWidget {
-  const IndividualDetails({super.key});
+  const IndividualDetails({
+    Key? key,
+    this.verificationType,
+  }) : super(key: key);
+
+  final VerificationType? verificationType;
 
   @override
   State<IndividualDetails> createState() => _IndividualDetailsState();
@@ -27,6 +33,7 @@ class _IndividualDetailsState extends State<IndividualDetails> {
 
   @override
   Widget build(BuildContext context) {
+    // print(widget.verificationType.toString());
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -72,8 +79,9 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                 UserData(
                   firstname: _registrationController.firstname,
                   lastname: _registrationController.lastname,
-                  email: _registrationController.email,
                   referrer: _registrationController.referral,
+                  phone: _registrationController.phone,
+                  email: _registrationController.email,
                 ),
                 SizedBox(
                   height: 5.h,
@@ -85,7 +93,10 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                     onTap: () {
                       if (_registrationController.firstname.text.isEmpty ||
                           _registrationController.lastname.text.isEmpty ||
-                          _registrationController.email.text.isEmpty) {
+                          widget.verificationType == VerificationType.email &&
+                              _registrationController.email.text.isEmpty ||
+                          widget.verificationType == VerificationType.phone &&
+                              _registrationController.phone.text.isEmpty) {
                         // SweetAlertV2.show(context,
                         //     title: "Kindly Insert all fields",
                         //     style: SweetAlertV2Style.error,
@@ -94,6 +105,8 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                         //       fontSize: 10,
                         //       fontWeight: FontWeight.w400,
                         //     ));
+                        print(_registrationController.email.text);
+                        print(_registrationController.phone.text);
                         Fluttertoast.showToast(
                           msg: "Kindly Insert all fields",
                           toastLength: Toast.LENGTH_LONG,
@@ -110,33 +123,37 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                         //     ),
                         //   ),
                         // );
-                      } else if (!function
-                          .validateEmail(_registrationController.email.text)) {
-                        // SweetAlertV2.show(context,
-                        //     title: "Invalid email address sent",
-                        //     style: SweetAlertV2Style.error,
-                        //     titleStyle: const TextStyle(
-                        //       fontFamily: "Work Sans",
-                        //       fontSize: 10,
-                        //       fontWeight: FontWeight.w400,
-                        //     ));
-                        Fluttertoast.showToast(
-                          msg: "Invalid email address sent",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(
-                        //     content: Text(
-                        //       'Invalid email address sent',
-                        //     ),
-                        //   ),
-                        // );
-                      } else {
+                      }
+                      //  else if (widget.verificationType ==
+                      //         VerificationType.email &&
+                      //     !function.validateEmail(
+                      //         _registrationController.email.text)) {
+                      //   // SweetAlertV2.show(context,
+                      //   //     title: "Invalid email address sent",
+                      //   //     style: SweetAlertV2Style.error,
+                      //   //     titleStyle: const TextStyle(
+                      //   //       fontFamily: "Work Sans",
+                      //   //       fontSize: 10,
+                      //   //       fontWeight: FontWeight.w400,
+                      //   //     ));
+                      //   Fluttertoast.showToast(
+                      //     msg: "Invalid email address sent",
+                      //     toastLength: Toast.LENGTH_LONG,
+                      //     gravity: ToastGravity.CENTER,
+                      //     timeInSecForIosWeb: 2,
+                      //     backgroundColor: Colors.red,
+                      //     textColor: Colors.white,
+                      //     fontSize: 16.0,
+                      //   );
+                      //   // ScaffoldMessenger.of(context).showSnackBar(
+                      //   //   const SnackBar(
+                      //   //     content: Text(
+                      //   //       'Invalid email address sent',
+                      //   //     ),
+                      //   //   ),
+                      //   // );
+                      // }
+                      else {
                         // registrationData.setFirstname = firstname.text;
                         // registrationData.setEmail = email.text;
                         // registrationData.setLastname = lastname.text;
