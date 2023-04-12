@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
-import 'all_supplies.dart';
 
 class AddSupplies extends StatefulWidget {
   const AddSupplies({super.key});
@@ -57,8 +56,8 @@ class _AddSuppliesState extends State<AddSupplies> {
               const ProgressStyle(
                 stage: 0,
                 width: 4,
-                pageName: "My Supplies",
-                backRoute: AllSupplies(),
+                pageName: "Add Supplier",
+                // backRoute: AllSupplies(),
               ),
               SizedBox(
                 height: 3.h,

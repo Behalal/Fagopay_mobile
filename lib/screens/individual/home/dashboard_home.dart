@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'models/payments_model.dart';
 import 'models/service_model.dart';
 import '../../kyc/kyc1.dart';
@@ -384,15 +383,15 @@ class _DashboardHomeState extends State<DashboardHome> {
                           ),
                           child: GestureDetector(
                             onTap: () {
-                              Fluttertoast.showToast(
-                                msg: "This is Center Short Toast",
-                                toastLength: Toast.LENGTH_LONG,
-                                gravity: ToastGravity.CENTER,
-                                timeInSecForIosWeb: 2,
-                                backgroundColor: Colors.green,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
+                              // Fluttertoast.showToast(
+                              //   msg: "This is Center Short Toast",
+                              //   toastLength: Toast.LENGTH_LONG,
+                              //   gravity: ToastGravity.CENTER,
+                              //   timeInSecForIosWeb: 2,
+                              //   backgroundColor: Colors.green,
+                              //   textColor: Colors.white,
+                              //   fontSize: 16.0,
+                              // );
                             },
                             child: Image.asset(
                               'assets/images/refer-earn.png',

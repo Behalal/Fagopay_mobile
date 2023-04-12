@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -32,6 +35,7 @@ class _FagoToBankState extends State<FagoToBank> {
   // String? accountName = "";
   String selectedBankValue = "";
   final _transactionController = Get.find<TransactionController>();
+  String verifiedReceipientUser = "";
 
   @override
   void initState() {
@@ -41,59 +45,81 @@ class _FagoToBankState extends State<FagoToBank> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        body:
-            // (isLoading)
-            //     ? const Loading():
-            SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ProgressStyle(
-                  stage: 50,
-                  pageName: "Bank Transfer",
-                  // backRoute: DashboardHome(
-                  //   userDetails: widget.userDetails,
-                  //   accountDetails: widget.accountDetails,
-                  // ),
+    return ProgressHUD(
+      child: Builder(
+        builder: (context) => GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            body:
+                // (isLoading)
+                //     ? const Loading():
+                SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const ProgressStyle(
+                      stage: 50,
+                      pageName: "Bank Transfer",
+                      // backRoute: DashboardHome(
+                      //   userDetails: widget.userDetails,
+                      //   accountDetails: widget.accountDetails,
+                      // ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    AccountDetails(
+                      action: "spend",
+                      accountDetails: widget.accountDetails,
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    SelectBank(
+                      bankdropdown: getBankList(allBanks),
+                      onChanged: (selectedValue) {
+                        setState(() {
+                          selectedBankValue = selectedValue!;
+                        });
+                      },
+                      selectedValue: "",
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    FagoTransactionForm(
+                      accountName: widget.accountDetails.accountName,
+                      selectedBankValue: selectedBankValue,
+                      accountNumberController:
+                          _transactionController.accountNumberController,
+                      verifiedReceipientUser: verifiedReceipientUser,
+                      onChangedOfAccountNumberController: (value) async {
+                        // if (value.length > 10) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(
+                        //       content: Text('The account number must be 10 digits!'),
+                        //     ),
+                        //   );
+                        //   return;
+                        // }
+                        if (value.length >= 10) {
+                          await getBankDetails(
+                              context, selectedBankValue, value);
+                        }
+                      },
+                      page: "bank",
+                      cancelRoute: FagoToBank(
+                        userDetails: widget.userDetails,
+                        accountDetails: widget.accountDetails,
+                      ),
+                      onSubmitForm: () {},
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                AccountDetails(
-                  action: "spend",
-                  accountDetails: widget.accountDetails,
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                SelectBank(
-                  bankdropdown: getBankList(allBanks),
-                  onChanged: (selectedValue) {
-                    setState(() {
-                      selectedBankValue = selectedValue!;
-                    });
-                  },
-                  selectedValue: "",
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                FagoTransactionForm(
-                  accountName: widget.accountDetails.accountName,
-                  selectedBankValue: selectedBankValue,
-                  page: "bank",
-                  cancelRoute: FagoToBank(
-                    userDetails: widget.userDetails,
-                    accountDetails: widget.accountDetails,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -171,5 +197,26 @@ class _FagoToBankState extends State<FagoToBank> {
     bankItems.addAll(allBanks);
 
     return bankItems;
+  }
+
+  Future<void> getBankDetails(
+      BuildContext context, String bankCode, String accountNumber) async {
+    final progress = ProgressHUD.of(context);
+    progress!.show();
+    final response =
+        await _transactionController.getBankDetails(bankCode, accountNumber);
+    final jsonBodyData = jsonDecode(response.body);
+    final customerDetail = jsonBodyData['data']['account_name'];
+    if (response.statusCode != 200) {
+      progress.dismiss();
+      setState(() {
+        verifiedReceipientUser = "";
+      });
+    } else {
+      progress.dismiss();
+      setState(() {
+        verifiedReceipientUser = customerDetail;
+      });
+    }
   }
 }

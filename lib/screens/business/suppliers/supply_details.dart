@@ -38,7 +38,7 @@ class _SupplyDetailsState extends State<SupplyDetails> {
               const ProgressStyle(
                 stage: 0,
                 pageName: "Obasa Yussuf",
-                backRoute: AllSupplies(),
+                // backRoute: AllSupplies(),
                 icon: "assets/images/profile-delete.png",
               ),
               SizedBox(

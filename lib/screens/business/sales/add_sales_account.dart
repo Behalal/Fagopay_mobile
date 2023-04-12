@@ -19,6 +19,7 @@ class AddSalesAccount extends StatefulWidget {
 
 class _AddSalesAccountState extends State<AddSalesAccount> {
   final _userController = Get.find<UserController>();
+  
   List country = [
     {'name': 'Select Country', 'value': ''},
     {'name': 'Nigeria', 'value': 'nga'},
@@ -52,10 +53,10 @@ class _AddSalesAccountState extends State<AddSalesAccount> {
               ProgressStyle(
                 stage: 0,
                 pageName: "Create Account",
-                backRoute: BusinessHome(
-                  userDetails: _userController.user!,
-                  accountDetails: _userController.userAccountDetails!,
-                ),
+                // backRoute: BusinessHome(
+                //   userDetails: _userController.user!,
+                //   accountDetails: _userController.userAccountDetails!,
+                // ),
               ),
               SizedBox(
                 height: 3.h,

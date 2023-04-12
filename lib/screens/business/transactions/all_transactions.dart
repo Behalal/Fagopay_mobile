@@ -45,13 +45,13 @@ class _AllTransactionState extends State<AllTransaction> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "Transactions",
-                backRoute: BusinessHome(
-                  userDetails: _userController.user!,
-                  accountDetails: _userController.userAccountDetails!,
-                ),
+                // backRoute: BusinessHome(
+                //   userDetails: _userController.user!,
+                //   accountDetails: _userController.userAccountDetails!,
+                // ),
               ),
               SizedBox(
                 height: 2.h,
@@ -103,8 +103,7 @@ class _AllTransactionState extends State<AllTransaction> {
                     children: [
                       Container(
                         height: 5.h,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 1.h),
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
                         decoration: BoxDecoration(
                           color: white,
                           border: Border.all(

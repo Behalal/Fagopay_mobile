@@ -58,7 +58,7 @@ class _CustomerPageState extends State<CustomerPage> {
                                 width: 1.5.w,
                               ),
                               const AutoSizeText(
-                                "Add Account",
+                                "Add Customer",
                                 style: TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 10,
@@ -262,10 +262,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     )
                   ])),
         ),
-        bottomNavigationBar: const LoadMore()
-        
-      );
+        bottomNavigationBar: const LoadMore());
   }
 }
-
-

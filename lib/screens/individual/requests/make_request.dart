@@ -93,6 +93,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       width: 90.w,
                       child: TextFormField(
                         controller: _transactionController.phoneController,
+                        keyboardType: TextInputType.phone,
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,

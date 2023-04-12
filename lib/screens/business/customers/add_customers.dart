@@ -29,7 +29,7 @@ class _AddCustomerState extends State<AddCustomer> {
                       stage: 50,
                       width: 4,
                       pageName: "My Customers",
-                      backRoute: CustomerPage(),
+                      // backRoute: CustomerPage(),
                     ),
                     SizedBox(
                       height: 3.h,

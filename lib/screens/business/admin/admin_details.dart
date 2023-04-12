@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
-import 'all_admin.dart';
 
 class AdminDetails extends StatefulWidget {
   const AdminDetails({super.key});
@@ -28,7 +27,7 @@ class _AdminDetailsState extends State<AdminDetails> {
                 const ProgressStyle(
                   stage: 0,
                   pageName: "Admin Accounts",
-                  backRoute: AllAdmin(),
+                  // backRoute: AllAdmin(),
                 ),
                 SizedBox(
                   height: 3.h,
@@ -104,10 +103,18 @@ class _AdminDetailsState extends State<AdminDetails> {
                   height: 2.h,
                 ),
                 const AdminAccountBox(),
-                SizedBox(height: 2.h,),
-                const AdminAccountBox(boxColor: fagoSecondaryColorWithOpacity10,),
-                SizedBox(height: 2.h,),
-                const AdminAccountBox(boxColor: fagoGreenColorWithOpacity10,),
+                SizedBox(
+                  height: 2.h,
+                ),
+                const AdminAccountBox(
+                  boxColor: fagoSecondaryColorWithOpacity10,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                const AdminAccountBox(
+                  boxColor: fagoGreenColorWithOpacity10,
+                ),
               ]),
         ),
       ),
@@ -118,7 +125,8 @@ class _AdminDetailsState extends State<AdminDetails> {
 class AdminAccountBox extends StatelessWidget {
   final Color? boxColor;
   const AdminAccountBox({
-    Key? key, this.boxColor,
+    Key? key,
+    this.boxColor,
   }) : super(key: key);
 
   @override
@@ -126,10 +134,10 @@ class AdminAccountBox extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
       decoration: BoxDecoration(
-          color: (boxColor != null)? boxColor :white,
+          color: (boxColor != null) ? boxColor : white,
           borderRadius: const BorderRadius.all(Radius.circular(5)),
-          boxShadow: const[
-             BoxShadow(
+          boxShadow: const [
+            BoxShadow(
                 color: blackWithOpacity,
                 offset: Offset.zero,
                 spreadRadius: 2,

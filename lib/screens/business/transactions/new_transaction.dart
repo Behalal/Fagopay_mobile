@@ -49,7 +49,7 @@ class _NewTransactionState extends State<NewTransaction> {
               const ProgressStyle(
                 stage: 0,
                 pageName: "Add Transaction",
-                backRoute: AllTransaction(),
+                // backRoute: AllTransaction(),
               ),
               SizedBox(
                 height: 4.h,

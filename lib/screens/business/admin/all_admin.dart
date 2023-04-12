@@ -193,4 +193,3 @@ class _AllAdminState extends State<AllAdmin> {
         bottomNavigationBar: const LoadMore());
   }
 }
-

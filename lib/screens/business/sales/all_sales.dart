@@ -44,10 +44,10 @@ class _AllSalesState extends State<AllSales> {
               ProgressStyle(
                 stage: 0,
                 pageName: "Sales Account",
-                backRoute: BusinessHome(
-                  userDetails: _userController.user!,
-                  accountDetails: _userController.userAccountDetails!,
-                ),
+                // backRoute: BusinessHome(
+                //   userDetails: _userController.user!,
+                //   accountDetails: _userController.userAccountDetails!,
+                // ),
               ),
               SizedBox(
                 height: 1.5.h,

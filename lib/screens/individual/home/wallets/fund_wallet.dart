@@ -14,6 +14,7 @@ import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class FundWallet extends StatefulWidget {
   // final String action;
@@ -553,6 +554,14 @@ class _FundWalletState extends State<FundWallet> {
       progress.dismiss();
       final hostedLink = jsonData['data']['link'];
       await _launchURL('$hostedLink');
+      //       if (!mounted) return;
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => PaymentScreen(
+      //       paymentLink: '$hostedLink',
+      //     ),
+      //   ),
+      // );
       return;
     }
     progress.dismiss();

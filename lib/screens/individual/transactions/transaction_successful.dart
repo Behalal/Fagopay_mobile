@@ -45,7 +45,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                 ),
               ),
               SizedBox(
-                height: 15.h,
+                height: 8.h,
               ),
               Stack(
                 alignment: AlignmentDirectional.center,

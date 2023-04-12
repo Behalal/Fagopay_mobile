@@ -32,13 +32,13 @@ class _AllSuppliesState extends State<AllSupplies> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "My Suppliers",
-                backRoute: BusinessHome(
-                  userDetails: _userController.user!,
-                  accountDetails: _userController.userAccountDetails!,
-                ),
+                // backRoute: BusinessHome(
+                //   userDetails: _userController.user!,
+                //   accountDetails: _userController.userAccountDetails!,
+                // ),
               ),
               SizedBox(
                 height: 3.h,
