@@ -57,7 +57,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                       left: 1.w,
                     ),
                     child: Container(
-                      padding: const EdgeInsets.only(top: 55, bottom: 1),
+                      padding: const EdgeInsets.only(top: 55, bottom: 2),
                       width: 95.w,
                       height: 20.h,
                       decoration: const BoxDecoration(

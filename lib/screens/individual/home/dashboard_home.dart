@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/individual/home/models/payments_model.dart';
 import 'package:fagopay/screens/individual/home/models/service_model.dart';
+import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/kyc/kyc1.dart';
 import 'package:fagopay/screens/widgets.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,10 @@ class _DashboardHomeState extends State<DashboardHome> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 280,
+                Container(
+                  padding: EdgeInsets.only(top: 0.h),
+                  color: Colors.black,
+                  // height: 280,
                   child: DashBoardDetails(
                     user: widget.userDetails,
                     accountType: "Individual",
@@ -55,7 +58,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(
-                          height: 3.h,
+                          height: 2.h,
                         ),
                         Padding(
                           padding: EdgeInsets.only(
@@ -361,6 +364,33 @@ class _DashboardHomeState extends State<DashboardHome> {
                             //     child: const Image(
                             //       image: AssetImage("assets/images/Frame 256.png"),
                             //     ))
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.to((const IdentityPassPage()));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 5.w, right: 5.w, top: 2.h),
+                            child: Container(
+                              height: 40,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                color: fagoPrimaryColor,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Center(
+                                child: AutoSizeText(
+                                  "Verify Your Identity",
+                                  style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: white),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                         Padding(

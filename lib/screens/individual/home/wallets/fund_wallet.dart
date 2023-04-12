@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:fagopay/models/user_model/user.dart';
@@ -28,18 +30,23 @@ class _FundWalletState extends State<FundWallet> {
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      IconButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          icon: const Icon(Icons.arrow_back_ios)),
                       // ProgressStyle(
                       //   stage: 50,
                       //   pageName: "Fund Wallet",
                       //   backRoute: DashboardHome(userDetails: userFullDetails),
                       // ),
                       SizedBox(
-                        height: 3.h,
+                        height: 1.h,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,

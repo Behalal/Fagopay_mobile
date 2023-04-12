@@ -10,10 +10,10 @@
         "name": "Launch development",
         "request": "launch",
         "type": "dart",
-        "program": "lib/main_dev.dart",
+        "program": "lib/main.dart",
         "args": [
           "--target",
-          "lib/main_dev.dart"
+          "lib/main.dart"
         ]
       },
       {
