@@ -11,10 +11,11 @@ import 'package:get/get.dart';
 
 class RegistrationController extends GetxController {
   Functions function = Functions();
-  TextEditingController userAuthDataController = TextEditingController();
+  // TextEditingController userAuthDataController = TextEditingController();
   TextEditingController firstname = TextEditingController();
   TextEditingController lastname = TextEditingController();
   TextEditingController email = TextEditingController();
+  TextEditingController phone = TextEditingController();
   TextEditingController referral = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
@@ -24,14 +25,14 @@ class RegistrationController extends GetxController {
 
   Future<dynamic> selectAccountType() async {
     String typeKey = "";
-    if (function.validateEmail(userAuthDataController.text)) {
+    if (function.validateEmail(email.text)) {
       typeKey = 'email';
     } else {
       typeKey = 'phone_number';
     }
     try {
       var requestBody = jsonEncode(
-          {'account_type': accountType, typeKey: userAuthDataController.text});
+          {'account_type': accountType, typeKey: typeKey == 'email' ? email.text : phone.text});
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}register",
         headers: BaseAPI.headers,
@@ -65,6 +66,7 @@ class RegistrationController extends GetxController {
         'first_name': firstname.text,
         "last_name": lastname.text,
         'email': email.text,
+        'phone_number': phone.text,
         'password': password.text,
         'password_confirmation': confirmPassword.text,
         'referal_by': referral.text,

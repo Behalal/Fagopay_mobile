@@ -55,9 +55,9 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                       left: 1.w,
                     ),
                     child: Container(
-                      padding: const EdgeInsets.only(top: 55, bottom: 2),
+                      padding: const EdgeInsets.only(top: 40, bottom: 0),
                       width: 95.w,
-                      height: 20.h,
+                      height: 18.h,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage("assets/images/image 1.png"),
@@ -269,7 +269,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 9.w, bottom: 15),
+                padding: EdgeInsets.only(left: 9.w, bottom: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -351,7 +351,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                     child: const Icon(
                                       Icons.copy,
                                       color: white,
-                                      size: 15,
+                                      size: 18,
                                     ),
                                   )
                                 ],
@@ -363,7 +363,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 widget.accountDetails.accountNumber!,
                                 style: const TextStyle(
                                     fontFamily: "Work Sans",
-                                    fontSize: 10,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: white),
                               ),

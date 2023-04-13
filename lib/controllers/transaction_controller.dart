@@ -97,4 +97,30 @@ class TransactionController extends GetxController {
       throw Exception('Failed');
     }
   }
+
+  Future<dynamic> bankTransfer(String accountNumber, String accountBank,
+      String amount, String description, String transactionPin) async {
+    final token = await SecureStorage.readUserToken();
+    var requestBody = jsonEncode({
+      "account_number": accountNumber,
+      "account_bank": accountBank,
+      "amount": amount,
+      "description": description,
+      "transaction_pin": transactionPin
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.transactionsPath}bank-transfer",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
 }

@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:fagopay/controllers/transaction_controller.dart';
+import 'package:fagopay/screens/functions.dart';
+import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
@@ -115,7 +117,15 @@ class _FagoToBankState extends State<FagoToBank> {
                         userDetails: widget.userDetails,
                         accountDetails: widget.accountDetails,
                       ),
-                      onSubmitForm: () {},
+                      onSubmitForm: () {
+                        goToPage(
+                          context,
+                          ConfirmTransactions(
+                            // backRoute:  FagoToBank(),
+                            action: 'buy_internet',
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -126,50 +136,6 @@ class _FagoToBankState extends State<FagoToBank> {
       ),
     );
   }
-
-  // void verifyData(String bankaccount, String bankcode) {
-  //   ref
-  //       .read(transactionControllerProvider.notifier)
-  //       .getAllBanks()
-  //       .then((banksValue) {
-  //     if (banksValue.code != null && banksValue.code != 200) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(banksValue.message!),
-  //         ),
-  //       );
-  //     } else {
-  //       // Future.delayed(const Duration(seconds: 4), () {
-  //       setState(() {
-  //         isLoading = false;
-  //         allBanks = banksValue.banks!;
-  //       });
-  //       // });
-  //     }
-  //   });
-  // }
-
-  // void callUserDetailsProvider() {
-  //   ref.read(loginControllerProvider.notifier).getUserDetails().then((value) {
-  //     if (value.code != null && value.code == 401) {
-  //       Navigator.of(context).pushReplacement(
-  //         MaterialPageRoute(
-  //           builder: (BuildContext context) => const SignIn(),
-  //         ),
-  //       );
-  //     } else if (value.code != null && value.code != 200) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text(value.message!),
-  //         ),
-  //       );
-  //     } else {
-  //       setState(() {
-  //         userDetails = value;
-  //       });
-  //     }
-  //   });
-  // }
 
   void callBankProvider() async {
     final responseData = await _transactionController.getAllBanks();
@@ -218,5 +184,10 @@ class _FagoToBankState extends State<FagoToBank> {
         verifiedReceipientUser = customerDetail;
       });
     }
+  }
+
+  Future<void> bankTransfer() async {
+    // final response = await _transactionController.bankTransfer(
+    //     accountNumber, accountBank, amount, description, transactionPin);
   }
 }

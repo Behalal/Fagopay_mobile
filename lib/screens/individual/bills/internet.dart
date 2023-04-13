@@ -398,13 +398,14 @@ class _InternrtState extends State<Internrt> {
                           }
                         }),
                         child: AuthButtons(
-                            form: true,
-                            color: (verifiedUser) ? null : inactiveTab,
-                            text: "Continue",
-                            route: ConfirmTransactions(
-                              backRoute: const Internrt(),
-                              action: 'buy_internet',
-                            )),
+                          form: true,
+                          color: (verifiedUser) ? null : inactiveTab,
+                          text: "Continue",
+                          route: ConfirmTransactions(
+                            backRoute: const Internrt(),
+                            action: 'buy_internet',
+                          ),
+                        ),
                       ),
                     )
                   ],
