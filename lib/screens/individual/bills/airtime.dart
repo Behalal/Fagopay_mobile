@@ -1,13 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../controllers/bill_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
+import '../transactions/confirm_transaction.dart';
 import 'data.dart';
 import 'models/bill_post_model.dart';
-import '../transactions/confirm_transaction.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class BuyAirtime extends StatefulWidget {
   const BuyAirtime({super.key});
@@ -187,7 +189,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                   child: TextFormField(
                     maxLength: 14,
                     controller: _billsController.phoneController,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.phone,
                     onChanged: ((value) {
                       setState(() {
                         buyAirtimeFields.setPhone =
@@ -328,11 +330,20 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                           airtelActive == false &&
                           gloActive == false &&
                           etisatActive == false) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Select a Network Provider'),
-                          ),
+                        Fluttertoast.showToast(
+                          msg: "Select a Network Provider",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text('Select a Network Provider'),
+                        //   ),
+                        // );
                         return;
                       }
                       Navigator.of(context).pushReplacement(

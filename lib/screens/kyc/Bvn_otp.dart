@@ -1,13 +1,14 @@
+import 'dart:math' as math;
+
 import 'package:auto_size_text/auto_size_text.dart';
-import '../authentication/account_creation/widgets/current_step.dart';
-import 'kyc2.dart';
-import 'kyc_details.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
-import 'dart:math' as math;
 
+import '../authentication/account_creation/widgets/current_step.dart';
 import '../constants/colors.dart';
+import 'kyc2.dart';
+import 'kyc_details.dart';
 
 class BvnOTP extends StatefulWidget {
   const BvnOTP({super.key});

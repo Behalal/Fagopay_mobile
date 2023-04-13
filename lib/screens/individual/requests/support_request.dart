@@ -3,7 +3,6 @@ import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../bills/electricity.dart';
-import 'make_request.dart';
 import '../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -21,10 +20,11 @@ class SupportRequest extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
-                          stage: 50,
-                          pageName: "Support Request",
-                          backRoute: const MakeRequest()),
+                      const ProgressStyle(
+                        stage: 50,
+                        pageName: "Support Request",
+                        // backRoute: MakeRequest(),
+                      ),
                       SizedBox(
                         height: 2.h,
                       ),
@@ -52,7 +52,7 @@ class SupportRequest extends StatelessWidget {
                         height: 4.h,
                       ),
                       Container(
-                        height: 105,
+                        height: 150,
                         decoration: const BoxDecoration(
                           color: fagoSecondaryColorWithOpacity10,
                         ),
@@ -102,19 +102,18 @@ class SupportRequest extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 14,
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w600,
                                         color: stepsColor,
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 1.h,
+                                      height: 0.5.h,
                                     ),
                                     const AutoSizeText(
                                       "I want to buy a new laptop ",
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 16,
-                                        fontWeight: FontWeight.w600,
                                         color: stepsColor,
                                       ),
                                     ),

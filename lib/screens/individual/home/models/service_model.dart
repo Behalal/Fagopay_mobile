@@ -1,6 +1,8 @@
-import 'package:fagopay/controllers/user_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../../../../controllers/user_controller.dart';
 import '../../../constants/colors.dart';
 import '../../bills/data.dart';
 import '../../bills/electricity.dart';
@@ -9,8 +11,6 @@ import '../../bills/tv.dart';
 import '../../requests/requests.dart';
 import '../../transactions/fago_to_bank.dart';
 import '../../transactions/fago_to_fago.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ServiceModel {
   Widget image;

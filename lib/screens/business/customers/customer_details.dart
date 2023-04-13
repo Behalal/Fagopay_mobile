@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../constants/colors.dart';
-import 'customer.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../constants/colors.dart';
+import '../../individual/widgets/head_style_extra_pages.dart';
+import '../widgets/boxes.dart';
+import 'customer.dart';
 
 class CustomerDetails extends StatefulWidget {
   const CustomerDetails({super.key});
@@ -34,11 +35,11 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 0,
                         // width: 4,
                         pageName: "Obasa Yussuf",
-                        backRoute: const CustomerPage(),
+                        // backRoute: CustomerPage(),
                         icon: "assets/images/profile-delete.png",
                       ),
                       SizedBox(
@@ -276,7 +277,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                           ),
                         ],
                       ),
-                      if ( transactionDetailsTab ) Container(
+                      if ( transactionDetailsTab ) SizedBox(
                         width: 90.w,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../../controllers/registration_controller.dart';
 import 'package:get/get.dart';
 import '../../../functions/functions.dart';
 import 'select_verification_type.dart';
@@ -165,17 +166,35 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                           //       fontSize: 10,
                           //       fontWeight: FontWeight.w400,
                           //     ));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Kindly enter your password'),
-                            ),
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   const SnackBar(
+                          //     content: Text('Kindly enter your password'),
+                          //   ),
+                          // );
+                          Fluttertoast.showToast(
+                            msg: "Kindly enter your password",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
                           );
                         } else if (_registrationController.passCode.text !=
                             _registrationController.passCodeConfirm.text) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Passcode does not match'),
-                            ),
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   const SnackBar(
+                          //     content: Text('Passcode does not match'),
+                          //   ),
+                          // );
+                          Fluttertoast.showToast(
+                            msg: "Passcode does not match",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
                           );
                         } else {
                           setState(() {
@@ -211,22 +230,38 @@ class _SetupPassCodeState extends State<SetupPassCode> {
       setState(() {
         _isLoading = false;
       });
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Error setting up Passcode!'),
-        ),
+      Fluttertoast.showToast(
+        msg: "Error setting up Passcode!",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Error setting up Passcode!'),
+      //   ),
+      // );
       return;
     }
-    if (!mounted) return;
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Pin successfully set'),
-      ),
+    Fluttertoast.showToast(
+      msg: "Pin successfully set",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
-    Future.delayed(const Duration(seconds: 2), () {
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('Pin successfully set'),
+    //   ),
+    // );
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

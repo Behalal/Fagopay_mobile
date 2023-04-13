@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../service/secure_storage/secure_storage.dart';
 
 import '../functions/functions.dart';
 import '../models/register_request/register.model.dart';

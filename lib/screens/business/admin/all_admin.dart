@@ -1,11 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../models/user_model/user.dart';
+import '../widgets/load_more.dart';
 import '../../constants/colors.dart';
 import 'add_admin.dart';
 import 'admin_details.dart';
-import '../customers/add_customers.dart';
-import '../home/home.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
 import '../../functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -193,29 +190,6 @@ class _AllAdminState extends State<AllAdmin> {
                         ),
                       ]
                     ]))),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 3.h),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 1.h),
-            decoration: const BoxDecoration(
-                color: fagoSecondaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(25))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset("assets/images/chart.png"),
-                const AutoSizeText(
-                  "Load More",
-                  style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 14,
-                      color: white,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-          ),
-        ));
+        bottomNavigationBar: const LoadMore());
   }
 }

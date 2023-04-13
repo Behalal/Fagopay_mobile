@@ -25,9 +25,8 @@ class AccountDetails extends StatefulWidget {
 class _AccountDetailsState extends State<AccountDetails> {
   @override
   Widget build(BuildContext context) {
-    //ref.watch();
-    print(
-        "acct balance is $currencySymbol ${widget.accountDetails.balance}.00");
+    // print(
+    //     "acct balance is $currencySymbol ${widget.accountDetails.balance}.00");
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -148,7 +147,9 @@ class _AccountDetailsState extends State<AccountDetails> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       AutoSizeText(
-                        widget.accountDetails.accountName != "" ? "Wema" : "",
+                        widget.accountDetails.accountName != ""
+                            ? widget.accountDetails.accountName!
+                            : "",
                         style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 14,
@@ -159,7 +160,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                       SizedBox(height: 3.h),
                       AutoSizeText(
                         widget.accountDetails.accountNumber != ""
-                            ? "2346389056"
+                            ? widget.accountDetails.accountNumber!
                             : "",
                         style: const TextStyle(
                           fontFamily: "Work Sans",

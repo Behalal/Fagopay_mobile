@@ -1,26 +1,53 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
 
-class FagoTransactionForm extends StatelessWidget {
+class FagoTransactionForm extends StatefulWidget {
   final String? accountName;
+  final String? selectedBankValue;
   final String page;
   final Widget cancelRoute;
+  final TextEditingController? accountNumberController;
+  final Function(String)? onChangedOfAccountNumberController;
+  final String? verifiedReceipientUser;
+  final VoidCallback? onSubmitForm;
 
   const FagoTransactionForm({
     Key? key,
     this.accountName,
     required this.page,
     required this.cancelRoute,
+    this.selectedBankValue,
+    this.accountNumberController,
+    this.onChangedOfAccountNumberController,
+    this.verifiedReceipientUser, this.onSubmitForm,
   }) : super(key: key);
+
+  @override
+  State<FagoTransactionForm> createState() => _FagoTransactionFormState();
+}
+
+class _FagoTransactionFormState extends State<FagoTransactionForm> {
+  final _transactionsController = Get.find<TransactionController>();
+
+  @override
+  void dispose() {
+    _transactionsController.accountNumberController.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     String formDescription;
-    if (page == 'bank') {
+    if (widget.page == 'bank') {
       formDescription = "Account";
     } else {
       formDescription = "Phone";
@@ -39,11 +66,14 @@ class FagoTransactionForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
           child: TextFormField(
+            controller: widget.accountNumberController,
+            onChanged: widget.onChangedOfAccountNumberController,
+            keyboardType: TextInputType.number,
             style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
@@ -60,11 +90,13 @@ class FagoTransactionForm extends StatelessWidget {
                 ),
               ),
               border: const OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                  borderSide: BorderSide(
-                      color: textBoxBorderColor,
-                      width: 1.0,
-                      style: BorderStyle.solid)),
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderSide: BorderSide(
+                  color: textBoxBorderColor,
+                  width: 1.0,
+                  style: BorderStyle.solid,
+                ),
+              ),
               hintText: "Enter Recipient $formDescription",
               hintStyle: const TextStyle(
                 fontFamily: "Work Sans",
@@ -75,38 +107,43 @@ class FagoTransactionForm extends StatelessWidget {
             ),
           ),
         ),
-        // SizedBox(
-        //   height: 0.5.h,
-        // ),
-        // if (accountName != null)
-        //   Container(
-        //     width: 90.w,
-        //     decoration: const BoxDecoration(
-        //         color: fagoSecondaryColorWithOpacity10,
-        //         borderRadius: BorderRadius.all(Radius.circular(5))),
-        //     child: Padding(
-        //       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-        //       child: Row(
-        //         mainAxisAlignment: MainAxisAlignment.start,
-        //         crossAxisAlignment: CrossAxisAlignment.center,
-        //         children: [
-        //           const Image(image: AssetImage("assets/images/account.png")),
-        //           SizedBox(
-        //             width: 2.w,
-        //           ),
-        //           AutoSizeText(
-        //             accountName!,
-        //             style: const TextStyle(
-        //               fontFamily: "Work Sans",
-        //               fontSize: 14,
-        //               fontWeight: FontWeight.w500,
-        //               color: welcomeText,
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
+        SizedBox(
+          height: 0.5.h,
+        ),
+        Container(
+          width: 90.w,
+          decoration: const BoxDecoration(
+              color: fagoSecondaryColorWithOpacity10,
+              borderRadius: BorderRadius.all(Radius.circular(5))),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const AutoSizeText(
+                  "Fullname",
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: welcomeText,
+                  ),
+                ),
+                AutoSizeText(
+                  '${widget.verifiedReceipientUser}',
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    fontFamily: "Work Sans",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: welcomeText,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         SizedBox(
           height: 2.h,
         ),
@@ -120,7 +157,7 @@ class FagoTransactionForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 1.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
@@ -173,7 +210,7 @@ class FagoTransactionForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 1.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
@@ -215,7 +252,7 @@ class FagoTransactionForm extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.5.h),
           child: GestureDetector(
-            onTap: () {},
+            onTap: widget.onSubmitForm,
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
               alignment: Alignment.center,

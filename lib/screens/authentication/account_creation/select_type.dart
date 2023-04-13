@@ -1,15 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../models/register_request/register.model.dart';
+import '../../constants/colors.dart';
+import '../sign_in.dart';
+import '../widgets/auth_buttons.dart';
 import 'select_verification_type.dart';
 import 'widgets/business_box.dart';
 import 'widgets/current_step.dart';
 import 'widgets/personal_box.dart';
 import 'widgets/terms_and_cond.dart';
-import '../sign_in.dart';
-import '../widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-
-import '../../../models/register_request/register.model.dart';
 
 class SelectType extends StatefulWidget {
   const SelectType({super.key});

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../../service/secure_storage/secure_storage.dart';
 import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
 import 'select_type.dart';
@@ -252,10 +253,19 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                         if (_isLoading != true) {
                           if (_registrationController
                               .userAuthDataController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Kindly Insert all fields'),
-                              ),
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   const SnackBar(
+                            //     content: Text('Kindly Insert all fields'),
+                            //   ),
+                            // );
+                            Fluttertoast.showToast(
+                              msg: "Kindly Insert all fields",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
                             );
                             return;
                           }
@@ -263,11 +273,20 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                           if (usePhone &&
                               !function.validatePhone(_registrationController
                                   .userAuthDataController.text)) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('Kindly Insert a valid phone number'),
-                              ),
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   const SnackBar(
+                            //     content:
+                            //         Text('Kindly Insert a valid phone number'),
+                            //   ),
+                            // );
+                            Fluttertoast.showToast(
+                              msg: "Kindly Insert a valid phone number",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
                             );
                             return;
                           }
@@ -275,12 +294,21 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                           if (useEmail &&
                               !function.validateEmail(_registrationController
                                   .userAuthDataController.text)) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('Kindly Insert a valid email address'),
-                              ),
+                            Fluttertoast.showToast(
+                              msg: "Kindly Insert a valid email address",
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
                             );
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   const SnackBar(
+                            //     content:
+                            //         Text('Kindly Insert a valid email address'),
+                            //   ),
+                            // );
                             return;
                           }
                           setUserAccount(context);
@@ -314,12 +342,21 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
       final jsonBody = jsonDecode(res.body);
       final registeredUserIdentifier = jsonBody['data']['identifier'];
       SecureStorage.setUserIdentifier(registeredUserIdentifier);
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['message']}'),
-        ),
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['message']}'),
+      //   ),
+      // );
+      Fluttertoast.showToast(
+        msg: "${jsonBody['message']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => VerifyCodeSent(
@@ -333,12 +370,20 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         _isLoading = false;
       });
       final jsonBody = jsonDecode(res.body);
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['message']}'),
-        ),
+      Fluttertoast.showToast(
+        msg: "${jsonBody['message']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['message']}'),
+      //   ),
+      // );
     }
   }
 }

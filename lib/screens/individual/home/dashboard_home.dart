@@ -10,9 +10,9 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/individual/home/widgets/dashboard_details.dart';
-import 'package:fagopay/screens/individual/widgets/navigation_bar.dart';
+import '../../constants/colors.dart';
+import 'widgets/dashboard_details.dart';
+import '../widgets/navigation_bar.dart';
 
 import '../../../models/user_model/user.dart';
 
@@ -42,10 +42,8 @@ class _DashboardHomeState extends State<DashboardHome> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.only(top: 0.h),
-                  color: Colors.black,
-                  // height: 280,
+                SizedBox(
+                  height: 300,
                   child: DashBoardDetails(
                     user: widget.userDetails,
                     accountType: "Individual",
@@ -57,9 +55,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(
-                          height: 2.h,
-                        ),
+                        // SizedBox(
+                        //   height: 3.h,
+                        // ),
                         Padding(
                           padding: EdgeInsets.only(
                             left: 5.w,
@@ -366,45 +364,42 @@ class _DashboardHomeState extends State<DashboardHome> {
                             //     ))
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            Get.to((const IdentityPassPage()));
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left: 5.w, right: 5.w, top: 2.h),
-                            child: Container(
-                              height: 40,
-                              width: Get.width,
-                              decoration: BoxDecoration(
-                                color: fagoPrimaryColor,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Center(
-                                child: AutoSizeText(
-                                  "Verify Your Identity",
-                                  style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                      color: white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding:
+                        //       EdgeInsets.only(left: 5.w, right: 5.w, top: 2.h),
+                        //   child: Container(
+                        //     height: 80,
+                        //     width: Get.width,
+                        //     decoration: BoxDecoration(
+                        //       color: fagoPrimaryColor,
+                        //       borderRadius: BorderRadius.circular(8),
+                        //     ),
+                        //   ),
+                        // ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(left: 5.w, right: 5.w, top: 2.h),
-                          child: Container(
-                            height: 80,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: fagoPrimaryColor,
-                              borderRadius: BorderRadius.circular(8),
+                          padding: EdgeInsets.only(
+                            left: 5.w,
+                            right: 5.w,
+                            top: 2.h,
+                          ),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Fluttertoast.showToast(
+                              //   msg: "This is Center Short Toast",
+                              //   toastLength: Toast.LENGTH_LONG,
+                              //   gravity: ToastGravity.CENTER,
+                              //   timeInSecForIosWeb: 2,
+                              //   backgroundColor: Colors.green,
+                              //   textColor: Colors.white,
+                              //   fontSize: 16.0,
+                              // );
+                            },
+                            child: Image.asset(
+                              'assets/images/refer-earn.png',
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),

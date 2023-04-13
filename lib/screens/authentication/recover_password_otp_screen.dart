@@ -1,9 +1,31 @@
-import '../constants/colors.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/screens/authentication/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class RecoverPasswordOTPScreen extends StatelessWidget {
-  const RecoverPasswordOTPScreen({super.key});
+import '../constants/colors.dart';
+
+class RecoverPasswordOTPScreen extends StatefulWidget {
+  final String email;
+
+  const RecoverPasswordOTPScreen({
+    Key? key,
+    required this.email,
+  }) : super(key: key);
+
+  @override
+  State<RecoverPasswordOTPScreen> createState() =>
+      _RecoverPasswordOTPScreenState();
+}
+
+class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
+  final TextEditingController _pinController = TextEditingController();
+
+  // @override
+  // void dispose() {
+  //   _pinController.clear();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +37,7 @@ class RecoverPasswordOTPScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded),
-          onPressed: () {},
+          onPressed: () => Navigator.of(context).pop(),
           color: fagoBlackColor,
         ),
         title: const Text(
@@ -63,9 +85,9 @@ class RecoverPasswordOTPScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            const Text(
-              'We sent OTP to obasa@fagopay.com. Please check your inbox and enter the OTP received.',
-              style: TextStyle(
+            Text(
+              'We sent OTP to ${widget.email}. Please check your inbox and enter the OTP received.',
+              style: const TextStyle(
                 color: fagoBlackColor,
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -82,9 +104,18 @@ class RecoverPasswordOTPScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             PinCodeTextField(
+              controller: _pinController,
               appContext: context,
-              length: 4,
-              onChanged: (value) {},
+              length: 6,
+              onChanged: (value) {
+                if (value.length == 6) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ResetPasswordScreen(pinCode: value),
+                    ),
+                  );
+                }
+              },
               keyboardType: TextInputType.number,
               pinTheme: PinTheme(
                 shape: PinCodeFieldShape.box,
@@ -125,7 +156,7 @@ class RecoverPasswordOTPScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/networking/network_helper.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../screens/individual/bills/models/bill_post_model.dart';
+import '../service/constants/constants.dart';
+import '../service/networking/network_helper.dart';
+import '../service/secure_storage/secure_storage.dart';
 
 class BillController extends GetxController {
   TextEditingController phoneController = TextEditingController();
@@ -194,6 +195,64 @@ class BillController extends GetxController {
     try {
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.billPath}internet-subscription",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
+  Future<dynamic> verifySmartCardNumber(
+      String billersCode, String serviceID) async {
+    final token = await SecureStorage.readUserToken();
+
+    var requestBody =
+        jsonEncode({"billersCode": billersCode, "serviceID": serviceID});
+
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.billPath}verify-smart-card-number",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
+  Future<dynamic> buyCableSubscription(String transactionPin) async {
+    final token = await SecureStorage.readUserToken();
+    String amount = buyTvCableFields.amount;
+    String serviceID = buyTvCableFields.serviceid;
+    String phone = buyTvCableFields.getphone;
+    String billerCode = buyTvCableFields.billersCode;
+    String variationCode = buyTvCableFields.variationCode;
+
+    var requestBody = jsonEncode({
+      "phone": phone,
+      "serviceID": serviceID,
+      "amount": double.parse(amount).toInt(),
+      "variation_code": variationCode,
+      "billersCode": billerCode,
+      "transaction_pin": transactionPin
+    });
+
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.billPath}tv-subscription",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Authorization": "Bearer $token"

@@ -3,19 +3,18 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/screens/constants/colors.dart';
+import 'package:fagopay/screens/constants/currency.dart';
+import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
+import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:fagopay/screens/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
-
 class ConfirmTransactions extends StatelessWidget {
-  String? action;
-  Widget? backRoute;
+  final String? action;
+  final Widget? backRoute;
 
   static DateTime now = DateTime.now();
   static DateFormat formatter = DateFormat('dd/MM/yyyy');
@@ -44,7 +43,7 @@ class ConfirmTransactions extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 100,
                 pageName: "Confirm Transfer",
               ),
@@ -99,9 +98,11 @@ class ConfirmTransactions extends StatelessWidget {
                                 ? "Data Purchase"
                                 : ((action == 'buy_light')
                                     ? "Electricity Purchase"
-                                    : ((action == 'buy_Internet')
+                                    : ((action == 'buy_internet')
                                         ? "Internet Purchase"
-                                        : "Wema-2309234595"))),
+                                        : action == "tv"
+                                            ? "Cable Subscription"
+                                            : "Wema-2309234595"))),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -152,9 +153,9 @@ class ConfirmTransactions extends StatelessWidget {
                     ),
                   ),
                 ),
-              SizedBox(
-                height: 3.h,
-              ),
+              // SizedBox(
+              //   height: 3.h,
+              // ),
               Container(
                 decoration: DottedDecoration(
                     linePosition: LinePosition.bottom,
@@ -183,7 +184,9 @@ class ConfirmTransactions extends StatelessWidget {
                                 ? "${currencySymbol}${data.amount}"
                                 : ((action == 'buy_light')
                                     ? "${currencySymbol}${data.amount}"
-                                    : "")),
+                                    : action == 'tv'
+                                        ? "${currencySymbol}${data.amount}"
+                                        : "")),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -262,7 +265,9 @@ class ConfirmTransactions extends StatelessWidget {
                                 ? "${data.getphone}"
                                 : ((action == 'buy_light')
                                     ? "${data.billersCode}"
-                                    : "")),
+                                    : action == 'tv'
+                                        ? "${data.billersCode}"
+                                        : "")),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -463,13 +468,11 @@ class ConfirmTransactions extends StatelessWidget {
       toLabel = "Phone Number";
       return buyAirtimeFields;
     }
-
     if (action == 'buy_data') {
       transactionType = "Transaction type";
       toLabel = "Phone Number";
       return buyDataFields;
     }
-
     if (action == 'buy_light') {
       transactionType = "Transaction type";
       toLabel = "Meter Number";
@@ -479,6 +482,11 @@ class ConfirmTransactions extends StatelessWidget {
       transactionType = "Transaction type";
       toLabel = "Router Number";
       return buyInternetFields;
+    }
+    if (action == 'tv') {
+      transactionType = "Transaction type";
+      toLabel = "Card Number";
+      return buyTvCableFields;
     }
   }
 }

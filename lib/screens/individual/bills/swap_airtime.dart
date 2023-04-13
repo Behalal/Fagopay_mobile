@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../transactions/confirm_transaction.dart';
 import '../widgets/head_style_extra_pages.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class SwapAirtime extends StatefulWidget {
   const SwapAirtime({super.key});
@@ -44,7 +45,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 50,
                         pageName: "Swap Airtime",
                         // backRoute: const DashboardHome(),

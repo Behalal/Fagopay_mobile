@@ -39,7 +39,7 @@ class _RequestHomeState extends State<RequestHome> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProgressStyle(
+                      const ProgressStyle(
                         stage: 0,
                         pageName: "Request Money",
                         // backRoute: DashboardHome(
@@ -69,7 +69,7 @@ class _RequestHomeState extends State<RequestHome> {
                               );
                             }),
                             child: Container(
-                              width: 40.w,
+                              width: 35.w,
                               decoration: const BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),

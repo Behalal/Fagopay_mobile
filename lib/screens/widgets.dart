@@ -1,16 +1,18 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
-import 'package:fagopay/screens/individual/transactions/transaction_successful.dart';
-import 'package:get/get.dart';
-import 'authentication/widgets/auth_buttons.dart';
-import 'constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
+
+import '../controllers/bill_controller.dart';
+import 'authentication/widgets/auth_buttons.dart';
+import 'constants/colors.dart';
+import 'individual/bills/models/bill_post_model.dart';
+import 'individual/transactions/transaction_successful.dart';
 
 class Loading extends StatelessWidget {
   const Loading({super.key});
@@ -39,7 +41,6 @@ class PinCodeModal extends StatefulWidget {
   const PinCodeModal({
     super.key,
     required this.action,
-    // required this.ref,
   });
 
   @override
@@ -49,25 +50,20 @@ class PinCodeModal extends StatefulWidget {
 class _PinCodeModalState extends State<PinCodeModal> {
   final TextEditingController pincontroller = TextEditingController();
   final _billController = Get.find<BillController>();
+  String _isLoading = "2";
+
+  // @override
+  // void dispose() {
+  //   pincontroller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100.w,
-      height: 65.h,
-      decoration: const BoxDecoration(
-        color: white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
+    return _isLoading == "2"
+        ? Container(
             width: 100.w,
+            height: 65.h,
             decoration: const BoxDecoration(
               color: white,
               borderRadius: BorderRadius.only(
@@ -76,196 +72,195 @@ class _PinCodeModalState extends State<PinCodeModal> {
               ),
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 1.5.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w),
-                  child: Container(
-                    width: 30.w,
-                    decoration: BoxDecoration(
-                        color: stepsColor,
-                        border: Border.all(width: 1.5, color: stepsColor)),
-                  ),
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: SizedBox(
-                    width: 80.w,
-                    child: const AutoSizeText(
-                      "input your transaction authentication code to confirm this transfer",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: fagoPrimaryColor),
+                Container(
+                  width: 100.w,
+                  decoration: const BoxDecoration(
+                    color: white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 3.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: PinCodeTextField(
-                    controller: pincontroller,
-                    appContext: context,
-                    obscureText: true,
-                    length: 4,
-                    onChanged: ((value) {
-                      // if (value.length != 4 || value.isEmpty) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Kindly enter your pin'),
-                      //     ),
-                      //   );
-                      // } else {
-                      //   if (widget.action == "buy_airtime") {
-                      //     setState(() {
-                      //       buyAirtime(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'buy_data') {
-                      //     setState(() {
-                      //       buyData(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'buy_light') {
-                      //     setState(() {
-                      //       buyElectricity(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'buy_internet') {
-                      //     setState(() {
-                      //       buyInternet(context, widget.ref, value);
-                      //     });
-                      //   } else if (widget.action == 'tv') {
-                      //     setState(() {
-                      //       cableSubscription(context, widget.ref, value);
-                      //     });
-                      //   }
-                      // }
-                    }),
-                    keyboardType: TextInputType.number,
-                    pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(5),
-                      fieldHeight: 45,
-                      fieldWidth: 45,
-                      activeFillColor: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 1.5.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: Container(
+                          width: 30.w,
+                          decoration: BoxDecoration(
+                              color: stepsColor,
+                              border:
+                                  Border.all(width: 1.5, color: stepsColor)),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        child: SizedBox(
+                          width: 80.w,
+                          child: const AutoSizeText(
+                            "Input your transaction authentication code to confirm this transfer",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                color: fagoPrimaryColor),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        child: PinCodeTextField(
+                          controller: pincontroller,
+                          appContext: context,
+                          obscureText: true,
+                          length: 4,
+                          onChanged: (value) {},
+                          keyboardType: TextInputType.none,
+                          pinTheme: PinTheme(
+                            shape: PinCodeFieldShape.box,
+                            borderRadius: BorderRadius.circular(5),
+                            fieldHeight: 45,
+                            fieldWidth: 45,
+                            activeFillColor: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 30.w),
+                        child: GestureDetector(
+                            onTap: () async {
+                              if (pincontroller.text.length != 4 ||
+                                  pincontroller.text.isEmpty) {
+                                Fluttertoast.showToast(
+                                  msg: "Kindly enter your pin",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //     content: Text('Kindly enter your pin'),
+                                //   ),
+                                // );
+                              } else {
+                                setState(() {
+                                  _isLoading = "1";
+                                });
+                                if (widget.action == "buy_airtime") {
+                                  await buyAirtime(context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "buy_data") {
+                                  await buyData(context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "buy_light") {
+                                  await buyElectricity(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "buy_internet") {
+                                  await buyInternet(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+
+                                if (widget.action == "tv") {
+                                  await buyCableSubscription(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+                              }
+                            },
+                            child: AuthButtons(text: "Pay", form: true)),
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 1.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30.w),
-                  child: GestureDetector(
-                      onTap: () async {
-                        if (pincontroller.text.length != 4 ||
-                            pincontroller.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Kindly enter your pin'),
-                            ),
-                          );
-                        } else {
-                          if (widget.action == "buy_airtime") {
-                            await buyAirtime(context, pincontroller.text);
-                            return;
-                          }
-                          if (widget.action == "buy_data") {
-                            await buyData(context, pincontroller.text);
-                            return;
-                          }
-                          if (widget.action == "buy_light") {
-                            await buyElectricity(context, pincontroller.text);
-                            return;
-                          }
-                          if (widget.action == "buy_internet") {
-                            await buyInternet(context, pincontroller.text);
-                            return;
-                          }
-                          // if (widget.action == "buy_airtime") {
-                          //   setState(() {
-                          //     buyAirtime(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'buy_data') {
-                          //   setState(() {
-                          //     buyData(context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'buy_light') {
-                          //   setState(() {
-                          //     buyElectricity(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'buy_internet') {
-                          //   setState(() {
-                          //     buyInternet(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // } else if (widget.action == 'tv') {
-                          //   setState(() {
-                          //     cableSubscription(
-                          //         context, widget.ref, pincontroller.text);
-                          //   });
-                          // }
-                        }
-                      },
-                      child: AuthButtons(text: "Pay", form: true)),
-                ),
-                SizedBox(
-                  height: 0.5.h,
+                NumericKeyboard(
+                  onKeyboardTap: ((text) {
+                    setState(() {
+                      pincontroller.text = pincontroller.text + text;
+                    });
+                  }),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  textColor: black,
+                  rightIcon: const Icon(
+                    Icons.backspace_outlined,
+                    size: 25,
+                  ),
+                  rightButtonFn: (() {
+                    setState(() {
+                      pincontroller.text = pincontroller.text
+                          .substring(0, pincontroller.text.length - 1);
+                    });
+                  }),
                 )
               ],
             ),
-          ),
-          NumericKeyboard(
-            onKeyboardTap: ((text) {
-              setState(() {
-                pincontroller.text = pincontroller.text + text;
-              });
-            }),
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            textColor: black,
-            rightIcon: const Icon(
-              Icons.backspace_outlined,
-              size: 25,
-            ),
-            rightButtonFn: (() {
-              setState(() {
-                pincontroller.text = pincontroller.text
-                    .substring(0, pincontroller.text.length - 1);
-              });
-            }),
           )
-        ],
-      ),
-    );
+        : _isLoading == "1"
+            ? const Center(
+                child: Loading(),
+              )
+            : Container();
   }
 
   Future<void> buyAirtime(BuildContext context, String pinCode) async {
     final response = await _billController.buyAirtime(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
+    // if (!mounted) return;
     if (response.statusCode != 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['data']['error']}'),
-        ),
+      setState(() {
+        _isLoading = "1";
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['data']['error']}'),
+      //   ),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Airtime Purchase Successful'),
-        ),
-      );
+      setState(() {
+        _isLoading = "1";
+      });
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Airtime Purchase Successful'),
+      //   ),
+      // );
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (BuildContext context) => TransactionSuccessful(
           amount: buyAirtimeFields.amount,
@@ -273,27 +268,50 @@ class _PinCodeModalState extends State<PinCodeModal> {
           action: 'airtime',
         ),
       ));
+      Fluttertoast.showToast(
+        msg: "Airtime Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
   Future<void> buyData(BuildContext context, String pinCode) async {
     final response = await _billController.buyData(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['data']['error']}'),
-        ),
+      setState(() {
+        _isLoading = "1";
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['data']['error']}'),
+      //   ),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Databundle Purchase Successful'),
-        ),
-      );
+      setState(() {
+        _isLoading = "1";
+      });
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Databundle Purchase Successful'),
+      //   ),
+      // );
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -303,27 +321,50 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
+      Fluttertoast.showToast(
+        msg: "Databundle Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
   Future<void> buyElectricity(BuildContext context, String pinCode) async {
     final response = await _billController.buyElectricity(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['data']['error']}'),
-        ),
+      setState(() {
+        _isLoading = "1";
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['data']['error']}'),
+      //   ),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Electricity Purchase Successful'),
-        ),
-      );
+      setState(() {
+        _isLoading = "1";
+      });
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Electricity Purchase Successful'),
+      //   ),
+      // );
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -333,27 +374,50 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
+      Fluttertoast.showToast(
+        msg: "Electricity Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
   Future<void> buyInternet(BuildContext context, String pinCode) async {
     final response = await _billController.buyInternet(pinCode);
     final jsonBody = jsonDecode(response.body);
-
-    if (!mounted) return;
-
     if (response.statusCode != 200) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${jsonBody['data']['error']}'),
-        ),
+      setState(() {
+        _isLoading = "1";
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['data']['error']}'),
+      //   ),
+      // );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Internet Subscription Purchase Successful'),
-        ),
-      );
+      setState(() {
+        _isLoading = "1";
+      });
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Internet Subscription Purchase Successful'),
+      //   ),
+      // );
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
@@ -362,6 +426,69 @@ class _PinCodeModalState extends State<PinCodeModal> {
             action: 'Internet Subscription',
           ),
         ),
+      );
+      Fluttertoast.showToast(
+        msg: "Internet Subscription Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  Future<void> buyCableSubscription(
+      BuildContext context, String pinCode) async {
+    final response = await _billController.buyCableSubscription(pinCode);
+    final jsonBody = jsonDecode(response.body);
+    if (response.statusCode != 200) {
+      setState(() {
+        _isLoading = "1";
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['data']['error']}'),
+      //   ),
+      // );
+    } else {
+      setState(() {
+        _isLoading = "1";
+      });
+
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('Cable Subscription Purchase Successful'),
+      //   ),
+      // );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: buyTvCableFields.amount,
+            number: buyTvCableFields.billersCode,
+            action: 'Cable Subscription',
+          ),
+        ),
+      );
+      Fluttertoast.showToast(
+        msg: "Cable Subscription Purchase Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
     }
   }
@@ -383,7 +510,6 @@ Future showPinModal(
         //
         return PinCodeModal(
           action: action,
-          // ref: ref,
         ); //whatever you're returning, does not have to be a Container
       });
 }

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/registration_controller.dart';
-import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import '../../../controllers/registration_controller.dart';
+import 'individual_details.dart';
 import 'package:get/get.dart';
 import 'select_verification_type.dart';
 import 'widgets/current_step.dart';
@@ -217,12 +218,21 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
       setState(() {
         isLoading = false;
       });
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('OTP is Invalid'),
-        ),
+      Fluttertoast.showToast(
+        msg: "OTP is Invalid",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // if (!mounted) return;
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text('OTP is Invalid'),
+      //   ),
+      // );
       return;
     }
 

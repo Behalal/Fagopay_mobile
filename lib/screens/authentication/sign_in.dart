@@ -14,6 +14,7 @@ import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -208,18 +209,27 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                       .emailController.text.isEmpty ||
                                   _loginController
                                       .passwordController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'Kindly insert all fields',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
+                                Fluttertoast.showToast(
+                                  msg: "Kindly insert all fields",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
                                 );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //     content: Text(
+                                //       'Kindly insert all fields',
+                                //       style: TextStyle(
+                                //         fontFamily: "Work Sans",
+                                //         fontSize: 10,
+                                //         fontWeight: FontWeight.w400,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // );
                                 progress.dismiss();
                                 return;
                               }
@@ -293,9 +303,8 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   }
 
   Future<void> loginUser(BuildContext context) async {
+      final progress = ProgressHUD.of(context);
     final response = await _loginController.loginUser();
-    if (!mounted) return;
-    final progress = ProgressHUD.of(context);
     setState(() {
       _isLoading = true;
     });
@@ -303,18 +312,28 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       final jsonBody = jsonDecode(response.body);
       final userToken = jsonBody['token'];
       SecureStorage.setUserToken(userToken);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            'Login Successfull',
-            style: TextStyle(
-              fontFamily: "Work Sans",
-              fontSize: 10,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
+      Fluttertoast.showToast(
+        msg: "Login Successfull",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
       );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(
+      //     content: Text(
+      //       'Login Successfull',
+      //       style: TextStyle(
+      //         fontFamily: "Work Sans",
+      //         fontSize: 10,
+      //         fontWeight: FontWeight.w400,
+      //       ),
+      //     ),
+      //   ),
+      // );
+      if (!mounted) return;
       await getUserDetails(context);
       return;
     }
@@ -323,46 +342,62 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     });
     progress?.dismiss();
     final jsonBody = jsonDecode(response.body);
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          '${jsonBody['data']['error']}',
-          style: const TextStyle(
-            fontFamily: "Work Sans",
-            fontSize: 10,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ),
+    // if (!mounted) return;
+    Fluttertoast.showToast(
+      msg: "${jsonBody['data']['error']}",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
     );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(
+    //       '${jsonBody['data']['error']}',
+    //       style: const TextStyle(
+    //         fontFamily: "Work Sans",
+    //         fontSize: 10,
+    //         fontWeight: FontWeight.w400,
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 
   Future<void> getUserDetails(BuildContext context) async {
-    final response = await _loginController.getUserDetails();
-    if (!mounted) return;
     final progress = ProgressHUD.of(context);
+    final response = await _loginController.getUserDetails();
     setState(() {
       _isLoading = false;
     });
     progress?.dismiss();
-    if (!mounted) return;
     final userjsonBodyData = response['data']['userdetail'];
     final userAccountjsonBodyData = response['data']['accountdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
     _userController.setUser = userDetails;
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => DashboardHome(
-            userDetails: userDetails,
-            accountDetails: userAccountDetails,
-          ),
+    // Future.delayed(const Duration(seconds: 1), () {
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) => DashboardHome(
+          userDetails: userDetails,
+          accountDetails: userAccountDetails,
         ),
-      );
-    });
+      ),
+    );
+    // Navigator.of(context).pushReplacement(
+    //   MaterialPageRoute(
+    //     builder: (BuildContext context) => BusinessHome(
+    //       userDetails: userDetails,
+    //       accountDetails: userAccountDetails,
+    //     ),
+    //   ),
+    // );
+    // });
   }
 }
 

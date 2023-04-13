@@ -1,11 +1,19 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/networking/network_helper.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../service/constants/constants.dart';
+import '../service/networking/network_helper.dart';
+import '../service/secure_storage/secure_storage.dart';
+
 class TransactionController extends GetxController {
+  TextEditingController accountNumberController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController dexcriptionController = TextEditingController();
+
   Future<dynamic> getAllBanks() async {
     final token = await SecureStorage.readUserToken();
     try {
@@ -23,15 +31,70 @@ class TransactionController extends GetxController {
     }
   }
 
-  //   Future<VerifyAccountNo> getBankDetails(
-//       String bankCode, String accountNo) async {
-//     state = const LoginStateLaoding();
+  Future<dynamic> getBankDetails(String bankCode, String accountNo) async {
+    final token = await SecureStorage.readUserToken();
+    var requestBody = jsonEncode({
+      "account_number": accountNo,
+      "account_bank": bankCode,
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.transactionsPath}resolve-bank",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
 
-//     VerifyAccountNo response = await ref
-//         .read(transactionRepositoryProvider)
-//         .getBankDetails(bankCode, accountNo);
-//     state = const LoginStateSuccess();
-//     // response.printAttributes();
-//     return response;
-//   }
+  Future<dynamic> fundWallet(String amount) async {
+    final token = await SecureStorage.readUserToken();
+    var requestBody = jsonEncode({
+      "topup_amount": amount,
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.transactionsPath}fund-wallet",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
+  Future<dynamic> requestMoney(
+      String phoneNumber, String amount, String needDescription) async {
+    final token = await SecureStorage.readUserToken();
+    var requestBody = jsonEncode({
+      "phone_number": phoneNumber,
+      "amount": amount,
+      "description": needDescription,
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.transactionsPath}request-money",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
 }

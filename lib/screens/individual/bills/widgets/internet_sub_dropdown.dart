@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../../controllers/bill_controller.dart';
 import '../../../../models/data_model.dart';
 import '../../../constants/colors.dart';
-import '../models/bill_post_model.dart';
 import '../../widgets/data_dropdown.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import '../models/bill_post_model.dart';
 
 class InternetDropDown extends StatefulWidget {
   // bool isLoading;
@@ -76,7 +77,7 @@ class _InternetDropDownState extends State<InternetDropDown> {
                   buyInternetFields.setBillersCode = selectedValue;
                   print(newValue);
                   if (selectedValue.isNotEmpty) {
-                    fetchDataByServiceId(newValue);
+                    // fetchDataByServiceId(newValue);
                   }
                 });
               },
@@ -105,41 +106,6 @@ class _InternetDropDownState extends State<InternetDropDown> {
       ],
     );
   }
-
-  Future<void> fetchDataByServiceId(String serviceId) async {
-    final response = await _billController.getDatabyServiceId(serviceId);
-    // List<DataDetails> x = response['data']['variation']
-    //     .map<DataDetails>((variation) => DataDetails.fromJson(variation))
-    //     .toList();
-
-    print(response);
-
-    //     if (value.code != 200) {
-    //   setState(() {
-    //     widget.isLoading = false;
-    //   });
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text(value.message!),
-    //     ),
-    //   );
-    // } else {
-    // setState(() {
-    //   widget.allBanks = x;
-    //   widget.dataDropdown = getDataList(widget.allBanks!);
-    //   widget.isLoading = false;
-    // });
-    // }
-  }
-
-  // void fetchDataByServiceId(String serviceId) {
-  //   ref
-  //       .read(billControllerProvider.notifier)
-  //       .getDatabyServiceId(serviceId)
-  //       .then((value) {
-
-  //   });
-  // }
 
   List<DropdownMenuItem<String>> getDataList(List<DataDetails> data) {
     List<DropdownMenuItem<String>> dataItems = [];

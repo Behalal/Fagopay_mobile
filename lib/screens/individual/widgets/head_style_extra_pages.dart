@@ -1,37 +1,40 @@
-import '../../constants/colors.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../constants/colors.dart';
+
 class ProgressStyle extends StatelessWidget {
-  Widget? backRoute;
-  String pageName;
-  int stage;
-  double? width;
-  String? icon;
-  ProgressStyle({
-    super.key,
-    required this.pageName,
+  final Widget? backRoute;
+  final String pageName;
+  final int stage;
+  final double? width;
+  final String? icon;
+  
+  const ProgressStyle({
+    Key? key,
     this.backRoute,
+    required this.pageName,
     required this.stage,
     this.width,
     this.icon,
-  });
+  }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
-        mainAxisAlignment: (icon != null)? MainAxisAlignment.spaceBetween: MainAxisAlignment.start,
+        mainAxisAlignment: (icon != null)
+            ? MainAxisAlignment.spaceBetween
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             onPressed: () {
               if (backRoute != null) {
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => backRoute!,
-                  ),
-                );
+                goToPage(context, backRoute!);
               } else {
                 Navigator.of(context).pop();
               }
@@ -39,9 +42,10 @@ class ProgressStyle extends StatelessWidget {
             icon: const Image(image: AssetImage("assets/images/Icon.png")),
             iconSize: 20,
           ),
-          if ( icon == null )SizedBox(
-            width: 8.w,
-          ),
+          if (icon == null)
+            SizedBox(
+              width: 8.w,
+            ),
           Text(
             pageName,
             textAlign: TextAlign.center,
@@ -52,7 +56,7 @@ class ProgressStyle extends StatelessWidget {
               color: fagoSecondaryColor,
             ),
           ),
-          Container()
+          if (icon != null) Image.asset(icon!),
         ],
       ),
       const SizedBox(

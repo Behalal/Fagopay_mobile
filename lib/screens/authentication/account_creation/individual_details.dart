@@ -1,15 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/registration_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
+import '../../constants/colors.dart';
+import '../widgets/auth_buttons.dart';
 import 'select_verification_type.dart';
 import 'setup_password.dart';
 import 'widgets/current_step.dart';
 import 'widgets/user_details.dart';
-import '../widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class IndividualDetails extends StatefulWidget {
   const IndividualDetails({super.key});
@@ -92,13 +94,22 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                         //       fontSize: 10,
                         //       fontWeight: FontWeight.w400,
                         //     ));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Kindly Insert all fields',
-                            ),
-                          ),
+                        Fluttertoast.showToast(
+                          msg: "Kindly Insert all fields",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text(
+                        //       'Kindly Insert all fields',
+                        //     ),
+                        //   ),
+                        // );
                       } else if (!function
                           .validateEmail(_registrationController.email.text)) {
                         // SweetAlertV2.show(context,
@@ -109,13 +120,22 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                         //       fontSize: 10,
                         //       fontWeight: FontWeight.w400,
                         //     ));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Invalid email address sent',
-                            ),
-                          ),
+                        Fluttertoast.showToast(
+                          msg: "Invalid email address sent",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //     content: Text(
+                        //       'Invalid email address sent',
+                        //     ),
+                        //   ),
+                        // );
                       } else {
                         // registrationData.setFirstname = firstname.text;
                         // registrationData.setEmail = email.text;

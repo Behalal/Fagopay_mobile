@@ -55,6 +55,7 @@ const fagoGreenColorWithOpacity10 = Color.fromRGBO(0, 91, 69, 0.10);
 
 const fagoBlackColor = Color(0xff000000);
 const fagoBlackColorWithOpacity = Color.fromRGBO(0, 0, 0, 0.3);
+const fagoBlackColorWithOpacity15 = Color.fromRGBO(0, 0, 0, 0.15);
 
 const transactionKeys = Color(0xff8C8C8C);
 

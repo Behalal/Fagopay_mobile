@@ -1,13 +1,17 @@
+import 'package:flutter/cupertino.dart';
+
 import '../../admin/all_admin.dart';
 import '../../customers/customer.dart';
-import 'package:flutter/cupertino.dart';
+import '../../suppliers/all_supplies.dart';
+import '../../transactions/all_transactions.dart';
 
 class ActionsModel {
   String actionImage;
   String actionText;
   Widget? route;
 
-  ActionsModel({required this.actionImage, required this.actionText, this.route});
+  ActionsModel(
+      {required this.actionImage, required this.actionText, this.route});
 }
 
 List<ActionsModel> actionContents = [
@@ -20,16 +24,18 @@ List<ActionsModel> actionContents = [
   ActionsModel(
       actionImage: "assets/images/business_home_3.png",
       actionText: "Create Invoice",
-      route: const AllAdmin()
-  ),
+      route: const AllAdmin()),
   ActionsModel(
       actionImage: "assets/images/business_home_4.png",
-      actionText: "Suppliers"),
+      actionText: "Suppliers",
+      route: const AllSupplies()),
   ActionsModel(
       actionImage: "assets/images/business_home_5.png",
       actionText: "Customers",
-      route: const CustomerPage()
-    ),
+      route: const CustomerPage()),
   ActionsModel(
-      actionImage: "assets/images/business_box3.png", actionText: "Transactions"),
+    actionImage: "assets/images/business_box3.png",
+    actionText: "Transactions",
+    route: const AllTransaction(),
+  ),
 ];

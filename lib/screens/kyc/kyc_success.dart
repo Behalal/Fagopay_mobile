@@ -1,11 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../authentication/sign_in.dart';
-import '../authentication/widgets/auth_buttons.dart';
-import '../constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:sizer/sizer.dart';
+
+import '../constants/colors.dart';
 
 class kyc_success extends StatelessWidget {
   const kyc_success({super.key});
