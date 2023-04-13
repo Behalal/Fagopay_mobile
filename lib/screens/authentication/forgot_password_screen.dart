@@ -53,10 +53,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 280,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  top: 260,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                    child: SingleChildScrollView(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,15 +85,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 30,
+                            height: 50,
                           ),
                           SizedBox(
-                            width: 380,
+                            width: 330,
                             child: TextField(
                               controller: _loginController.emailController,
                               decoration: InputDecoration(
                                 focusColor: const Color(0XFFe8a5aa),
-                                hintText: 'Phone number or Email',
+                                hintText: 'Email address',
                                 hintStyle: const TextStyle(
                                   fontSize: 14,
                                 ),
@@ -117,7 +117,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 40,
                           ),
                           Align(
                             alignment: Alignment.center,
