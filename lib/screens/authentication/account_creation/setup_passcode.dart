@@ -84,6 +84,7 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                   Padding(
                       padding: EdgeInsets.only(left: 2.5.w, right: 4.w),
                       child: PinCodeTextField(
+                        obscureText: true,
                         controller: _registrationController.passCode,
                         length: 4,
                         appContext: context,
@@ -120,6 +121,7 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                       padding: EdgeInsets.only(left: 2.5.w, right: 4.w),
                       child: PinCodeTextField(
                         controller: _registrationController.passCodeConfirm,
+                        obscureText: true,
                         length: 4,
                         appContext: context,
                         pastedTextStyle: const TextStyle(

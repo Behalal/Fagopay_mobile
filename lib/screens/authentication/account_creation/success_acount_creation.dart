@@ -37,7 +37,8 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
               SizedBox(
                 width: 50.w,
                 child: const AutoSizeText(
-                  "Account Created",
+                  "Account Created Successfully",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontFamily: "Work Sans",
                     fontSize: 22,
@@ -46,21 +47,21 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 2.h),
-                child: SizedBox(
-                  width: 50.w,
-                  child: const AutoSizeText(
-                    "Successfully",
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: fagoSecondaryColor,
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 2.h),
+              //   child: SizedBox(
+              //     width: 50.w,
+              //     child: const AutoSizeText(
+              //       "",
+              //       style: TextStyle(
+              //         fontFamily: "Work Sans",
+              //         fontSize: 22,
+              //         fontWeight: FontWeight.w700,
+              //         color: fagoSecondaryColor,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 10.h,
               ),

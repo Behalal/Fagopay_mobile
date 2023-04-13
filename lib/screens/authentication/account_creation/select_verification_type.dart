@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../service/secure_storage/secure_storage.dart';
@@ -345,7 +346,8 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
     progress!.show();
     try {
       final res = await _registrationController.selectAccountType();
-      print(res.body);
+      final jsonBody = jsonDecode(res.body);
+      // print(res.body);
       setState(() {
         _isLoading = true;
       });
@@ -354,7 +356,6 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         setState(() {
           _isLoading = false;
         });
-        final jsonBody = jsonDecode(res.body);
         final registeredUserIdentifier = jsonBody['data']['identifier'];
         SecureStorage.setUserIdentifier(registeredUserIdentifier);
         // ScaffoldMessenger.of(context).showSnackBar(
@@ -384,14 +385,21 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
             ),
           ),
         );
-      } else {
+        return;
+      }
+      if (res.statusCode == 422) {
         progress.dismiss();
         setState(() {
           _isLoading = false;
         });
-        final jsonBody = jsonDecode(res.body);
+        if (!mounted) return;
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const IndividualDetails(),
+          ),
+        );
         Fluttertoast.showToast(
-          msg: "${jsonBody['data']['error']}",
+          msg: "${jsonBody['data']['error'][0]}",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2,
@@ -399,12 +407,26 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text('${jsonBody['message']}'),
-        //   ),
-        // );
+        return;
       }
+      progress.dismiss();
+      setState(() {
+        _isLoading = false;
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text('${jsonBody['message']}'),
+      //   ),
+      // );
     } catch (e) {
       print(e);
     }
