@@ -1,4 +1,5 @@
 import 'package:fagopay/screens/kyc/kyc_success.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
 import 'package:get/get.dart';
@@ -41,10 +42,15 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
                 email: "kennyobey@gmail.com",
                 userRef: "10",
                 onCancel: (response) {
-                  print(response);
+                  if (kDebugMode) {
+                    print(response);
+                  }
                 },
                 onVerified: (response) {
                   Get.to(() => const kyc_success());
+                  if (kDebugMode) {
+                    print(response);
+                  }
                 },
                 onError: (error) => print(error)));
           },
