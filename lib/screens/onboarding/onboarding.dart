@@ -107,7 +107,7 @@ class _OnboardingState extends State<Onboarding> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 3.h),
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 1.h),
             child: GestureDetector(
               onTap: () {
                 //? Show login screen

@@ -1,8 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'models/payments_model.dart';
-import 'models/service_model.dart';
-import '../../kyc/kyc1.dart';
-import '../../widgets.dart';
+import 'package:fagopay/screens/individual/home/models/payments_model.dart';
+import 'package:fagopay/screens/individual/home/models/service_model.dart';
+import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
+import 'package:fagopay/screens/kyc/kyc1.dart';
+import 'package:fagopay/screens/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
