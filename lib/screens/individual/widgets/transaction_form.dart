@@ -28,7 +28,8 @@ class FagoTransactionForm extends StatefulWidget {
     this.selectedBankValue,
     this.accountNumberController,
     this.onChangedOfAccountNumberController,
-    this.verifiedReceipientUser, this.onSubmitForm,
+    this.verifiedReceipientUser,
+    this.onSubmitForm,
   }) : super(key: key);
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -83,4 +84,24 @@ class LoginController extends GetxController {
       throw Exception('Failed');
     }
   }
+
+Future<dynamic> validateForgotResetPassword(
+      String otp, String password, String confirmedPassword) async {
+    var requestBody = jsonEncode({
+      'code': otp,
+      
+    });
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.validateResetOtp}password-reset-code",
+        headers: BaseAPI.headers,
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+   
 }

@@ -9,6 +9,8 @@ class BaseAPI {
   static String cityPath = "${api}states/";
   static String authPath = "$api/auth";
   static String billPath = "${api}bills/";
+  static String validateResetOtp = "${api}verify/";
+
 
   // String headers = {
   //   "Content-Type": "application/json; charset=UTF-8",

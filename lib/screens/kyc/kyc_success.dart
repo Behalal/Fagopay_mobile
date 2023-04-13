@@ -73,26 +73,41 @@ class kyc_success extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 4.h,
+                height: 9.h,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 22.w),
+                padding: EdgeInsets.only(left: 10.w, right: 10.w),
                 child: SizedBox(
                   width: 70.w,
                   child: GestureDetector(
-                    onTap: () {
-                      Get.to(() => DashboardHome(
+                    onTap: () => Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => DashboardHome(
                             userDetails: _userUcontroller.user!,
-                          ));
-                    },
-                    child: const AutoSizeText(
-                      "Go Back To HomePage",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        fontFamily: "Work Sans",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: fagoSecondaryColor,
+                            accountDetails: _userUcontroller.userAccountDetails,
+                          ),
+                        ),
+                        (Route<dynamic> route) => false),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          color: buttonColor,
+                          borderRadius: BorderRadius.all(Radius.circular(25))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          AutoSizeText(
+                            "Continue",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Work Sans",
+                                fontWeight: FontWeight.w600,
+                                color: white),
+                          ),
+                        ],
                       ),
                     ),
                   ),
