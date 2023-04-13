@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../authentication/account_creation/widgets/current_step.dart';
@@ -78,78 +80,76 @@ class KycVerficationstate extends State<KycVerfication> {
                     ),
                   ),
                 SizedBox(
-                  height: 1.h,
+                  height: 2.h,
                 ),
-                if (widget.accountType == 'business')
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.5.w),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                const BvnVerification()));
-                      },
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 85.w,
-                            height: 8.h,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.h, vertical: 3),
-                              decoration: const BoxDecoration(
-                                  color: fagoSecondaryColorWithOpacity10,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Image(
-                                      image: AssetImage(
-                                          "assets/images/bi_shield-lock.png")),
-                                  SizedBox(
-                                    width: 1.w,
+                if (widget.accountType == 'individual')
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const IdentityPassPage()));
+                    },
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: Get.width,
+                          height: 8.h,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3.h, vertical: 1.h),
+                            decoration: const BoxDecoration(
+                                color: fagoSecondaryColorWithOpacity10,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Image(
+                                    image: AssetImage(
+                                        "assets/images/bi_shield-lock.png")),
+                                SizedBox(
+                                  width: 3.w,
+                                ),
+                                const Text(
+                                  "Verify Your BVN",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w500,
+                                    color: black,
                                   ),
-                                  const Text(
-                                    "Verify Your BVN",
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: "Work Sans",
-                                      fontWeight: FontWeight.w500,
-                                      color: black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 19.w,
-                                  ),
-                                  const Image(
-                                      image: AssetImage(
-                                          "assets/images/arrow-right.png")),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  width: 19.w,
+                                ),
+                                const Image(
+                                    image: AssetImage(
+                                        "assets/images/arrow-right.png")),
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Row(
-                            children: [
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    width: 33.w,
-                                    height: 3.h,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 4.h, vertical: 3),
-                                      decoration: const BoxDecoration(
-                                          color:
-                                              fagoSecondaryColorWithOpacity10,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: const Text(
+                        ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  width: 25.w,
+                                  height: 3.h,
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 4.h, vertical: 3),
+                                    decoration: const BoxDecoration(
+                                        color: fagoSecondaryColorWithOpacity10,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                    child: const Center(
+                                      child: Text(
                                         "Individual",
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
@@ -161,26 +161,26 @@ class KycVerficationstate extends State<KycVerfication> {
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 15.w,
-                              ),
-                              const Text(
-                                "Why we ask for BVN?",
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 12,
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  color: black,
                                 ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 15.w,
+                            ),
+                            const Text(
+                              "Why we ask for BVN?",
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontSize: 12,
+                                fontFamily: "Work Sans",
+                                fontWeight: FontWeight.w400,
+                                color: black,
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 SizedBox(
