@@ -1,5 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/models/user_model/user.dart';
+import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../constants/colors.dart';
@@ -9,6 +13,7 @@ class kyc_success extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _userUcontroller = Get.find<UserController>();
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -74,13 +79,21 @@ class kyc_success extends StatelessWidget {
                 padding: EdgeInsets.only(left: 22.w),
                 child: SizedBox(
                   width: 70.w,
-                  child: const AutoSizeText(
-                    "You will be directed in 10s",
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: inactiveTab,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => DashboardHome(
+                            userDetails: _userUcontroller.user!,
+                          ));
+                    },
+                    child: const AutoSizeText(
+                      "Go Back To HomePage",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontFamily: "Work Sans",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: fagoSecondaryColor,
+                      ),
                     ),
                   ),
                 ),
