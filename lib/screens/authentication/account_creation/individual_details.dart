@@ -76,13 +76,7 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                     ),
                   ),
                 ),
-                UserData(
-                  firstname: _registrationController.firstname,
-                  lastname: _registrationController.lastname,
-                  referrer: _registrationController.referral,
-                  phone: _registrationController.phone,
-                  email: _registrationController.email,
-                ),
+                const UserData(),
                 SizedBox(
                   height: 5.h,
                 ),

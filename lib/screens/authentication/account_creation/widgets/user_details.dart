@@ -1,27 +1,26 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/controllers/registration_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/colors.dart';
 
 class UserData extends StatelessWidget {
-  final TextEditingController firstname;
-  final TextEditingController lastname;
-  final TextEditingController email;
-  final TextEditingController phone;
-  final TextEditingController referrer;
+  // final TextEditingController firstname;
+  // final TextEditingController lastname;
+  // final TextEditingController email;
+  // final TextEditingController phone;
+  // final TextEditingController referrer;
 
   const UserData(
       {Key? key,
-      required this.firstname,
-      required this.lastname,
-      required this.email,
-      required this.phone,
-      required this.referrer})
+      })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _registrationController = Get.find<RegistrationController>();
     return Column(
       children: [
         SizedBox(
@@ -32,7 +31,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: firstname,
+                controller: _registrationController.firstname,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -77,7 +76,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: lastname,
+                controller: _registrationController.lastname,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -122,7 +121,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: phone.text == 'null' ? email : phone,
+                controller: _registrationController.email.text != '' ? _registrationController.phone : _registrationController.email,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -137,12 +136,14 @@ class UserData extends StatelessWidget {
                     ),
                   ),
                   border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      borderSide: BorderSide(
-                          color: textBoxBorderColor,
-                          width: 1.0,
-                          style: BorderStyle.solid)),
-                  hintText: phone.text == 'null' ? "Email" : "Phone",
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderSide: BorderSide(
+                      color: textBoxBorderColor,
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  hintText: _registrationController.email.text != '' ? "Phone" : "Email",
                   hintStyle: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -167,7 +168,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: referrer,
+                controller: _registrationController.referral,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,

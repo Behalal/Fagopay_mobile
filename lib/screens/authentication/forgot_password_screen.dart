@@ -7,7 +7,6 @@ import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 
 import '../constants/colors.dart';
 
@@ -54,125 +53,137 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                 ),
                 Positioned(
-                  left: 10.w,
-                  top: 35.h,
-                  child: const Text(
-                    'Forgot Password',
-                    style: TextStyle(
-                      color: fagoSecondaryColor,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Work Sans',
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 10.w,
-                  top: 41.h,
-                  child: const Text(
-                    'Recover lost Password',
-                    style: TextStyle(
-                      color: fagoBlackColor,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      // fontFamily: 'Work Sans',
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 50.h,
-                  left: 10.w,
-                  child: SizedBox(
-                    width: 300,
-                    child: TextField(
-                      controller: _loginController.emailController,
-                      decoration: InputDecoration(
-                        focusColor: const Color(0XFFe8a5aa),
-                        hintText: 'Phone number or Email',
-                        hintStyle: const TextStyle(
-                          fontSize: 14,
-                        ),
-                        prefixIconColor: const Color(0XFFe8a5aa),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0XFFe8a5aa),
-                            width: 1.0,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.0),
-                          ),
-                        ),
-                        prefixIcon: SvgPicture.asset(
-                          'assets/icons/dial-icon.svg',
-                          fit: BoxFit.scaleDown,
-                          height: 20,
-                          width: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 25.h,
-                  left: 15.w,
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (_loginController.emailController.text != "") {
-                          await forgotPassword(
-                              context, _loginController.emailController.text);
-                          return;
-                        }
-                        Fluttertoast.showToast(
-                          msg: "Enter the field properly!",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        backgroundColor: fagoSecondaryColor,
-                        fixedSize: const Size(250, 50),
-                      ),
-                      child: const Text('Submit'),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 20.h,
-                  left: 36.w,
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: const TextSpan(
-                        text: 'Back to ',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+                  top: 280,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          TextSpan(
-                            text: 'Login',
+                          const Text(
+                            'Forgot Password',
+                            textAlign: TextAlign.left,
                             style: TextStyle(
                               color: fagoSecondaryColor,
-                              fontSize: 14,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Work Sans',
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          const Text(
+                            'Recover lost Password',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: fagoBlackColor,
+                              fontSize: 18,
                               fontWeight: FontWeight.w600,
+                              // fontFamily: 'Work Sans',
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          SizedBox(
+                            width: 380,
+                            child: TextField(
+                              controller: _loginController.emailController,
+                              decoration: InputDecoration(
+                                focusColor: const Color(0XFFe8a5aa),
+                                hintText: 'Phone number or Email',
+                                hintStyle: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                                prefixIconColor: const Color(0XFFe8a5aa),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0XFFe8a5aa),
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(5.0),
+                                  ),
+                                ),
+                                prefixIcon: SvgPicture.asset(
+                                  'assets/icons/dial-icon.svg',
+                                  fit: BoxFit.scaleDown,
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (_loginController.emailController.text !=
+                                    "") {
+                                  await forgotPassword(context,
+                                      _loginController.emailController.text);
+                                  return;
+                                }
+                                Fluttertoast.showToast(
+                                  msg: "Enter the field properly!",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                backgroundColor: fagoSecondaryColor,
+                                fixedSize: const Size(250, 50),
+                              ),
+                              child: const Text('Submit'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () => Navigator.of(context).pop(),
+                              child: RichText(
+                                textAlign: TextAlign.center,
+                                text: const TextSpan(
+                                  text: 'Back to ',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Login',
+                                      style: TextStyle(
+                                        color: fagoSecondaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -197,7 +208,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    if (!mounted) return;
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => RecoverPasswordOTPScreen(

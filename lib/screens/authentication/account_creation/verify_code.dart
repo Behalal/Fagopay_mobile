@@ -220,37 +220,33 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
       {required String userIdentifier, required String code}) async {
     final response =
         await _registrationController.validateCode(userIdentifier, code);
-    if (response.statusCode != 200) {
-      setState(() {
-        isLoading = false;
-      });
-      Fluttertoast.showToast(
-        msg: "OTP is Invalid",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
+    if (response.statusCode == 200) {
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) =>
+              IndividualDetails(verificationType: widget.verificationType),
+        ),
       );
-      // if (!mounted) return;
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('OTP is Invalid'),
-      //   ),
-      // );
       return;
     }
-
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) =>
-                IndividualDetails(verificationType: widget.verificationType),
-          ),
-        );
-      });
+    setState(() {
+      isLoading = false;
     });
+    Fluttertoast.showToast(
+      msg: "OTP is Invalid",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+    // if (!mounted) return;
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('OTP is Invalid'),
+    //   ),
+    // );
   }
 }
