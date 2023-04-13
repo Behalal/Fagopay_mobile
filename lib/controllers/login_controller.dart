@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fagopay/screens/authentication/reset_password_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,22 @@ import 'package:get/get.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
+import 'package:http/http.dart' as http;
+
+enum OtpForgotVerifyStatus {
+  empty,
+  loading,
+  error,
+  success,
+}
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
+  OtpForgotVerifyStatus get otpForgotVerifyStatus =>
+      _otpForgotVerifyStatus.value;
 
   Future<dynamic> loginUser() async {
     var requestBody = jsonEncode({
@@ -85,23 +98,71 @@ class LoginController extends GetxController {
     }
   }
 
-Future<dynamic> validateForgotResetPassword(
-      String otp, String password, String confirmedPassword) async {
-    var requestBody = jsonEncode({
-      'code': otp,
-      
-    });
+// Future<dynamic> validateForgotResetPassword(
+//       String otp, String password, String confirmedPassword) async {
+//     var requestBody = jsonEncode({
+//       'code': otp,
+
+//     });
+//     try {
+//       final responseData = await NetworkHelper.postRequest(
+//         url: "${BaseAPI.validateResetOtp}password-reset-code",
+//         headers: BaseAPI.headers,
+//         body: requestBody,
+//       );
+//       return responseData;
+//     } catch (e) {
+//       log(e.toString());
+//       throw Exception('Failed');
+//     }
+//   }
+
+  Future validateForgotResetPassword({String? otp}) async {
+    _otpForgotVerifyStatus(OtpForgotVerifyStatus.loading);
     try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.validateResetOtp}password-reset-code",
-        headers: BaseAPI.headers,
-        body: requestBody,
-      );
-      return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+      if (kDebugMode) {
+        print('validating reset password otp...');
+      }
+
+      var response = await http.post(Uri.parse(BaseAPI.validateResetOtp),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({
+            "code": otp,
+          }));
+      if (kDebugMode) {
+        print(response.body);
+      }
+      var json = jsonDecode(response.body);
+      if (json['success'] == false) {
+        throw (json['message']);
+      }
+
+      if (response.statusCode == 200) {
+        _otpForgotVerifyStatus(OtpForgotVerifyStatus.success);
+        Get.snackbar('Success', 'Password reset validated successfully!');
+        print("user id ${json['data']['code']}");
+        Get.to(() => ResetPasswordScreen(
+              pinCode: json['data']['code'],
+            ));
+      } else if (response.statusCode == 422) {
+        Get.snackbar('Error', 'The selected code is invalid');
+        _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
+      }
+
+      return response.body;
+    } catch (error) {
+      _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
+      Get.snackbar(
+          'Error',
+          error.toString() ==
+                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com''"
+              ? 'No internet connection!'
+              : error.toString());
+      if (kDebugMode) {
+        print("error ${error.toString()}");
+      }
     }
   }
-   
 }

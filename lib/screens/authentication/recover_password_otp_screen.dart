@@ -1,8 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/screens/authentication/reset_password_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 //import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:sizer/sizer.dart';
 
 import '../constants/colors.dart';
 
@@ -20,6 +27,7 @@ class RecoverPasswordOTPScreen extends StatefulWidget {
 }
 
 class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
+  final authController = Get.put(LoginController());
   final TextEditingController _pinController = TextEditingController();
   TextEditingController controller = TextEditingController(text: "");
   String thisText = "";
@@ -206,9 +214,92 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
                 ),
               ],
             ),
+            const Spacer(),
+            Obx(() {
+              return InkWell(
+                onTap: () {
+                  if (otpText == null || otpText == '') {
+                    Get.snackbar("Alert",
+                        "Enter the otp sent to ${authController.emailController.text} to continue!");
+                  } else {
+                    authController.validateForgotResetPassword(otp: otpText);
+                  }
+                },
+                child: Container(
+                  height: 50,
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(36),
+                    color: fagoSecondaryColor,
+                  ),
+                  child: (authController.otpForgotVerifyStatus ==
+                          OtpForgotVerifyStatus.loading)
+                      ? const LoadingWidget()
+                      : const Center(
+                          child: AutoSizeText(
+                            "Continue",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: "Work Sans",
+                                fontWeight: FontWeight.w600,
+                                color: white),
+                          ),
+                        ),
+                ),
+              );
+            }),
+            // Container(
+            //   padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+            //   alignment: Alignment.center,
+            //   decoration: const BoxDecoration(
+            //       color: buttonColor,
+            //       borderRadius: BorderRadius.all(Radius.circular(25))),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: const [
+            //       AutoSizeText(
+            //         "Continue",
+            //         textAlign: TextAlign.center,
+            //         style: TextStyle(
+            //             fontSize: 16,
+            //             fontFamily: "Work Sans",
+            //             fontWeight: FontWeight.w600,
+            //             color: white),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            SizedBox(
+              height: 5.h,
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class LoadingWidget extends StatelessWidget {
+  final Color? color;
+  final double? size;
+  const LoadingWidget({Key? key, this.color = Colors.white, this.size})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size ?? 20,
+      height: size ?? 20,
+      child: Center(
+          heightFactor: 1,
+          widthFactor: 1,
+          child: Platform.isIOS
+              ? CupertinoActivityIndicator(
+                  color: color,
+                )
+              : CircularProgressIndicator(
+                  color: color,
+                )),
     );
   }
 }

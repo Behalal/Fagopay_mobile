@@ -9,7 +9,7 @@ class BaseAPI {
   static String cityPath = "${api}states/";
   static String authPath = "$api/auth";
   static String billPath = "${api}bills/";
-  static String validateResetOtp = "${api}verify/";
+  static String validateResetOtp = "${api}verify/password-reset-code";
 
 
   // String headers = {
