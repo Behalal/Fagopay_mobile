@@ -122,7 +122,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: phone.text == 'null' ? email : phone,
+                controller: phone.text != '' ? phone : email,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -137,12 +137,14 @@ class UserData extends StatelessWidget {
                     ),
                   ),
                   border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      borderSide: BorderSide(
-                          color: textBoxBorderColor,
-                          width: 1.0,
-                          style: BorderStyle.solid)),
-                  hintText: phone.text == 'null' ? "Email" : "Phone",
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderSide: BorderSide(
+                      color: textBoxBorderColor,
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  hintText: phone.text != '' ? "Phone" : "Email",
                   hintStyle: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,

@@ -345,7 +345,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
     progress!.show();
     try {
       final res = await _registrationController.selectAccountType();
-      // print(res.body);
+      print(res.body);
       setState(() {
         _isLoading = true;
       });
@@ -391,7 +391,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         });
         final jsonBody = jsonDecode(res.body);
         Fluttertoast.showToast(
-          msg: "${jsonBody['message']}",
+          msg: "${jsonBody['data']['error']}",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
           timeInSecForIosWeb: 2,
