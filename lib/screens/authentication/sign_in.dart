@@ -12,6 +12,7 @@ import 'package:fagopay/screens/authentication/widgets/forgot_pass_text.dart';
 import 'package:fagopay/screens/authentication/widgets/password_input.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -303,13 +304,16 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
   }
 
   Future<void> loginUser(BuildContext context) async {
-      final progress = ProgressHUD.of(context);
+    final progress = ProgressHUD.of(context);
     final response = await _loginController.loginUser();
     setState(() {
       _isLoading = true;
     });
     if (response.statusCode == 200) {
       final jsonBody = jsonDecode(response.body);
+      if (kDebugMode) {
+        print('User response is $jsonBody');
+      }
       final userToken = jsonBody['token'];
       SecureStorage.setUserToken(userToken);
       Fluttertoast.showToast(
@@ -374,6 +378,9 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     });
     progress?.dismiss();
     final userjsonBodyData = response['data']['userdetail'];
+    if (kDebugMode) {
+      print('User details response is $userjsonBodyData');
+    }
     final userAccountjsonBodyData = response['data']['accountdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
     _userController.setUser = userDetails;

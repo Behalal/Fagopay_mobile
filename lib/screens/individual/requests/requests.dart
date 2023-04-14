@@ -1,4 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/models/my_request_model.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import 'make_request.dart';
@@ -16,6 +19,7 @@ class RequestHome extends StatefulWidget {
 class _RequestHomeState extends State<RequestHome> {
   late bool MyRequest;
   late bool Request;
+  int? myRequestType;
 
   @override
   void initState() {
@@ -47,7 +51,7 @@ class _RequestHomeState extends State<RequestHome> {
                         // ),
                       ),
                       SizedBox(
-                        height: 1.h,
+                        height: 3.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -69,6 +73,7 @@ class _RequestHomeState extends State<RequestHome> {
                               );
                             }),
                             child: Container(
+                              height: 5.h,
                               width: 35.w,
                               decoration: const BoxDecoration(
                                   borderRadius:
@@ -81,13 +86,15 @@ class _RequestHomeState extends State<RequestHome> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.mode_standby_sharp,
-                                      size: 15,
-                                      color: white,
-                                    ),
-                                    AutoSizeText(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/request_money_icon.svg'),
+                                    // Icon(
+                                    //   Icons.mode_standby_sharp,
+                                    //   size: 15,
+                                    //   color: white,
+                                    // ),
+                                    const AutoSizeText(
                                       "Request Now",
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
@@ -148,7 +155,7 @@ class _RequestHomeState extends State<RequestHome> {
                                         width: 2.5,
                                         color: fagoSecondaryColorWithOpacity))),
                             child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 1.8.h)),
+                                padding: EdgeInsets.symmetric(vertical: 2.h)),
                           ),
                           GestureDetector(
                             onTap: (() {
@@ -184,165 +191,175 @@ class _RequestHomeState extends State<RequestHome> {
                         ],
                       ),
                       SizedBox(
-                        height: 1.h,
+                        height: 2.h,
                       ),
                       (MyRequest)
                           ? Container(
-                              width: 90.w,
-                              decoration: const BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 1,
-                                          color: fagoBlackColorWithOpacity))),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 2.w, vertical: 1.8.h),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
+                              height: 65.h,
+                              width: Get.width,
+                              child: ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  scrollDirection: Axis.vertical,
+                                  physics: const ScrollPhysics(),
+                                  shrinkWrap: false,
+                                  itemCount: myRequest.length,
+                                  separatorBuilder: (context, index) =>
                                       SizedBox(
-                                        width: 45.w,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                const AutoSizeText(
-                                                  "Requested",
-                                                  style: TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        stepsColorWithOpacity55,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 1.w,
-                                                ),
-                                                AutoSizeText(
-                                                  "$currencySymbol 200",
-                                                  style: const TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: fagoSecondaryColor,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 1.w,
-                                                ),
-                                                const AutoSizeText(
-                                                  "from",
-                                                  style: TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                    color:
-                                                        stepsColorWithOpacity55,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            const AutoSizeText(
-                                              "Ibrahim Lukman",
-                                              style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w600,
-                                                color: stepsColor,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 1.h,
-                                            ),
-                                            const AutoSizeText(
-                                              "on 17 Feb 2023",
-                                              style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400,
-                                                color: stepsColor,
-                                              ),
+                                        height: 1.6.h,
+                                      ),
+                                  itemBuilder: (context, index) {
+                                    var item = myRequest[index];
+                                    return InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          myRequestType = index;
+                                        });
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              blurRadius: 2,
+                                              offset: const Offset(
+                                                  4, 4), // Shadow position
                                             ),
                                           ],
+                                          // border: const Border(
+                                          //     bottom: BorderSide(
+                                          //         width: 1,
+                                          //         color: fagoBlackColorWithOpacity)),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 40.w,
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              const Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 12),
-                                                child: Icon(
-                                                  Icons.note_alt_outlined,
-                                                  size: 25,
-                                                  color: welcomeText,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 2.h,
-                                              ),
-                                              Container(
-                                                width: 23.w,
-                                                decoration: const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                    color: fagoSecondaryColor),
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 3.w,
-                                                      vertical: 1.h),
-                                                  child: Row(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 3.w, vertical: 1.8.h),
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  width: 45.w,
+                                                  child: Column(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
-                                                            .spaceBetween,
+                                                            .spaceEvenly,
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
-                                                            .center,
-                                                    children: const [
-                                                      Icon(
-                                                        Icons.cancel_rounded,
-                                                        size: 15,
-                                                        color: white,
+                                                            .start,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          const AutoSizeText(
+                                                            "Requested",
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "Work Sans",
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color: stepsColor,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 1.w,
+                                                          ),
+                                                          AutoSizeText(
+                                                            "$currencySymbol ${item.amount}",
+                                                            style:
+                                                                const TextStyle(
+                                                              fontFamily:
+                                                                  "Work Sans",
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color:
+                                                                  fagoSecondaryColor,
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 1.w,
+                                                          ),
+                                                          const AutoSizeText(
+                                                            "from",
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  "Work Sans",
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color: stepsColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 1.h,
                                                       ),
                                                       AutoSizeText(
-                                                        "Cancel",
-                                                        style: TextStyle(
+                                                        item.name!,
+                                                        style: const TextStyle(
+                                                          fontFamily:
+                                                              "Work Sans",
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color: stepsColor,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 1.h,
+                                                      ),
+                                                      AutoSizeText(
+                                                        item.date!
+                                                            .toIso8601String(),
+                                                        style: const TextStyle(
                                                           fontFamily:
                                                               "Work Sans",
                                                           fontSize: 12,
                                                           fontWeight:
-                                                              FontWeight.w600,
-                                                          color: white,
+                                                              FontWeight.w400,
+                                                          color:
+                                                              stepsColorWithOpacity55,
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-                                              ),
-                                            ]),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Get.defaultDialog(
+                                                        title: "",
+                                                        middleText: "",
+                                                        titlePadding:
+                                                            EdgeInsets.zero,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        content: dialogItem());
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                      'assets/icons/delete_request.svg'),
+                                                ),
+                                              ]),
+                                        ),
                                       ),
-                                    ]),
-                              ),
+                                    );
+                                  }),
                             )
                           : Container(
                               // width: 90.w,
@@ -481,5 +498,142 @@ class _RequestHomeState extends State<RequestHome> {
                               ),
                             )
                     ]))));
+  }
+
+  Widget dialogItem() {
+    return SizedBox(
+      height: 190,
+      width: Get.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const AutoSizeText(
+            "Reject Request",
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: fagoSecondaryColor,
+            ),
+          ),
+          SizedBox(
+            height: 1.5.h,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              AutoSizeText(
+                "Are you sure to reject this",
+                style: TextStyle(
+                  fontFamily: "Work Sans",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: stepsColor,
+                ),
+              ),
+              AutoSizeText(
+                " Request",
+                style: TextStyle(
+                  fontFamily: "Work Sans",
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  color: fagoSecondaryColor,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 1.5.h,
+          ),
+          const AutoSizeText(
+            '"Helping someone else doesn’t decrease \nyour wealth”',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: stepsColorWithOpacity55,
+            ),
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          const AutoSizeText(
+            "Thomas Fries",
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: stepsColor,
+            ),
+          ),
+          SizedBox(
+            height: 2.h,
+          ),
+          Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  width: 130,
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                      color: buttonColor,
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      const AutoSizeText(
+                        "Confirm",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w600,
+                            color: white),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 3.h,
+                ),
+                Container(
+                  width: 130,
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: buttonColor),
+                      color: white,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(25))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      const AutoSizeText(
+                        "Cancel",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w600,
+                            color: buttonColor),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
