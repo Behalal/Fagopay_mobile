@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,8 +23,13 @@ class KycVerfication extends StatefulWidget {
 }
 
 class KycVerficationstate extends State<KycVerfication> {
+  final _userUcontroller = Get.find<UserController>();
+
   @override
   Widget build(BuildContext context) {
+    print(
+      'Id is ${_userUcontroller.user!.id}',
+    );
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

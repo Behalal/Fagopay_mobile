@@ -1,3 +1,5 @@
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/kyc/kyc_success.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class IdentityPassPage extends StatefulWidget {
-  const IdentityPassPage({super.key});
+  const IdentityPassPage({
+    super.key,
+  });
 
   @override
   _IdentityPassPageState createState() => _IdentityPassPageState();
@@ -24,9 +28,12 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
 
     await Permission.microphone.request();
   };
-
+  final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
+    print(
+      'Id is ${_userUcontroller.user!.id}',
+    );
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -37,10 +44,10 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
             FlutterIdentityKyc.showWidget(InputParameters(
                 context: context,
                 merchantKey: "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
-                firstName: "Kehinde",
-                lastName: "Obe",
-                email: "kennyobey@gmail.com",
-                userRef: "10",
+                firstName:_userUcontroller.user!.firstName,
+                lastName: _userUcontroller.user!.lastName,
+                email: _userUcontroller.user!.email,
+                userRef: _userUcontroller.user!.id,
                 onCancel: (response) {
                   if (kDebugMode) {
                     print(response);
