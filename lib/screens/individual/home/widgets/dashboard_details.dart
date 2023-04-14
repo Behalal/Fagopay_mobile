@@ -2,11 +2,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
-import 'package:fagopay/screens/kyc/kyc_success.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
