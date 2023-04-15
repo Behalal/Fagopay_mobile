@@ -399,7 +399,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
           ),
         );
         Fluttertoast.showToast(
-          msg: "${jsonBody['data']['error'][0]}",
+          msg: "${jsonBody['data']['error']}",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 2,

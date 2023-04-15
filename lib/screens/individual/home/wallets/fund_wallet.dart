@@ -566,7 +566,7 @@ class _FundWalletState extends State<FundWallet> {
     }
     progress.dismiss();
     Fluttertoast.showToast(
-      msg: "${jsonData['data']['error'][0]}",
+      msg: "${jsonData['data']['error']}",
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
@@ -578,7 +578,7 @@ class _FundWalletState extends State<FundWallet> {
     // if (!mounted) return;
     // ScaffoldMessenger.of(context).showSnackBar(
     //   SnackBar(
-    //     content: Text('${jsonData['data']['error'][0]}'),
+    //     content: Text('${jsonData['data']['error']}'),
     //   ),
     // );
   }

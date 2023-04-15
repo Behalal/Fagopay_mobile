@@ -560,7 +560,7 @@ class _SetupPasswordState extends State<SetupPassword> {
         _isLoading = false;
       });
       Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error'][0]}",
+        msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
@@ -571,7 +571,7 @@ class _SetupPasswordState extends State<SetupPassword> {
       // if (!mounted) return;
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
-      //     content: Text('${jsonBody['data']['error'][0]}'),
+      //     content: Text('${jsonBody['data']['error']}'),
       //   ),
       // );
       return;
