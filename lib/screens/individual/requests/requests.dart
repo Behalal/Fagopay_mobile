@@ -409,15 +409,17 @@ class _RequestHomeState extends State<RequestHome> {
                                                 ),
                                               );
                                             })
-                                        : const AutoSizeText(
-                                            'No Request found',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: stepsColor,
+                                        : const Center(
+                                          child: AutoSizeText(
+                                              'No Request found',
+                                              style: TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: stepsColor,
+                                              ),
                                             ),
-                                          );
+                                        );
                               }),
                             )
                           : SizedBox(
@@ -610,15 +612,17 @@ class _RequestHomeState extends State<RequestHome> {
                                                 ),
                                               );
                                             })
-                                        : const AutoSizeText(
-                                            'No Request found',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: stepsColor,
+                                        : const Center(
+                                          child: AutoSizeText(
+                                              'No Request found',
+                                              style: TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: stepsColor,
+                                              ),
                                             ),
-                                          );
+                                        );
                                 ;
                               }),
                             )
