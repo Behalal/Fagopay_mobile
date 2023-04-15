@@ -459,7 +459,7 @@ class _FundWalletState extends State<FundWallet> {
                             Fluttertoast.showToast(
                               msg: "Fill in the form properly!",
                               toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.CENTER,
+                              gravity: ToastGravity.TOP,
                               timeInSecForIosWeb: 2,
                               backgroundColor: Colors.red,
                               textColor: Colors.white,
@@ -568,7 +568,7 @@ class _FundWalletState extends State<FundWallet> {
     Fluttertoast.showToast(
       msg: "${jsonData['data']['error'][0]}",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.red,
       textColor: Colors.white,

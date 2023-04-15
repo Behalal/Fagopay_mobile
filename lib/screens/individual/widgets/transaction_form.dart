@@ -1,10 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,7 +13,6 @@ class FagoTransactionForm extends StatefulWidget {
   final String? selectedBankValue;
   final String page;
   final Widget cancelRoute;
-  final TextEditingController? accountNumberController;
   final Function(String)? onChangedOfAccountNumberController;
   final String? verifiedReceipientUser;
   final VoidCallback? onSubmitForm;
@@ -26,7 +23,6 @@ class FagoTransactionForm extends StatefulWidget {
     required this.page,
     required this.cancelRoute,
     this.selectedBankValue,
-    this.accountNumberController,
     this.onChangedOfAccountNumberController,
     this.verifiedReceipientUser,
     this.onSubmitForm,
@@ -38,12 +34,6 @@ class FagoTransactionForm extends StatefulWidget {
 
 class _FagoTransactionFormState extends State<FagoTransactionForm> {
   final _transactionsController = Get.find<TransactionController>();
-
-  @override
-  void dispose() {
-    _transactionsController.accountNumberController.clear();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +62,7 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
         SizedBox(
           width: 90.w,
           child: TextFormField(
-            controller: widget.accountNumberController,
+            controller: _transactionsController.accountNumberController,
             onChanged: widget.onChangedOfAccountNumberController,
             keyboardType: TextInputType.number,
             style: const TextStyle(
@@ -163,6 +153,7 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
         SizedBox(
           width: 90.w,
           child: TextFormField(
+            controller: _transactionsController.amountController,
             keyboardType: TextInputType.number,
             style: const TextStyle(
               fontFamily: "Work Sans",
@@ -216,6 +207,7 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
         SizedBox(
           width: 90.w,
           child: TextFormField(
+            controller: _transactionsController.dexcriptionController,
             style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
@@ -267,10 +259,11 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
                     "Continue",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: "Work Sans",
-                        fontWeight: FontWeight.w600,
-                        color: white),
+                      fontSize: 16,
+                      fontFamily: "Work Sans",
+                      fontWeight: FontWeight.w600,
+                      color: white,
+                    ),
                   ),
                 ],
               ),

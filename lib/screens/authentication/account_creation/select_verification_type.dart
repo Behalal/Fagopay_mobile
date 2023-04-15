@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
+import 'individual_details.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../../service/secure_storage/secure_storage.dart';
@@ -269,7 +269,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                 Fluttertoast.showToast(
                                   msg: "Kindly Insert all fields",
                                   toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
+                                  gravity: ToastGravity.TOP,
                                   timeInSecForIosWeb: 2,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
@@ -290,7 +290,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                 Fluttertoast.showToast(
                                   msg: "Kindly Insert a valid phone number",
                                   toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
+                                  gravity: ToastGravity.TOP,
                                   timeInSecForIosWeb: 2,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
@@ -305,7 +305,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                 Fluttertoast.showToast(
                                   msg: "Kindly Insert a valid email address",
                                   toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
+                                  gravity: ToastGravity.TOP,
                                   timeInSecForIosWeb: 2,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
@@ -347,7 +347,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
     try {
       final res = await _registrationController.selectAccountType();
       final jsonBody = jsonDecode(res.body);
-      // print(res.body);
+      print(res.body);
       setState(() {
         _isLoading = true;
       });
@@ -366,7 +366,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         Fluttertoast.showToast(
           msg: "${jsonBody['message']}",
           toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 2,
           backgroundColor: Colors.green,
           textColor: Colors.white,
@@ -401,7 +401,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
         Fluttertoast.showToast(
           msg: "${jsonBody['data']['error'][0]}",
           toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 2,
           backgroundColor: Colors.green,
           textColor: Colors.white,
@@ -416,7 +416,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,

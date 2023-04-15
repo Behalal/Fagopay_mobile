@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 import '../authentication/account_creation/widgets/current_step.dart';
 import '../authentication/widgets/auth_buttons.dart';
 import '../constants/colors.dart';
 import 'kyc1.dart';
 import 'kyc2.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class KycDetailsScreen extends StatefulWidget {
   const KycDetailsScreen({super.key});

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../controllers/bill_controller.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:get/get.dart';
@@ -371,18 +372,27 @@ class _ElectricityState extends State<Electricity> {
         await _billController.verifyMeterNo(serviceID, billerCode, type);
     final jsonBodyData = jsonDecode(response.body);
     final customerDetail = jsonBodyData['data']['customer_detail'];
-    if (response.statusCode != 200) {
-      progress.dismiss();
-      setState(() {
-        verrifiedMeterUser = "";
-        _verifiedMeter = false;
-      });
-    } else {
+    if (response.statusCode == 200) {
       progress.dismiss();
       setState(() {
         verrifiedMeterUser = customerDetail['Customer_Name'];
         _verifiedMeter = true;
       });
+      return;
     }
+    progress.dismiss();
+    setState(() {
+      verrifiedMeterUser = "";
+      _verifiedMeter = false;
+    });
+    Fluttertoast.showToast(
+      msg: "${jsonBodyData['data']['error']}",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 }

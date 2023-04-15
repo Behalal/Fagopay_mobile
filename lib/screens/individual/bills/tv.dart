@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../controllers/bill_controller.dart';
 import '../../../models/data_model.dart';
 import '../../functions.dart';
@@ -384,19 +385,28 @@ class _TVSubscriptionState extends State<TVSubscription> {
         await _billcontroller.verifySmartCardNumber(cardNo, serviceID);
     final jsonBodyData = jsonDecode(response.body);
     final customerDetail = jsonBodyData['data']['customer_detail'];
-    if (response.statusCode != 200) {
-      progress.dismiss();
-      setState(() {
-        verifiedCableUser = "";
-        verifiedUser = false;
-      });
-    } else {
+    if (response.statusCode == 200) {
       progress.dismiss();
       setState(() {
         verifiedCableUser = customerDetail['Customer_Name'];
         verifiedUser = true;
       });
+      return;
     }
+    progress.dismiss();
+    setState(() {
+      verifiedCableUser = "";
+      verifiedUser = false;
+    });
+    Fluttertoast.showToast(
+      msg: "${jsonBodyData['data']['error']}",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 
   Future<void> fetchDataByServiceId(String serviceId) async {

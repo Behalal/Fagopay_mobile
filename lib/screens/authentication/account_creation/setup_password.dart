@@ -492,7 +492,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         Fluttertoast.showToast(
                           msg: "Kindly enter your password",
                           toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
+                          gravity: ToastGravity.TOP,
                           timeInSecForIosWeb: 2,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
@@ -508,7 +508,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         Fluttertoast.showToast(
                           msg: "Password does not match",
                           toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
+                          gravity: ToastGravity.TOP,
                           timeInSecForIosWeb: 2,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
@@ -562,7 +562,7 @@ class _SetupPasswordState extends State<SetupPassword> {
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error'][0]}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -581,7 +581,7 @@ class _SetupPasswordState extends State<SetupPassword> {
     Fluttertoast.showToast(
       msg: "Registration successful",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.green,
       textColor: Colors.white,

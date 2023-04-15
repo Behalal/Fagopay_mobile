@@ -333,7 +333,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                         Fluttertoast.showToast(
                           msg: "Select a Network Provider",
                           toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
+                          gravity: ToastGravity.TOP,
                           timeInSecForIosWeb: 2,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,

@@ -1,6 +1,5 @@
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/kyc/kyc_success.dart';
+import '../../controllers/user_controller.dart';
+import 'kyc_success.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
@@ -44,9 +43,9 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
             FlutterIdentityKyc.showWidget(InputParameters(
                 context: context,
                 merchantKey: "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
-                firstName:_userUcontroller.user!.firstName,
+                firstName: _userUcontroller.user!.firstName,
                 lastName: _userUcontroller.user!.lastName,
-                email: _userUcontroller.user!.email,
+                email: _userUcontroller.user!.email!,
                 userRef: _userUcontroller.user!.id,
                 onCancel: (response) {
                   if (kDebugMode) {

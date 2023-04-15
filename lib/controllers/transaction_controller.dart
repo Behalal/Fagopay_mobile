@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import '../screens/individual/bills/models/transaction_post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -98,9 +99,14 @@ class TransactionController extends GetxController {
     }
   }
 
-  Future<dynamic> bankTransfer(String accountNumber, String accountBank,
-      String amount, String description, String transactionPin) async {
+  Future<dynamic> bankTransfer(String transactionPin) async {
     final token = await SecureStorage.readUserToken();
+
+    String accountNumber = bankTransferFields.accountNumber;
+    String accountBank = bankTransferFields.bankId;
+    String amount = bankTransferFields.amount;
+    String description = bankTransferFields.narration;
+
     var requestBody = jsonEncode({
       "account_number": accountNumber,
       "account_bank": accountBank,
