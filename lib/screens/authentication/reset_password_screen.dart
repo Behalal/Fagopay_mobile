@@ -126,7 +126,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           Fluttertoast.showToast(
                             msg: "Passwords dont match!",
                             toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.CENTER,
+                            gravity: ToastGravity.TOP,
                             timeInSecForIosWeb: 2,
                             backgroundColor: Colors.red,
                             textColor: Colors.white,
@@ -140,7 +140,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       Fluttertoast.showToast(
                         msg: "Enter the fields correctly",
                         toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.CENTER,
+                        gravity: ToastGravity.TOP,
                         timeInSecForIosWeb: 2,
                         backgroundColor: Colors.red,
                         textColor: Colors.white,
@@ -169,7 +169,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         msg:
             "Password has been reset successfuly. Proceed to login with your new password",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -188,7 +188,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     Fluttertoast.showToast(
       msg: "${jsonBody['data']['error']}",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.red,
       textColor: Colors.white,

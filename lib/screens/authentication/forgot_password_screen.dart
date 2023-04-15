@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fagopay/controllers/login_controller.dart';
-import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
+import '../../controllers/login_controller.dart';
+import 'recover_password_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -132,7 +132,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 Fluttertoast.showToast(
                                   msg: "Enter the field properly!",
                                   toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
+                                  gravity: ToastGravity.TOP,
                                   timeInSecForIosWeb: 2,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
@@ -202,7 +202,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       Fluttertoast.showToast(
         msg: "Password reset code has been sent to your email",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -222,7 +222,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     Fluttertoast.showToast(
       msg: "${jsonBody['data']['error']}",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.red,
       textColor: Colors.white,

@@ -492,7 +492,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         Fluttertoast.showToast(
                           msg: "Kindly enter your password",
                           toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
+                          gravity: ToastGravity.TOP,
                           timeInSecForIosWeb: 2,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
@@ -508,7 +508,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         Fluttertoast.showToast(
                           msg: "Password does not match",
                           toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
+                          gravity: ToastGravity.TOP,
                           timeInSecForIosWeb: 2,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
@@ -560,9 +560,9 @@ class _SetupPasswordState extends State<SetupPassword> {
         _isLoading = false;
       });
       Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error'][0]}",
+        msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -571,7 +571,7 @@ class _SetupPasswordState extends State<SetupPassword> {
       // if (!mounted) return;
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
-      //     content: Text('${jsonBody['data']['error'][0]}'),
+      //     content: Text('${jsonBody['data']['error']}'),
       //   ),
       // );
       return;
@@ -581,7 +581,7 @@ class _SetupPasswordState extends State<SetupPassword> {
     Fluttertoast.showToast(
       msg: "Registration successful",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.green,
       textColor: Colors.white,

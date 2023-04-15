@@ -236,7 +236,7 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
     Fluttertoast.showToast(
       msg: "OTP is Invalid",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.red,
       textColor: Colors.white,

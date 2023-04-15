@@ -8,7 +8,6 @@ import 'package:sizer/sizer.dart';
 import '../authentication/account_creation/widgets/current_step.dart';
 import '../constants/colors.dart';
 import 'business_verify.dart';
-import 'kyc2.dart';
 
 class KycVerfication extends StatefulWidget {
   final String accountType;

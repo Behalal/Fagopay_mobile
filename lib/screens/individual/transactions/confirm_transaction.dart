@@ -6,6 +6,7 @@ import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
+import 'package:fagopay/screens/individual/bills/models/transaction_post_model.dart';
 import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
 import 'package:fagopay/screens/widgets.dart';
 import 'package:flutter/material.dart';
@@ -102,7 +103,9 @@ class ConfirmTransactions extends StatelessWidget {
                                         ? "Internet Purchase"
                                         : action == "tv"
                                             ? "Cable Subscription"
-                                            : "Wema-2309234595"))),
+                                            : action == "bank_transfer"
+                                                ? "Bank Transfer"
+                                                : "Wema-2309234595"))),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -186,7 +189,9 @@ class ConfirmTransactions extends StatelessWidget {
                                     ? "${currencySymbol}${data.amount}"
                                     : action == 'tv'
                                         ? "${currencySymbol}${data.amount}"
-                                        : "")),
+                                        : action == 'bank_transfer'
+                                            ? "${currencySymbol}${data.amount}"
+                                            : "")),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -234,6 +239,43 @@ class ConfirmTransactions extends StatelessWidget {
                   ),
                 ),
               ],
+              if (action == "bank_transfer") ...[
+                SizedBox(
+                  height: 3.h,
+                ),
+                Container(
+                  decoration: DottedDecoration(
+                      linePosition: LinePosition.bottom,
+                      color: transactionKeys,
+                      dash: const [3, 3]),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AutoSizeText(
+                          "Account Name",
+                          style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: transactionKeys),
+                        ),
+                        AutoSizeText(
+                          "${data.accountName}",
+                          style: const TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: fagoSecondaryColor),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               SizedBox(
                 height: 3.h,
               ),
@@ -267,7 +309,9 @@ class ConfirmTransactions extends StatelessWidget {
                                     ? "${data.billersCode}"
                                     : action == 'tv'
                                         ? "${data.billersCode}"
-                                        : "")),
+                                        : action == 'bank_transfer'
+                                            ? "${data.accountNumber}"
+                                            : "")),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -278,6 +322,43 @@ class ConfirmTransactions extends StatelessWidget {
                   ),
                 ),
               ),
+              if (action == "bank_transfer") ...[
+                SizedBox(
+                  height: 3.h,
+                ),
+                Container(
+                  decoration: DottedDecoration(
+                      linePosition: LinePosition.bottom,
+                      color: transactionKeys,
+                      dash: const [3, 3]),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 0.5.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AutoSizeText(
+                          "Description",
+                          style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: transactionKeys),
+                        ),
+                        AutoSizeText(
+                          "${data.narration}",
+                          style: const TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: fagoSecondaryColor),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
               // SizedBox(
               //   height: 3.h,
               // ),
@@ -392,36 +473,36 @@ class ConfirmTransactions extends StatelessWidget {
                 height: 4.h,
               ),
               Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
-                  child: GestureDetector(
-                    onTap: () => showPinModal(context, action!),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                          color: buttonColor,
-                          borderRadius: BorderRadius.all(Radius.circular(25))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 1.w,
-                          ),
-                          const AutoSizeText(
-                            "Continue",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w600,
-                                color: white),
-                          ),
-                        ],
-                      ),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.h),
+                child: GestureDetector(
+                  onTap: () => showPinModal(context, action!),
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        color: buttonColor,
+                        borderRadius: BorderRadius.all(Radius.circular(25))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 1.w,
+                        ),
+                        const AutoSizeText(
+                          "Continue",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: "Work Sans",
+                              fontWeight: FontWeight.w600,
+                              color: white),
+                        ),
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
                 child: GestureDetector(
@@ -487,6 +568,11 @@ class ConfirmTransactions extends StatelessWidget {
       transactionType = "Transaction type";
       toLabel = "Card Number";
       return buyTvCableFields;
+    }
+    if (action == 'bank_transfer') {
+      transactionType = "Transaction type";
+      toLabel = "Account Number";
+      return bankTransferFields;
     }
   }
 }

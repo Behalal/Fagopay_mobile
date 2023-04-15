@@ -1,23 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-// class SecureStorage {
-//   dynamic tokenRead() async {
-//     final prefs = await SharedPreferences.getInstance();
-//     const key = 'token';
-//     final readValue = prefs.getString(key) ?? 0;
-//     log('read: $readValue');
-//     return readValue;
-//   }
-
-//   dynamic tokenSave(token) async {
-//     final prefs = await SharedPreferences.getInstance();
-//     const key = 'token';
-//     final value = token;
-//     prefs.setString(key, value);
-//     log('saved $value');
-//   }
-// }
-
 class SecureStorage {
   static const _storage = FlutterSecureStorage();
 

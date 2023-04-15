@@ -5,7 +5,6 @@ import '../../authentication/widgets/auth_buttons.dart';
 import '../../individual/widgets/business_form.dart';
 import '../../individual/widgets/business_warning.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
-import 'customer.dart';
 
 class AddSales extends StatefulWidget {
   const AddSales({super.key});

@@ -716,10 +716,11 @@ class _RequestHomeState extends State<RequestHome> {
                         "Confirm",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Work Sans",
-                            fontWeight: FontWeight.w600,
-                            color: white),
+                          fontSize: 16,
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w600,
+                          color: white,
+                        ),
                       ),
                     ],
                   ),
@@ -732,10 +733,12 @@ class _RequestHomeState extends State<RequestHome> {
                   padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      border: Border.all(color: buttonColor),
-                      color: white,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(25))),
+                    border: Border.all(color: buttonColor),
+                    color: white,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(25),
+                    ),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -746,10 +749,11 @@ class _RequestHomeState extends State<RequestHome> {
                         "Cancel",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: "Work Sans",
-                            fontWeight: FontWeight.w600,
-                            color: buttonColor),
+                          fontSize: 16,
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w600,
+                          color: buttonColor,
+                        ),
                       ),
                     ],
                   ),

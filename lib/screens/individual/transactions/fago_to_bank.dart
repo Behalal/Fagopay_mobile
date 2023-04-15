@@ -3,9 +3,11 @@ import 'dart:convert';
 
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:fagopay/screens/functions.dart';
+import 'package:fagopay/screens/individual/bills/models/transaction_post_model.dart';
 import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -33,8 +35,6 @@ class FagoToBank extends StatefulWidget {
 class _FagoToBankState extends State<FagoToBank> {
   List<BankDetails> allBanks = [];
   List<DropdownMenuItem<String>> bankDropdown = [];
-  // bool isLoading = true;
-  // String? accountName = "";
   String selectedBankValue = "";
   final _transactionController = Get.find<TransactionController>();
   String verifiedReceipientUser = "";
@@ -43,6 +43,14 @@ class _FagoToBankState extends State<FagoToBank> {
   void initState() {
     super.initState();
     callBankProvider();
+  }
+
+  @override
+  void dispose() {
+    _transactionController.accountNumberController.clear();
+    _transactionController.amountController.clear();
+    _transactionController.dexcriptionController.clear();
+    super.dispose();
   }
 
   @override
@@ -85,6 +93,7 @@ class _FagoToBankState extends State<FagoToBank> {
                       onChanged: (selectedValue) {
                         setState(() {
                           selectedBankValue = selectedValue!;
+                          bankTransferFields.setBankId = selectedValue;
                         });
                       },
                       selectedValue: "",
@@ -95,8 +104,6 @@ class _FagoToBankState extends State<FagoToBank> {
                     FagoTransactionForm(
                       accountName: widget.accountDetails.accountName,
                       selectedBankValue: selectedBankValue,
-                      accountNumberController:
-                          _transactionController.accountNumberController,
                       verifiedReceipientUser: verifiedReceipientUser,
                       onChangedOfAccountNumberController: (value) async {
                         // if (value.length > 10) {
@@ -118,12 +125,53 @@ class _FagoToBankState extends State<FagoToBank> {
                         accountDetails: widget.accountDetails,
                       ),
                       onSubmitForm: () {
-                        goToPage(
-                          context,
-                          ConfirmTransactions(
-                            // backRoute:  FagoToBank(),
-                            action: 'buy_internet',
-                          ),
+                        // if (verifiedReceipientUser == "") {
+                        //   Fluttertoast.showToast(
+                        //     msg: "Receipient account is not verified!",
+                        //     toastLength: Toast.LENGTH_LONG,
+                        //     gravity: ToastGravity.TOP,
+                        //     timeInSecForIosWeb: 2,
+                        //     backgroundColor: Colors.red,
+                        //     textColor: Colors.white,
+                        //     fontSize: 16.0,
+                        //   );
+                        //   return;
+                        // }
+                        if (bankTransferFields.bankId != "" &&
+                            _transactionController.amountController.text !=
+                                "" &&
+                            _transactionController
+                                    .accountNumberController.text !=
+                                "") {
+                          bankTransferFields.setAccountName =
+                              verifiedReceipientUser;
+                          bankTransferFields.setAccountNumber =
+                              _transactionController
+                                  .accountNumberController.text;
+                          bankTransferFields.setAmount =
+                              _transactionController.amountController.text;
+                          bankTransferFields.setNarration =
+                              _transactionController.dexcriptionController.text;
+                          goToPage(
+                            context,
+                            ConfirmTransactions(
+                              backRoute: FagoToBank(
+                                userDetails: widget.userDetails,
+                                accountDetails: widget.accountDetails,
+                              ),
+                              action: 'bank_transfer',
+                            ),
+                          );
+                          return;
+                        }
+                        Fluttertoast.showToast(
+                          msg: "Enter the fields correctly!",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
                       },
                     ),
@@ -173,21 +221,25 @@ class _FagoToBankState extends State<FagoToBank> {
         await _transactionController.getBankDetails(bankCode, accountNumber);
     final jsonBodyData = jsonDecode(response.body);
     final customerDetail = jsonBodyData['data']['account_name'];
-    if (response.statusCode != 200) {
-      progress.dismiss();
-      setState(() {
-        verifiedReceipientUser = "";
-      });
-    } else {
+    if (response.statusCode == 200) {
       progress.dismiss();
       setState(() {
         verifiedReceipientUser = customerDetail;
       });
+      return;
     }
-  }
-
-  Future<void> bankTransfer() async {
-    // final response = await _transactionController.bankTransfer(
-    //     accountNumber, accountBank, amount, description, transactionPin);
+    progress.dismiss();
+    setState(() {
+      verifiedReceipientUser = "";
+    });
+    Fluttertoast.showToast(
+      msg: "${jsonBodyData['data']['error']}",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
 }

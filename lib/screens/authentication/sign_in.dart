@@ -213,7 +213,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                 Fluttertoast.showToast(
                                   msg: "Kindly insert all fields",
                                   toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
+                                  gravity: ToastGravity.TOP,
                                   timeInSecForIosWeb: 2,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
@@ -319,7 +319,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       Fluttertoast.showToast(
         msg: "Login Successfull",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -350,7 +350,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     Fluttertoast.showToast(
       msg: "${jsonBody['data']['error']}",
       toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.CENTER,
+      gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
       backgroundColor: Colors.red,
       textColor: Colors.white,

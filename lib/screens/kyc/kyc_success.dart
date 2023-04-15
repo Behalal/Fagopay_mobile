@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import '../../controllers/user_controller.dart';
+import '../../models/user_model/user.dart';
+import '../individual/home/dashboard_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import '../controllers/transaction_controller.dart';
+import 'individual/bills/models/transaction_post_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -50,6 +53,7 @@ class PinCodeModal extends StatefulWidget {
 class _PinCodeModalState extends State<PinCodeModal> {
   final TextEditingController pincontroller = TextEditingController();
   final _billController = Get.find<BillController>();
+  final _transactionController = Get.find<TransactionController>();
   String _isLoading = "2";
 
   // @override
@@ -150,7 +154,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                 Fluttertoast.showToast(
                                   msg: "Kindly enter your pin",
                                   toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
+                                  gravity: ToastGravity.TOP,
                                   timeInSecForIosWeb: 2,
                                   backgroundColor: Colors.red,
                                   textColor: Colors.white,
@@ -183,9 +187,13 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                       context, pincontroller.text);
                                   return;
                                 }
-
                                 if (widget.action == "tv") {
                                   await buyCableSubscription(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "bank_transfer") {
+                                  await bankTransfer(
                                       context, pincontroller.text);
                                   return;
                                 }
@@ -234,12 +242,12 @@ class _PinCodeModalState extends State<PinCodeModal> {
     // if (!mounted) return;
     if (response.statusCode != 200) {
       setState(() {
-        _isLoading = "1";
+        Navigator.of(context).pop();
       });
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -271,7 +279,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       Fluttertoast.showToast(
         msg: "Airtime Purchase Successful",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -285,12 +293,12 @@ class _PinCodeModalState extends State<PinCodeModal> {
     final jsonBody = jsonDecode(response.body);
     if (response.statusCode != 200) {
       setState(() {
-        _isLoading = "1";
+        Navigator.of(context).pop();
       });
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -324,7 +332,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       Fluttertoast.showToast(
         msg: "Databundle Purchase Successful",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -338,12 +346,12 @@ class _PinCodeModalState extends State<PinCodeModal> {
     final jsonBody = jsonDecode(response.body);
     if (response.statusCode != 200) {
       setState(() {
-        _isLoading = "1";
+        Navigator.of(context).pop();
       });
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -358,7 +366,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
-
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Electricity Purchase Successful'),
@@ -377,7 +384,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       Fluttertoast.showToast(
         msg: "Electricity Purchase Successful",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -391,12 +398,12 @@ class _PinCodeModalState extends State<PinCodeModal> {
     final jsonBody = jsonDecode(response.body);
     if (response.statusCode != 200) {
       setState(() {
-        _isLoading = "1";
+        Navigator.of(context).pop();
       });
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -430,7 +437,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       Fluttertoast.showToast(
         msg: "Internet Subscription Purchase Successful",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,
@@ -445,12 +452,12 @@ class _PinCodeModalState extends State<PinCodeModal> {
     final jsonBody = jsonDecode(response.body);
     if (response.statusCode != 200) {
       setState(() {
-        _isLoading = "1";
+        Navigator.of(context).pop();
       });
       Fluttertoast.showToast(
         msg: "${jsonBody['data']['error']}",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.red,
         textColor: Colors.white,
@@ -465,7 +472,6 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         _isLoading = "1";
       });
-
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text('Cable Subscription Purchase Successful'),
@@ -484,7 +490,52 @@ class _PinCodeModalState extends State<PinCodeModal> {
       Fluttertoast.showToast(
         msg: "Cable Subscription Purchase Successful",
         toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
+
+  Future<void> bankTransfer(BuildContext context, String pinCode) async {
+    final response = await _transactionController.bankTransfer(pinCode);
+    final jsonBody = jsonDecode(response.body);
+    if (kDebugMode) {
+      print(jsonBody);
+    }
+    if (response.statusCode != 200) {
+      setState(() {
+        Navigator.of(context).pop();
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      setState(() {
+        _isLoading = "1";
+      });
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: bankTransferFields.amount,
+            number: bankTransferFields.accountNumber,
+            action: 'Bank Transfer',
+          ),
+        ),
+      );
+      Fluttertoast.showToast(
+        msg: "Bank Transfer Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
         backgroundColor: Colors.green,
         textColor: Colors.white,

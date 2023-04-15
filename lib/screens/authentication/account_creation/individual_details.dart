@@ -104,7 +104,7 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                         Fluttertoast.showToast(
                           msg: "Kindly Insert all fields",
                           toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.CENTER,
+                          gravity: ToastGravity.TOP,
                           timeInSecForIosWeb: 2,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
@@ -133,7 +133,7 @@ class _IndividualDetailsState extends State<IndividualDetails> {
                       //   Fluttertoast.showToast(
                       //     msg: "Invalid email address sent",
                       //     toastLength: Toast.LENGTH_LONG,
-                      //     gravity: ToastGravity.CENTER,
+                      //     gravity: ToastGravity.TOP,
                       //     timeInSecForIosWeb: 2,
                       //     backgroundColor: Colors.red,
                       //     textColor: Colors.white,
