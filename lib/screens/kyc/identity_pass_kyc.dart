@@ -44,9 +44,9 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
             FlutterIdentityKyc.showWidget(InputParameters(
                 context: context,
                 merchantKey: "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
-                firstName:_userUcontroller.user!.firstName,
+                firstName: _userUcontroller.user!.firstName,
                 lastName: _userUcontroller.user!.lastName,
-                email: _userUcontroller.user!.email,
+                email: _userUcontroller.user!.email ?? '',
                 userRef: _userUcontroller.user!.id,
                 onCancel: (response) {
                   if (kDebugMode) {

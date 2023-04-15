@@ -1,3 +1,4 @@
+import 'package:fagopay/controllers/request_money_controller.dart';
 import 'package:get/get.dart';
 
 import '../controllers/bill_controller.dart';
@@ -13,5 +14,6 @@ class AppBinding extends Bindings {
     Get.lazyPut(() => UserController());
     Get.lazyPut(() => TransactionController());
     Get.lazyPut(() => BillController());
+    Get.lazyPut(() => RequestMoney());
   }
 }

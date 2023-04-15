@@ -50,7 +50,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       // backRoute: RequestHome(),
                     ),
                     SizedBox(
-                      height: 1.h,
+                      height: 4.h,
                     ),
                     // ignore: prefer_const_constructors
                     Text(
@@ -64,7 +64,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       ),
                     ),
                     SizedBox(
-                      height: 2.h,
+                      height: 4.h,
                     ),
                     Container(
                       decoration: DottedDecoration(
@@ -78,7 +78,7 @@ class _MakeRequestState extends State<MakeRequest> {
                     // FagoTransactionForm(page: "", cancelRoute: const RequestHome()),
                     // ignore: prefer_const_constructors
                     AutoSizeText(
-                      "Phone Number",
+                      "Request From",
                       style: const TextStyle(
                         fontFamily: "Work Sans",
                         fontSize: 15,
@@ -87,7 +87,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       ),
                     ),
                     SizedBox(
-                      height: 0.5.h,
+                      height: 1.5.h,
                     ),
                     SizedBox(
                       width: 90.w,
@@ -160,7 +160,7 @@ class _MakeRequestState extends State<MakeRequest> {
                     //   ),
                     // ),
                     SizedBox(
-                      height: 2.h,
+                      height: 4.h,
                     ),
                     const AutoSizeText(
                       "Enter Amount",
@@ -172,7 +172,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       ),
                     ),
                     SizedBox(
-                      height: 0.5.h,
+                      height: 1.5.h,
                     ),
                     SizedBox(
                       width: 90.w,
@@ -213,7 +213,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       ),
                     ),
                     SizedBox(
-                      height: 2.h,
+                      height: 4.h,
                     ),
                     const AutoSizeText(
                       "Narrate your need",
@@ -225,7 +225,7 @@ class _MakeRequestState extends State<MakeRequest> {
                       ),
                     ),
                     SizedBox(
-                      height: 0.5.h,
+                      height: 1.5.h,
                     ),
                     SizedBox(
                       width: 90.w,
