@@ -11,6 +11,9 @@ class BaseAPI {
   static String billPath = "${api}bills/";
   static String validateResetOtp = "${api}verify/password-reset-code";
 
+// RequestMoney Endpoint
+  static String myRequest = "${api}transaction/requestee-request-list";
+  static String requestedMoney = "${api}transaction/requester-request-list";
 
   // String headers = {
   //   "Content-Type": "application/json; charset=UTF-8",

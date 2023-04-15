@@ -1,3 +1,4 @@
+import 'package:fagopay/controllers/request_money_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class PaymentModel {
 }
 
 final _userController = Get.find<UserController>();
+final _moneyRequest = Get.put(RequestMoney());
 
 List<PaymentModel> paymentContents = [
   PaymentModel(
@@ -71,6 +73,8 @@ List<PaymentModel> paymentContents = [
         currentColor: fagoPrimaryColor,
       ),
     ),
-    route: const RequestHome(),
+    route: RequestHome(
+      //item: _moneyRequest.myRequestList,
+    ),
   ),
 ];

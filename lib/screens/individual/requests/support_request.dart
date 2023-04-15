@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
@@ -15,10 +16,10 @@ class SupportRequest extends StatelessWidget {
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const ProgressStyle(
                         stage: 50,
@@ -32,7 +33,7 @@ class SupportRequest extends StatelessWidget {
                         text: TextSpan(
                             style: const TextStyle(
                                 fontFamily: "Work Sans",
-                                fontSize: 20,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 color: stepsColor),
                             children: [
@@ -45,14 +46,17 @@ class SupportRequest extends StatelessWidget {
                               TextSpan(
                                   text: '$currencySymbol 200',
                                   style: const TextStyle(
-                                      color: fagoSecondaryColor)),
+                                    fontSize: 16,
+                                    color: fagoSecondaryColor,
+                                    fontWeight: FontWeight.w700,
+                                  )),
                             ]),
                       ),
                       SizedBox(
                         height: 4.h,
                       ),
                       Container(
-                        height: 150,
+                        height: 100,
                         decoration: const BoxDecoration(
                           color: fagoSecondaryColorWithOpacity10,
                         ),
@@ -60,13 +64,14 @@ class SupportRequest extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               vertical: 1.5.h, horizontal: 2.5.w),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
                                 // width: 60.w,
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
@@ -74,16 +79,8 @@ class SupportRequest extends StatelessWidget {
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.contacts_rounded,
-                                          color: stepsColor,
-                                          size: 15,
-                                        ),
-                                        SizedBox(
-                                          width: 1.w,
-                                        ),
-                                        const AutoSizeText(
+                                      children: const [
+                                        AutoSizeText(
                                           "Ibrahim Lukman",
                                           style: TextStyle(
                                             fontFamily: "Work Sans",
@@ -101,8 +98,8 @@ class SupportRequest extends StatelessWidget {
                                       "Narration",
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
                                         color: stepsColor,
                                       ),
                                     ),
@@ -114,29 +111,27 @@ class SupportRequest extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 16,
-                                        color: stepsColor,
+                                        fontWeight: FontWeight.w600,
+                                        color: buttonColor,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                width: 30.w,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    AutoSizeText(
-                                      "$currencySymbol 200",
-                                      style: const TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                        color: fagoSecondaryColor,
-                                      ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  AutoSizeText(
+                                    "$currencySymbol 200",
+                                    style: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: fagoSecondaryColor,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -145,16 +140,38 @@ class SupportRequest extends StatelessWidget {
                       SizedBox(
                         height: 5.h,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('assets/icons/markIcon.svg'),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          const AutoSizeText(
+                            "By clicking on I support or using the custom box, I consent \nthat Fagopay shall debit my wallet to credit the requestee.",
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 10,
+                              fontWeight: FontWeight.w300,
+                              color: stepsColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 10.w, vertical: 2.h),
                         child: AuthButtons(
                             form: false,
-                            text: "Continue",
+                            text: "I Support",
                             route: const Electricity()),
                       ),
                       SizedBox(
-                        height: 5.h,
+                        height: 3.h,
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 42.w),
@@ -168,7 +185,7 @@ class SupportRequest extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 5.h,
+                        height: 3.h,
                       ),
                       const AutoSizeText(
                         "How much can you afford?",
@@ -217,6 +234,58 @@ class SupportRequest extends StatelessWidget {
                                 color: fagoSecondaryColor, size: 25),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      Container(
+                        width: 70.w,
+                        padding: EdgeInsets.symmetric(
+                            vertical: 1.8.h, horizontal: 3.w),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: buttonColor),
+                            color: white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(25))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 1.w,
+                            ),
+                            const AutoSizeText(
+                              "I don’t approve",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "Work Sans",
+                                  fontWeight: FontWeight.w600,
+                                  color: buttonColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      RichText(
+                        text: const TextSpan(
+                          
+                            style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: stepsColor),
+                            children: [
+                              TextSpan(
+                                  text:
+                                      '“Helping someone else doesn’t decrease your\nwealth”.'),
+                              TextSpan(
+                                  text: 'Thomas Fries',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w600)),
+                            ]),
                       ),
                     ]))));
   }
