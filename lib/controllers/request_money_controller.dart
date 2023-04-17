@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fagopay/models/register_request/lookup_phone_model.dart';
 import 'package:fagopay/models/request_money/request_money_model.dart';
 import 'package:fagopay/service/constants/constants.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
@@ -23,7 +24,7 @@ enum MyRequestedMoneyStatus {
   available,
 }
 
-enum RequestMoneyApi {
+enum LookUpPhone {
   empty,
   loading,
   error,
@@ -44,6 +45,12 @@ class RequestMoney extends GetxController {
   final _requestedMoneyStatus = MyRequestedMoneyStatus.empty.obs;
   MyRequestedMoneyStatus get requestedMoneyStatus =>
       _requestedMoneyStatus.value;
+
+  final _looUpPhonStatus = LookUpPhone.empty.obs;
+  LookUpPhone get looUpPhonStatus => _looUpPhonStatus.value;
+
+  final Rx<LookUpPhoneNumber?> mUser = Rx(null);
+  LookUpPhoneNumber? get user => mUser.value;
 
   Future getMyRequest() async {
     final token = await SecureStorage.readUserToken();
@@ -150,18 +157,22 @@ class RequestMoney extends GetxController {
   }
 
   // Future requestMoneyApi({String? otp}) async {
-  //   _otpForgotVerifyStatus(OtpForgotVerifyStatus.loading);
+  //   final token = await SecureStorage.readUserToken();
+  //   _requestMoneyApiStatus(RequestMoneyApi.loading);
   //   try {
   //     if (kDebugMode) {
   //       print('validating reset password otp...');
   //     }
 
-  //     var response = await http.post(Uri.parse(BaseAPI.validateResetOtp),
+  //     var response = await http.post(Uri.parse(BaseAPI.requestMoneyapi),
   //         headers: {
   //           "Content-Type": "application/json",
+  //           "Authorization": "Bearer $token"
   //         },
   //         body: jsonEncode({
-  //           "code": otp,
+  //           "phone_number": otp,
+  //           "amount": 3500,
+  //           "description": "Kennyobey request testing"
   //         }));
   //     if (kDebugMode) {
   //       print(response.body);
@@ -172,20 +183,20 @@ class RequestMoney extends GetxController {
   //     }
 
   //     if (response.statusCode == 200) {
-  //       _otpForgotVerifyStatus(OtpForgotVerifyStatus.success);
+  //       _requestMoneyApiStatus(RequestMoneyApi.success);
   //       Get.snackbar('Success', 'Password reset validated successfully!');
   //       print("user id ${json['data']['code']}");
-  //       Get.to(() => ResetPasswordScreen(
-  //             pinCode: json['data']['code'],
-  //           ));
+  //       // Get.to(() => ResetPasswordScreen(
+  //       //       pinCode: json['data']['code'],
+  //       //     ));
   //     } else if (response.statusCode == 422) {
   //       Get.snackbar('Error', 'The selected code is invalid');
-  //       _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
+  //       _requestMoneyApiStatus(RequestMoneyApi.error);
   //     }
 
   //     return response.body;
   //   } catch (error) {
-  //     _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
+  //     _requestMoneyApiStatus(RequestMoneyApi.error);
   //     Get.snackbar(
   //         'Error',
   //         error.toString() ==
@@ -197,4 +208,53 @@ class RequestMoney extends GetxController {
   //     }
   //   }
   // }
+
+  Future lookUpPhone({required String phone}) async {
+    final token = await SecureStorage.readUserToken();
+    try {
+      _looUpPhonStatus(LookUpPhone.loading);
+
+      var response = await http.get(
+          Uri.parse(
+            "${BaseAPI.lookupPhoneNum}$phone",
+          ),
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer $token'
+          });
+      print('here 1');
+      var json = jsonDecode(response.body);
+      if (kDebugMode) {
+        print(response.body);
+      }
+      print('here 3');
+      if (kDebugMode) {
+        print("lookup data ${response.body}");
+      }
+      if (response.statusCode == 200) {
+        var json = jsonDecode(response.body);
+
+        var phoneNumDetails =
+            LookUpPhoneNumber.fromJson(json['data']['account_detail']);
+        mUser(phoneNumDetails);
+        if (kDebugMode) {
+          print("phone number mUser $mUser request");
+          // print("phone number details $phoneNumDetails request");
+        }
+        _looUpPhonStatus(LookUpPhone.success);
+      }
+      return response.body;
+    } catch (error) {
+      _looUpPhonStatus(LookUpPhone.error);
+      Get.snackbar(
+          'Error',
+          error.toString() ==
+                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+              ? 'No internet connection!'
+              : error.toString());
+      if (kDebugMode) {
+        print('look up phone Error ${error.toString()}');
+      }
+    }
+  }
 }
