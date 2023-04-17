@@ -168,11 +168,12 @@ class _MakeRequestState extends State<MakeRequest> {
                                       color: welcomeText,
                                       size: 12,
                                     )
-                                  : _moneyRequest.mUser.value!.accountName !=
+                                  : _moneyRequest.mUser.value?.accountName !=
                                           null
                                       ? AutoSizeText(
                                           _moneyRequest
-                                              .mUser.value!.accountName,
+                                                  .mUser.value!.accountName ??
+                                              '',
                                           style: const TextStyle(
                                             fontFamily: "Work Sans",
                                             fontSize: 14,

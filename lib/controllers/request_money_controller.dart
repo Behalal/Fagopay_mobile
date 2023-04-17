@@ -242,6 +242,10 @@ class RequestMoney extends GetxController {
           // print("phone number details $phoneNumDetails request");
         }
         _looUpPhonStatus(LookUpPhone.success);
+      } else if (response.statusCode == 404) {
+        // Get.snackbar(
+        //     'Error', 'Make sure the number is a register number on fagopay');
+        _looUpPhonStatus(LookUpPhone.error);
       }
       return response.body;
     } catch (error) {
