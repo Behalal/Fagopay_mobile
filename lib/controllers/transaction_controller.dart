@@ -129,4 +129,34 @@ class TransactionController extends GetxController {
       throw Exception('Failed');
     }
   }
+
+  Future<dynamic> fagoToFagoTransfer(String transactionPin) async {
+    final token = await SecureStorage.readUserToken();
+
+    String phoneNumber = bankTransferFields.phoneNumber;
+    String amount = bankTransferFields.amount;
+    String description = bankTransferFields.narration;
+
+    var requestBody = jsonEncode({
+      "phonenumber": phoneNumber,
+      "amount": amount,
+      "description": description,
+      "transaction_pin": transactionPin
+    });
+
+    try {
+      final responseData = await NetworkHelper.postRequest(
+        url: "${BaseAPI.transactionsPath}fago-to-fago",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: requestBody,
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
 }

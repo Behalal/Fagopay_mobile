@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/constants/colors.dart';
@@ -28,6 +30,7 @@ class DashBoardDetails extends StatefulWidget {
 class _DashBoardDetailsState extends State<DashBoardDetails> {
   bool balanceVisible = true;
   String notVisibleText = "******";
+  final _userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -286,19 +289,20 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AutoSizeText(
-                          (balanceVisible)
-                              ? ((widget.accountDetails.balance.toString() ==
-                                      "")
-                                  ? "$currencySymbol 0.00"
-                                  : "$currencySymbol ${widget.accountDetails.balance}.00")
-                              : notVisibleText,
-                          style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 30,
-                              fontWeight: FontWeight.w700,
-                              color: white),
-                        ),
+                        Obx(() => AutoSizeText(
+                              (balanceVisible)
+                                  ? ((widget.accountDetails.balance
+                                              .toString() ==
+                                          "")
+                                      ? " 0.00"
+                                      : "$currencySymbol ${_userController.userAccountDetails!.balance}.00")
+                                  : notVisibleText,
+                              style: const TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w700,
+                                  color: white),
+                            )),
                         SizedBox(
                           width: 2.w,
                         ),

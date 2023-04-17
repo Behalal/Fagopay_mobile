@@ -1,20 +1,21 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import '../../../controllers/bill_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../controllers/bill_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
+import '../../functions.dart';
+import '../transactions/confirm_transaction.dart';
+import '../widgets/head_style_extra_pages.dart';
 import 'models/bill_post_model.dart';
 import 'widgets/electricity_provider.dart';
 import 'widgets/meter_type.dart';
-import '../transactions/confirm_transaction.dart';
-import '../widgets/head_style_extra_pages.dart';
-import '../../functions.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class Electricity extends StatefulWidget {
   const Electricity({super.key});

@@ -1,14 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../authentication/widgets/auth_buttons.dart';
-import '../../individual/widgets/business_warning.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controllers/user_controller.dart';
+import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
+import '../../individual/widgets/business_warning.dart';
 import '../../individual/widgets/head_style_extra_pages.dart';
-import '../home/home.dart';
 
 class AddSalesAccount extends StatefulWidget {
   const AddSalesAccount({super.key});

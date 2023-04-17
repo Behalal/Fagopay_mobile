@@ -1,6 +1,7 @@
 class BankTransferFields {
   String _bankId = "";
   String _accountNumber = "";
+  String _phoneNumber = "";
   String _accountName = "";
   String _amount = "";
   String _narration = "";
@@ -9,6 +10,12 @@ class BankTransferFields {
 
   set setAmount(String amount) {
     _amount = amount;
+  }
+
+  String get phoneNumber => _phoneNumber;
+
+  set setPhoneNumber(String phoneNumber) {
+    _phoneNumber = phoneNumber;
   }
 
   String get accountName => _accountName;

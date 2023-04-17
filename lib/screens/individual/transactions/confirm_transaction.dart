@@ -105,7 +105,9 @@ class ConfirmTransactions extends StatelessWidget {
                                             ? "Cable Subscription"
                                             : action == "bank_transfer"
                                                 ? "Bank Transfer"
-                                                : "Wema-2309234595"))),
+                                                : action == "fago_to_fago"
+                                                    ? "Fago to Fago Transfer"
+                                                    : "Wema-2309234595"))),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -191,7 +193,9 @@ class ConfirmTransactions extends StatelessWidget {
                                         ? "${currencySymbol}${data.amount}"
                                         : action == 'bank_transfer'
                                             ? "${currencySymbol}${data.amount}"
-                                            : "")),
+                                            : action == 'fago_to_fago'
+                                                ? "${currencySymbol}${data.amount}"
+                                                : "")),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -311,7 +315,9 @@ class ConfirmTransactions extends StatelessWidget {
                                         ? "${data.billersCode}"
                                         : action == 'bank_transfer'
                                             ? "${data.accountNumber}"
-                                            : "")),
+                                            : action == 'fago_to_fago'
+                                                ? "${data.phoneNumber}"
+                                                : "")),
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 16,
@@ -322,7 +328,7 @@ class ConfirmTransactions extends StatelessWidget {
                   ),
                 ),
               ),
-              if (action == "bank_transfer") ...[
+              if (action == "bank_transfer" || action == "fago_to_fago") ...[
                 SizedBox(
                   height: 3.h,
                 ),
@@ -572,6 +578,11 @@ class ConfirmTransactions extends StatelessWidget {
     if (action == 'bank_transfer') {
       transactionType = "Transaction type";
       toLabel = "Account Number";
+      return bankTransferFields;
+    }
+    if (action == 'fago_to_fago') {
+      transactionType = "Transaction type";
+      toLabel = "Phone Number";
       return bankTransferFields;
     }
   }

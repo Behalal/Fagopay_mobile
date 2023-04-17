@@ -1,21 +1,22 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../../controllers/bill_controller.dart';
 import '../../../models/data_model.dart';
-import '../../functions.dart';
-import 'models/bill_post_model.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:get/get.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
-import 'widgets/tv_sub_dropdown.dart';
+import '../../functions.dart';
 import '../transactions/confirm_transaction.dart';
 import '../widgets/head_style_extra_pages.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'models/bill_post_model.dart';
+import 'widgets/tv_sub_dropdown.dart';
 
 class TVSubscription extends StatefulWidget {
   const TVSubscription({super.key});

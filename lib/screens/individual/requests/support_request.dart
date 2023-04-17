@@ -56,7 +56,7 @@ class SupportRequest extends StatelessWidget {
                         height: 4.h,
                       ),
                       Container(
-                        height: 100,
+                        height: 150,
                         decoration: const BoxDecoration(
                           color: fagoSecondaryColorWithOpacity10,
                         ),
@@ -271,7 +271,6 @@ class SupportRequest extends StatelessWidget {
                       ),
                       RichText(
                         text: const TextSpan(
-                          
                             style: TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 12,

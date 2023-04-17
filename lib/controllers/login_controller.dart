@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import '../screens/authentication/reset_password_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
+import '../screens/authentication/reset_password_screen.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
-import 'package:http/http.dart' as http;
 
 enum OtpForgotVerifyStatus {
   empty,

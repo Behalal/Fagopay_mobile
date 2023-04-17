@@ -1,6 +1,7 @@
-import '../forgot_password_screen.dart';
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../constants/colors.dart';
+import '../forgot_password_screen.dart';
 
 class ForgotPassText extends StatelessWidget {
   const ForgotPassText({Key? key}) : super(key: key);
