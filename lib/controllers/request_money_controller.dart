@@ -23,6 +23,14 @@ enum MyRequestedMoneyStatus {
   available,
 }
 
+enum RequestMoneyApi {
+  empty,
+  loading,
+  error,
+  success,
+  available,
+}
+
 class RequestMoney extends GetxController {
   final Rx<List<MyRequest>> _myRequestList = Rx([]);
   List<MyRequest> get myRequestList => _myRequestList.value;
@@ -140,4 +148,53 @@ class RequestMoney extends GetxController {
       }
     }
   }
+
+  // Future requestMoneyApi({String? otp}) async {
+  //   _otpForgotVerifyStatus(OtpForgotVerifyStatus.loading);
+  //   try {
+  //     if (kDebugMode) {
+  //       print('validating reset password otp...');
+  //     }
+
+  //     var response = await http.post(Uri.parse(BaseAPI.validateResetOtp),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: jsonEncode({
+  //           "code": otp,
+  //         }));
+  //     if (kDebugMode) {
+  //       print(response.body);
+  //     }
+  //     var json = jsonDecode(response.body);
+  //     if (json['success'] == false) {
+  //       throw (json['message']);
+  //     }
+
+  //     if (response.statusCode == 200) {
+  //       _otpForgotVerifyStatus(OtpForgotVerifyStatus.success);
+  //       Get.snackbar('Success', 'Password reset validated successfully!');
+  //       print("user id ${json['data']['code']}");
+  //       Get.to(() => ResetPasswordScreen(
+  //             pinCode: json['data']['code'],
+  //           ));
+  //     } else if (response.statusCode == 422) {
+  //       Get.snackbar('Error', 'The selected code is invalid');
+  //       _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
+  //     }
+
+  //     return response.body;
+  //   } catch (error) {
+  //     _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
+  //     Get.snackbar(
+  //         'Error',
+  //         error.toString() ==
+  //                 "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com''"
+  //             ? 'No internet connection!'
+  //             : error.toString());
+  //     if (kDebugMode) {
+  //       print("error ${error.toString()}");
+  //     }
+  //   }
+  // }
 }

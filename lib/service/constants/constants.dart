@@ -14,6 +14,7 @@ class BaseAPI {
 // RequestMoney Endpoint
   static String myRequest = "${api}transaction/requestee-request-list";
   static String requestedMoney = "${api}transaction/requester-request-list";
+  static String requestMoneyapi = "${api}transaction/request-money";
 
   // String headers = {
   //   "Content-Type": "application/json; charset=UTF-8",
