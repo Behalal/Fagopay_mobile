@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/models/request_money/request_money_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
@@ -8,9 +9,15 @@ import '../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class SupportRequest extends StatelessWidget {
-  const SupportRequest({super.key});
+class SupportRequest extends StatefulWidget {
+  final MyRequest item;
+  const SupportRequest({super.key, required this.item});
 
+  @override
+  State<SupportRequest> createState() => _SupportRequestState();
+}
+
+class _SupportRequestState extends State<SupportRequest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,14 +44,15 @@ class SupportRequest extends StatelessWidget {
                                 fontWeight: FontWeight.w400,
                                 color: stepsColor),
                             children: [
-                              const TextSpan(text: 'Support'),
-                              const TextSpan(
-                                  text: ' Ibrahim Lukman',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w600)),
+                              const TextSpan(text: 'Support '),
+                              TextSpan(
+                                  text: widget.item.requestedfromname,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w600)),
                               const TextSpan(text: ' request of '),
                               TextSpan(
-                                  text: '$currencySymbol 200',
+                                  text:
+                                      '$currencySymbol ${widget.item.requestedAmount}',
                                   style: const TextStyle(
                                     fontSize: 16,
                                     color: fagoSecondaryColor,
@@ -56,7 +64,7 @@ class SupportRequest extends StatelessWidget {
                         height: 4.h,
                       ),
                       Container(
-                        height: 150,
+                        height: 15.h,
                         decoration: const BoxDecoration(
                           color: fagoSecondaryColorWithOpacity10,
                         ),
@@ -79,10 +87,10 @@ class SupportRequest extends StatelessWidget {
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         AutoSizeText(
-                                          "Ibrahim Lukman",
-                                          style: TextStyle(
+                                          widget.item.requestedfromname!,
+                                          style: const TextStyle(
                                             fontFamily: "Work Sans",
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
@@ -106,9 +114,9 @@ class SupportRequest extends StatelessWidget {
                                     SizedBox(
                                       height: 0.5.h,
                                     ),
-                                    const AutoSizeText(
-                                      "I want to buy a new laptop ",
-                                      style: TextStyle(
+                                    AutoSizeText(
+                                      widget.item.description!,
+                                      style: const TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -123,7 +131,7 @@ class SupportRequest extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   AutoSizeText(
-                                    "$currencySymbol 200",
+                                    "$currencySymbol  ${widget.item.requestedAmount}",
                                     style: const TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 20,

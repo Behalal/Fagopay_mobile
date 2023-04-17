@@ -410,7 +410,7 @@ class _RequestHomeState extends State<RequestHome> {
                                               );
                                             })
                                         : const Center(
-                                          child: AutoSizeText(
+                                            child: AutoSizeText(
                                               'No Request found',
                                               style: TextStyle(
                                                 fontFamily: "Work Sans",
@@ -419,7 +419,7 @@ class _RequestHomeState extends State<RequestHome> {
                                                 color: stepsColor,
                                               ),
                                             ),
-                                        );
+                                          );
                               }),
                             )
                           : SizedBox(
@@ -562,7 +562,9 @@ class _RequestHomeState extends State<RequestHome> {
                                                           InkWell(
                                                             onTap: () {
                                                               Get.to(() =>
-                                                                  const SupportRequest());
+                                                                  SupportRequest(
+                                                                    item: item,
+                                                                  ));
                                                             },
                                                             child: Container(
                                                               width: 17.w,
@@ -613,7 +615,7 @@ class _RequestHomeState extends State<RequestHome> {
                                               );
                                             })
                                         : const Center(
-                                          child: AutoSizeText(
+                                            child: AutoSizeText(
                                               'No Request found',
                                               style: TextStyle(
                                                 fontFamily: "Work Sans",
@@ -622,7 +624,7 @@ class _RequestHomeState extends State<RequestHome> {
                                                 color: stepsColor,
                                               ),
                                             ),
-                                        );
+                                          );
                                 ;
                               }),
                             )
