@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:fagopay/models/request_money/request_money_model.dart';
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../models/request_money/request_money_model.dart';
+import '../service/constants/constants.dart';
+import '../service/secure_storage/secure_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;

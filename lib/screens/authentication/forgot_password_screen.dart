@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import '../../controllers/login_controller.dart';
-import 'recover_password_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/login_controller.dart';
 import '../constants/colors.dart';
+import 'recover_password_otp_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});

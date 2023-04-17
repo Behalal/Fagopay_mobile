@@ -62,7 +62,9 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
         SizedBox(
           width: 90.w,
           child: TextFormField(
-            controller: _transactionsController.accountNumberController,
+            controller: widget.page == 'bank'
+                ? _transactionsController.accountNumberController
+                : _transactionsController.phoneController,
             onChanged: widget.onChangedOfAccountNumberController,
             keyboardType: TextInputType.number,
             style: const TextStyle(
@@ -98,43 +100,49 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
             ),
           ),
         ),
-        SizedBox(
-          height: 0.5.h,
-        ),
-        Container(
-          width: 90.w,
-          decoration: const BoxDecoration(
-              color: fagoSecondaryColorWithOpacity10,
-              borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const AutoSizeText(
-                  "Fullname",
-                  style: TextStyle(
-                    fontFamily: "Work Sans",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: welcomeText,
+        if (widget.page != "phone")
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 0.5.h,
+              ),
+              Container(
+                width: 90.w,
+                decoration: const BoxDecoration(
+                    color: fagoSecondaryColorWithOpacity10,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AutoSizeText(
+                        "Fullname",
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: welcomeText,
+                        ),
+                      ),
+                      AutoSizeText(
+                        '${widget.verifiedReceipientUser}',
+                        style: const TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: welcomeText,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                AutoSizeText(
-                  '${widget.verifiedReceipientUser}',
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontFamily: "Work Sans",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: welcomeText,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ),
         SizedBox(
           height: 2.h,
         ),
@@ -240,7 +248,7 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 7.h,
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 0.5.h),

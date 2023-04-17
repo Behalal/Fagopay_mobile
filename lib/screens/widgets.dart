@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import '../controllers/transaction_controller.dart';
-import 'individual/bills/models/transaction_post_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,9 +10,11 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/bill_controller.dart';
+import '../controllers/transaction_controller.dart';
 import 'authentication/widgets/auth_buttons.dart';
 import 'constants/colors.dart';
 import 'individual/bills/models/bill_post_model.dart';
+import 'individual/bills/models/transaction_post_model.dart';
 import 'individual/transactions/transaction_successful.dart';
 
 class Loading extends StatelessWidget {
@@ -194,6 +194,11 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                 }
                                 if (widget.action == "bank_transfer") {
                                   await bankTransfer(
+                                      context, pincontroller.text);
+                                  return;
+                                }
+                                if (widget.action == "fago_to_fago") {
+                                  await fagoToFagoTransfer(
                                       context, pincontroller.text);
                                   return;
                                 }
@@ -543,6 +548,51 @@ class _PinCodeModalState extends State<PinCodeModal> {
       );
     }
   }
+
+  Future<void> fagoToFagoTransfer(BuildContext context, String pinCode) async {
+    final response = await _transactionController.fagoToFagoTransfer(pinCode);
+    final jsonBody = jsonDecode(response.body);
+    if (kDebugMode) {
+      print(jsonBody);
+    }
+    if (response.statusCode != 200) {
+      setState(() {
+        Navigator.of(context).pop();
+      });
+      Fluttertoast.showToast(
+        msg: "${jsonBody['data']['error']}",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } else {
+      setState(() {
+        _isLoading = "1";
+      });
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => TransactionSuccessful(
+            amount: bankTransferFields.amount,
+            number: bankTransferFields.phoneNumber,
+            action: 'Fago to Fago Transfer',
+          ),
+        ),
+      );
+      Fluttertoast.showToast(
+        msg: "Transfer Successful",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+  }
 }
 
 // show modal sheet
@@ -552,15 +602,16 @@ Future showPinModal(
   String action,
 ) {
   return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
-      // shape: const ShapeBorder().add(),
-      context: context,
-      isScrollControlled: true,
-      isDismissible: true,
-      builder: (BuildContext context) {
-        //
-        return PinCodeModal(
-          action: action,
-        ); //whatever you're returning, does not have to be a Container
-      });
+    backgroundColor: Colors.transparent,
+    // shape: const ShapeBorder().add(),
+    context: context,
+    isScrollControlled: true,
+    isDismissible: true,
+    builder: (BuildContext context) {
+      //
+      return PinCodeModal(
+        action: action,
+      ); //whatever you're returning, does not have to be a Container
+    },
+  );
 }

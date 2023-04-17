@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/request_money_controller.dart';
-import 'package:fagopay/models/my_request_model.dart';
-import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
-import 'package:fagopay/screens/individual/requests/support_request.dart';
+import '../../../controllers/request_money_controller.dart';
+import '../../../models/my_request_model.dart';
+import '../../authentication/recover_password_otp_screen.dart';
+import 'support_request.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../models/request_money/request_money_model.dart';

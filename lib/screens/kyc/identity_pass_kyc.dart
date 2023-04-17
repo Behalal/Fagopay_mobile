@@ -40,11 +40,11 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
                 child: ElevatedButton(
           style: null,
           onPressed: () {
-            FlutterIdentityKyc.showWidget(InputParameters(
+            FlutterIdentityKyc.showWidget(
+              InputParameters(
                 context: context,
                 merchantKey: "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
                 firstName: _userUcontroller.user!.firstName,
-               
                 lastName: _userUcontroller.user!.lastName,
                 email: _userUcontroller.user!.email ?? '',
                 userRef: _userUcontroller.user!.id,
@@ -59,7 +59,9 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
                     print(response);
                   }
                 },
-                onError: (error) => print(error)));
+                onError: (error) => print(error),
+              ),
+            );
           },
           child: const Text('Verify My Identity'),
         ))));

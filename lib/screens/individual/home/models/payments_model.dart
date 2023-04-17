@@ -1,4 +1,4 @@
-import 'package:fagopay/controllers/request_money_controller.dart';
+import '../../../../controllers/request_money_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

@@ -1,7 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import '../../../controllers/login_controller.dart';
+import '../../../controllers/user_controller.dart';
 import 'models/payments_model.dart';
 import 'models/service_model.dart';
-import '../../kyc/identity_pass_kyc.dart';
 import '../../kyc/kyc1.dart';
 import '../../widgets.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,14 @@ class DashboardHome extends StatefulWidget {
 
 class _DashboardHomeState extends State<DashboardHome> {
   bool isLoading = false;
+  final _loginController = Get.find<LoginController>();
+  final _userController = Get.find<UserController>();
+
+  @override
+  void didChangeDependencies() async {
+    await getUserDetails();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -408,5 +417,12 @@ class _DashboardHomeState extends State<DashboardHome> {
             ),
       bottomNavigationBar: const FagoNavigationBar(),
     );
+  }
+
+  Future<void> getUserDetails() async {
+    final response = await _loginController.getUserDetails();
+    final userAccountjsonBodyData = response['data']['accountdetail'];
+    final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
+    _userController.setUserAccountDetails = userAccountDetails;
   }
 }

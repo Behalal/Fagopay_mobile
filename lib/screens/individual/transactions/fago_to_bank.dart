@@ -2,21 +2,20 @@
 import 'dart:convert';
 
 import 'package:fagopay/controllers/transaction_controller.dart';
+import 'package:fagopay/models/bank_model.dart';
+import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/functions.dart';
 import 'package:fagopay/screens/individual/bills/models/transaction_post_model.dart';
 import 'package:fagopay/screens/individual/transactions/confirm_transaction.dart';
+import 'package:fagopay/screens/individual/widgets/account_details.dart';
+import 'package:fagopay/screens/individual/widgets/banks_dropdown.dart';
+import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import 'package:fagopay/screens/individual/widgets/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
-import 'package:fagopay/models/bank_model.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/individual/widgets/account_details.dart';
-import 'package:fagopay/screens/individual/widgets/banks_dropdown.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
-import 'package:fagopay/screens/individual/widgets/transaction_form.dart';
 
 class FagoToBank extends StatefulWidget {
   final User userDetails;
