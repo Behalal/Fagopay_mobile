@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/controllers/request_money_controller.dart';
+import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
+import '../../../controllers/transaction_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -20,6 +23,7 @@ class MakeRequest extends StatefulWidget {
 }
 
 class _MakeRequestState extends State<MakeRequest> {
+  final _moneyRequest = Get.put(RequestMoney());
   final _transactionController = Get.find<TransactionController>();
 
   @override
@@ -92,6 +96,16 @@ class _MakeRequestState extends State<MakeRequest> {
                     SizedBox(
                       width: 90.w,
                       child: TextFormField(
+                        onChanged: (value) {
+                          setState(() {
+                            if (value.length == 11) {
+                              _moneyRequest.lookUpPhone(
+                                  phone: _transactionController
+                                      .phoneController.text
+                                      .trim());
+                            }
+                          });
+                        },
                         controller: _transactionController.phoneController,
                         keyboardType: TextInputType.phone,
                         style: const TextStyle(
@@ -126,39 +140,61 @@ class _MakeRequestState extends State<MakeRequest> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //     height: 2.h,
-                    // ),
-                    // Container(
-                    //   width: 90.w,
-                    //   decoration: const BoxDecoration(
-                    //       color: fagoSecondaryColorWithOpacity10,
-                    //       borderRadius: BorderRadius.all(Radius.circular(5))),
-                    //   child: Padding(
-                    //     padding:
-                    //         EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.start,
-                    //       crossAxisAlignment: CrossAxisAlignment.center,
-                    //       children: [
-                    //         const Image(
-                    //             image: AssetImage("assets/images/account.png")),
-                    //         SizedBox(
-                    //           width: 2.w,
-                    //         ),
-                    //         const AutoSizeText(
-                    //           "Ibrahim Lukman",
-                    //           style: TextStyle(
-                    //             fontFamily: "Work Sans",
-                    //             fontSize: 14,
-                    //             fontWeight: FontWeight.w500,
-                    //             color: welcomeText,
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    SizedBox(
+                      height: 0.2.h,
+                    ),
+
+                    Container(
+                      width: 90.w,
+                      decoration: const BoxDecoration(
+                          color: fagoSecondaryColorWithOpacity10,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.w, vertical: 1.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Image(
+                                image: AssetImage("assets/images/account.png")),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Obx(() {
+                              return _moneyRequest.looUpPhonStatus ==
+                                      LookUpPhone.loading
+                                  ? const LoadingWidget(
+                                      color: welcomeText,
+                                      size: 12,
+                                    )
+                                  : _moneyRequest.mUser.value!.accountName !=
+                                          null
+                                      ? AutoSizeText(
+                                          _moneyRequest
+                                              .mUser.value!.accountName,
+                                          style: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: welcomeText,
+                                          ),
+                                        )
+                                      : const AutoSizeText(
+                                          "Couldn't find number",
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: welcomeText,
+                                          ),
+                                        );
+                            })
+                          ],
+                        ),
+                      ),
+                    ),
+
                     SizedBox(
                       height: 4.h,
                     ),
@@ -177,6 +213,7 @@ class _MakeRequestState extends State<MakeRequest> {
                     SizedBox(
                       width: 90.w,
                       child: TextFormField(
+                        keyboardType: TextInputType.phone,
                         controller: _transactionController.amountController,
                         style: const TextStyle(
                             fontFamily: "Work Sans",
