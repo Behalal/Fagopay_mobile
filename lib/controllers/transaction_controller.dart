@@ -218,6 +218,9 @@ class TransactionController extends GetxController {
             ? _transactionHistoryStatus(TransactionHistoryStatus.available)
             : _transactionHistoryStatus(TransactionHistoryStatus.empty);
         _transactionHistoryStatus(TransactionHistoryStatus.success);
+      } else if (response.statusCode == 409) {
+        Get.snackbar('Error', 'Go and verify your KYC');
+        _transactionHistoryStatus(TransactionHistoryStatus.error);
       }
       return response.body;
     } catch (error) {
