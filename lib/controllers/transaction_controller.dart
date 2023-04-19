@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fagopay/models/transaction.dart/transaction_history_model.dart';
+import 'package:fagopay/screens/individual/transactions/transaction_history.dart';
+import 'package:flutter/foundation.dart';
+
 import '../screens/individual/bills/models/transaction_post_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +12,25 @@ import 'package:get/get.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
+import 'package:http/http.dart' as http;
+
+enum TransactionHistoryStatus {
+  empty,
+  loading,
+  error,
+  success,
+  available,
+}
 
 class TransactionController extends GetxController {
+  final Rx<List<TransactionHistoryModel>> _transactionHistoryList = Rx([]);
+  List<TransactionHistoryModel> get transactionHistoryList =>
+      _transactionHistoryList.value;
+
+  final _transactionHistoryStatus = TransactionHistoryStatus.empty.obs;
+  TransactionHistoryStatus get transactionHistoryStatus =>
+      _transactionHistoryStatus.value;
+
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController amountController = TextEditingController();
@@ -157,6 +178,59 @@ class TransactionController extends GetxController {
     } catch (e) {
       log(e.toString());
       throw Exception('Failed');
+    }
+  }
+
+  Future getTransactionHistory() async {
+    final token = await SecureStorage.readUserToken();
+    try {
+      _transactionHistoryStatus(TransactionHistoryStatus.loading);
+      if (kDebugMode) {
+        print('getting my request...');
+      }
+      var response = await http.get(
+        Uri.parse(BaseAPI.transactionHistory),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      );
+      print('here 1');
+      var json = jsonDecode(response.body);
+      if (kDebugMode) {
+        print(response.body);
+      }
+      print('here 3');
+      // if (response.statusCode == 200) {
+      //   throw (json['message']);
+      // }
+      print('here 2');
+      if (response.statusCode == 200) {
+        var list = List.from(json['data']['transactions']);
+        var transactionList =
+            list.map((e) => TransactionHistoryModel.fromJson(e)).toList();
+        if (kDebugMode) {
+          print("${transactionList.length} request");
+          print(" Req ${transactionList.first} request");
+        }
+        _transactionHistoryList(transactionList);
+        transactionList.isNotEmpty
+            ? _transactionHistoryStatus(TransactionHistoryStatus.available)
+            : _transactionHistoryStatus(TransactionHistoryStatus.empty);
+        _transactionHistoryStatus(TransactionHistoryStatus.success);
+      }
+      return response.body;
+    } catch (error) {
+      _transactionHistoryStatus(TransactionHistoryStatus.error);
+      Get.snackbar(
+          'Error',
+          error.toString() ==
+                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+              ? 'No internet connection!'
+              : error.toString());
+      if (kDebugMode) {
+        print('getting crops seller product Error ${error.toString()}');
+      }
     }
   }
 }

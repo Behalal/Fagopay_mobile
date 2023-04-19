@@ -41,7 +41,7 @@ class _AllSalesState extends State<AllSales> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "Sales Account",
                 // backRoute: BusinessHome(

@@ -264,7 +264,7 @@ class _BusinessHomeState extends State<BusinessHome> {
           ))
         ],
       ),
-      bottomNavigationBar: const FagoNavigationBar(),
+     // bottomNavigationBar: const FagoNavigationBar(),
     );
   }
 }
