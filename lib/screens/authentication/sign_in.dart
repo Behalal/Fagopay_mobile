@@ -11,6 +11,7 @@ import 'package:fagopay/screens/authentication/widgets/email_phone_input.dart';
 import 'package:fagopay/screens/authentication/widgets/forgot_pass_text.dart';
 import 'package:fagopay/screens/authentication/widgets/password_input.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/screens/individual/widgets/navigation_bar.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -390,10 +391,12 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (BuildContext context) => DashboardHome(
-          userDetails: userDetails,
-          accountDetails: userAccountDetails,
-        ),
+        builder: (BuildContext context) => const Dashboard(),
+
+        //  DashboardHome(
+        //   userDetails: userDetails,
+        //   accountDetails: userAccountDetails,
+        // ),
       ),
     );
     // Navigator.of(context).pushReplacement(

@@ -418,7 +418,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                 ),
               ],
             ),
-      bottomNavigationBar: const FagoNavigationBar(),
+    //  bottomNavigationBar: const FagoNavigationBar(),
     );
   }
 

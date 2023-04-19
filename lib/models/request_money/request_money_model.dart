@@ -65,7 +65,7 @@ class MyRequest {
   String? requestedby;
   String? requestedfrom;
   String? description;
-  dynamic? comment;
+  dynamic comment;
   String? status;
   String? requestedAmount;
   String? amountApproved;

@@ -6,6 +6,7 @@ import 'appbinding/appbinding.dart';
 import 'screens/core/splash_speen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     const FagoPay(),
   );
