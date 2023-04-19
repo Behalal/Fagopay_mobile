@@ -11,7 +11,7 @@ import '../../../models/user_model/user.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../functions.dart';
-import '../../individual/widgets/navigation_bar.dart';
+import '../../widgets/navigation_bar.dart';
 import 'models/actions.model.dart';
 import 'models/sales.model.dart';
 

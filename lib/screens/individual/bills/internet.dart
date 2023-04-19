@@ -11,7 +11,7 @@ import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import 'models/bill_post_model.dart';
 import '../transactions/confirm_transaction.dart';
-import '../widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import '../../functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';

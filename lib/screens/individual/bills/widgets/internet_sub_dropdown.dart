@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import '../../../../controllers/bill_controller.dart';
 import '../../../../models/data_model.dart';
 import '../../../constants/colors.dart';
-import '../../widgets/data_dropdown.dart';
+import '../../../widgets/data_dropdown.dart';
 import '../models/bill_post_model.dart';
 
 class InternetDropDown extends StatefulWidget {

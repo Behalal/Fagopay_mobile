@@ -4,8 +4,8 @@ import 'package:sizer/sizer.dart';
 
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
-import '../../individual/widgets/business_warning.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
+import '../../widgets/business_warning.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'all_admin.dart';
 
 class AddAdmin extends StatefulWidget {

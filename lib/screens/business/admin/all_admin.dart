@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import '../widgets/load_more.dart';
 import '../../constants/colors.dart';
 import 'add_admin.dart';
@@ -25,14 +26,11 @@ class _AllAdminState extends State<AllAdmin> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ProgressStyle(
-                      //   stage: 0,
-                      //   width: 4,
-                      //   pageName: "Account Admins",
-                      //   backRoute: BusinessHome(
-                      //     userDetails: userFullDetails,
-                      //   ),
-                      // ),
+                      const ProgressStyle(
+                        stage: 0,
+                        width: 4,
+                        pageName: "Account Admins",
+                      ),
                       SizedBox(
                         height: 3.h,
                       ),

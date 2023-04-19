@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/transaction_controller.dart';
-import 'package:fagopay/screens/individual/widgets/head_style_extra_pages.dart';
+import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';

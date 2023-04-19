@@ -4,8 +4,8 @@ import 'package:fagopay/models/user_model/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../constants/colors.dart';
-import '../../constants/currency.dart';
+import '../constants/colors.dart';
+import '../constants/currency.dart';
 
 class AccountDetails extends StatefulWidget {
   final String action;

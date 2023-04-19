@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../constants/colors.dart';
+import '../constants/colors.dart';
 
 class BusinessForm extends StatelessWidget {
   const BusinessForm({
@@ -25,7 +25,7 @@ class BusinessForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
@@ -46,12 +46,11 @@ class BusinessForm extends StatelessWidget {
                 ),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                borderSide: BorderSide(
-                    color: linearGradient1,
-                    width: 1.0,
-                    style: BorderStyle.solid
-              )),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(
+                      color: linearGradient1,
+                      width: 1.0,
+                      style: BorderStyle.solid)),
               border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   borderSide: BorderSide(
@@ -81,7 +80,7 @@ class BusinessForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
@@ -102,12 +101,11 @@ class BusinessForm extends StatelessWidget {
                 ),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                borderSide: BorderSide(
-                    color: linearGradient1,
-                    width: 1.0,
-                    style: BorderStyle.solid
-              )),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(
+                      color: linearGradient1,
+                      width: 1.0,
+                      style: BorderStyle.solid)),
               border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   borderSide: BorderSide(
@@ -137,7 +135,7 @@ class BusinessForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
@@ -158,12 +156,11 @@ class BusinessForm extends StatelessWidget {
                 ),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                borderSide: BorderSide(
-                    color: linearGradient1,
-                    width: 1.0,
-                    style: BorderStyle.solid
-              )),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(
+                      color: linearGradient1,
+                      width: 1.0,
+                      style: BorderStyle.solid)),
               border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   borderSide: BorderSide(
@@ -194,55 +191,101 @@ class BusinessForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const AutoSizeText(
-                      "Country",
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: welcomeText,
-                      ),
+                    "Country",
+                    style: TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: welcomeText,
                     ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    TextFormField(
-                      style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: signInPlaceholder),
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: const BorderSide(
-                            color: textBoxBorderColor,
-                            width: 1.0,
-                          ),
+                  ),
+                  SizedBox(
+                    height: 0.5.h,
+                  ),
+                  // TextFormField(
+                  //   style: const TextStyle(
+                  //     fontFamily: "Work Sans",
+                  //     fontWeight: FontWeight.w400,
+                  //     fontSize: 14,
+                  //     color: signInPlaceholder,
+                  //   ),
+                  //   decoration: InputDecoration(
+                  //     contentPadding:
+                  //         EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                  //     enabledBorder: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(5.0),
+                  //       borderSide: const BorderSide(
+                  //         color: textBoxBorderColor,
+                  //         width: 1.0,
+                  //       ),
+                  //     ),
+                  //     focusedBorder: const OutlineInputBorder(
+                  //         borderRadius: BorderRadius.all(Radius.circular(5)),
+                  //         borderSide: BorderSide(
+                  //             color: linearGradient1,
+                  //             width: 1.0,
+                  //             style: BorderStyle.solid)),
+                  //     border: const OutlineInputBorder(
+                  //         borderRadius: BorderRadius.all(Radius.circular(5)),
+                  //         borderSide: BorderSide(
+                  //             color: textBoxBorderColor,
+                  //             width: 1.0,
+                  //             style: BorderStyle.solid)),
+                  //     hintText: "Enter country",
+                  //     hintStyle: const TextStyle(
+                  //       fontFamily: "Work Sans",
+                  //       fontWeight: FontWeight.w400,
+                  //       fontSize: 14,
+                  //       color: signInPlaceholder,
+                  //     ),
+                  //   ),
+                  // ),
+
+                  DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: const BorderSide(
+                          color: textBoxBorderColor,
+                          width: 1.0,
                         ),
-                        focusedBorder: const OutlineInputBorder(
+                      ),
+                      focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(
                               color: linearGradient1,
                               width: 1.0,
-                              style: BorderStyle.solid
-                        )),
-                        border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            borderSide: BorderSide(
-                                color: textBoxBorderColor,
-                                width: 1.0,
-                                style: BorderStyle.solid)),
-                        hintText: "Enter country",
-                        hintStyle: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: signInPlaceholder,
-                        ),
+                              style: BorderStyle.solid)),
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid)),
+                      hintText: "Enter country",
+                      hintStyle: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
                       ),
                     ),
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'data',
+                        child: Text('data'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'cow',
+                        child: Text('cow'),
+                      )
+                    ],
+                    onChanged: (value) {
+                      print(value);
+                    },
+                  )
                 ],
               ),
             ),
@@ -253,55 +296,54 @@ class BusinessForm extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const AutoSizeText(
-                      "State",
-                      style: TextStyle(
+                    "State",
+                    style: TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: welcomeText,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 0.5.h,
+                  ),
+                  TextFormField(
+                    style: const TextStyle(
                         fontFamily: "Work Sans",
-                        fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: welcomeText,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    TextFormField(
-                      style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: signInPlaceholder),
-                      decoration: InputDecoration(
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                          borderSide: const BorderSide(
-                            color: textBoxBorderColor,
-                            width: 1.0,
-                          ),
+                        fontSize: 14,
+                        color: signInPlaceholder),
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: const BorderSide(
+                          color: textBoxBorderColor,
+                          width: 1.0,
                         ),
-                        focusedBorder: const OutlineInputBorder(
+                      ),
+                      focusedBorder: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5)),
                           borderSide: BorderSide(
                               color: linearGradient1,
                               width: 1.0,
-                              style: BorderStyle.solid
-                        )),
-                        border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5)),
-                            borderSide: BorderSide(
-                                color: textBoxBorderColor,
-                                width: 1.0,
-                                style: BorderStyle.solid)),
-                        hintText: "Enter your state",
-                        hintStyle: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          color: signInPlaceholder,
-                        ),
+                              style: BorderStyle.solid)),
+                      border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid)),
+                      hintText: "Enter your state",
+                      hintStyle: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
                       ),
                     ),
+                  ),
                 ],
               ),
             )
@@ -320,7 +362,7 @@ class BusinessForm extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
@@ -341,12 +383,11 @@ class BusinessForm extends StatelessWidget {
                 ),
               ),
               focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                borderSide: BorderSide(
-                    color: linearGradient1,
-                    width: 1.0,
-                    style: BorderStyle.solid
-              )),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                  borderSide: BorderSide(
+                      color: linearGradient1,
+                      width: 1.0,
+                      style: BorderStyle.solid)),
               border: const OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   borderSide: BorderSide(

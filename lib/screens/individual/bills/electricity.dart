@@ -12,7 +12,7 @@ import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../functions.dart';
 import '../transactions/confirm_transaction.dart';
-import '../widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'models/bill_post_model.dart';
 import 'widgets/electricity_provider.dart';
 import 'widgets/meter_type.dart';

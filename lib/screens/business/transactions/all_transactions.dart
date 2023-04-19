@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
 import '../../functions.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/load_more.dart';
 import 'new_transaction.dart';
 
@@ -48,10 +48,6 @@ class _AllTransactionState extends State<AllTransaction> {
               const ProgressStyle(
                 stage: 0,
                 pageName: "Transactions",
-                // backRoute: BusinessHome(
-                //   userDetails: _userController.user!,
-                //   accountDetails: _userController.userAccountDetails!,
-                // ),
               ),
               SizedBox(
                 height: 2.h,

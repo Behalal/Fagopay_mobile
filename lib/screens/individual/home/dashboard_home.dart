@@ -13,7 +13,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
 import 'widgets/dashboard_details.dart';
-import '../widgets/navigation_bar.dart';
+import '../../widgets/navigation_bar.dart';
 
 import '../../../models/user_model/user.dart';
 
@@ -408,7 +408,10 @@ class _DashboardHomeState extends State<DashboardHome> {
                               fit: BoxFit.fitWidth,
                             ),
                           ),
-                        )
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   ),
