@@ -14,7 +14,7 @@ import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../functions.dart';
 import '../transactions/confirm_transaction.dart';
-import '../widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'models/bill_post_model.dart';
 import 'widgets/tv_sub_dropdown.dart';
 

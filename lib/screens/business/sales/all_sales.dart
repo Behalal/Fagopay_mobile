@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import '../home/home.dart';
 
 class AllSales extends StatefulWidget {
@@ -41,13 +41,9 @@ class _AllSalesState extends State<AllSales> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "Sales Account",
-                // backRoute: BusinessHome(
-                //   userDetails: _userController.user!,
-                //   accountDetails: _userController.userAccountDetails!,
-                // ),
               ),
               SizedBox(
                 height: 1.5.h,

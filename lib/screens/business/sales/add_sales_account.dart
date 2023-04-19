@@ -6,8 +6,8 @@ import 'package:sizer/sizer.dart';
 import '../../../controllers/user_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
-import '../../individual/widgets/business_warning.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
+import '../../widgets/business_warning.dart';
+import '../../widgets/head_style_extra_pages.dart';
 
 class AddSalesAccount extends StatefulWidget {
   const AddSalesAccount({super.key});

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../constants/colors.dart';
+import '../constants/colors.dart';
 
 class FagoTransactionForm extends StatefulWidget {
   final String? accountName;

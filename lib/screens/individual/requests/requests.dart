@@ -9,7 +9,7 @@ import '../../../models/request_money/request_money_model.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import 'make_request.dart';
-import '../widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:number_display/number_display.dart';

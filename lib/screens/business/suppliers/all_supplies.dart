@@ -6,7 +6,7 @@ import 'package:sizer/sizer.dart';
 import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
 import '../../functions.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/boxes.dart';
 import '../widgets/load_more.dart';
 import 'add_supllies.dart';
@@ -34,10 +34,6 @@ class _AllSuppliesState extends State<AllSupplies> {
               const ProgressStyle(
                 stage: 0,
                 pageName: "My Suppliers",
-                // backRoute: BusinessHome(
-                //   userDetails: _userController.user!,
-                //   accountDetails: _userController.userAccountDetails!,
-                // ),
               ),
               SizedBox(
                 height: 3.h,

@@ -3,7 +3,7 @@ import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../constants/colors.dart';
+import '../constants/colors.dart';
 
 class ProgressStyle extends StatelessWidget {
   final Widget? backRoute;

@@ -13,7 +13,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../../controllers/transaction_controller.dart';
 import '../../constants/colors.dart';
-import '../widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 
 class MakeRequest extends StatefulWidget {
   const MakeRequest({super.key});

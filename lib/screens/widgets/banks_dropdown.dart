@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../constants/colors.dart';
+import '../constants/colors.dart';
 
 class SelectBank extends StatefulWidget {
   final List<DropdownMenuItem<String>> bankdropdown;

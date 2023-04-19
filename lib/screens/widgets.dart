@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -54,6 +55,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
   final TextEditingController pincontroller = TextEditingController();
   final _billController = Get.find<BillController>();
   final _transactionController = Get.find<TransactionController>();
+  final _userController = Get.find<UserController>();
   String _isLoading = "2";
 
   // @override
@@ -160,48 +162,57 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   const SnackBar(
-                                //     content: Text('Kindly enter your pin'),
-                                //   ),
-                                // );
-                              } else {
-                                setState(() {
-                                  _isLoading = "1";
-                                });
-                                if (widget.action == "buy_airtime") {
-                                  await buyAirtime(context, pincontroller.text);
-                                  return;
-                                }
-                                if (widget.action == "buy_data") {
-                                  await buyData(context, pincontroller.text);
-                                  return;
-                                }
-                                if (widget.action == "buy_light") {
-                                  await buyElectricity(
-                                      context, pincontroller.text);
-                                  return;
-                                }
-                                if (widget.action == "buy_internet") {
-                                  await buyInternet(
-                                      context, pincontroller.text);
-                                  return;
-                                }
-                                if (widget.action == "tv") {
-                                  await buyCableSubscription(
-                                      context, pincontroller.text);
-                                  return;
-                                }
-                                if (widget.action == "bank_transfer") {
-                                  await bankTransfer(
-                                      context, pincontroller.text);
-                                  return;
-                                }
-                                if (widget.action == "fago_to_fago") {
-                                  await fagoToFagoTransfer(
-                                      context, pincontroller.text);
-                                  return;
-                                }
+                                return;
+                              }
+                              if (_userController.userAccountDetails!.balance! <
+                                      1 ||
+                                  _userController
+                                          .userAccountDetails!.balance! ==
+                                      0) {
+                                Fluttertoast.showToast(
+                                  msg: "Insufficient Wallet Balance",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.TOP,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                return;
+                              }
+                              setState(() {
+                                _isLoading = "1";
+                              });
+                              if (widget.action == "buy_airtime") {
+                                await buyAirtime(context, pincontroller.text);
+                                return;
+                              }
+                              if (widget.action == "buy_data") {
+                                await buyData(context, pincontroller.text);
+                                return;
+                              }
+                              if (widget.action == "buy_light") {
+                                await buyElectricity(
+                                    context, pincontroller.text);
+                                return;
+                              }
+                              if (widget.action == "buy_internet") {
+                                await buyInternet(context, pincontroller.text);
+                                return;
+                              }
+                              if (widget.action == "tv") {
+                                await buyCableSubscription(
+                                    context, pincontroller.text);
+                                return;
+                              }
+                              if (widget.action == "bank_transfer") {
+                                await bankTransfer(context, pincontroller.text);
+                                return;
+                              }
+                              if (widget.action == "fago_to_fago") {
+                                await fagoToFagoTransfer(
+                                    context, pincontroller.text);
+                                return;
                               }
                             },
                             child: AuthButtons(text: "Pay", form: true)),

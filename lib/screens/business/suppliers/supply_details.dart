@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
-import '../../individual/widgets/head_style_extra_pages.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/boxes.dart';
 import 'all_supplies.dart';
 

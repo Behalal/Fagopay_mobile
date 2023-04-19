@@ -11,7 +11,7 @@ import '../../../models/data_model.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../transactions/confirm_transaction.dart';
-import '../widgets/data_dropdown.dart';
+import '../../widgets/data_dropdown.dart';
 import 'airtime.dart';
 import 'models/bill_post_model.dart';
 
