@@ -7,7 +7,7 @@ import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart'
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
-import '../widgets/head_style_extra_pages.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -497,14 +497,16 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                           SizedBox(
                             height: 0.5.h,
                           ),
-                          AutoSizeText(
-                            widget.item.description.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: stepsColor,
+                          Flexible(
+                            child: AutoSizeText(
+                              widget.item.description.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: stepsColor,
+                              ),
                             ),
                           ),
                         ],
