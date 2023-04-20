@@ -37,6 +37,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                   //   stage: 0,
                   //   pageName: "Transactions",
                   //   // backRoute: MakeRequest(),
+                  SizedBox(height: 6.h),
                   const AutoSizeText(
                     'Transactions',
                     style: TextStyle(
@@ -52,247 +53,240 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Container(
-                      height: 69.h,
-                      width: Get.width,
-                      decoration: const BoxDecoration(
-                          //color: white,
-                          ),
-                      child: SizedBox(
-                        height: 10.h,
-                        child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 0.h, horizontal: 2.5.w),
-                            child: Obx(() {
-                              return _transactionController
-                                          .transactionHistoryStatus ==
-                                      TransactionHistoryStatus.loading
-                                  ? const LoadingWidget(
-                                      color: fagoSecondaryColor,
-                                    )
-                                  : _transactionController
-                                          .transactionHistoryList.isNotEmpty
-                                      ? ListView.separated(
-                                          padding: EdgeInsets.zero,
-                                          scrollDirection: Axis.vertical,
-                                          physics: const ScrollPhysics(),
-                                          shrinkWrap: false,
-                                          itemCount: _transactionController
-                                              .transactionHistoryList.length,
-                                          separatorBuilder: (context, index) =>
-                                              SizedBox(
-                                                height: 1.2.h,
-                                              ),
-                                          itemBuilder: (context, index) {
-                                            var item = _transactionController
-                                                .transactionHistoryList[index];
-                                            return InkWell(
+                  Expanded(
+                    child: SizedBox(
+                      height: 10.h,
+                      child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 0.h, horizontal: 2.5.w),
+                          child: Obx(() {
+                            return _transactionController
+                                        .transactionHistoryStatus ==
+                                    TransactionHistoryStatus.loading
+                                ? const LoadingWidget(
+                                    color: fagoSecondaryColor,
+                                  )
+                                : _transactionController
+                                        .transactionHistoryList.isNotEmpty
+                                    ? ListView.separated(
+                                        padding: EdgeInsets.zero,
+                                        scrollDirection: Axis.vertical,
+                                        physics: const ScrollPhysics(),
+                                        shrinkWrap: false,
+                                        itemCount: _transactionController
+                                            .transactionHistoryList.length,
+                                        separatorBuilder: (context, index) =>
+                                            SizedBox(
+                                              height: 1.2.h,
+                                            ),
+                                        itemBuilder: (context, index) {
+                                          var item = _transactionController
+                                              .transactionHistoryList[index];
+                                          return InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                transactionType = index;
+                                              });
+                                            },
+                                            child: InkWell(
                                               onTap: () {
-                                                setState(() {
-                                                  transactionType = index;
-                                                });
-                                              },
-                                              child: InkWell(
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor: white,
-                                                    shape:
-                                                        const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.vertical(
-                                                        top:
-                                                            Radius.circular(20),
-                                                      ),
-                                                    ),
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        TransactionDetails(
-                                                      item: item,
-                                                    ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(12),
-                                                  height: 10.h,
-                                                  decoration: BoxDecoration(
+                                                showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor: white,
+                                                  shape:
+                                                      const RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color:
-                                                        fagoSecondaryColorWithOpacity10,
+                                                        BorderRadius.vertical(
+                                                      top: Radius.circular(20),
+                                                    ),
                                                   ),
-                                                  alignment: Alignment.center,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Row(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      TransactionDetails(
+                                                    item: item,
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(12),
+                                                height: 10.h,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color:
+                                                      fagoSecondaryColorWithOpacity10,
+                                                ),
+                                                alignment: Alignment.center,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            SvgPicture.asset(item
+                                                                        .transactionType !=
+                                                                    TransactionType
+                                                                        .CREDIT
+                                                                ? 'assets/icons/transfer_icon.svg'
+                                                                : 'assets/icons/recived_from_icon.svg'),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          width: 3.h,
+                                                        ),
+                                                        Expanded(
+                                                          child: Row(
                                                             children: [
-                                                              SvgPicture.asset(item
-                                                                          .transactionType !=
-                                                                      TransactionType
-                                                                          .CREDIT
-                                                                  ? 'assets/icons/transfer_icon.svg'
-                                                                  : 'assets/icons/recived_from_icon.svg'),
+                                                              Flexible(
+                                                                child: Column(
+                                                                  // mainAxisAlignment:
+                                                                  //     MainAxisAlignment
+                                                                  //         .spaceBetween,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    AutoSizeText(
+                                                                      item.transactionType ==
+                                                                              TransactionType.DEBIT
+                                                                          ? 'Transfer to ${item.toFrom}'
+                                                                          : 'Transfer from ${item.toFrom}',
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        fontFamily:
+                                                                            "Work Sans",
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                        color:
+                                                                            stepsColor,
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          1.h,
+                                                                    ),
+                                                                    AutoSizeText(
+                                                                      " ${item.createdAt.year.toString()}-${item.createdAt.month.toString().padLeft(2, '0')}-${item.createdAt.day.toString().padLeft(2, '0')} ${item.createdAt.hour.toString().padLeft(2, '0')}:${item.createdAt.minute.toString().padLeft(2, '0')}",
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        fontFamily:
+                                                                            "Work Sans",
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.w400,
+                                                                        color:
+                                                                            stepsColor,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
                                                             ],
                                                           ),
-                                                          SizedBox(
-                                                            width: 3.h,
-                                                          ),
-                                                          Expanded(
-                                                            child: Row(
-                                                              children: [
-                                                                Flexible(
-                                                                  child: Column(
-                                                                    // mainAxisAlignment:
-                                                                    //     MainAxisAlignment
-                                                                    //         .spaceBetween,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      AutoSizeText(
-                                                                        item.transactionType ==
-                                                                                TransactionType.DEBIT
-                                                                            ? 'Transfer to ${item.toFrom}'
-                                                                            : 'Transfer from ${item.toFrom}',
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                        style:
-                                                                            const TextStyle(
-                                                                          fontFamily:
-                                                                              "Work Sans",
-                                                                          fontSize:
-                                                                              14,
-                                                                          fontWeight:
-                                                                              FontWeight.w500,
-                                                                          color:
-                                                                              stepsColor,
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        height:
-                                                                            1.h,
-                                                                      ),
-                                                                      AutoSizeText(
-                                                                        " ${item.createdAt.year.toString()}-${item.createdAt.month.toString().padLeft(2, '0')}-${item.createdAt.day.toString().padLeft(2, '0')} ${item.createdAt.hour.toString().padLeft(2, '0')}:${item.createdAt.minute.toString().padLeft(2, '0')}",
-                                                                        style:
-                                                                            const TextStyle(
-                                                                          fontFamily:
-                                                                              "Work Sans",
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.w400,
-                                                                          color:
-                                                                              stepsColor,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            AutoSizeText(
+                                                              item.transactionType ==
+                                                                      TransactionType
+                                                                          .DEBIT
+                                                                  ? item.outflow
+                                                                      .toString()
+                                                                  : item.inflow
+                                                                      .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    "Work Sans",
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                color:
+                                                                    fagoSecondaryColor,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              AutoSizeText(
-                                                                item.transactionType ==
-                                                                        TransactionType
-                                                                            .DEBIT
-                                                                    ? item
-                                                                        .outflow
-                                                                        .toString()
-                                                                    : item
-                                                                        .inflow
-                                                                        .toString(),
+                                                            SizedBox(
+                                                              height: 1.h,
+                                                            ),
+                                                            Container(
+                                                              height: 17,
+                                                              width: 60,
+                                                              decoration: BoxDecoration(
+                                                                  color: white,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              25)),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child:
+                                                                  AutoSizeText(
+                                                                item.transactionStatus ==
+                                                                        TransactionStatus
+                                                                            .SUCCESS
+                                                                    ? 'Success'
+                                                                    : 'pending',
                                                                 style:
                                                                     const TextStyle(
                                                                   fontFamily:
                                                                       "Work Sans",
-                                                                  fontSize: 14,
+                                                                  fontSize: 5,
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w700,
+                                                                          .w400,
                                                                   color:
-                                                                      fagoSecondaryColor,
+                                                                      fagoGreenColor,
                                                                 ),
                                                               ),
-                                                              SizedBox(
-                                                                height: 1.h,
-                                                              ),
-                                                              Container(
-                                                                height: 17,
-                                                                width: 60,
-                                                                decoration: BoxDecoration(
-                                                                    color:
-                                                                        white,
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            25)),
-                                                                alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                child:
-                                                                    AutoSizeText(
-                                                                  item.transactionStatus ==
-                                                                          TransactionStatus
-                                                                              .SUCCESS
-                                                                      ? 'Success'
-                                                                      : 'pending',
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontFamily:
-                                                                        "Work Sans",
-                                                                    fontSize: 5,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        fagoGreenColor,
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            );
-                                          })
-                                      : const Center(
-                                          child: AutoSizeText(
-                                            'No history found',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: stepsColor,
                                             ),
+                                          );
+                                        })
+                                    : const Center(
+                                        child: AutoSizeText(
+                                          'No history found',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: stepsColor,
                                           ),
-                                        );
-                            })),
-                      ))
+                                        ),
+                                      );
+                          })),
+                    ),
+                  )
                 ])));
   }
 }
