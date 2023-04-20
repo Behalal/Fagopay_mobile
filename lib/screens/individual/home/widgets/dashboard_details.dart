@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -155,25 +156,28 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                             Navigator.of(context)
                                                 .pushReplacement(
                                               MaterialPageRoute(
-                                                builder: (context) =>
-                                                    BusinessHome(
-                                                  userDetails: widget.user,
-                                                  accountDetails:
-                                                      widget.accountDetails,
-                                                ),
-                                              ),
+                                                  builder: (context) =>
+                                                      const BusinessDashboard()
+
+                                                  //     BusinessHome(
+                                                  //   userDetails: widget.user,
+                                                  //   accountDetails:
+                                                  //       widget.accountDetails,
+                                                  // ),
+                                                  ),
                                             );
                                             return;
                                           }
                                           Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DashboardHome(
-                                                userDetails: widget.user,
-                                                accountDetails:
-                                                    widget.accountDetails,
-                                              ),
-                                            ),
+                                                builder: (context) =>
+                                                    const Dashboard()
+                                                //     DashboardHome(
+                                                //   userDetails: widget.user,
+                                                //   accountDetails:
+                                                //       widget.accountDetails,
+                                                // ),
+                                                ),
                                           );
                                         },
                                         itemBuilder: (BuildContext context) =>

@@ -10,10 +10,10 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     // Get.put(RegistrationController(), permanent: true);
-    Get.lazyPut(() => LoginController());
-    Get.lazyPut(() => UserController());
-    Get.lazyPut(() => TransactionController());
-    Get.lazyPut(() => BillController());
-    Get.lazyPut(() => RequestMoney());
+    Get.put(LoginController(), permanent: true);
+    Get.put(UserController(), permanent: true);
+    Get.put(TransactionController(), permanent: true);
+    Get.put(BillController(), permanent: true);
+    Get.put(RequestMoney(), permanent: true);
   }
 }
