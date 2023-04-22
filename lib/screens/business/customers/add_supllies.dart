@@ -37,7 +37,7 @@ class _AddSuppliesState extends State<AddSupplies> {
                     SizedBox(
                       height: 2.h,
                     ),
-                    const BusinessForm(),
+                    // const BusinessForm(),
                     SizedBox(height: 4.h,),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),

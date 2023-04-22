@@ -37,7 +37,7 @@ class _AddSalesState extends State<AddSales> {
                     SizedBox(
                       height: 2.h,
                     ),
-                    const BusinessForm(),
+                    // const BusinessForm(),
                     SizedBox(height: 4.h,),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -45,8 +45,8 @@ class _AddSalesState extends State<AddSales> {
                           form: true, text: "Submit", route: null),
                     )
                   ]
-              )
-          )
+              ),
+          ),
       )
     );
   }
