@@ -21,7 +21,7 @@ class RegistrationController extends GetxController {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController passCode = TextEditingController();
   TextEditingController passCodeConfirm = TextEditingController();
-  final accountType = registrationData.getAccountType;
+ late final accountType = registrationData.getAccountType;
 
   Future<dynamic> selectAccountType() async {
     String typeKey = "";

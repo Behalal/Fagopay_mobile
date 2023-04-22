@@ -149,13 +149,13 @@ class _SupportRequestState extends State<SupportRequest> {
                         height: 5.h,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SvgPicture.asset('assets/icons/markIcon.svg'),
-                          SizedBox(
-                            width: 1.h,
-                          ),
+                          // SizedBox(
+                          //   width: 1.h,
+                          // ),
                           const AutoSizeText(
                             "By clicking on I support or using the custom box, I consent \nthat Fagopay shall debit my wallet to credit the requestee.",
                             style: TextStyle(

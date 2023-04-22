@@ -55,7 +55,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                   ),
                   Expanded(
                     child: SizedBox(
-                      height: 10.h,
+                      height: 8.h,
                       child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 0.h, horizontal: 2.5.w),
@@ -109,8 +109,8 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                               },
                                               child: Container(
                                                 padding:
-                                                    const EdgeInsets.all(12),
-                                                height: 10.h,
+                                                    const EdgeInsets.all(15),
+                                                height: 8.h,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(5),
@@ -171,7 +171,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                                                         fontSize:
                                                                             14,
                                                                         fontWeight:
-                                                                            FontWeight.w500,
+                                                                            FontWeight.w600,
                                                                         color:
                                                                             stepsColor,
                                                                       ),

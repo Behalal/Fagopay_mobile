@@ -11,7 +11,7 @@ class ProgressStyle extends StatelessWidget {
   final int stage;
   final double? width;
   final String? icon;
-  
+
   const ProgressStyle({
     Key? key,
     this.backRoute,
@@ -20,7 +20,6 @@ class ProgressStyle extends StatelessWidget {
     this.width,
     this.icon,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class ProgressStyle extends StatelessWidget {
           ),
           if (icon == null)
             SizedBox(
-              width: 8.w,
+              width: 20.w,
             ),
           Text(
             pageName,

@@ -3,6 +3,7 @@ import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/screens/individual/profile/profile_settings.dart';
 import 'package:fagopay/screens/individual/transactions/transaction_history.dart';
 import 'package:fagopay/screens/kyc/kyc2.dart';
 import 'package:fagopay/screens/kyc/kyc_success.dart';
@@ -243,7 +244,7 @@ class _DashboardState extends State<Dashboard> {
         return const BvnVerification();
       case 4:
       default:
-        return const kyc_success();
+        return const ProfileSettings();
     }
   }
 

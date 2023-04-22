@@ -143,7 +143,7 @@ class _RequestHomeState extends State<RequestHome> {
                               });
                             },
                             child: Container(
-                              width: 40.w,
+                              width: 45.w,
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
@@ -166,7 +166,7 @@ class _RequestHomeState extends State<RequestHome> {
                             ),
                           ),
                           Container(
-                            width: 10.w,
+                            width: 0.w,
                             decoration: const BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
@@ -183,7 +183,7 @@ class _RequestHomeState extends State<RequestHome> {
                               });
                             }),
                             child: Container(
-                              width: 40.w,
+                              width: 45.w,
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
@@ -633,7 +633,7 @@ class _RequestHomeState extends State<RequestHome> {
 
   Widget dialogItem() {
     return SizedBox(
-      height: 190,
+      height: 200,
       width: Get.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -732,7 +732,7 @@ class _RequestHomeState extends State<RequestHome> {
                   ),
                 ),
                 SizedBox(
-                  height: 3.h,
+                  height: 2.h,
                 ),
                 Container(
                   width: 130,
