@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/suppliers_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
 import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/boxes.dart';
-import 'all_supplies.dart';
 
 class SupplyDetails extends StatefulWidget {
   const SupplyDetails({super.key});
@@ -17,6 +18,7 @@ class SupplyDetails extends StatefulWidget {
 class _SupplyDetailsState extends State<SupplyDetails> {
   late bool customerDetailsTab;
   late bool transactionDetailsTab;
+  final _supplierController = Get.find<SupplierController>();
 
   @override
   void initState() {
@@ -27,6 +29,8 @@ class _SupplyDetailsState extends State<SupplyDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final supplierId = ModalRoute.of(context)!.settings.arguments as String;
+    final supplier = _supplierController.findSupplierById(supplierId);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -35,9 +39,9 @@ class _SupplyDetailsState extends State<SupplyDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProgressStyle(
+              ProgressStyle(
                 stage: 0,
-                pageName: "Obasa Yussuf",
+                pageName: supplier.name!,
                 // backRoute: AllSupplies(),
                 icon: "assets/images/profile-delete.png",
               ),
@@ -80,9 +84,9 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                       "assets/images/biz_call.png",
                       color: white,
                     ),
-                    const AutoSizeText(
-                      "+447-4543-536-6",
-                      style: TextStyle(
+                    AutoSizeText(
+                      supplier.phone!,
+                      style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 10,
                           color: white,
@@ -259,10 +263,10 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                const AutoSizeText(
-                                  "obasana Yussuf",
+                                AutoSizeText(
+                                  supplier.accountName!,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 14,
                                       color: fagoSecondaryColor,
@@ -271,10 +275,10 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                                 SizedBox(
                                   height: 1.5.h,
                                 ),
-                                const AutoSizeText(
-                                  "0024583927",
+                                AutoSizeText(
+                                  supplier.accountNumber!,
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 14,
                                       color: fagoSecondaryColor,
@@ -327,10 +331,10 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                                 color: inactiveTab,
                                 fontWeight: FontWeight.w500),
                           ),
-                          const AutoSizeText(
-                            "obasana@gmail.com",
+                          AutoSizeText(
+                            supplier.email!,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 14,
                                 color: fagoSecondaryColor,
@@ -361,21 +365,23 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                             "Address",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                color: inactiveTab,
-                                fontWeight: FontWeight.w500),
+                              fontFamily: "Work Sans",
+                              fontSize: 14,
+                              color: inactiveTab,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                           SizedBox(
                             width: 70.w,
-                            child: const AutoSizeText(
-                              "12, adjascent KFC, Ikoyi estate, island Lagos, Nigeria",
+                            child: AutoSizeText(
+                              supplier.address!,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 14,
-                                  color: fagoSecondaryColor,
-                                  fontWeight: FontWeight.w400),
+                              style: const TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                color: fagoSecondaryColor,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                         ],

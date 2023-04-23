@@ -53,6 +53,7 @@ class _BusinessFormState extends State<BusinessForm> {
           width: 90.w,
           child: TextFormField(
             controller: _customerController.nameController,
+            keyboardType: TextInputType.name,
             style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
@@ -109,6 +110,7 @@ class _BusinessFormState extends State<BusinessForm> {
           width: 90.w,
           child: TextFormField(
             controller: _customerController.phoneController,
+            keyboardType: TextInputType.phone,
             style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
@@ -165,6 +167,7 @@ class _BusinessFormState extends State<BusinessForm> {
           width: 90.w,
           child: TextFormField(
             controller: _customerController.emailController,
+            keyboardType: TextInputType.emailAddress,
             style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
@@ -366,6 +369,7 @@ class _BusinessFormState extends State<BusinessForm> {
           width: 90.w,
           child: TextFormField(
             controller: _customerController.addressController,
+            keyboardType: TextInputType.streetAddress,
             style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,

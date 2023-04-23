@@ -10,7 +10,8 @@ class BaseAPI {
   static String citiesPath = "${api}city-state/";
   static String authPath = "$api/auth";
   static String billPath = "${api}bills/";
-  static String customerPath = "${api}customer/";
+  static String customersPath = "${api}customer";
+  static String suppliersPath = "${api}supplier";
   static String validateResetOtp = "${api}verify/password-reset-code";
 
 // RequestMoney Endpoint

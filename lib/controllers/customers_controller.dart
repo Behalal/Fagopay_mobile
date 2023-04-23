@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fagopay/models/customer_model.dart';
 import 'package:fagopay/service/constants/constants.dart';
 import 'package:fagopay/service/networking/network_helper.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
@@ -8,6 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomerController extends GetxController {
+  // final Rx<Customer?> _customer = Rx(null);
+  final Rx<List<Customer>> _customers = Rx([]);
+
+  List<Customer> get customers {
+    return [..._customers.value];
+  }
+
+  set customers(List<Customer> customers) {
+    _customers(customers);
+  }
+
+  Customer findCustomerById(String id) {
+    return customers.firstWhere((customer) => customer.id == id);
+  }
+
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -20,7 +36,7 @@ class CustomerController extends GetxController {
     final token = await SecureStorage.readUserToken();
     try {
       final responseData = await NetworkHelper.getRequest(
-        url: BaseAPI.customerPath,
+        url: BaseAPI.customersPath,
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Authorization": "Bearer $token",
@@ -47,14 +63,14 @@ class CustomerController extends GetxController {
       "phone_number": phoneNumber,
       "email": email,
       "address": address,
-      "country_id": "0d9534ec-6d5f-43c5-b5b0-54e063088ad7",
-      "state_id": "76eff75c-1fef-44a0-9c9d-88752ea2513b",
-      "city_id": "20b9083a-8450-40eb-9344-67f67f4de9e7",
+      "country_id": countryId,
+      "state_id": stateId,
+      "city_id": cityId,
     });
 
     try {
       final response = await NetworkHelper.postRequest(
-        url: BaseAPI.customerPath,
+        url: BaseAPI.customersPath,
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Authorization": "Bearer $token",
@@ -66,4 +82,6 @@ class CustomerController extends GetxController {
       log(e.toString());
     }
   }
+
+  // Future<dynamic> getCustomerDetails(String id) async {}
 }
