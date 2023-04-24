@@ -1,0 +1,249 @@
+// ignore_for_file: unrelated_type_equality_checks
+
+import 'dart:io';
+
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
+import 'package:fagopay/screens/individual/refer_and_win/reward_center.dart';
+import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import '../../constants/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class ReferAndEarn extends StatefulWidget {
+  const ReferAndEarn({
+    super.key,
+  });
+
+  @override
+  State<ReferAndEarn> createState() => _ReferAndEarnState();
+}
+
+class _ReferAndEarnState extends State<ReferAndEarn> {
+  int? myRequestType;
+  var number = "";
+  int? transactionType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Padding(
+            padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const ProgressStyle(
+                    stage: 0,
+                    pageName: "Refer & Earn",
+                    // backRoute: MakeRequest(),
+                  ),
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Expanded(
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 2.h, horizontal: 2.5.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 1.5.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset('assets/images/new-year 2.png'),
+                                Image.asset('assets/images/gift 1.png'),
+                                Image.asset('assets/images/new-year 1.png'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 4.5.h,
+                            ),
+                            const AutoSizeText(
+                              'Share FagoPay with your network and you both get \npaid.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                                color: stepsColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: const TextSpan(
+                                  style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                      color: stepsColor),
+                                  children: [
+                                    TextSpan(text: 'Earn upto '),
+                                    TextSpan(
+                                        text: '#200 ',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600)),
+                                    TextSpan(
+                                        text:
+                                            'Earn upto  for every new user that joins using your referral code and transact over'),
+                                    TextSpan(
+                                        text: ' #20,000',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600)),
+                                    TextSpan(text: ' in their first 2 months'),
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 20),
+                              height: 6.5.h,
+                              width: 35.5.h,
+                              decoration: BoxDecoration(
+                                  color: fagoSecondaryColorWithOpacity10,
+                                  borderRadius: BorderRadius.circular(36),
+                                  border:
+                                      Border.all(color: fagoSecondaryColor)),
+                              //alignment: Alignment.center,
+                              child: Row(
+                                children: [
+                                  const AutoSizeText(
+                                    'Referral Code',
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: stepsColor,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    height: Get.height,
+                                    width: 20.5.h,
+                                    decoration: const BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(36),
+                                            bottomRight: Radius.circular(36))),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const AutoSizeText(
+                                          'Ibrahim2023',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: fagoSecondaryColor,
+                                          ),
+                                        ),
+                                        SvgPicture.asset(
+                                            'assets/icons/copy-svgrepo-com 1.svg')
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 0.5.h,
+                            ),
+                            const AutoSizeText(
+                              'Tap to copy',
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: stepsColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 13.h,
+                            ),
+                            Container(
+                              height: 6.5.h,
+                              width: 35.5.h,
+                              decoration: BoxDecoration(
+                                  color: fagoSecondaryColor,
+                                  borderRadius: BorderRadius.circular(36),
+                                  border:
+                                      Border.all(color: fagoSecondaryColor)),
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const AutoSizeText(
+                                    'Invite your friends',
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                      color: white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 2.h,
+                                  ),
+                                  SvgPicture.asset(
+                                      'assets/icons/invite_friends.svg'),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Get.to(()=>const ReferCenter());
+                              },
+                              child: Container(
+                                height: 6.5.h,
+                                width: 35.5.h,
+                                decoration: BoxDecoration(
+                                    color: fagoSecondaryColorWithOpacity10,
+                                    borderRadius: BorderRadius.circular(36),
+                                    border: Border.all(
+                                        color: fagoSecondaryColorWithOpacity10)),
+                                alignment: Alignment.center,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const AutoSizeText(
+                                      'My Referral Earnings',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: stepsColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 2.h,
+                                    ),
+                                    SvgPicture.asset(
+                                        'assets/icons/earning_icon.svg'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                ])));
+  }
+}

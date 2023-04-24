@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
 import '../../../controllers/login_controller.dart';
 import '../../../controllers/user_controller.dart';
 import 'models/payments_model.dart';
@@ -393,6 +394,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           ),
                           child: GestureDetector(
                             onTap: () {
+                              Get.to(() => const ReferAndEarn());
                               // Fluttertoast.showToast(
                               //   msg: "This is Center Short Toast",
                               //   toastLength: Toast.LENGTH_LONG,
@@ -418,7 +420,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                 ),
               ],
             ),
-    //  bottomNavigationBar: const FagoNavigationBar(),
+      //  bottomNavigationBar: const FagoNavigationBar(),
     );
   }
 

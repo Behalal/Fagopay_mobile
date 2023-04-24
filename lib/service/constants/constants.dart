@@ -10,6 +10,7 @@ class BaseAPI {
   static String authPath = "$api/auth";
   static String billPath = "${api}bills/";
   static String validateResetOtp = "${api}verify/password-reset-code";
+  static String nextofKin = "${api}kyc/create-update-nextofkin";
 
 // RequestMoney Endpoint
   static String myRequest = "${api}transaction/requestee-request-list";
