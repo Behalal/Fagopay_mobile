@@ -5,10 +5,13 @@ class BaseAPI {
   static String userPath = "${api}user/";
   static String verificationPath = "${api}verify/";
   static String transactionsPath = "${api}transaction/";
-  static String locationPath = "${api}countries/";
-  static String cityPath = "${api}states/";
+  static String countriesPath = "${api}countries/";
+  static String statesPath = "${api}states/";
+  static String citiesPath = "${api}city-state/";
   static String authPath = "$api/auth";
   static String billPath = "${api}bills/";
+  static String customersPath = "${api}customer";
+  static String suppliersPath = "${api}supplier";
   static String validateResetOtp = "${api}verify/password-reset-code";
   static String nextofKin = "${api}kyc/create-update-nextofkin";
 

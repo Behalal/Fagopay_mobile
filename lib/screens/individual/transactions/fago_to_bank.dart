@@ -33,7 +33,6 @@ class FagoToBank extends StatefulWidget {
 
 class _FagoToBankState extends State<FagoToBank> {
   List<BankDetails> allBanks = [];
-  List<DropdownMenuItem<String>> bankDropdown = [];
   String selectedBankValue = "";
   final _transactionController = Get.find<TransactionController>();
   String verifiedReceipientUser = "";
