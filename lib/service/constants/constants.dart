@@ -13,6 +13,7 @@ class BaseAPI {
   static String customersPath = "${api}customer";
   static String suppliersPath = "${api}supplier";
   static String validateResetOtp = "${api}verify/password-reset-code";
+  static String nextofKin = "${api}kyc/create-update-nextofkin";
 
 // RequestMoney Endpoint
   static String myRequest = "${api}transaction/requestee-request-list";

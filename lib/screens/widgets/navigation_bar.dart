@@ -3,6 +3,7 @@ import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/screens/individual/profile/profile_settings.dart';
 import 'package:fagopay/screens/individual/transactions/transaction_history.dart';
 import 'package:fagopay/screens/kyc/kyc2.dart';
 import 'package:fagopay/screens/kyc/kyc_success.dart';
@@ -129,11 +130,11 @@ class _DashboardState extends State<Dashboard> {
   bool isclicked = false;
 
   List<String> selectedIcons = [
-    'assets/icons/home_icon.svg',
-    'assets/icons/transaction_icon.svg',
+    'assets/icons/selected_home.svg',
+    'assets/icons/selected_transaction.svg',
     'assets/icons/home_nav_logo.svg',
     'assets/icons/fago_pay_card_icon.svg',
-    'assets/icons/profile_icon.svg',
+    'assets/icons/selected_profile.svg',
   ];
   List<String> unSelectedIcons = [
     'assets/icons/home_icon.svg',
@@ -158,13 +159,14 @@ class _DashboardState extends State<Dashboard> {
       body: buildPages(),
       bottomNavigationBar: Container(
         constraints: const BoxConstraints(),
-        height: Get.height * 0.10,
+        height: Get.height * 0.11,
         decoration: const BoxDecoration(
           color: white,
         ),
         child: ListView.builder(
           itemCount: selectedIcons.length,
           scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(
             left: Get.width * .04,
             right: Get.width * .04,
@@ -188,24 +190,34 @@ class _DashboardState extends State<Dashboard> {
                   duration: const Duration(milliseconds: 1500),
                   curve: Curves.fastLinearToSlowEaseIn,
                   margin: EdgeInsets.only(
-                    bottom: index == selectedIndex ? 0 : Get.width * .003,
+                    bottom: index == selectedIndex ? 0 : Get.width * .001,
                     right: Get.width * .03,
                     left: Get.width * .03,
                   ),
                   width: Get.width * .128,
                   height: Get.width * .014,
                 ),
-                SvgPicture.asset(
-                  index == selectedIndex
-                      ? selectedIcons[index]
-                      : unSelectedIcons[index],
-                  height: Get.width * .05,
-                  // color: index == selectedIndex
-                  //     ? AppColor().primaryColorPurple.withOpacity(0.5)
-                  //     : Colors.black38,
-                ),
+                index == 2
+                    ? SvgPicture.asset(
+                        index == selectedIndex
+                            ? selectedIcons[index]
+                            : unSelectedIcons[index],
+                        height: Get.width * .12,
+                        // color: index == selectedIndex
+                        //     ? AppColor().primaryColorPurple.withOpacity(0.5)
+                        //     : Colors.black38,
+                      )
+                    : SvgPicture.asset(
+                        index == selectedIndex
+                            ? selectedIcons[index]
+                            : unSelectedIcons[index],
+                        height: Get.width * .06,
+                        // color: index == selectedIndex
+                        //     ? AppColor().primaryColorPurple.withOpacity(0.5)
+                        //     : Colors.black38,
+                      ),
                 SizedBox(
-                  height: 1.h,
+                  height: 0.5.h,
                 ),
                 AutoSizeText(
                   navTitle[index],
@@ -243,7 +255,7 @@ class _DashboardState extends State<Dashboard> {
         return const BvnVerification();
       case 4:
       default:
-        return const kyc_success();
+        return const ProfileSettings();
     }
   }
 
@@ -300,11 +312,11 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
   bool isclicked = false;
 
   List<String> selectedIcons = [
-    'assets/icons/home_icon.svg',
-    'assets/icons/transaction_icon.svg',
+    'assets/icons/selected_home.svg',
+    'assets/icons/selected_transaction.svg',
     'assets/icons/home_nav_logo.svg',
     'assets/icons/fago_pay_card_icon.svg',
-    'assets/icons/profile_icon.svg',
+    'assets/icons/selected_profile.svg',
   ];
   List<String> unSelectedIcons = [
     'assets/icons/home_icon.svg',
@@ -315,11 +327,11 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
   ];
 
   List<String> navTitle = [
-    'Business',
-    'Transaction',
+    'Home',
+    'Invoice',
     '',
-    'Fagopay Cards',
-    'Profile',
+    'Transactions',
+    'Admin',
   ];
 
   @override
@@ -329,13 +341,14 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
       body: buildPages(),
       bottomNavigationBar: Container(
         constraints: const BoxConstraints(),
-        height: Get.height * 0.10,
+        height: Get.height * 0.11,
         decoration: const BoxDecoration(
           color: white,
         ),
         child: ListView.builder(
           itemCount: selectedIcons.length,
           scrollDirection: Axis.horizontal,
+          physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.only(
             left: Get.width * .04,
             right: Get.width * .04,
@@ -366,15 +379,25 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
                   width: Get.width * .128,
                   height: Get.width * .014,
                 ),
-                SvgPicture.asset(
-                  index == selectedIndex
-                      ? selectedIcons[index]
-                      : unSelectedIcons[index],
-                  height: Get.width * .05,
-                  // color: index == selectedIndex
-                  //     ? AppColor().primaryColorPurple.withOpacity(0.5)
-                  //     : Colors.black38,
-                ),
+                index == 2
+                    ? SvgPicture.asset(
+                        index == selectedIndex
+                            ? selectedIcons[index]
+                            : unSelectedIcons[index],
+                        height: Get.width * .12,
+                        // color: index == selectedIndex
+                        //     ? AppColor().primaryColorPurple.withOpacity(0.5)
+                        //     : Colors.black38,
+                      )
+                    : SvgPicture.asset(
+                        index == selectedIndex
+                            ? selectedIcons[index]
+                            : unSelectedIcons[index],
+                        height: Get.width * .06,
+                        // color: index == selectedIndex
+                        //     ? AppColor().primaryColorPurple.withOpacity(0.5)
+                        //     : Colors.black38,
+                      ),
                 SizedBox(
                   height: 1.h,
                 ),
