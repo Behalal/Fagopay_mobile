@@ -105,48 +105,46 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                       SizedBox(
                         height: 1.h,
                       ),
-                      Center(
-                        child: PinCodeTextField(
-                          pinBoxOuterPadding:
-                              const EdgeInsets.symmetric(horizontal: 4),
-                          pinBoxRadius: 0,
-                          autofocus: true,
-                          controller: oldPasscodeController,
-                          hideCharacter: true,
+                      PinCodeTextField(
+                        pinBoxOuterPadding:
+                            const EdgeInsets.symmetric(horizontal: 4),
+                        pinBoxRadius: 0,
+                        autofocus: true,
+                        controller: oldPasscodeController,
+                        hideCharacter: true,
 
-                          highlight: true,
-                          highlightColor: stepsColor,
-                          defaultBorderColor: fagoSecondaryColor,
-                          hasTextBorderColor: stepsColor,
-                          highlightPinBoxColor: Colors.white,
-                          maxLength: 6,
-                          hasError: hasError,
-                          maskCharacter: '*',
-                          onTextChanged: (text) {
-                            setState(() {
-                              hasError = false;
-                            });
-                          },
-                          onDone: (text) {
-                            otpText = text;
-                            print("DONE $otpText");
-                          },
-                          pinBoxWidth: 56,
-                          pinBoxHeight: 56,
-                          hasUnderline: false,
-                          pinBoxDecoration:
-                              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                          pinTextStyle: const TextStyle(fontSize: 15.0),
-                          pinTextAnimatedSwitcherTransition:
-                              ProvidedPinBoxTextAnimation.scalingTransition,
-                          //                    pinBoxColor: Colors.green[100],
-                          pinTextAnimatedSwitcherDuration:
-                              const Duration(milliseconds: 300),
-                          //                    highlightAnimation: true,
-                          highlightAnimationBeginColor: Colors.black,
-                          highlightAnimationEndColor: Colors.white12,
-                          keyboardType: TextInputType.number,
-                        ),
+                        highlight: true,
+                        highlightColor: stepsColor,
+                        defaultBorderColor: fagoSecondaryColor,
+                        hasTextBorderColor: stepsColor,
+                        highlightPinBoxColor: Colors.white,
+                        maxLength: 6,
+                        hasError: hasError,
+                        maskCharacter: '*',
+                        onTextChanged: (text) {
+                          setState(() {
+                            hasError = false;
+                          });
+                        },
+                        onDone: (text) {
+                          otpText = text;
+                          print("DONE $otpText");
+                        },
+                        pinBoxWidth: 52,
+                        pinBoxHeight: 52,
+                        hasUnderline: false,
+                        pinBoxDecoration:
+                            ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                        pinTextStyle: const TextStyle(fontSize: 15.0),
+                        pinTextAnimatedSwitcherTransition:
+                            ProvidedPinBoxTextAnimation.scalingTransition,
+                        //                    pinBoxColor: Colors.green[100],
+                        pinTextAnimatedSwitcherDuration:
+                            const Duration(milliseconds: 300),
+                        //                    highlightAnimation: true,
+                        highlightAnimationBeginColor: Colors.black,
+                        highlightAnimationEndColor: Colors.white12,
+                        keyboardType: TextInputType.number,
                       ),
                       SizedBox(
                         height: 3.h,
@@ -170,47 +168,45 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                       SizedBox(
                         height: 1.h,
                       ),
-                      Center(
-                        child: PinCodeTextField(
-                          pinBoxOuterPadding:
-                              const EdgeInsets.symmetric(horizontal: 4),
-                          pinBoxRadius: 0,
-                          autofocus: true,
-                          controller: newPasscodeController,
-                          hideCharacter: true,
-                          highlight: true,
-                          highlightColor: stepsColor,
-                          defaultBorderColor: fagoSecondaryColor,
-                          hasTextBorderColor: stepsColor,
-                          highlightPinBoxColor: Colors.white,
-                          maxLength: 6,
-                          hasError: hasError,
-                          maskCharacter: '*',
-                          onTextChanged: (text) {
-                            setState(() {
-                              hasError = false;
-                            });
-                          },
-                          onDone: (text) {
-                            otpText = text;
-                            print("DONE $otpText");
-                          },
-                          pinBoxWidth: 56,
-                          pinBoxHeight: 56,
-                          hasUnderline: false,
-                          pinBoxDecoration:
-                              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                          pinTextStyle: const TextStyle(fontSize: 15.0),
-                          pinTextAnimatedSwitcherTransition:
-                              ProvidedPinBoxTextAnimation.scalingTransition,
-                          //                    pinBoxColor: Colors.green[100],
-                          pinTextAnimatedSwitcherDuration:
-                              const Duration(milliseconds: 300),
-                          //                    highlightAnimation: true,
-                          highlightAnimationBeginColor: Colors.black,
-                          highlightAnimationEndColor: Colors.white12,
-                          keyboardType: TextInputType.number,
-                        ),
+                      PinCodeTextField(
+                        pinBoxOuterPadding:
+                            const EdgeInsets.symmetric(horizontal: 4),
+                        pinBoxRadius: 0,
+                        autofocus: true,
+                        controller: newPasscodeController,
+                        hideCharacter: true,
+                        highlight: true,
+                        highlightColor: stepsColor,
+                        defaultBorderColor: fagoSecondaryColor,
+                        hasTextBorderColor: stepsColor,
+                        highlightPinBoxColor: Colors.white,
+                        maxLength: 6,
+                        hasError: hasError,
+                        maskCharacter: '*',
+                        onTextChanged: (text) {
+                          setState(() {
+                            hasError = false;
+                          });
+                        },
+                        onDone: (text) {
+                          otpText = text;
+                          print("DONE $otpText");
+                        },
+                        pinBoxWidth: 52,
+                        pinBoxHeight: 52,
+                        hasUnderline: false,
+                        pinBoxDecoration:
+                            ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                        pinTextStyle: const TextStyle(fontSize: 15.0),
+                        pinTextAnimatedSwitcherTransition:
+                            ProvidedPinBoxTextAnimation.scalingTransition,
+                        //                    pinBoxColor: Colors.green[100],
+                        pinTextAnimatedSwitcherDuration:
+                            const Duration(milliseconds: 300),
+                        //                    highlightAnimation: true,
+                        highlightAnimationBeginColor: Colors.black,
+                        highlightAnimationEndColor: Colors.white12,
+                        keyboardType: TextInputType.number,
                       ),
                       SizedBox(
                         height: 4.h,
@@ -227,47 +223,45 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                       SizedBox(
                         height: 1.h,
                       ),
-                      Center(
-                        child: PinCodeTextField(
-                          pinBoxOuterPadding:
-                              const EdgeInsets.symmetric(horizontal: 4),
-                          pinBoxRadius: 0,
-                          autofocus: true,
-                          controller: confirmPasscodeController,
-                          hideCharacter: true,
-                          highlight: true,
-                          highlightColor: stepsColor,
-                          defaultBorderColor: fagoSecondaryColor,
-                          hasTextBorderColor: stepsColor,
-                          highlightPinBoxColor: Colors.white,
-                          maxLength: 6,
-                          hasError: hasError,
-                          maskCharacter: '*',
-                          onTextChanged: (text) {
-                            setState(() {
-                              hasError = false;
-                            });
-                          },
-                          onDone: (text) {
-                            otpText = text;
-                            print("DONE $otpText");
-                          },
-                          pinBoxWidth: 56,
-                          pinBoxHeight: 56,
-                          hasUnderline: false,
-                          pinBoxDecoration:
-                              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                          pinTextStyle: const TextStyle(fontSize: 15.0),
-                          pinTextAnimatedSwitcherTransition:
-                              ProvidedPinBoxTextAnimation.scalingTransition,
-                          //                    pinBoxColor: Colors.green[100],
-                          pinTextAnimatedSwitcherDuration:
-                              const Duration(milliseconds: 300),
-                          //                    highlightAnimation: true,
-                          highlightAnimationBeginColor: Colors.black,
-                          highlightAnimationEndColor: Colors.white12,
-                          keyboardType: TextInputType.number,
-                        ),
+                      PinCodeTextField(
+                        pinBoxOuterPadding:
+                            const EdgeInsets.symmetric(horizontal: 4),
+                        pinBoxRadius: 0,
+                        autofocus: true,
+                        controller: confirmPasscodeController,
+                        hideCharacter: true,
+                        highlight: true,
+                        highlightColor: stepsColor,
+                        defaultBorderColor: fagoSecondaryColor,
+                        hasTextBorderColor: stepsColor,
+                        highlightPinBoxColor: Colors.white,
+                        maxLength: 6,
+                        hasError: hasError,
+                        maskCharacter: '*',
+                        onTextChanged: (text) {
+                          setState(() {
+                            hasError = false;
+                          });
+                        },
+                        onDone: (text) {
+                          otpText = text;
+                          print("DONE $otpText");
+                        },
+                        pinBoxWidth: 52,
+                        pinBoxHeight: 52,
+                        hasUnderline: false,
+                        pinBoxDecoration:
+                            ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                        pinTextStyle: const TextStyle(fontSize: 15.0),
+                        pinTextAnimatedSwitcherTransition:
+                            ProvidedPinBoxTextAnimation.scalingTransition,
+                        //                    pinBoxColor: Colors.green[100],
+                        pinTextAnimatedSwitcherDuration:
+                            const Duration(milliseconds: 300),
+                        //                    highlightAnimation: true,
+                        highlightAnimationBeginColor: Colors.black,
+                        highlightAnimationEndColor: Colors.white12,
+                        keyboardType: TextInputType.number,
                       ),
                       // Padding(
                       //     padding: EdgeInsets.only(left: 2.5.w, right: 4.w),
