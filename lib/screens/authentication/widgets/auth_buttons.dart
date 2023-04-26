@@ -28,7 +28,7 @@ class AuthButtons extends StatelessWidget {
       return GestureDetector(
         onTap: () {
           if (route != null) {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
                 MaterialPageRoute(builder: (BuildContext context) => route!));
           }
         },

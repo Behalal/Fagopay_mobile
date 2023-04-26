@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/models/request_money/request_money_model.dart';
+import 'package:fagopay/screens/individual/requests/create_payment_link.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
@@ -70,7 +72,7 @@ class _SupportRequestState extends State<SupportRequest> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              vertical: 1.5.h, horizontal: 2.5.w),
+                              vertical: 1.5.h, horizontal: 3.w),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +178,7 @@ class _SupportRequestState extends State<SupportRequest> {
                         child: AuthButtons(
                             form: false,
                             text: "I Support",
-                            route: const Electricity()),
+                            route: const CreatePaymentLink()),
                       ),
                       SizedBox(
                         height: 3.h,

@@ -376,7 +376,8 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
 }
 
 class NameTextfield extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
+  final TextInputType? keyboadType;
   final String? errorText;
   final String? title;
   final String? validatorText;
@@ -386,10 +387,11 @@ class NameTextfield extends StatelessWidget {
     super.key,
     this.errorText,
     this.onChanged,
-    required this.controller,
+    this.controller,
     this.title,
     this.validate,
     this.validatorText,
+    this.keyboadType,
   });
 
   @override
@@ -409,7 +411,7 @@ class NameTextfield extends StatelessWidget {
             },
         controller: controller,
         onChanged: onChanged,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: keyboadType,
         style: const TextStyle(
             fontFamily: "Work Sans",
             fontWeight: FontWeight.w400,
