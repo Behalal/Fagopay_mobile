@@ -4,6 +4,7 @@ import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:fagopay/screens/individual/profile/profile_settings.dart';
+import 'package:fagopay/screens/individual/purse/my_purse.dart';
 import 'package:fagopay/screens/individual/transactions/transaction_history.dart';
 import 'package:fagopay/screens/kyc/kyc2.dart';
 import 'package:fagopay/screens/kyc/kyc_success.dart';
@@ -252,7 +253,7 @@ class _DashboardState extends State<Dashboard> {
       case 2:
         return const kyc_success();
       case 3:
-        return const BvnVerification();
+        return const MyPurse();
       case 4:
       default:
         return const ProfileSettings();

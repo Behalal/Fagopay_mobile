@@ -327,7 +327,6 @@ class _ReferCenterState extends State<ReferCenter> {
                                 padding: EdgeInsets.symmetric(horizontal: 1.h),
                                 height: 6.h,
                                 width: Get.width,
-                                color: white,
                                 child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -384,7 +383,6 @@ class _ReferCenterState extends State<ReferCenter> {
                                 padding: EdgeInsets.symmetric(horizontal: 1.h),
                                 height: 6.h,
                                 width: Get.width,
-                                color: white,
                                 child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
