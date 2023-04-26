@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/business/home/home.dart';
+import 'package:fagopay/screens/individual/fago/fago_main_page.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:fagopay/screens/individual/profile/profile_settings.dart';
 import 'package:fagopay/screens/individual/purse/my_purse.dart';
@@ -251,7 +252,7 @@ class _DashboardState extends State<Dashboard> {
       case 1:
         return const TransactionHistoryPage();
       case 2:
-        return const kyc_success();
+        return const FagoMainPage();
       case 3:
         return const MyPurse();
       case 4:
