@@ -4,12 +4,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:fagopay/models/transaction.dart/transaction_history_model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../constants/colors.dart';
-
-import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../constants/colors.dart';
 
 class TransactionHistoryPage extends StatefulWidget {
   const TransactionHistoryPage({

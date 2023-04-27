@@ -43,8 +43,11 @@ class CustomerBox extends StatelessWidget {
                 : fagoSecondaryColorWithOpacity10,
           ),
           child: Column(
-            mainAxisAlignment: (onlyText)? MainAxisAlignment.center :MainAxisAlignment.start,
-            crossAxisAlignment: (onlyText)? CrossAxisAlignment.center: CrossAxisAlignment.start,
+            mainAxisAlignment:
+                (onlyText) ? MainAxisAlignment.center : MainAxisAlignment.start,
+            crossAxisAlignment: (onlyText)
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.start,
             children: [
               if (firstBoxImage != null)
                 SizedBox(
@@ -54,6 +57,8 @@ class CustomerBox extends StatelessWidget {
                     child: Image.asset(
                       firstBoxImage!,
                       color: textImageColor,
+                      height: 3.h,
+                      width: 3.w,
                     ),
                   ),
                 )
@@ -65,8 +70,12 @@ class CustomerBox extends StatelessWidget {
                 height: 1.h,
               ),
               Row(
-                mainAxisAlignment:(onlyText)? MainAxisAlignment.center :MainAxisAlignment.start,
-                crossAxisAlignment: (onlyText)? CrossAxisAlignment.center: CrossAxisAlignment.start,
+                mainAxisAlignment: (onlyText)
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                crossAxisAlignment: (onlyText)
+                    ? CrossAxisAlignment.center
+                    : CrossAxisAlignment.start,
                 children: [
                   SizedBox(width: 1.5.w),
                   AutoSizeText(
@@ -106,8 +115,11 @@ class CustomerBox extends StatelessWidget {
                 : fagoSecondaryColorWithOpacity10,
           ),
           child: Column(
-            mainAxisAlignment: (onlyText)? MainAxisAlignment.center :MainAxisAlignment.start,
-            crossAxisAlignment: (onlyText)? CrossAxisAlignment.center: CrossAxisAlignment.start,
+            mainAxisAlignment:
+                (onlyText) ? MainAxisAlignment.center : MainAxisAlignment.start,
+            crossAxisAlignment: (onlyText)
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.start,
             children: [
               if (secondBoxImage != null)
                 SizedBox(
@@ -117,6 +129,8 @@ class CustomerBox extends StatelessWidget {
                     child: Image.asset(
                       secondBoxImage!,
                       color: textImageColor,
+                      height: 3.h,
+                      width: 3.w,
                     ),
                   ),
                 )
@@ -128,7 +142,9 @@ class CustomerBox extends StatelessWidget {
                 height: 1.h,
               ),
               Row(
-                mainAxisAlignment: (onlyText)? MainAxisAlignment.center :MainAxisAlignment.start,
+                mainAxisAlignment: (onlyText)
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(width: 1.5.w),

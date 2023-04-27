@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import '../../../controllers/registration_controller.dart';

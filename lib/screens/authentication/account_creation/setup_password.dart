@@ -1,18 +1,19 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../controllers/registration_controller.dart';
 import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
+import '../../../service/secure_storage/secure_storage.dart';
+import '../../constants/colors.dart';
+import '../widgets/auth_buttons.dart';
 import 'select_verification_type.dart';
 import 'setup_passcode.dart';
 import 'widgets/current_step.dart';
-import '../widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import '../../../service/secure_storage/secure_storage.dart';
 
 class SetupPassword extends StatefulWidget {
   const SetupPassword({super.key});

@@ -1,9 +1,10 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../constants/colors.dart';
 
 class FagoMainPage extends StatefulWidget {
   const FagoMainPage({

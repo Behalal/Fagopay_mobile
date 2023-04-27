@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/controllers/request_money_controller.dart';
-import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
+import '../../../controllers/request_money_controller.dart';
+import '../../authentication/recover_password_otp_screen.dart';
 import '../../../controllers/transaction_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';

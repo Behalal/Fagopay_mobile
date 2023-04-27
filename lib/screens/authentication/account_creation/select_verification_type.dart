@@ -1,20 +1,21 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'individual_details.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import '../../../service/secure_storage/secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:sizer/sizer.dart';
+
 import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
+import '../../../service/secure_storage/secure_storage.dart';
+import '../../constants/colors.dart';
+import '../widgets/auth_buttons.dart';
+import 'individual_details.dart';
 import 'select_type.dart';
 import 'verify_code.dart';
 import 'widgets/current_step.dart';
-import '../widgets/auth_buttons.dart';
-import '../../constants/colors.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
 
 class SelectVerificationType extends StatefulWidget {
   const SelectVerificationType({super.key});

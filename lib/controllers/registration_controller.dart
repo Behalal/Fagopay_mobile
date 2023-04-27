@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import '../service/secure_storage/secure_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../functions/functions.dart';
 import '../models/register_request/register.model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import '../service/secure_storage/secure_storage.dart';
 
 class RegistrationController extends GetxController {
   Functions function = Functions();
