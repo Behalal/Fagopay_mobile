@@ -1,10 +1,11 @@
-import '../../controllers/user_controller.dart';
-import 'kyc_success.dart';
+import 'package:fagopay/screens/kyc/kyc_success.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../controllers/user_controller.dart';
 
 class IdentityPassPage extends StatefulWidget {
   const IdentityPassPage({

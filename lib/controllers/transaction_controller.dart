@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fagopay/models/transaction.dart/transaction_history_model.dart';
-import 'package:fagopay/screens/individual/transactions/transaction_history.dart';
+import '../models/transaction.dart/transaction_history_model.dart';
+import '../screens/individual/transactions/transaction_history.dart';
 import 'package:flutter/foundation.dart';
 
 import '../screens/individual/bills/models/transaction_post_model.dart';

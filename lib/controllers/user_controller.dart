@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:fagopay/models/nextofkin_model.dart';
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../models/nextofkin_model.dart';
+import '../service/constants/constants.dart';
+import '../service/secure_storage/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

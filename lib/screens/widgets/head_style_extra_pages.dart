@@ -1,7 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import 'package:fagopay/screens/functions.dart';
 
 import '../constants/colors.dart';
 
@@ -11,6 +12,7 @@ class ProgressStyle extends StatelessWidget {
   final int stage;
   final double? width;
   final String? icon;
+  final VoidCallback? onPressedIconAction;
 
   const ProgressStyle({
     Key? key,
@@ -19,6 +21,7 @@ class ProgressStyle extends StatelessWidget {
     required this.stage,
     this.width,
     this.icon,
+    this.onPressedIconAction,
   }) : super(key: key);
 
   @override
@@ -45,17 +48,24 @@ class ProgressStyle extends StatelessWidget {
             SizedBox(
               width: 20.w,
             ),
-          Text(
-            pageName,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontFamily: "Work Sans",
-              fontSize: 22,
-              fontWeight: FontWeight.w700,
-              color: fagoSecondaryColor,
+          FittedBox(
+            child: Text(
+              pageName,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontFamily: "Work Sans",
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: fagoSecondaryColor,
+              ),
             ),
           ),
-          if (icon != null) Image.asset(icon!),
+          if (icon != null)
+            GestureDetector(
+              onTap: onPressedIconAction,
+              child: Image.asset(icon!),
+            ),
         ],
       ),
       const SizedBox(

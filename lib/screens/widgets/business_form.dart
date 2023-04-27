@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/customers_controller.dart';
-import 'package:fagopay/controllers/locations_controller.dart';
-import 'package:fagopay/screens/widgets/custom_dropdown_field.dart';
+import '../../controllers/customers_controller.dart';
+import '../../controllers/locations_controller.dart';
+import 'custom_dropdown_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:fagopay/models/locations_model.dart' as location;
+import '../../models/locations_model.dart' as location;
 
 import '../constants/colors.dart';
 

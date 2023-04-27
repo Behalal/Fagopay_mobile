@@ -1,12 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../controllers/user_controller.dart';
-import '../../models/user_model/user.dart';
-import '../individual/home/dashboard_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../controllers/user_controller.dart';
 import '../constants/colors.dart';
+import '../individual/home/dashboard_home.dart';
 
 class kyc_success extends StatelessWidget {
   const kyc_success({super.key});
