@@ -5,6 +5,7 @@ import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:fagopay/models/user_model/user.dart';
@@ -392,10 +393,8 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Image(
-                                  image:
-                                      AssetImage("assets/images/fund_icon.png"),
-                                ),
+                                SvgPicture.asset(
+                                    'assets/icons/fundAccount_icon.svg'),
                                 SizedBox(
                                   width: 1.w,
                                 ),
