@@ -95,7 +95,7 @@ class _CreatePurseState extends State<CreatePurse> {
                             ),
                             NameTextfield(
                               // controller: _userController.nameController,
-                              title: '500,000.00',
+                              title: _value.toString(),
                               keyboadType: TextInputType.number,
                               validate: (value) {
                                 if (value!.isEmpty) {
