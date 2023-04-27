@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
+import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -120,33 +121,39 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                   SizedBox(
                                     height: 3.h,
                                   ),
-                                  Container(
-                                    height: 5.h,
-                                    width: 20.5.h,
-                                    decoration: BoxDecoration(
-                                        color: fagoSecondaryColor,
-                                        borderRadius: BorderRadius.circular(25),
-                                        border: Border.all(
-                                            color: fagoSecondaryColor)),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/verify_pre.svg'),
-                                        const AutoSizeText(
-                                          'Continue',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
-                                            color: white,
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to((const IdentityPassPage()));
+                                    },
+                                    child: Container(
+                                      height: 5.h,
+                                      width: 20.5.h,
+                                      decoration: BoxDecoration(
+                                          color: fagoSecondaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          border: Border.all(
+                                              color: fagoSecondaryColor)),
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/icons/verify_pre.svg'),
+                                          const AutoSizeText(
+                                            'Continue',
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: white,
+                                            ),
                                           ),
-                                        ),
-                                        SvgPicture.asset(
-                                            'assets/icons/verify_suxf.svg')
-                                      ],
+                                          SvgPicture.asset(
+                                              'assets/icons/verify_suxf.svg')
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

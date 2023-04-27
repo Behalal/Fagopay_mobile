@@ -3,14 +3,12 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/login_controller.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/nextofkin_model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +30,15 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
   final _userController = Get.put(UserController());
   var number = "";
   int? transactionType;
+  String? selectedRelationship;
+  final List<String> items = [
+    'Siblings',
+    'Father',
+    'Mother',
+    'Relationship Partner',
+    'Husband',
+    'Wife',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,16 +293,53 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                 SizedBox(
                                   height: 1.h,
                                 ),
-                                NameTextfield(
-                                  controller:
-                                      _userController.relationshipController,
-                                  title: 'Siblings',
-                                  validate: (value) {
-                                    if (value!.isEmpty) {
-                                      return 'Relationship must not be empty';
-                                    }
-                                    return null;
-                                  },
+                                Container(
+                                  width: Get.width,
+                                  height: 58,
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                          color:
+                                              fagoSecondaryColorWithOpacity)),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton2(
+                                      hint: Text(
+                                        'Categories',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Theme.of(context).hintColor,
+                                        ),
+                                      ),
+                                      items: items
+                                          .map((item) =>
+                                              DropdownMenuItem<String>(
+                                                value: item,
+                                                child: Text(
+                                                  item,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ))
+                                          .toList(),
+                                      value: selectedRelationship,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedRelationship =
+                                              value as String;
+                                        });
+                                      },
+                                      buttonStyleData: const ButtonStyleData(
+                                        height: 40,
+                                        width: 140,
+                                      ),
+                                      menuItemStyleData:
+                                          const MenuItemStyleData(
+                                        height: 40,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 3.h,
@@ -304,23 +348,20 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                   return InkWell(
                                     onTap: () {
                                       NextOfKinModel nextOfKin = NextOfKinModel(
-                                        fullName: _userController
-                                            .nameController.text
-                                            .trim(),
-                                        houseAddress: _userController
-                                            .addressController.text
-                                            .trim(),
-                                        phoneNumber: number +
-                                            _userController
-                                                .phoneNumController.text
-                                                .trim(),
-                                        email: _userController
-                                            .emailController.text
-                                            .trim(),
-                                        relationship: _userController
-                                            .relationshipController.text
-                                            .trim(),
-                                      );
+                                          fullName: _userController
+                                              .nameController.text
+                                              .trim(),
+                                          houseAddress: _userController
+                                              .addressController.text
+                                              .trim(),
+                                          phoneNumber: number +
+                                              _userController
+                                                  .phoneNumController.text
+                                                  .trim(),
+                                          email: _userController
+                                              .emailController.text
+                                              .trim(),
+                                          relationship: selectedRelationship);
 
                                       if (kDebugMode) {
                                         print(
@@ -414,9 +455,9 @@ class NameTextfield extends StatelessWidget {
         keyboardType: keyboadType,
         style: const TextStyle(
             fontFamily: "Work Sans",
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
             fontSize: 14,
-            color: signInPlaceholder),
+            color: stepsColor),
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -445,7 +486,7 @@ class NameTextfield extends StatelessWidget {
             fontFamily: "Work Sans",
             fontWeight: FontWeight.w400,
             fontSize: 14,
-            color: signInPlaceholder,
+            color: stepsColor,
           ),
           //prefixIcon: const Image(image: AssetImage("assets/images/phone.png")),
         ),

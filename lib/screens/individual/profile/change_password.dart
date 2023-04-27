@@ -42,6 +42,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
@@ -60,135 +61,137 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.5.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const AutoSizeText(
-                      'Create New Password',
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: fagoSecondaryColor,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const AutoSizeText(
+                        'Create New Password',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    const AutoSizeText(
-                      'Provide a strong password to secure your \naccount',
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: stepsColorWithOpacity55,
+                      SizedBox(
+                        height: 2.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    const AutoSizeText(
-                      'Old Password',
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: welcomeText,
+                      const AutoSizeText(
+                        'Provide a strong password to secure your \naccount',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColorWithOpacity55,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    _PasswordInput(
-                      controller: _passwordController,
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    const Divider(
-                      color: stepsColor,
-                    ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    const AutoSizeText(
-                      'Enter New Password',
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: welcomeText,
+                      SizedBox(
+                        height: 3.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    _PasswordInput(
-                      controller: _passwordController,
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    const AutoSizeText(
-                      'Enter New Password',
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: welcomeText,
+                      const AutoSizeText(
+                        'Old Password',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: welcomeText,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    _ConfirmPasswordInput(
-                      controller: _confirmPasswordController,
-                    ),
-                    SizedBox(
-                      height: 1.h,
-                    ),
-                    const _PasswordVerificationChips(),
-                    SizedBox(
-                      height: 2.h,
-                    ),
-                    Center(
-                      child: AuthButtons(
-                        form: false,
-                        text: "Update",
+                      SizedBox(
+                        height: 1.h,
                       ),
-                    ),
-                    // _ContinueButton(
-                    //   onPressed: () async {
-                    //     if (_passwordController.text != "" &&
-                    //         _confirmPasswordController.text != "") {
-                    //       if (_confirmPasswordController.text !=
-                    //           _passwordController.text) {
-                    //         Fluttertoast.showToast(
-                    //           msg: "Passwords dont match!",
-                    //           toastLength: Toast.LENGTH_LONG,
-                    //           gravity: ToastGravity.TOP,
-                    //           timeInSecForIosWeb: 2,
-                    //           backgroundColor: Colors.red,
-                    //           textColor: Colors.white,
-                    //           fontSize: 16.0,
-                    //         );
-                    //         return;
-                    //       }
-                    //       await createNewPassword(context);
-                    //       return;
-                    //     }
-                    //     Fluttertoast.showToast(
-                    //       msg: "Enter the fields correctly",
-                    //       toastLength: Toast.LENGTH_LONG,
-                    //       gravity: ToastGravity.TOP,
-                    //       timeInSecForIosWeb: 2,
-                    //       backgroundColor: Colors.red,
-                    //       textColor: Colors.white,
-                    //       fontSize: 16.0,
-                    //     );
-                    //   },
-                    // ),
-                  ],
+                      _PasswordInput(
+                        controller: _passwordController,
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      const Divider(
+                        color: stepsColor,
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      const AutoSizeText(
+                        'Enter New Password',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: welcomeText,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      _PasswordInput(
+                        controller: _passwordController,
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      const AutoSizeText(
+                        'Enter New Password',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: welcomeText,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      _ConfirmPasswordInput(
+                        controller: _confirmPasswordController,
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      const _PasswordVerificationChips(),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Center(
+                        child: AuthButtons(
+                          form: false,
+                          text: "Update",
+                        ),
+                      ),
+                      // _ContinueButton(
+                      //   onPressed: () async {
+                      //     if (_passwordController.text != "" &&
+                      //         _confirmPasswordController.text != "") {
+                      //       if (_confirmPasswordController.text !=
+                      //           _passwordController.text) {
+                      //         Fluttertoast.showToast(
+                      //           msg: "Passwords dont match!",
+                      //           toastLength: Toast.LENGTH_LONG,
+                      //           gravity: ToastGravity.TOP,
+                      //           timeInSecForIosWeb: 2,
+                      //           backgroundColor: Colors.red,
+                      //           textColor: Colors.white,
+                      //           fontSize: 16.0,
+                      //         );
+                      //         return;
+                      //       }
+                      //       await createNewPassword(context);
+                      //       return;
+                      //     }
+                      //     Fluttertoast.showToast(
+                      //       msg: "Enter the fields correctly",
+                      //       toastLength: Toast.LENGTH_LONG,
+                      //       gravity: ToastGravity.TOP,
+                      //       timeInSecForIosWeb: 2,
+                      //       backgroundColor: Colors.red,
+                      //       textColor: Colors.white,
+                      //       fontSize: 16.0,
+                      //     );
+                      //   },
+                      // ),
+                    ],
+                  ),
                 ),
               ),
             ),
