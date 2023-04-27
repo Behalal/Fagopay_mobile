@@ -219,7 +219,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 // ),
                               )
                             : SizedBox(
-                                height: 2.h,
+                                height: 1.h,
                               ),
                         Padding(
                           padding: EdgeInsets.only(
