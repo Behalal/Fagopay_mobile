@@ -1,3 +1,4 @@
+import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,7 +43,7 @@ class _SelectTypeState extends State<SelectType> {
             children: [
               CurrentStep(
                 step: "1",
-                backRoute: const SignIn(),
+                // backRoute: const SignIn(),
               ),
               SizedBox(
                 height: 2.h,
@@ -123,14 +124,14 @@ class _SelectTypeState extends State<SelectType> {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            const SelectVerificationType(),
+                            const IdentityPassPage(),
                       ),
                     );
                   },
                   child: AuthButtons(
                     form: true,
-                    text: 'Continue',
-                    route: const SelectVerificationType(),
+                    text: 'Proceed to Verification',
+                    route: const IdentityPassPage(),
                   ),
                 ),
               )

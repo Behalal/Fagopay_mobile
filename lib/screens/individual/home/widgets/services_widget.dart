@@ -1,6 +1,10 @@
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/individual/bills/data.dart';
 import 'package:fagopay/screens/individual/bills/electricity.dart';
 import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
+import 'package:fagopay/screens/individual/requests/requests.dart';
+import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
+import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,45 +15,49 @@ class Services {
   const Services({required this.image, this.route, required this.itemName});
 }
 
+final _userController = Get.find<UserController>();
 List<Services> services = [
+  Services(
+    image: 'assets/icons/new_tansfer_icon.svg',
+    itemName: 'Transfer',
+    route: FagoToBank(
+      userDetails: _userController.user!,
+      accountDetails: _userController.userAccountDetails!,
+    ),
+  ),
   const Services(
-    image: 'assets/icons/new_airtime_icon.svg',
-    itemName: 'Airtime',
+    image: 'assets/icons/new_paymentLink_icon.svg',
+    itemName: 'Fago2Fago',
+    route: FagoToFago(),
+  ),
+  const Services(
+    image: 'assets/icons/new_scanToPay_icon.svg',
+    itemName: 'Scan to Pay',
     route: null,
   ),
   const Services(
-    image: 'assets/icons/wifi-square.svg',
-    itemName: 'Data',
-    route:  BuyData(),
+    image: 'assets/icons/new_requestMoney_icon.svg',
+    itemName: 'Request Money',
+    route: RequestHome(),
+  ),
+  const Services(
+    image: 'assets/icons/new_airtime_icon.svg',
+    itemName: 'Airtime & Data',
+    route: BuyData(),
+  ),
+  const Services(
+    image: 'assets/icons/new_payInternet_icon.svg',
+    itemName: 'Bills Payment',
+    route: Electricity(),
   ),
   const Services(
     image: 'assets/icons/new_swapAirtime_icon.svg',
     itemName: 'Swap Airtime',
-    route: null,
+    route: BuyData(),
   ),
   const Services(
-    image: 'assets/icons/new_paymentLink_icon.svg',
+    image: 'assets/icons/new_payment_link_2.svg',
     itemName: 'Payment Link',
-    route: null,
-  ),
-  const Services(
-    image: 'assets/icons/new_payInternet_icon.svg',
-    itemName: 'Pay Internet ',
-    route: null,
-  ),
-  const Services(
-    image: 'assets/icons/new_Cable_icon.svg',
-    itemName: 'Cable TV',
-    route: null,
-  ),
-  const Services(
-    image: 'assets/icons/new_electricity_icon.svg',
-    itemName: 'Electricity',
-    route: Electricity(),
-  ),
-  const Services(
-    image: 'assets/icons/new_rewardCenter_icon.svg',
-    itemName: 'Reward Centre',
     route: ReferAndEarn(),
   )
 ];

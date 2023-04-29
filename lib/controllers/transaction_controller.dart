@@ -233,7 +233,7 @@ class TransactionController extends GetxController {
               ? 'No internet connection!'
               : error.toString());
       if (kDebugMode) {
-        print('getting crops seller product Error ${error.toString()}');
+        print('Transaction listt Error ${error.toString()}');
       }
     }
   }

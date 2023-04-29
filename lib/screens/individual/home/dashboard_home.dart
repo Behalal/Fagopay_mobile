@@ -1,7 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/models/user_model/completeUserModel.dart';
+import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
 import 'package:fagopay/screens/individual/home/widgets/services_widget.dart';
+import 'package:fagopay/screens/individual/profile/profile_kyc_page.dart';
 import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
 import 'package:fagopay/screens/individual/requests/requests.dart';
+import 'package:fagopay/screens/individual/sales/sales_page.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
 import '../../../controllers/login_controller.dart';
@@ -23,6 +27,7 @@ import '../../widgets/navigation_bar.dart';
 import '../../../models/user_model/user.dart';
 
 class DashboardHome extends StatefulWidget {
+  final String? accountType;
   final User userDetails;
   final AccountDetail? accountDetails;
 
@@ -30,6 +35,7 @@ class DashboardHome extends StatefulWidget {
     Key? key,
     required this.userDetails,
     this.accountDetails,
+    this.accountType,
   }) : super(key: key);
 
   @override
@@ -57,11 +63,12 @@ class _DashboardHomeState extends State<DashboardHome> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 300,
+                  height: 32.5.h,
                   child: DashBoardDetails(
                     user: widget.userDetails,
                     accountType: "Individual",
                     accountDetails: widget.accountDetails!,
+                    userDetails: _userController.user!,
                   ),
                 ),
                 Expanded(
@@ -69,68 +76,92 @@ class _DashboardHomeState extends State<DashboardHome> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 2.h,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  const AutoSizeText(
-                                    '3',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w700,
-                                      color: fagoSecondaryColor,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 1.w,
-                                  ),
-                                  const AutoSizeText(
-                                    ' Accounts',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400,
-                                      color: stepsColor,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: 5.h,
-                                width: 23.5.h,
-                                decoration: BoxDecoration(
-                                    color: fagoSecondaryColor,
-                                    borderRadius: BorderRadius.circular(25),
-                                    border:
-                                        Border.all(color: fagoSecondaryColor)),
-                                alignment: Alignment.center,
+                        widget.userDetails.kycVerified == 1 &&
+                                widget.accountType == "Bussiness"
+                            ?
+                            //
+                            Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 2.h,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const AutoSizeText(
-                                      'Manage Accounts',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        color: white,
+                                    Row(
+                                      children: [
+                                        const AutoSizeText(
+                                          '0',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: fagoSecondaryColor,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 1.w,
+                                        ),
+                                        const AutoSizeText(
+                                          'Sub Accounts',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w400,
+                                            color: stepsColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) =>
+                                                ViewAccountModal());
+                                      },
+                                      child: Container(
+                                        height: 4.h,
+                                        width: 20.5.h,
+                                        decoration: BoxDecoration(
+                                            color: fagoSecondaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            border: Border.all(
+                                                color: fagoSecondaryColor)),
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            const AutoSizeText(
+                                              'View Accounts',
+                                              style: TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500,
+                                                color: white,
+                                              ),
+                                            ),
+                                            SvgPicture.asset(
+                                                'assets/icons/arrow-right.svg')
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    SvgPicture.asset(
-                                        'assets/icons/arrow-right.svg')
                                   ],
                                 ),
+                              )
+                            : SizedBox(
+                                height: 0.h,
                               ),
-                            ],
-                          ),
-                        ),
                         SizedBox(
                           height: 1.h,
                         ),
@@ -142,11 +173,12 @@ class _DashboardHomeState extends State<DashboardHome> {
                                   onTap: () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            const KycVerfication(
-                                          accountType: 'individual',
-                                        ),
-                                      ),
+                                          builder: (BuildContext context) =>
+                                              const ProfileKycPage()
+                                          //     const KycVerfication(
+                                          //   accountType: 'individual',
+                                          // ),
+                                          ),
                                     );
                                   },
                                   child: Container(
@@ -221,158 +253,13 @@ class _DashboardHomeState extends State<DashboardHome> {
                             : SizedBox(
                                 height: 1.h,
                               ),
+
                         Padding(
                           padding: EdgeInsets.only(
                             left: 5.w,
                           ),
                           child: const AutoSizeText(
-                            "Payments",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: stepsColor,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.w,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 2.h, vertical: 2.h),
-                            height: 10.h,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                                color: fagoSecondaryColor.withOpacity(0.05),
-                                borderRadius: BorderRadius.circular(8)),
-                            alignment: Alignment.center,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(
-                                      () => FagoToBank(
-                                        userDetails: _userController.user!,
-                                        accountDetails:
-                                            _userController.userAccountDetails!,
-                                      ),
-                                    );
-                                  },
-                                  child: Column(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/new_tansfer_icon.svg',
-                                        height: 2.5.h,
-                                        width: 2.5.w,
-                                      ),
-                                      SizedBox(
-                                        height: 1.5.h,
-                                      ),
-                                      const AutoSizeText(
-                                        "Transfer",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 10,
-                                          color: black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(() => const FagoToFago());
-                                  },
-                                  child: Column(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/new_fagotofago_icon.svg',
-                                        height: 2.5.h,
-                                        width: 2.5.w,
-                                      ),
-                                      SizedBox(
-                                        height: 1.5.h,
-                                      ),
-                                      const AutoSizeText(
-                                        "Fago2Fago",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 10,
-                                          color: black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/new_scanToPay_icon.svg',
-                                      height: 2.5.h,
-                                      width: 2.5.w,
-                                    ),
-                                    SizedBox(
-                                      height: 1.5.h,
-                                    ),
-                                    const AutoSizeText(
-                                      "Scan to Pay",
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10,
-                                        color: black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Get.to(() => const RequestHome());
-                                  },
-                                  child: Column(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/new_requestMoney_icon.svg',
-                                        height: 2.5.h,
-                                        width: 2.5.w,
-                                      ),
-                                      SizedBox(
-                                        height: 1.5.h,
-                                      ),
-                                      const AutoSizeText(
-                                        "Request Money",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 10,
-                                          color: black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: 5.w,
-                          ),
-                          child: const AutoSizeText(
-                            "Services",
+                            "Payment & Services",
                             style: TextStyle(
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w600,
@@ -407,7 +294,18 @@ class _DashboardHomeState extends State<DashboardHome> {
                                     List.generate(services.length, (index) {
                                   return InkWell(
                                     onTap: () {
-                                      if (services[index].route != null) {
+                                      if (services[index].route != null &&
+                                          widget.userDetails.kycVerified == 0) {
+                                        Get.defaultDialog(
+                                            title: "",
+                                            middleText: "",
+                                            titlePadding: EdgeInsets.zero,
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 8, vertical: 8),
+                                            content: unverifiedUserDialogue());
+                                      } else if (services[index].route !=
+                                          null) {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (BuildContext context) =>
@@ -445,73 +343,277 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 })),
                           ),
                         ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 5.w,
+                          ),
+                          child: const AutoSizeText(
+                            "Business Tools",
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: stepsColor,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.w,
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 2.h, vertical: 2.h),
+                            height: 10.h,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: fagoSecondaryColor.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(8)),
+                            alignment: Alignment.center,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (widget.userDetails.kycVerified == 0) {
+                                      Get.defaultDialog(
+                                          title: "",
+                                          middleText: "",
+                                          titlePadding: EdgeInsets.zero,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 8),
+                                          content: unverifiedUserDialogue());
+                                    }
+                                    // Get.to(
+                                    //   () => FagoToBank(
+                                    //     userDetails: _userController.user!,
+                                    //     accountDetails:
+                                    //         _userController.userAccountDetails!,
+                                    //   ),
+                                    // );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/customer_new_icon.svg',
+                                        height: 2.5.h,
+                                        width: 2.5.w,
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "Customers",
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 10,
+                                          color: black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (widget.userDetails.kycVerified == 0) {
+                                      Get.defaultDialog(
+                                          title: "",
+                                          middleText: "",
+                                          titlePadding: EdgeInsets.zero,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 8),
+                                          content: unverifiedUserDialogue());
+                                    }
+                                    //  Get.to(() => const FagoToFago());
+                                  },
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/people_icon.svg',
+                                        height: 2.5.h,
+                                        width: 2.5.w,
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "Suppliers",
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 10,
+                                          color: black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (widget.userDetails.kycVerified == 0) {
+                                      Get.defaultDialog(
+                                          title: "",
+                                          middleText: "",
+                                          titlePadding: EdgeInsets.zero,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 8),
+                                          content: unverifiedUserDialogue());
+                                    }
+                                  },
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/shop.svg',
+                                        height: 2.5.h,
+                                        width: 2.5.w,
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "Bookkeeping",
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 10,
+                                          color: black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (widget.userDetails.kycVerified == 0) {
+                                      Get.defaultDialog(
+                                          title: "",
+                                          middleText: "",
+                                          titlePadding: EdgeInsets.zero,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 8),
+                                          content: unverifiedUserDialogue());
+                                    }
+                                    // Get.to(() => const RequestHome());
+                                  },
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/icons/stickynote.svg',
+                                        height: 2.5.h,
+                                        width: 2.5.w,
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "Invoice",
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 10,
+                                          color: black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
                         // SizedBox(
                         //   height: 1.5.h,
                         // ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 5.w, vertical: 2.h),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 3.h, vertical: 2.h),
-                            height: 16.h,
-                            width: Get.width,
-                            color: fagoSecondaryColorWithOpacity10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const AutoSizeText(
-                                  'Manage Multiple Business \nAccounts in One App',
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: fagoSecondaryColor,
-                                  ),
-                                ),
-                                const AutoSizeText(
-                                  'Do you own a business with corporate registration? Manage them within this App or manage for others',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: stepsColor,
-                                  ),
-                                ),
-                                Container(
-                                  width: 30.w,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      color: buttonColor),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3.w, vertical: .8.h),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/fundAccount_icon.svg'),
-                                        const AutoSizeText(
-                                          "New Account",
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.w600,
-                                            color: white,
+                          child: Stack(
+                            alignment: Alignment.bottomRight,
+                            children: [
+                              SvgPicture.asset('assets/icons/Ellipse 278.svg'),
+                              SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 3.h, vertical: 2.h),
+                                height: 16.h,
+                                width: Get.width,
+                                color: fagoSecondaryColor.withOpacity(0.05),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const AutoSizeText(
+                                      'Manage Multiple Business \nAccounts in One App',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: fagoSecondaryColor,
+                                      ),
+                                    ),
+                                    const AutoSizeText(
+                                      'Do you own a business with corporate registration? Manage them within this App or manage for others',
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: stepsColor,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(() => const SelectType());
+                                      },
+                                      child: Container(
+                                        width: 30.w,
+                                        decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15)),
+                                            color: buttonColor),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 3.w, vertical: .8.h),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/icons/fundAccount_icon.svg'),
+                                              const AutoSizeText(
+                                                "New Account",
+                                                style: TextStyle(
+                                                  fontFamily: "Work Sans",
+                                                  fontSize: 8,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: white,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                         ),
 
@@ -707,10 +809,372 @@ class _DashboardHomeState extends State<DashboardHome> {
     );
   }
 
+  Widget unverifiedUserDialogue() {
+    return SizedBox(
+      height: 240,
+      width: Get.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SvgPicture.asset('assets/icons/lock_primary.svg'),
+          SizedBox(
+            height: 1.h,
+          ),
+          const AutoSizeText(
+            "You don’t have any account",
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: fagoSecondaryColor,
+            ),
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          const AutoSizeText(
+            "Create one now",
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: stepsColor,
+            ),
+          ),
+          SizedBox(
+            height: 1.h,
+          ),
+          const AutoSizeText(
+            'You will be able to enjoy our services once we verify your identity.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: stepsColorWithOpacity55,
+            ),
+          ),
+          SizedBox(
+            height: 1.5.h,
+          ),
+          Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 3.h),
+              child: InkWell(
+                onTap: () {
+                  Get.to(() => const SelectType());
+                },
+                child: Container(
+                  width: Get.width,
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                      color: buttonColor,
+                      borderRadius: BorderRadius.all(Radius.circular(25))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 1.w,
+                      ),
+                      const AutoSizeText(
+                        "Open an Account",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w600,
+                          color: white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> getUserDetails() async {
     final response = await _loginController.getUserDetails();
     final userAccountjsonBodyData = response['data']['accountdetail'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
+  }
+}
+
+class ViewAccountModal extends StatefulWidget {
+  const ViewAccountModal({
+    super.key,
+  });
+
+  @override
+  State<ViewAccountModal> createState() => _ViewAccountModalState();
+}
+
+class _ViewAccountModalState extends State<ViewAccountModal> {
+  final _userUcontroller = Get.find<UserController>();
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 50.h,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
+              child: Center(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 0.3.h,
+                      width: 10.h,
+                      color: fagoSecondaryColor,
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    const AutoSizeText(
+                      'Obasana Designs',
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                        color: fagoSecondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Divider(
+              color: stepsColor,
+            ),
+            // ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const AutoSizeText(
+                  '4',
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    color: fagoSecondaryColor,
+                  ),
+                ),
+                SizedBox(
+                  width: 1.w,
+                ),
+                const AutoSizeText(
+                  'Sub Accounts',
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: stepsColor,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            const Divider(
+              color: stepsColor,
+            ),
+            // ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 2.h,
+              ),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => const SalesAccount());
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
+                      height: 10.h,
+                      width: Get.width,
+                      color: fagoSecondaryColor.withOpacity(0.05),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/sub_account_icons.svg',
+                          ),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          SvgPicture.asset(
+                            'assets/icons/vertical_line.svg',
+                          ),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const AutoSizeText(
+                                'Sales Account | Damburi Branch',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: stepsColor,
+                                ),
+                              ),
+                              AutoSizeText(
+                                '2038173855 | Guaranty Trust Bank ',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: stepsColor.withOpacity(0.5),
+                                ),
+                              ),
+                              const AutoSizeText(
+                                '# 900,340.00',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: fagoSecondaryColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset(
+                            'assets/icons/arrow_front.svg',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 1.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(() => const SalesAccount());
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
+                      height: 10.h,
+                      width: Get.width,
+                      color: fagoGreenColor.withOpacity(0.05),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icons/sub_account_icons.svg',
+                            color: fagoGreenColor,
+                          ),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          SvgPicture.asset(
+                            'assets/icons/vertical_line.svg',
+                          ),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const AutoSizeText(
+                                'Sales Account | Damburi Branch',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: stepsColor,
+                                ),
+                              ),
+                              AutoSizeText(
+                                '2038173855 | Guaranty Trust Bank ',
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: stepsColor.withOpacity(0.5),
+                                ),
+                              ),
+                              const AutoSizeText(
+                                '# 900,340.00',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: fagoGreenColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset(
+                            'assets/icons/arrow_front.svg',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 3.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      //  Get.to(() => const SelectType());
+                    },
+                    child: Container(
+                      width: 38.w,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                          color: buttonColor),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 3.w, vertical: 1.3.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                                'assets/icons/fundAccount_icon.svg'),
+                            const AutoSizeText(
+                              "Create Sub Account",
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 8,
+                                fontWeight: FontWeight.w600,
+                                color: white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }
