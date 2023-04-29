@@ -114,7 +114,8 @@ import '../constants/colors.dart';
 // }
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final String? accountType;
+  const Dashboard({super.key, this.accountType});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -245,9 +246,9 @@ class _DashboardState extends State<Dashboard> {
     switch (selectedIndex) {
       case 0:
         return DashboardHome(
-          userDetails: _userUcontroller.user!,
-          accountDetails: _userUcontroller.userAccountDetails,
-        );
+            userDetails: _userUcontroller.user!,
+            accountDetails: _userUcontroller.userAccountDetails,
+            accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : '');
 
       case 1:
         return const TransactionHistoryPage();
