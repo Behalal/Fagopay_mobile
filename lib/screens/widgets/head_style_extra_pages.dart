@@ -1,8 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
-import 'package:fagopay/screens/functions.dart';
 
 import '../constants/colors.dart';
 

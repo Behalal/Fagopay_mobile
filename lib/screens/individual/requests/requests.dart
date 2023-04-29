@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../controllers/request_money_controller.dart';
-import '../../../models/my_request_model.dart';
 import '../../authentication/recover_password_otp_screen.dart';
 import 'support_request.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import '../../../models/request_money/request_money_model.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import 'make_request.dart';
@@ -625,7 +623,6 @@ class _RequestHomeState extends State<RequestHome> {
                                               ),
                                             ),
                                           );
-                                ;
                               }),
                             )
                     ]))));

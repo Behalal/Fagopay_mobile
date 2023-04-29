@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/widgets/navigation_bar.dart';
+import '../../widgets/navigation_bar.dart';
 import '../../../controllers/user_controller.dart';
-import '../home/dashboard_home.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';

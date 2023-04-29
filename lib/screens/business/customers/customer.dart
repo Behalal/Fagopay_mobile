@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/customer_model.dart';
-import 'package:fagopay/screens/business/customers/add_customer.dart';
-import 'package:fagopay/screens/business/customers/components/custom_customer_card.dart';
-import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
+import '../../../models/customer_model.dart';
+import 'add_customer.dart';
+import 'components/custom_customer_card.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

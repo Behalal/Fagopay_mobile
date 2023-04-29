@@ -1,10 +1,10 @@
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/screens/individual/bills/data.dart';
-import 'package:fagopay/screens/individual/bills/electricity.dart';
-import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
-import 'package:fagopay/screens/individual/requests/requests.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
+import '../../../../controllers/user_controller.dart';
+import '../../bills/data.dart';
+import '../../bills/electricity.dart';
+import '../../refer_and_win/refer_page.dart';
+import '../../requests/requests.dart';
+import '../../transactions/fago_to_bank.dart';
+import '../../transactions/fago_to_fago.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

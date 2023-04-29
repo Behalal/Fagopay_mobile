@@ -1,28 +1,20 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/user_model/completeUserModel.dart';
-import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
-import 'package:fagopay/screens/individual/home/widgets/services_widget.dart';
-import 'package:fagopay/screens/individual/profile/profile_kyc_page.dart';
-import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
-import 'package:fagopay/screens/individual/requests/requests.dart';
-import 'package:fagopay/screens/individual/sales/sales_page.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
+import '../../authentication/account_creation/select_type.dart';
+import '../../business/customers/customer.dart';
+import '../../business/suppliers/all_supplies.dart';
+import 'widgets/services_widget.dart';
+import '../profile/profile_kyc_page.dart';
+import '../sales/sales_page.dart';
 import '../../../controllers/login_controller.dart';
 import '../../../controllers/user_controller.dart';
-import 'models/payments_model.dart';
-import 'models/service_model.dart';
-import '../../kyc/kyc1.dart';
 import '../../widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
 import 'widgets/dashboard_details.dart';
-import '../../widgets/navigation_bar.dart';
 
 import '../../../models/user_model/user.dart';
 
@@ -125,7 +117,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             ),
                                             context: context,
                                             builder: (context) =>
-                                                ViewAccountModal());
+                                                const ViewAccountModal());
                                       },
                                       child: Container(
                                         height: 4.h,
@@ -391,14 +383,14 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               const EdgeInsets.symmetric(
                                                   horizontal: 8, vertical: 8),
                                           content: unverifiedUserDialogue());
+                                      return;
                                     }
-                                    // Get.to(
-                                    //   () => FagoToBank(
-                                    //     userDetails: _userController.user!,
-                                    //     accountDetails:
-                                    //         _userController.userAccountDetails!,
-                                    //   ),
-                                    // );
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CustomerPage(),
+                                      ),
+                                    );
                                   },
                                   child: Column(
                                     children: [
@@ -433,8 +425,14 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               const EdgeInsets.symmetric(
                                                   horizontal: 8, vertical: 8),
                                           content: unverifiedUserDialogue());
+                                      return;
                                     }
-                                    //  Get.to(() => const FagoToFago());
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AllSupplies(),
+                                      ),
+                                    );
                                   },
                                   child: Column(
                                     children: [
@@ -473,10 +471,10 @@ class _DashboardHomeState extends State<DashboardHome> {
                                   },
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/shop.svg',
-                                        height: 2.5.h,
-                                        width: 2.5.w,
+                                      Icon(
+                                        Icons.house,
+                                        size: 2.5.h,
+                                        color: fagoSecondaryColor,
                                       ),
                                       SizedBox(
                                         height: 1.5.h,
@@ -509,10 +507,10 @@ class _DashboardHomeState extends State<DashboardHome> {
                                   },
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/stickynote.svg',
-                                        height: 2.5.h,
-                                        width: 2.5.w,
+                                      Icon(
+                                        Icons.file_copy,
+                                        size: 2.5.h,
+                                        color: fagoSecondaryColor,
                                       ),
                                       SizedBox(
                                         height: 1.5.h,

@@ -164,15 +164,18 @@ class CustomerBox extends StatelessWidget {
               SizedBox(
                 height: 1.5.h,
               ),
-              AutoSizeText(
-                secondBoxDescription,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: "Work Sans",
-                    fontSize: 12,
-                    color:
-                        (textImageColor != null) ? textImageColor : inactiveTab,
-                    fontWeight: FontWeight.w500),
+              FittedBox(
+                child: AutoSizeText(
+                  secondBoxDescription,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 12,
+                      color: (textImageColor != null)
+                          ? textImageColor
+                          : inactiveTab,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ],
           ),

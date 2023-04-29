@@ -198,7 +198,7 @@ class _SalesAccountState extends State<SalesAccount> {
                                             SizedBox(
                                               height: .5.h,
                                             ),
-                                            AutoSizeText(
+                                            const AutoSizeText(
                                               '# 700,340.00',
                                               style: TextStyle(
                                                 fontFamily: "Work Sans",

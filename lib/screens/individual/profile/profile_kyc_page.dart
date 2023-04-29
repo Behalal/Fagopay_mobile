@@ -1,9 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks
 
-import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,8 +9,6 @@ import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ProfileKycPage extends StatefulWidget {
   const ProfileKycPage({
