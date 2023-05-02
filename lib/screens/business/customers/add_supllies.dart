@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../authentication/widgets/auth_buttons.dart';
-import '../../widgets/business_form.dart';
 import '../../widgets/business_warning.dart';
 import '../../widgets/head_style_extra_pages.dart';
 

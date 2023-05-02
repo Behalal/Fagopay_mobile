@@ -5,7 +5,6 @@ import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/individual/purse/my_purse_list.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +94,7 @@ class _CreatePurseState extends State<CreatePurse> {
                             ),
                             NameTextfield(
                               // controller: _userController.nameController,
-                              title: '500,000.00',
+                              title: _value.toString(),
                               keyboadType: TextInputType.number,
                               validate: (value) {
                                 if (value!.isEmpty) {

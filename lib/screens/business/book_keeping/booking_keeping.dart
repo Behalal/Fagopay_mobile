@@ -60,7 +60,7 @@ class _BookKeepingState extends State<BookKeeping> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProgressStyle(
+               ProgressStyle(
                 stage: 0,
                 pageName: "Sales & Expenses",
               ),

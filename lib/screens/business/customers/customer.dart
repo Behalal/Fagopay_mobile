@@ -1,16 +1,17 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/customers_controller.dart';
-import 'package:fagopay/models/customer_model.dart';
-import 'package:fagopay/screens/business/customers/add_customer.dart';
-import 'package:fagopay/screens/business/customers/components/custom_customer_card.dart';
-import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
-import 'package:get/get.dart';
-import '../widgets/boxes.dart';
-import '../../constants/colors.dart';
-import 'customer_details.dart';
-import '../../functions.dart';
+import '../../../models/customer_model.dart';
+import 'add_customer.dart';
+import 'components/custom_customer_card.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../controllers/customers_controller.dart';
+import '../../constants/colors.dart';
+import '../../functions.dart';
+import '../widgets/boxes.dart';
+import 'customer_details.dart';
 
 class CustomerPage extends StatefulWidget {
   const CustomerPage({super.key});

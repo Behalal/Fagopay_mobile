@@ -1,9 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
-import 'package:fagopay/screens/constants/colors.dart';
 
 class CustomSupplierCard extends StatelessWidget {
   const CustomSupplierCard({
@@ -39,13 +38,18 @@ class CustomSupplierCard extends StatelessWidget {
                 SizedBox(
                   width: 2.w,
                 ),
-                AutoSizeText(
-                  supplierName,
-                  style: const TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 20,
-                      color: inactiveTab,
-                      fontWeight: FontWeight.w500),
+                SizedBox(
+                  width: 65.w,
+                  child: FittedBox(
+                    child: AutoSizeText(
+                      supplierName,
+                      style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          color: inactiveTab,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
                 ),
               ],
             ),

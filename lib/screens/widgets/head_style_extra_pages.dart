@@ -12,6 +12,7 @@ class ProgressStyle extends StatelessWidget {
   final double? width;
   final String? icon;
   final bool shadow;
+  final VoidCallback? onPressedIconAction;
 
   const ProgressStyle({
     Key? key,
@@ -21,6 +22,7 @@ class ProgressStyle extends StatelessWidget {
     this.width,
     this.icon,
     this.shadow = false,
+    this.onPressedIconAction,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class ProgressStyle extends StatelessWidget {
       Row(
         mainAxisAlignment: (icon != null)
             ? MainAxisAlignment.spaceBetween
-            : MainAxisAlignment.start,
+            : MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
@@ -43,21 +45,29 @@ class ProgressStyle extends StatelessWidget {
             icon: const Image(image: AssetImage("assets/images/Icon.png")),
             iconSize: 20,
           ),
-          if (icon == null)
-            SizedBox(
-              width: 20.w,
-            ),
+          // if (icon == null)
+          //   SizedBox(
+          //     width: 20,
+          //   ),
           Text(
             pageName,
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontFamily: "Work Sans",
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: FontWeight.w700,
               color: fagoSecondaryColor,
             ),
           ),
-          if (icon != null) Image.asset(icon!),
+          // if (icon != null)
+          //   GestureDetector(
+          //     onTap: onPressedIconAction,
+          //     child: Image.asset(icon!),
+          //   ),
+          Container(
+            width: 20,
+          )
         ],
       ),
       const SizedBox(

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import '../../widgets/navigation_bar.dart';
 import '../../../controllers/user_controller.dart';
-import '../home/dashboard_home.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -173,12 +173,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                   )),
               InkWell(
                 onTap: () => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => DashboardHome(
-                        userDetails: _userUcontroller.user!,
-                        accountDetails: _userUcontroller.userAccountDetails,
-                      ),
-                    ),
+                    MaterialPageRoute(builder: (context) => const Dashboard()),
                     (Route<dynamic> route) => false),
                 child: const AutoSizeText(
                   "Go to Dashboard",

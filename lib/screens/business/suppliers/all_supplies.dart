@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/suppliers_controller.dart';
-import 'package:fagopay/models/supplier_model.dart';
-import 'package:fagopay/screens/business/suppliers/components/custom_supplier_card.dart';
+import '../../../controllers/suppliers_controller.dart';
+import '../../../models/supplier_model.dart';
+import 'components/custom_supplier_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

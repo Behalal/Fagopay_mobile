@@ -1,14 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/business/home/home.dart';
-import 'package:fagopay/screens/individual/fago/fago_main_page.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
-import 'package:fagopay/screens/individual/profile/profile_settings.dart';
-import 'package:fagopay/screens/individual/purse/my_purse.dart';
-import 'package:fagopay/screens/individual/transactions/transaction_history.dart';
-import 'package:fagopay/screens/kyc/kyc2.dart';
-import 'package:fagopay/screens/kyc/kyc_success.dart';
+import '../../controllers/user_controller.dart';
+import '../business/home/home.dart';
+import '../individual/fago/fago_main_page.dart';
+import '../individual/home/dashboard_home.dart';
+import '../individual/profile/profile_settings.dart';
+import '../individual/purse/my_purse.dart';
+import '../individual/transactions/transaction_history.dart';
+import '../kyc/kyc2.dart';
+import '../kyc/kyc_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -114,7 +113,8 @@ import '../constants/colors.dart';
 // }
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+  final String? accountType;
+  const Dashboard({super.key, this.accountType});
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -245,9 +245,9 @@ class _DashboardState extends State<Dashboard> {
     switch (selectedIndex) {
       case 0:
         return DashboardHome(
-          userDetails: _userUcontroller.user!,
-          accountDetails: _userUcontroller.userAccountDetails,
-        );
+            userDetails: _userUcontroller.user!,
+            accountDetails: _userUcontroller.userAccountDetails,
+            accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : '');
 
       case 1:
         return const TransactionHistoryPage();

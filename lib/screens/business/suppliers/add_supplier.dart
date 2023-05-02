@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/locations_controller.dart';
-import 'package:fagopay/controllers/suppliers_controller.dart';
-import 'package:fagopay/controllers/transaction_controller.dart';
-import 'package:fagopay/models/bank_model.dart';
-import 'package:fagopay/models/locations_model.dart' as location;
-import 'package:fagopay/screens/widgets/banks_dropdown.dart';
-import 'package:fagopay/screens/widgets/custom_dropdown_field.dart';
+import '../../../controllers/locations_controller.dart';
+import '../../../controllers/suppliers_controller.dart';
+import '../../../controllers/transaction_controller.dart';
+import '../../../models/bank_model.dart';
+import '../../../models/locations_model.dart' as location;
+import '../../widgets/banks_dropdown.dart';
+import '../../widgets/custom_dropdown_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';

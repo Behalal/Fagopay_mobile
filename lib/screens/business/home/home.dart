@@ -1,17 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/business/sales/add_sales_account.dart';
 import 'package:fagopay/screens/business/sales/all_sales.dart';
 import 'package:fagopay/screens/individual/home/widgets/dashboard_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../models/user_model/user.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../functions.dart';
-import '../../widgets/navigation_bar.dart';
 import 'models/actions.model.dart';
 import 'models/sales.model.dart';
 
@@ -30,6 +31,7 @@ class BusinessHome extends StatefulWidget {
 }
 
 class _BusinessHomeState extends State<BusinessHome> {
+  static final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +43,7 @@ class _BusinessHomeState extends State<BusinessHome> {
             user: widget.userDetails,
             accountType: "Business",
             accountDetails: widget.accountDetails,
+            userDetails: _userUcontroller.user!,
           ),
           SizedBox(
             height: 2.h,
@@ -264,7 +267,7 @@ class _BusinessHomeState extends State<BusinessHome> {
           ))
         ],
       ),
-     // bottomNavigationBar: const FagoNavigationBar(),
+      // bottomNavigationBar: const FagoNavigationBar(),
     );
   }
 }

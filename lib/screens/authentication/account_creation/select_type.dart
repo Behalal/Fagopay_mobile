@@ -1,11 +1,10 @@
+import '../../kyc/identity_pass_kyc.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../models/register_request/register.model.dart';
 import '../../constants/colors.dart';
-import '../sign_in.dart';
 import '../widgets/auth_buttons.dart';
-import 'select_verification_type.dart';
 import 'widgets/business_box.dart';
 import 'widgets/current_step.dart';
 import 'widgets/personal_box.dart';
@@ -42,7 +41,7 @@ class _SelectTypeState extends State<SelectType> {
             children: [
               CurrentStep(
                 step: "1",
-                backRoute: const SignIn(),
+                // backRoute: const SignIn(),
               ),
               SizedBox(
                 height: 2.h,
@@ -123,14 +122,14 @@ class _SelectTypeState extends State<SelectType> {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            const SelectVerificationType(),
+                            const IdentityPassPage(),
                       ),
                     );
                   },
                   child: AuthButtons(
                     form: true,
-                    text: 'Continue',
-                    route: const SelectVerificationType(),
+                    text: 'Proceed to Verification',
+                    route: const IdentityPassPage(),
                   ),
                 ),
               )

@@ -46,6 +46,9 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                 stage: 0,
                 pageName: customer.fullname!,
                 icon: "assets/images/profile-delete.png",
+                onPressedIconAction: () {
+                  print('goooall');
+                },
               ),
               SizedBox(
                 height: 3.h,

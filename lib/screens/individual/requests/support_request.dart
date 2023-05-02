@@ -1,12 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/request_money/request_money_model.dart';
-import 'package:fagopay/screens/individual/requests/create_payment_link.dart';
+import '../../../models/request_money/request_money_model.dart';
+import 'create_payment_link.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
-import '../bills/electricity.dart';
 import '../../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';

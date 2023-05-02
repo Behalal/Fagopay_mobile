@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:fagopay/models/register_request/lookup_phone_model.dart';
-import 'package:fagopay/models/request_money/request_money_model.dart';
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../models/register_request/lookup_phone_model.dart';
+import '../models/request_money/request_money_model.dart';
+import '../service/constants/constants.dart';
+import '../service/secure_storage/secure_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -88,8 +88,7 @@ class RequestMoney extends GetxController {
             ? _myRequestStatus(MyRequestStatus.available)
             : _myRequestStatus(MyRequestStatus.empty);
         _myRequestStatus(MyRequestStatus.success);
-      }
-        else if (response.statusCode == 409) {
+      } else if (response.statusCode == 409) {
         Get.snackbar('Error', 'Go and verify your KYC');
         _myRequestStatus(MyRequestStatus.error);
       }
@@ -103,7 +102,7 @@ class RequestMoney extends GetxController {
               ? 'No internet connection!'
               : error.toString());
       if (kDebugMode) {
-        print('getting crops seller product Error ${error.toString()}');
+        print('my request Error ${error.toString()}');
       }
     }
   }
@@ -139,19 +138,18 @@ class RequestMoney extends GetxController {
           print("${requestedMon.length} request");
           print(" Req list ${requestedMon.first} request");
         }
-        
+
         _requestedMoneyList(requestedMon);
         requestedMon.isNotEmpty
             ? _requestedMoneyStatus(MyRequestedMoneyStatus.available)
             : _requestedMoneyStatus(MyRequestedMoneyStatus.empty);
         _requestedMoneyStatus(MyRequestedMoneyStatus.success);
-      }
-       else if (response.statusCode == 409) {
+      } else if (response.statusCode == 409) {
         Get.snackbar('Error', 'Go and verify your KYC');
         _requestedMoneyStatus(MyRequestedMoneyStatus.error);
       }
       return response.body;
-    }  catch (error) {
+    } catch (error) {
       _myRequestStatus(MyRequestStatus.error);
       Get.snackbar(
           'Error',
@@ -160,7 +158,7 @@ class RequestMoney extends GetxController {
               ? 'No internet connection!'
               : error.toString());
       if (kDebugMode) {
-        print('getting crops seller product Error ${error.toString()}');
+        print('requested money Error ${error.toString()}');
       }
     }
   }

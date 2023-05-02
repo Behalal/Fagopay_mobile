@@ -5,8 +5,8 @@ import 'package:sizer/sizer.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
-import '../transactions/confirm_transaction.dart';
 import '../../widgets/head_style_extra_pages.dart';
+import '../transactions/confirm_transaction.dart';
 
 class SwapAirtime extends StatefulWidget {
   const SwapAirtime({super.key});
