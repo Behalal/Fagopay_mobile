@@ -4,6 +4,7 @@ const linearGradient1 = Color(0xff6B142B);
 const linearGradient2 = Color(0xffC61F2A);
 const white = Color(0xffffffff);
 const black = Color(0xff000000);
+const blackWithOpacity10 = Color.fromRGBO(0, 0, 0, 0.1);
 // Sign in screen
 const signInText = Color(0xffC61F2A);
 const welcomeText = Color(0xff292D32);
@@ -39,6 +40,7 @@ const termsAndCond = Color(0xff242424);
 
 // inactive tab
 const inactiveTab = Color(0xff576275);
+const inactiveTabWithOpacity30 = Color.fromRGBO(87, 98, 117, 0.3);
 const verificationCodeText = Color(0xff292D32);
 
 // password guide
@@ -56,6 +58,9 @@ const fagoGreenColorWithOpacity10 = Color.fromRGBO(0, 91, 69, 0.10);
 const fagoBlackColor = Color(0xff000000);
 const fagoBlackColorWithOpacity = Color.fromRGBO(0, 0, 0, 0.3);
 const fagoBlackColorWithOpacity15 = Color.fromRGBO(0, 0, 0, 0.15);
+const fagoBlackColorWithOpacity1 = Color.fromRGBO(0, 0, 0, 0.01);
+const fagoBlackColorWithOpacity10 = Color.fromRGBO(0, 0, 0, 0.1);
+const fagoBlackColorWithOpacity20 = Color.fromRGBO(0, 0, 0, 0.20);
 
 const transactionKeys = Color(0xff8C8C8C);
 
@@ -66,3 +71,4 @@ const blackWithOpacity5 = Color.fromRGBO(0, 0, 0, 0.5);
 
 const fagoGreyColor = Color(0xff98A2B3);
 const fagoGrey800Color = Color(0xff2B313B);
+const fagoSearchColor = Color(0xff8A95A8);

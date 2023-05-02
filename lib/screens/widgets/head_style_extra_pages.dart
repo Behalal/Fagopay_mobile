@@ -11,6 +11,7 @@ class ProgressStyle extends StatelessWidget {
   final int stage;
   final double? width;
   final String? icon;
+  final bool shadow;
 
   const ProgressStyle({
     Key? key,
@@ -19,6 +20,7 @@ class ProgressStyle extends StatelessWidget {
     required this.stage,
     this.width,
     this.icon,
+    this.shadow = false,
   }) : super(key: key);
 
   @override
@@ -66,16 +68,16 @@ class ProgressStyle extends StatelessWidget {
           Container(
             height: (width != null) ? width : 2,
             width: (stage > 0) ? ((stage == 100) ? 90.w : 45.w) : 0,
-            decoration: const BoxDecoration(
-                color: fagoSecondaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+            decoration: BoxDecoration(
+                color: (shadow) ? white : fagoSecondaryColor,
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
           ),
           Container(
             height: 2,
             width: (stage > 0) ? ((stage == 50) ? 45.w : 0) : 90.w,
-            decoration: const BoxDecoration(
-                color: fagoSecondaryColorWithOpacity,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+            decoration: BoxDecoration(
+                color: (shadow) ? white : fagoSecondaryColorWithOpacity,
+                borderRadius: const BorderRadius.all(Radius.circular(10))),
           ),
         ],
       ),

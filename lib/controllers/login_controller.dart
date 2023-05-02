@@ -23,6 +23,7 @@ class LoginController extends GetxController {
   TextEditingController passwordController = TextEditingController();
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
+
   OtpForgotVerifyStatus get otpForgotVerifyStatus =>
       _otpForgotVerifyStatus.value;
 
