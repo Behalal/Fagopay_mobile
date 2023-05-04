@@ -20,8 +20,13 @@ class BaseAPI {
   static String requestedMoney = "${api}transaction/requester-request-list";
   static String requestMoneyapi = "${api}transaction/request-money";
   static String lookupPhoneNum = "${api}transaction/account-lookup-by-phone/";
-
   static String transactionHistory = "${api}transaction/history";
+
+  //bills
+static String airtimeSwapCharges = "${api}airtimeswap/get_fee/";
+static String initiateSwap = "${api}airtimeswap";
+
+ 
 
   // purse
   static String pulseCategory = "${api}pulsecategory";

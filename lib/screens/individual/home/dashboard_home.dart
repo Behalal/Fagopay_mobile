@@ -268,8 +268,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                           ),
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 1.h, vertical: 2.h),
-                            height: 20.h,
+                                horizontal: 2.h, vertical: 2.h),
+                            //height: 23.h,
                             width: Get.width,
                             decoration: BoxDecoration(
                                 color: fagoSecondaryColor.withOpacity(0.05),
@@ -280,8 +280,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 crossAxisCount: 4,
-                                crossAxisSpacing: 2.0,
-                                mainAxisSpacing: 4.0,
+                                crossAxisSpacing: 4.0.h,
+                                mainAxisSpacing: 3.0.h,
+                                childAspectRatio: 0.1.h,
                                 children:
                                     List.generate(services.length, (index) {
                                   return InkWell(
@@ -293,8 +294,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             middleText: "",
                                             titlePadding: EdgeInsets.zero,
                                             contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8, vertical: 8),
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 5.h,
+                                                    vertical: 3.h),
                                             content: unverifiedUserDialogue());
                                       } else if (services[index].route !=
                                           null) {
@@ -321,10 +323,11 @@ class _DashboardHomeState extends State<DashboardHome> {
                                           ),
                                           AutoSizeText(
                                             services[index].itemName,
+                                            textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               fontFamily: "Work Sans",
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 8,
+                                              fontSize: 0,
                                               color: black,
                                             ),
                                           ),
@@ -546,7 +549,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 3.h, vertical: 2.h),
-                                height: 16.h,
+                                height: 20.h,
                                 width: Get.width,
                                 color: fagoSecondaryColor.withOpacity(0.05),
                                 child: Column(

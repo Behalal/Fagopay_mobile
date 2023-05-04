@@ -78,147 +78,103 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                     child: Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: 0.h, horizontal: 2.5.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Get.to(() => const EditProfile());
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(18),
-                                width: Get.width,
-                                height: 10.h,
-                                decoration: const BoxDecoration(
-                                    color: fagoPrimaryColorWithOpacity10),
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const CircleAvatar(
-                                        radius: 27, // Image radius
-                                        backgroundImage: AssetImage(
-                                            'assets/images/fago(2).png'),
-                                      ),
-                                      SizedBox(
-                                        width: 1.h,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              AutoSizeText(
-                                                _userUcontroller
-                                                        .user!.firstName ??
-                                                    '',
-                                                style: const TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: welcomeText,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Get.to(() => const EditProfile());
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(18),
+                                  width: Get.width,
+                                  height: 10.h,
+                                  decoration: const BoxDecoration(
+                                      color: fagoPrimaryColorWithOpacity10),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const CircleAvatar(
+                                          radius: 27, // Image radius
+                                          backgroundImage: AssetImage(
+                                              'assets/images/fago(2).png'),
+                                        ),
+                                        SizedBox(
+                                          width: 1.h,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                AutoSizeText(
+                                                  _userUcontroller
+                                                          .user!.firstName ??
+                                                      '',
+                                                  style: const TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: welcomeText,
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: 0.5.h,
-                                              ),
-                                              AutoSizeText(
-                                                _userUcontroller
-                                                        .user!.lastName ??
-                                                    '',
-                                                style: const TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: welcomeText,
+                                                SizedBox(
+                                                  width: 0.5.h,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          AutoSizeText(
-                                            _userUcontroller.user!.email ?? '',
-                                            style: const TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400,
-                                              color: welcomeText,
+                                                AutoSizeText(
+                                                  _userUcontroller
+                                                          .user!.lastName ??
+                                                      '',
+                                                  style: const TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      SvgPicture.asset(
-                                          'assets/icons/arrow_front.svg')
-                                    ]),
+                                            AutoSizeText(
+                                              _userUcontroller.user!.email ??
+                                                  '',
+                                              style: const TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w400,
+                                                color: welcomeText,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        SvgPicture.asset(
+                                            'assets/icons/arrow_front.svg')
+                                      ]),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              'Security Settings',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: stepsColor,
+                              SizedBox(
+                                height: 2.h,
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              width: Get.width,
-                              height: 6.h,
-                              decoration: BoxDecoration(
-                                  color: fagoPrimaryColorWithOpacity10,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                        'assets/icons/face_icon.svg'),
-                                    SizedBox(
-                                      width: 1.h,
-                                    ),
-                                    const AutoSizeText(
-                                      'Face ID Authentication',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: welcomeText,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    Transform.scale(
-                                        scale: 1.5,
-                                        child: Switch(
-                                          onChanged: toggleSwitch,
-                                          value: isSwitched,
-                                          activeColor: Colors.red,
-                                          activeTrackColor: Colors.white,
-                                          inactiveThumbColor: Colors.white,
-                                          inactiveTrackColor: Colors.red,
-                                        )),
-                                  ]),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.to(() => const ForgotPassword(
-                                      pinCode: '',
-                                    ));
-                              },
-                              child: Container(
+                              const AutoSizeText(
+                                'Security Settings',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: stepsColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Container(
                                 padding: const EdgeInsets.all(15),
                                 width: Get.width,
                                 height: 6.h,
@@ -231,12 +187,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SvgPicture.asset(
-                                          'assets/icons/change_password.svg'),
+                                          'assets/icons/face_icon.svg'),
                                       SizedBox(
                                         width: 1.h,
                                       ),
                                       const AutoSizeText(
-                                        'Change Password',
+                                        'Face ID Authentication',
                                         style: TextStyle(
                                           fontFamily: "Work Sans",
                                           fontSize: 14,
@@ -245,21 +201,26 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                         ),
                                       ),
                                       const Spacer(),
-                                      SvgPicture.asset(
-                                          'assets/icons/arrow_front.svg')
+                                      Transform.scale(
+                                          scale: 1.5,
+                                          child: Switch(
+                                            onChanged: toggleSwitch,
+                                            value: isSwitched,
+                                            activeColor: Colors.red,
+                                            activeTrackColor: Colors.white,
+                                            inactiveThumbColor: Colors.white,
+                                            inactiveTrackColor: Colors.red,
+                                          )),
                                     ]),
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // Get.to(() => const ChangePassCode());
-                              },
-                              child: InkWell(
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              InkWell(
                                 onTap: () {
-                                  Get.to(() => const ChangePassCode());
+                                  Get.to(() => const ForgotPassword(
+                                        pinCode: '',
+                                      ));
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(15),
@@ -275,12 +236,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
-                                            'assets/icons/change_passcode.svg'),
+                                            'assets/icons/change_password.svg'),
                                         SizedBox(
                                           width: 1.h,
                                         ),
                                         const AutoSizeText(
-                                          'Change Passcode',
+                                          'Change Password',
                                           style: TextStyle(
                                             fontFamily: "Work Sans",
                                             fontSize: 14,
@@ -294,239 +255,287 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ]),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              'General Settings',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: stepsColor,
+                              SizedBox(
+                                height: 2.h,
                               ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              width: Get.width,
-                              height: 24.h,
-                              decoration: const BoxDecoration(
-                                color: fagoPrimaryColorWithOpacity10,
+                              InkWell(
+                                onTap: () {
+                                  // Get.to(() => const ChangePassCode());
+                                },
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.to(() => const ChangePassCode());
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15),
+                                    width: Get.width,
+                                    height: 6.h,
+                                    decoration: BoxDecoration(
+                                        color: fagoPrimaryColorWithOpacity10,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/icons/change_passcode.svg'),
+                                          SizedBox(
+                                            width: 1.h,
+                                          ),
+                                          const AutoSizeText(
+                                            'Change Passcode',
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: welcomeText,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          SvgPicture.asset(
+                                              'assets/icons/arrow_front.svg')
+                                        ]),
+                                  ),
+                                ),
                               ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              const AutoSizeText(
+                                'General Settings',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: stepsColor,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                width: Get.width,
+                                height: 24.h,
+                                decoration: const BoxDecoration(
+                                  color: fagoPrimaryColorWithOpacity10,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(() => const NextOfKinPage());
+                                      },
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/icons/Group 90.svg'),
+                                            SizedBox(
+                                              width: 2.h,
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const AutoSizeText(
+                                                  'Next of Kin',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 0.5.h,
+                                                ),
+                                                const AutoSizeText(
+                                                  'Who is your beneficiary?',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            SvgPicture.asset(
+                                                'assets/icons/arrow_front.svg')
+                                          ]),
+                                    ),
+                                    const Divider(),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(() => const ProfileKycPage());
+                                      },
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/icons/Group 90.svg'),
+                                            SizedBox(
+                                              width: 2.h,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const AutoSizeText(
+                                                  'KYC',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 0.5.h,
+                                                ),
+                                                Container(
+                                                  height: 2.5.h,
+                                                  width: 11.5.h,
+                                                  decoration: BoxDecoration(
+                                                      color: white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              25)),
+                                                  alignment: Alignment.center,
+                                                  child: const AutoSizeText(
+                                                    'Not Completed',
+                                                    style: TextStyle(
+                                                      fontFamily: "Work Sans",
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: fagoSecondaryColor,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            SvgPicture.asset(
+                                                'assets/icons/arrow_front.svg')
+                                          ]),
+                                    ),
+                                    const Divider(),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(() => const AccountLimit());
+                                      },
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/icons/Group 90.svg'),
+                                            SizedBox(
+                                              width: 2.h,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                const AutoSizeText(
+                                                  'Account Limit',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 0.5.h,
+                                                ),
+                                                const AutoSizeText(
+                                                  'Be aware of your account threshold',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            SvgPicture.asset(
+                                                'assets/icons/arrow_front.svg')
+                                          ]),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      Get.to(() => const NextOfKinPage());
+                                      Get.defaultDialog(
+                                          title: "",
+                                          middleText: "",
+                                          titlePadding: EdgeInsets.zero,
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 8),
+                                          content: logOutDialog());
                                     },
-                                    child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                    child: Container(
+                                      height: 4.h,
+                                      width: 11.5.h,
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          border: Border.all(
+                                              color: fagoSecondaryColor)),
+                                      alignment: Alignment.center,
+                                      child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.spaceEvenly,
                                         children: [
+                                          const AutoSizeText(
+                                            'Logout',
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: fagoSecondaryColor,
+                                            ),
+                                          ),
                                           SvgPicture.asset(
-                                              'assets/icons/Group 90.svg'),
-                                          SizedBox(
-                                            width: 2.h,
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const AutoSizeText(
-                                                'Next of Kin',
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: welcomeText,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 0.5.h,
-                                              ),
-                                              const AutoSizeText(
-                                                'Who is your beneficiary?',
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: welcomeText,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          SvgPicture.asset(
-                                              'assets/icons/arrow_front.svg')
-                                        ]),
-                                  ),
-                                  const Divider(),
-                                  InkWell(
-                                    onTap: () {
-                                      Get.to(() => const ProfileKycPage());
-                                    },
-                                    child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              'assets/icons/Group 90.svg'),
-                                          SizedBox(
-                                            width: 2.h,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const AutoSizeText(
-                                                'KYC',
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: welcomeText,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 0.5.h,
-                                              ),
-                                              Container(
-                                                height: 2.5.h,
-                                                width: 11.5.h,
-                                                decoration: BoxDecoration(
-                                                    color: white,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25)),
-                                                alignment: Alignment.center,
-                                                child: const AutoSizeText(
-                                                  'Not Completed',
-                                                  style: TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: fagoSecondaryColor,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          SvgPicture.asset(
-                                              'assets/icons/arrow_front.svg')
-                                        ]),
-                                  ),
-                                  const Divider(),
-                                  InkWell(
-                                    onTap: () {
-                                      Get.to(() => const AccountLimit());
-                                    },
-                                    child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              'assets/icons/Group 90.svg'),
-                                          SizedBox(
-                                            width: 2.h,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              const AutoSizeText(
-                                                'Account Limit',
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: welcomeText,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 0.5.h,
-                                              ),
-                                              const AutoSizeText(
-                                                'Be aware of your account threshold',
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: welcomeText,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          SvgPicture.asset(
-                                              'assets/icons/arrow_front.svg')
-                                        ]),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                        title: "",
-                                        middleText: "",
-                                        titlePadding: EdgeInsets.zero,
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 8),
-                                        content: logOutDialog());
-                                  },
-                                  child: Container(
-                                    height: 4.h,
-                                    width: 11.5.h,
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius: BorderRadius.circular(25),
-                                        border: Border.all(
-                                            color: fagoSecondaryColor)),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        const AutoSizeText(
-                                          'Logout',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: fagoSecondaryColor,
-                                          ),
-                                        ),
-                                        SvgPicture.asset(
-                                            'assets/icons/log_out.svg')
-                                      ],
+                                              'assets/icons/log_out.svg')
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
+                                ],
+                              )
+                            ],
+                          ),
                         )),
                   ),
                 ])));
