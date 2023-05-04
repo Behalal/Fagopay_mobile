@@ -1,11 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/screens/business/invoice/add_invoice.dart';
-import 'package:fagopay/screens/business/invoice/all_invoice.dart';
 import 'package:fagopay/screens/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
@@ -60,7 +56,7 @@ class _BookKeepingState extends State<BookKeeping> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "Sales & Expenses",
               ),
@@ -73,8 +69,7 @@ class _BookKeepingState extends State<BookKeeping> {
                 children: [
                   InkWell(
                     onTap: () {
-                      // goToPage(context, const AddSalesOrExpenses());
-                      goToPage(context, const AllInvoice());
+                      goToPage(context, const AddSalesOrExpenses());
                     },
                     child: SizedBox(
                       width: 45.w,
@@ -653,13 +648,20 @@ class _BookKeepingState extends State<BookKeeping> {
                       ]),
                 ),
               // No record Found
-              if (!recordFound) const NoRecordFound(recordDescription: 'Record a transaction now to keep track of your daily sales and expenses.', recordRoute: AddSalesOrExpenses(), recordText: 'Transactions',)
+              if (!recordFound)
+                const NoRecordFound(
+                  recordDescription:
+                      'Record a transaction now to keep track of your daily sales and expenses.',
+                  recordRoute: AddSalesOrExpenses(),
+                  recordText: 'Transactions',
+                )
             ],
           ),
         ),
       ),
     );
   }
+
   Container buildDot(int index, BuildContext context) {
     return Container(
       height: 4,

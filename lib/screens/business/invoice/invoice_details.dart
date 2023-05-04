@@ -6,8 +6,6 @@ import 'package:sizer/sizer.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../widgets/head_style_extra_pages.dart';
-import '../widgets/select_customer_modal.dart';
-import 'all_invoice.dart';
 
 class InvoiceDetails extends StatefulWidget {
   const InvoiceDetails({super.key});
@@ -43,7 +41,6 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                 ],
               ),
               child: const ProgressStyle(
-                backRoute: AllInvoice(),
                 stage: 0,
                 pageName: "View Invoice",
                 shadow: true,
@@ -801,5 +798,4 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
       ),
     );
   }
-
 }

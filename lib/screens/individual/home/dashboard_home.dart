@@ -1,4 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/models/company_model.dart';
+import 'package:fagopay/screens/business/book_keeping/booking_keeping.dart';
+import 'package:fagopay/screens/business/invoice/all_invoice.dart';
 import '../../authentication/account_creation/select_type.dart';
 import '../../business/customers/customer.dart';
 import '../../business/suppliers/all_supplies.dart';
@@ -38,10 +42,12 @@ class _DashboardHomeState extends State<DashboardHome> {
   bool isLoading = false;
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
 
   @override
   void didChangeDependencies() async {
     await getUserDetails();
+    await getCompany();
     super.didChangeDependencies();
   }
 
@@ -470,7 +476,14 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               const EdgeInsets.symmetric(
                                                   horizontal: 8, vertical: 8),
                                           content: unverifiedUserDialogue());
+                                      return;
                                     }
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BookKeeping(),
+                                      ),
+                                    );
                                   },
                                   child: Column(
                                     children: [
@@ -505,7 +518,14 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               const EdgeInsets.symmetric(
                                                   horizontal: 8, vertical: 8),
                                           content: unverifiedUserDialogue());
+                                      return;
                                     }
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const AllInvoice(),
+                                      ),
+                                    );
                                     // Get.to(() => const RequestHome());
                                   },
                                   child: Column(
@@ -904,6 +924,13 @@ class _DashboardHomeState extends State<DashboardHome> {
     final userAccountjsonBodyData = response['data']['accountdetail'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
+  }
+
+  Future<void> getCompany() async {
+    final response = await _companyController.getCompany();
+    final companyjsonBodyData = response['data']['company_detail'];
+    final companyDetails = Company.fromJson(companyjsonBodyData);
+    _companyController.setCompany = companyDetails;
   }
 }
 

@@ -12,6 +12,7 @@ class BaseAPI {
   static String billPath = "${api}bills/";
   static String customersPath = "${api}customer";
   static String suppliersPath = "${api}supplier";
+  static String companyPath = "${api}company";
   static String validateResetOtp = "${api}verify/password-reset-code";
   static String nextofKin = "${api}kyc/create-update-nextofkin";
 
