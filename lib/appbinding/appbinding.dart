@@ -1,4 +1,5 @@
 import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/controllers/purse_controller.dart';
 
 import '../controllers/customers_controller.dart';
 import '../controllers/locations_controller.dart';
