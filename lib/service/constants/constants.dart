@@ -23,6 +23,11 @@ class BaseAPI {
 
   static String transactionHistory = "${api}transaction/history";
 
+  // purse
+  static String pulseCategory = "${api}pulsecategory";
+  static String createPurse = "${api}pulse";
+  static String showPurse = "${api}pulse/";
+
   // String headers = {
   //   "Content-Type": "application/json; charset=UTF-8",
   //   "ddjd": 'Bearer ${token}'

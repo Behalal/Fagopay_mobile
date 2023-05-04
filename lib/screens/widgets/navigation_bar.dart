@@ -129,6 +129,7 @@ class _DashboardState extends State<Dashboard> {
   Widget currentScreen = DashboardHome(
     userDetails: _userUcontroller.user!,
     accountDetails: _userUcontroller.userAccountDetails,
+    // accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : ''
   );
   bool isclicked = false;
 
@@ -151,7 +152,7 @@ class _DashboardState extends State<Dashboard> {
     'Home',
     'Transaction',
     '',
-    'Fagopay Cards',
+    'Purse',
     'Profile',
   ];
 
@@ -246,9 +247,10 @@ class _DashboardState extends State<Dashboard> {
     switch (selectedIndex) {
       case 0:
         return DashboardHome(
-            userDetails: _userUcontroller.user!,
-            accountDetails: _userUcontroller.userAccountDetails,
-            accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : '');
+          userDetails: _userUcontroller.user!,
+          accountDetails: _userUcontroller.userAccountDetails,
+          // accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : ''
+        );
 
       case 1:
         return const TransactionHistoryPage();

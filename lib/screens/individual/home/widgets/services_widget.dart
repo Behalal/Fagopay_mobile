@@ -1,6 +1,7 @@
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/individual/bills/data.dart';
 import 'package:fagopay/screens/individual/bills/electricity.dart';
+import 'package:fagopay/screens/individual/bills/swap_airtime.dart';
 import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
 import 'package:fagopay/screens/individual/requests/requests.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
@@ -53,7 +54,7 @@ List<Services> services = [
   const Services(
     image: 'assets/icons/new_swapAirtime_icon.svg',
     itemName: 'Swap Airtime',
-    route: BuyData(),
+    route: SwapAirtime(),
   ),
   const Services(
     image: 'assets/icons/new_payment_link_2.svg',
