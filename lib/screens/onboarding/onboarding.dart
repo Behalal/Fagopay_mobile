@@ -40,7 +40,8 @@ class _OnboardingState extends State<Onboarding> {
             child: SizedBox(
               width: 100.w,
               height: 0.h,
-              child: PageView.builder(
+              child: 
+              PageView.builder(
                   controller: _controller,
                   itemCount: contents.length,
                   onPageChanged: (int index) {

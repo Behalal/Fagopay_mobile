@@ -49,7 +49,7 @@ class _AddSalesAccountState extends State<AddSalesAccount> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProgressStyle(
+              const ProgressStyle(
                 stage: 0,
                 pageName: "Create Account",
                 // backRoute: BusinessHome(

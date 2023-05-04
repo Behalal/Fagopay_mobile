@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import '../controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,6 +11,7 @@ import 'package:sizer/sizer.dart';
 
 import '../controllers/bill_controller.dart';
 import '../controllers/transaction_controller.dart';
+import '../controllers/user_controller.dart';
 import 'authentication/widgets/auth_buttons.dart';
 import 'constants/colors.dart';
 import 'individual/bills/models/bill_post_model.dart';

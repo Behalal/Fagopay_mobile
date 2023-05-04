@@ -6,7 +6,6 @@ import 'package:fagopay/controllers/purse_controller.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/individual/purse/purse_spending.dart';
-import 'package:fagopay/screens/individual/requests/payme_page.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

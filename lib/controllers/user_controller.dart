@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import '../models/nextofkin_model.dart';
-import '../service/constants/constants.dart';
-import '../service/secure_storage/secure_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-
-import '../models/user_model/user.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/nextofkin_model.dart';
+import '../models/user_model/user.dart';
+import '../service/constants/constants.dart';
+import '../service/secure_storage/secure_storage.dart';
 
 enum NextOfKinEnum {
   empty,

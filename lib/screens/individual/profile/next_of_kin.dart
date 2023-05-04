@@ -9,12 +9,13 @@ import 'package:fagopay/models/nextofkin_model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:sizer/sizer.dart';
+
+import '../../constants/colors.dart';
 
 class NextOfKinPage extends StatefulWidget {
   const NextOfKinPage({
@@ -445,9 +446,10 @@ class NameTextfield extends StatelessWidget {
             (value) {
               if (value == null || value.isEmpty) {
                 return validatorText;
-              } else if (value != null) {
+              } else {
                 return null;
               }
+
               return null;
             },
         controller: controller,

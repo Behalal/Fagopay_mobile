@@ -12,7 +12,7 @@ class kyc_success extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _userUcontroller = Get.find<UserController>();
+    final userUcontroller = Get.find<UserController>();
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
@@ -82,8 +82,8 @@ class kyc_success extends StatelessWidget {
                     onTap: () => Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                           builder: (context) => DashboardHome(
-                            userDetails: _userUcontroller.user!,
-                            accountDetails: _userUcontroller.userAccountDetails,
+                            userDetails: userUcontroller.user!,
+                            accountDetails: userUcontroller.userAccountDetails,
                           ),
                         ),
                         (Route<dynamic> route) => false),

@@ -73,7 +73,7 @@ List<PaymentModel> paymentContents = [
         currentColor: fagoPrimaryColor,
       ),
     ),
-    route: RequestHome(
+    route: const RequestHome(
       //item: _moneyRequest.myRequestList,
     ),
   ),

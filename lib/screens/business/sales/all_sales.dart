@@ -8,7 +8,6 @@ import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../widgets/head_style_extra_pages.dart';
-import '../home/home.dart';
 
 class AllSales extends StatefulWidget {
   const AllSales({super.key});

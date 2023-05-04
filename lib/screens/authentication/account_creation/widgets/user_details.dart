@@ -20,7 +20,7 @@ class UserData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _registrationController = Get.find<RegistrationController>();
+    final registrationController = Get.find<RegistrationController>();
     return Column(
       children: [
         SizedBox(
@@ -31,7 +31,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: _registrationController.firstname,
+                controller: registrationController.firstname,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -76,7 +76,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: _registrationController.lastname,
+                controller: registrationController.lastname,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -121,7 +121,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: _registrationController.email.text != '' ? _registrationController.phone : _registrationController.email,
+                controller: registrationController.email.text != '' ? registrationController.phone : registrationController.email,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -143,7 +143,7 @@ class UserData extends StatelessWidget {
                       style: BorderStyle.solid,
                     ),
                   ),
-                  hintText: _registrationController.email.text != '' ? "Phone" : "Email",
+                  hintText: registrationController.email.text != '' ? "Phone" : "Email",
                   hintStyle: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -168,7 +168,7 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: _registrationController.referral,
+                controller: registrationController.referral,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,

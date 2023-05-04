@@ -1,4 +1,4 @@
-import 'package:fagopay/screens/kyc/kyc_success.dart';
+import 'kyc_success.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';

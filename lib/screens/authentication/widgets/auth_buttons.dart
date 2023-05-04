@@ -8,19 +8,22 @@ class AuthButtons extends StatelessWidget {
   Widget? route;
   bool form;
   String? hasImage;
+  String? suffixImage;
   double? imageheight;
   double? imageWidth;
   Color? color;
 
-  AuthButtons(
-      {super.key,
+  AuthButtons({
+      super.key,
       required this.text,
       this.route,
       this.hasImage,
+      this.suffixImage,
       this.color,
       this.imageWidth,
       this.imageheight,
-      required this.form});
+      required this.form,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class AuthButtons extends StatelessWidget {
                   height: imageheight,
                   fit: BoxFit.fitWidth,
                 ),
-              if (hasImage != null) SizedBox(width: 1.2.w),
+              if (hasImage != null ) SizedBox(width: 1.2.w),
               if (text.isNotEmpty)
                 Text(
                   text,
@@ -60,6 +63,14 @@ class AuthButtons extends StatelessWidget {
                       fontFamily: "Work Sans",
                       fontWeight: FontWeight.w600,
                       color: white),
+                ),
+              if (suffixImage != null ) SizedBox(width: 1.2.w),
+               if (suffixImage != null)
+                Image.asset(
+                  suffixImage!,
+                  width: imageWidth,
+                  height: imageheight,
+                  fit: BoxFit.fitWidth,
                 ),
             ],
           ),
