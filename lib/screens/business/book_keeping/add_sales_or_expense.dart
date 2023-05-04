@@ -1,14 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/customer_details.dart';
-import 'booking_keeping.dart';
 
 class AddSalesOrExpenses extends StatefulWidget {
   const AddSalesOrExpenses({super.key});
@@ -75,7 +72,6 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ProgressStyle(
-                backRoute: const BookKeeping(),
                 stage: 0,
                 pageName: (salesTab) ? "Add Sales" : "Add Expenses",
               ),
@@ -180,8 +176,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                     ),
                     SizedBox(
                       width: 90.w,
-                      child: 
-                      TextFormField(
+                      child: TextFormField(
                         style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w400,
