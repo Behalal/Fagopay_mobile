@@ -288,7 +288,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 4.0.h,
                                 mainAxisSpacing: 3.0.h,
-                                childAspectRatio: 0.15.h,
+                                childAspectRatio: 0.10.h,
                                 children:
                                     List.generate(services.length, (index) {
                                   return InkWell(
