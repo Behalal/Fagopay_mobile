@@ -181,7 +181,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
-                          color: welcomeText,
+                          color: stepsColor,
                         ),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(

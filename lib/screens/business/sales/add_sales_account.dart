@@ -87,7 +87,7 @@ class _AddSalesAccountState extends State<AddSalesAccount> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: signInPlaceholder,
+                        color: stepsColor,
                       ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -223,7 +223,7 @@ class _AddSalesAccountState extends State<AddSalesAccount> {
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
-                          color: signInPlaceholder),
+                          color: stepsColor),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 4.w, vertical: 1.h),

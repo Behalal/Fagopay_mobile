@@ -26,7 +26,7 @@ class _SalesAccountState extends State<SalesAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
+            padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,7 +214,7 @@ class _SalesAccountState extends State<SalesAccount> {
                                 height: 1.5.h,
                               ),
                               const AutoSizeText(
-                                'Quick Actions',
+                                'Managed by',
                                 style: TextStyle(
                                   fontFamily: "Work Sans",
                                   fontSize: 14,
@@ -224,6 +224,15 @@ class _SalesAccountState extends State<SalesAccount> {
                               ),
                               SizedBox(
                                 height: 1.5.h,
+                              ),
+                              const AutoSizeText(
+                                'Quick Actions',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: stepsColor,
+                                ),
                               ),
                               SizedBox(
                                 height: 2.h,

@@ -274,8 +274,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                           ),
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 1.h, vertical: 2.h),
-                            height: 20.h,
+                                horizontal: 2.h, vertical: 2.h),
+                            //height: 23.h,
                             width: Get.width,
                             decoration: BoxDecoration(
                                 color: fagoSecondaryColor.withOpacity(0.05),
@@ -286,8 +286,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 crossAxisCount: 4,
-                                crossAxisSpacing: 2.0,
-                                mainAxisSpacing: 4.0,
+                                crossAxisSpacing: 4.0.h,
+                                mainAxisSpacing: 3.0.h,
+                                childAspectRatio: 0.10.h,
                                 children:
                                     List.generate(services.length, (index) {
                                   return InkWell(
@@ -299,8 +300,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             middleText: "",
                                             titlePadding: EdgeInsets.zero,
                                             contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8, vertical: 8),
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 5.h,
+                                                    vertical: 3.h),
                                             content: unverifiedUserDialogue());
                                       } else if (services[index].route !=
                                           null) {
@@ -310,6 +312,21 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 services[index].route!,
                                           ),
                                         );
+                                      } else if (services[index].route ==
+                                              null &&
+                                          widget.userDetails.kycVerified == 1 &&
+                                          services[index].bill == 'special') {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) =>
+                                                const BillsPayment());
                                       }
                                     },
                                     child: Column(children: [
@@ -323,14 +340,15 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             width: 2.5.w,
                                           ),
                                           SizedBox(
-                                            height: 1.5.h,
+                                            height: 1.0.h,
                                           ),
                                           AutoSizeText(
                                             services[index].itemName,
+                                            textAlign: TextAlign.center,
                                             style: const TextStyle(
                                               fontFamily: "Work Sans",
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 8,
+                                              fontSize: 0,
                                               color: black,
                                             ),
                                           ),
@@ -368,7 +386,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 2.h, vertical: 2.h),
-                            height: 10.h,
+                            // height: 10.h,
                             width: Get.width,
                             decoration: BoxDecoration(
                                 color: fagoSecondaryColor.withOpacity(0.05),
@@ -413,7 +431,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         style: TextStyle(
                                           fontFamily: "Work Sans",
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 10,
+                                          fontSize: 5,
                                           color: black,
                                         ),
                                       ),
@@ -566,7 +584,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 3.h, vertical: 2.h),
-                                height: 16.h,
+                                // height: 20.h,
                                 width: Get.width,
                                 color: fagoSecondaryColor.withOpacity(0.05),
                                 child: Column(
@@ -583,6 +601,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: fagoSecondaryColor,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
                                     const AutoSizeText(
                                       'Do you own a business with corporate registration? Manage them within this App or manage for others',
                                       textAlign: TextAlign.start,
@@ -593,12 +614,15 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: stepsColor,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
                                     InkWell(
                                       onTap: () {
                                         Get.to(() => const SelectType());
                                       },
                                       child: Container(
-                                        width: 30.w,
+                                        width: 20.h,
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),

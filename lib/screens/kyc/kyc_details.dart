@@ -72,7 +72,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: signInPlaceholder),
+                            color: stepsColor),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -115,7 +115,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: signInPlaceholder),
+                            color: stepsColor),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -160,7 +160,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: signInPlaceholder),
+                            color: stepsColor),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),

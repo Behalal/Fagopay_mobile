@@ -1,4 +1,5 @@
 import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/controllers/purse_controller.dart';
 
 import '../controllers/customers_controller.dart';
 import '../controllers/locations_controller.dart';
@@ -21,6 +22,7 @@ class AppBinding extends Bindings {
     Get.put(TransactionController(), permanent: true);
     Get.put(BillController(), permanent: true);
     Get.put(RequestMoney(), permanent: true);
+    Get.put(PurseController(), permanent: true);
     Get.lazyPut(() => SupplierController());
     Get.lazyPut(() => CustomerController());
     Get.lazyPut(() => LocationsController());

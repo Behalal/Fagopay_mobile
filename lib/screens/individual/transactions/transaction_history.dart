@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:fagopay/models/transaction.dart/transaction_history_model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
+import 'package:fagopay/screens/constants/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                   ),
                   Expanded(
                     child: SizedBox(
-                      height: 8.h,
+                      // height: 8.h,
                       child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: 0.h, horizontal: 2.5.w),
@@ -77,7 +78,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                             .transactionHistoryList.length,
                                         separatorBuilder: (context, index) =>
                                             SizedBox(
-                                              height: 1.2.h,
+                                              height: 1.5.h,
                                             ),
                                         itemBuilder: (context, index) {
                                           var item = _transactionController
@@ -110,7 +111,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.all(15),
-                                                height: 8.h,
+                                                // height: 10.h,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(5),
@@ -142,7 +143,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                                           ],
                                                         ),
                                                         SizedBox(
-                                                          width: 3.h,
+                                                          width: 2.h,
                                                         ),
                                                         Expanded(
                                                           child: Row(
@@ -160,7 +161,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                                                       item.transactionType ==
                                                                               TransactionType.DEBIT
                                                                           ? 'Transfer to ${item.toFrom}'
-                                                                          : 'Transfer from ${item.toFrom}',
+                                                                          : 'Transfer from $currencySymbol${item.toFrom}',
                                                                       overflow:
                                                                           TextOverflow
                                                                               .ellipsis,
@@ -212,9 +213,9 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                                               item.transactionType ==
                                                                       TransactionType
                                                                           .DEBIT
-                                                                  ? item.outflow
+                                                                  ? '$currencySymbol${item.outflow}'
                                                                       .toString()
-                                                                  : item.inflow
+                                                                  : '$currencySymbol${item.inflow}'
                                                                       .toString(),
                                                               style:
                                                                   const TextStyle(

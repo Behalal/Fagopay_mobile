@@ -168,7 +168,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: signInPlaceholder),
+                        color: stepsColor),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -239,7 +239,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: signInPlaceholder),
+                        color: stepsColor),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),

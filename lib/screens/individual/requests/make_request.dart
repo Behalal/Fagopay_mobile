@@ -106,12 +106,13 @@ class _MakeRequestState extends State<MakeRequest> {
                           });
                         },
                         controller: _transactionController.phoneController,
+                       
                         keyboardType: TextInputType.phone,
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: signInPlaceholder),
+                            color: stepsColor),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 4.w, vertical: 1.h),
@@ -219,7 +220,7 @@ class _MakeRequestState extends State<MakeRequest> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: signInPlaceholder),
+                            color: stepsColor),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: 4.w,
@@ -273,7 +274,7 @@ class _MakeRequestState extends State<MakeRequest> {
                             fontFamily: "work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: signInPlaceholder),
+                            color: stepsColor),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(
                               horizontal: 4.w, vertical: 1.h),
