@@ -1,10 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../widgets/navigation_bar.dart';
-import '../../../controllers/user_controller.dart';
-import 'package:get/get.dart';
-import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../controllers/user_controller.dart';
+import '../../constants/colors.dart';
+import '../../widgets/navigation_bar.dart';
 
 class TransactionSuccessful extends StatefulWidget {
   final String? amount;

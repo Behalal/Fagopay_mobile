@@ -1,10 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/constants/currency.dart';
+import '../../authentication/widgets/auth_buttons.dart';
+import '../../constants/colors.dart';
+import '../../constants/currency.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../widgets/head_style_extra_pages.dart';
@@ -605,11 +603,11 @@ class InvoiceField extends StatelessWidget {
         fontFamily: "Work Sans",
         fontWeight: textWeight,
         fontSize: 14,
-        color: (txtColor)? fagoSearchColor :inactiveTab,
+        color: (txtColor) ? fagoSearchColor : inactiveTab,
       ),
       decoration: InputDecoration(
         filled: bgColor,
-        fillColor: (bgColor)? white: null,
+        fillColor: (bgColor) ? white : null,
         contentPadding: EdgeInsets.symmetric(
           horizontal: 4.w,
           vertical: 1.h,
@@ -642,7 +640,11 @@ class InvoiceField extends StatelessWidget {
           fontFamily: "Work Sans",
           fontWeight: textWeight,
           fontSize: 14,
-          color: (txtColor)? fagoSearchColor: (hintcolor) ? signInPlaceholder : inactiveTab,
+          color: (txtColor)
+              ? fagoSearchColor
+              : (hintcolor)
+                  ? signInPlaceholder
+                  : inactiveTab,
         ),
       ),
     );

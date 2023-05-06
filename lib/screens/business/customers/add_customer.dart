@@ -52,7 +52,7 @@ class _AddCustomerState extends State<AddCustomer> {
                     const ProgressStyle(
                       stage: 50,
                       width: 4,
-                      pageName: "My Customers",
+                      pageName: "Add Customers",
                     ),
                     SizedBox(
                       height: 3.h,

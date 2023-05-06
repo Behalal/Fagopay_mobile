@@ -23,7 +23,7 @@ List<ActionsModel> actionContents = [
       actionText: "Payment Link"),
   ActionsModel(
       actionImage: "assets/images/business_home_3.png",
-      actionText: "Create Invoice",
+      actionText: "Admins",
       route: const AllAdmin()),
   ActionsModel(
       actionImage: "assets/images/business_home_4.png",

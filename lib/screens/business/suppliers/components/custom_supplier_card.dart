@@ -43,6 +43,7 @@ class CustomSupplierCard extends StatelessWidget {
                   child: FittedBox(
                     child: AutoSizeText(
                       supplierName,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 20,

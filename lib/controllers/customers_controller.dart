@@ -82,6 +82,4 @@ class CustomerController extends GetxController {
       log(e.toString());
     }
   }
-
-  // Future<dynamic> getCustomerDetails(String id) async {}
 }
