@@ -48,7 +48,8 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CurrentStep(
-                      step: "4", backRoute: const SelectVerificationType()),
+                    step: "4",
+                  ),
                   SizedBox(height: 5.h),
                   Padding(
                       padding: EdgeInsets.only(left: 2.5.w),

@@ -262,62 +262,66 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   usePhone &&
                                       _registrationController
                                           .phone.text.isEmpty) {
+                                Get.snackbar(
+                                    'Error', 'Kindly Insert all fields');
                                 // ScaffoldMessenger.of(context).showSnackBar(
                                 //   const SnackBar(
                                 //     content: Text('Kindly Insert all fields'),
                                 //   ),
                                 // );
-                                Fluttertoast.showToast(
-                                  msg: "Kindly Insert all fields",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
+                                // Fluttertoast.showToast(
+                                //   msg: "Kindly Insert all fields",
+                                //   toastLength: Toast.LENGTH_LONG,
+                                //   gravity: ToastGravity.TOP,
+                                //   timeInSecForIosWeb: 2,
+                                //   backgroundColor: Colors.red,
+                                //   textColor: Colors.white,
+                                //   fontSize: 16.0,
+                                // );
                                 return;
                               }
 
                               if (usePhone &&
                                   !function.validatePhone(
                                       _registrationController.phone.text)) {
+                                Get.snackbar(
+                                    'Error', 'Kindly Insert a valid phone number');
                                 // ScaffoldMessenger.of(context).showSnackBar(
                                 //   const SnackBar(
                                 //     content:
                                 //         Text('Kindly Insert a valid phone number'),
                                 //   ),
                                 // );
-                                Fluttertoast.showToast(
-                                  msg: "Kindly Insert a valid phone number",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
+                                // Fluttertoast.showToast(
+                                //   msg: "Kindly Insert a valid phone number",
+                                //   toastLength: Toast.LENGTH_LONG,
+                                //   gravity: ToastGravity.TOP,
+                                //   timeInSecForIosWeb: 2,
+                                //   backgroundColor: Colors.red,
+                                //   textColor: Colors.white,
+                                //   fontSize: 16.0,
+                                // );
                                 return;
                               }
 
                               if (useEmail &&
                                   !function.validateEmail(
                                       _registrationController.email.text)) {
-                                Fluttertoast.showToast(
-                                  msg: "Kindly Insert a valid email address",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   const SnackBar(
-                                //     content:
-                                //         Text('Kindly Insert a valid email address'),
-                                //   ),
+                                // Fluttertoast.showToast(
+                                //   msg: "Kindly Insert a valid email address",
+                                //   toastLength: Toast.LENGTH_LONG,
+                                //   gravity: ToastGravity.TOP,
+                                //   timeInSecForIosWeb: 2,
+                                //   backgroundColor: Colors.red,
+                                //   textColor: Colors.white,
+                                //   fontSize: 16.0,
                                 // );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        'Kindly Insert a valid email address'),
+                                  ),
+                                );
                                 return;
                               }
                               setUserAccount(context);
@@ -394,11 +398,11 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
           _isLoading = false;
         });
         if (!mounted) return;
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const IndividualDetails(),
-          ),
-        );
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (BuildContext context) => const IndividualDetails(),
+        //   ),
+        // );
         Fluttertoast.showToast(
           msg: "${jsonBody['data']['error']}",
           toastLength: Toast.LENGTH_LONG,
