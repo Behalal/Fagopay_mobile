@@ -47,6 +47,7 @@ dependencies:
   google_fonts: ^4.0.3
   dropdown_button2: ^2.1.0
   syncfusion_flutter_sliders: ^21.1.41
+  jiffy: ^6.1.0
 
 dev_dependencies:
   build_runner: ^2.3.3

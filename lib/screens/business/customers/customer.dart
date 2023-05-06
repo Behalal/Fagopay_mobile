@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../models/customer_model.dart';
-import 'add_customer.dart';
-import 'components/custom_customer_card.dart';
-import '../../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controllers/customers_controller.dart';
+import '../../../models/customer_model.dart';
 import '../../constants/colors.dart';
 import '../../functions.dart';
+import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/boxes.dart';
+import 'add_customer.dart';
+import 'components/custom_customer_card.dart';
 import 'customer_details.dart';
 
 class CustomerPage extends StatefulWidget {
@@ -118,6 +118,9 @@ class _CustomerPageState extends State<CustomerPage> {
                       )
                     : Expanded(
                         child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: _customerController.customers.length,
                           itemBuilder: (context, index) => CustomCustomerCard(
                             fullName:

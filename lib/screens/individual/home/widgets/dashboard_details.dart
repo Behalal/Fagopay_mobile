@@ -2,6 +2,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
+import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -281,7 +282,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                           ),
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 const Spacer(),
@@ -293,6 +294,32 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                   Icons.qr_code_scanner,
                                   size: 20,
                                   color: white,
+                                ),
+                                SizedBox(
+                                  width: 2.w,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    // SecureStorage.deleteUserIdentifier();
+                                    // SecureStorage.deleteUserToken();
+                                    // Navigator.of(context).pushAndRemoveUntil(
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) => const SignIn()),
+                                    //     (route) => false);
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => BusinessHome(
+                                          userDetails: widget.userDetails,
+                                          accountDetails: widget.accountDetails,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.notifications,
+                                    size: 20,
+                                    color: white,
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 2.w,

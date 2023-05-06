@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/screens/business/book_keeping/models/model.dart';
-import 'package:fagopay/screens/functions.dart';
+import '../book_keeping/models/model.dart';
+import '../../functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 

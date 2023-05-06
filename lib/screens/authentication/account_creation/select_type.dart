@@ -1,9 +1,9 @@
-import '../../kyc/identity_pass_kyc.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../models/register_request/register.model.dart';
 import '../../constants/colors.dart';
+import '../../kyc/identity_pass_kyc.dart';
 import '../widgets/auth_buttons.dart';
 import 'widgets/business_box.dart';
 import 'widgets/current_step.dart';

@@ -1,9 +1,9 @@
 import 'dart:developer';
 
-import 'package:fagopay/models/company_model.dart';
-import 'package:fagopay/service/constants/constants.dart';
-import 'package:fagopay/service/networking/network_helper.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import '../models/company_model.dart';
+import '../service/constants/constants.dart';
+import '../service/networking/network_helper.dart';
+import '../service/secure_storage/secure_storage.dart';
 import 'package:get/get.dart';
 
 class CompanyController extends GetxController {

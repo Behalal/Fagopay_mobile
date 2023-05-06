@@ -30,51 +30,56 @@ class CustomCustomerCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            width: 43.w,
             padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset("assets/images/customer_pic.png"),
+                SizedBox(
+                  width: 2.w,
+                ),
                 InkWell(
                   onTap: onPressed,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      AutoSizeText(
-                        fullName,
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 16,
-                            color: inactiveTab,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      AutoSizeText(
-                        email,
-                        textAlign: TextAlign.justify,
-                        style: const TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 12,
-                            color: inactiveTab,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ],
+                  child: SizedBox(
+                    width: 35.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        AutoSizeText(
+                          fullName,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 16,
+                              color: inactiveTab,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        AutoSizeText(
+                          email,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 12,
+                              color: inactiveTab,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
                   ),
                 )
               ],
             ),
           ),
           Container(
-            width: 43.w,
+            width: 38.w,
             padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
