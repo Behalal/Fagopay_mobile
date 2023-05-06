@@ -70,19 +70,19 @@ class _SwapAirtimeState extends State<SwapAirtime> {
     }
     setState(() => searchOnStoppedTyping = Timer(duration, () {
           _billsController.swapCharge(
-            amount: _billsController.amountController.text.toString(),
-            network: 'mtn'
-            // network: if(mtnActive == true){
-            //   mtnActive == 'mtn'
-            // }else if(gloActive == true){
-            //   gloActive == 'glo'
-            // }else if(airtelActive == true){
-            //   airtelActive == 'airtel'
-            // }lse if(etisatActive == true){
-            //   etisatActive == 'etisalat'
-            // }
-            // ,
-          );
+              amount: _billsController.amountController.text.toString(),
+              network: 'mtn'
+              // network: if(mtnActive == true){
+              //   mtnActive == 'mtn'
+              // }else if(gloActive == true){
+              //   gloActive == 'glo'
+              // }else if(airtelActive == true){
+              //   airtelActive == 'airtel'
+              // }lse if(etisatActive == true){
+              //   etisatActive == 'etisalat'
+              // }
+              // ,
+              );
           search(value);
           print('okay aske here');
         }));
@@ -101,7 +101,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                 child: Form(
                   key: formKey,
                   child: Column(
@@ -130,7 +130,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                         SizedBox(
                           height: 2.h,
                         ),
-                        
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,7 +277,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: signInPlaceholder),
+                                color: stepsColor),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
@@ -396,7 +396,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: signInPlaceholder),
+                                color: stepsColor),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
@@ -449,7 +449,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: signInPlaceholder),
+                                color: stepsColor),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
@@ -485,7 +485,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                             color: fagoSecondaryColorWithOpacity10,
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2.5.w),
+                            padding: EdgeInsets.all(2.0.w),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -747,13 +747,11 @@ class Debouncer {
   }
 }
 
-
 class NetworkItem {
   final String title;
-   final String? image;
+  final String? image;
 
-
-  NetworkItem( {this.image,required this.title});
+  NetworkItem({this.image, required this.title});
 }
 
 var networkItem = [
@@ -761,5 +759,4 @@ var networkItem = [
   NetworkItem(title: 'Fruits'),
   NetworkItem(title: 'Vegetables'),
   NetworkItem(title: 'Grains'),
- 
 ];

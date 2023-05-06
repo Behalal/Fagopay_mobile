@@ -288,7 +288,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 4.0.h,
                                 mainAxisSpacing: 3.0.h,
-                                childAspectRatio: 0.1.h,
+                                childAspectRatio: 0.15.h,
                                 children:
                                     List.generate(services.length, (index) {
                                   return InkWell(
@@ -312,6 +312,21 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 services[index].route!,
                                           ),
                                         );
+                                      } else if (services[index].route ==
+                                              null &&
+                                          widget.userDetails.kycVerified == 1 &&
+                                          services[index].bill == 'special') {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) =>
+                                                const BillsPayment());
                                       }
                                     },
                                     child: Column(children: [

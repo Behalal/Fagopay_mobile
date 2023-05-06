@@ -574,7 +574,7 @@ class _ManageAccountState extends State<ManageAccount> {
     return widget.userDetails.kycVerified == 1
         ? Container(
             padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 2.h),
-            height: Get.height * .9,
+            height: Get.height * .7,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
