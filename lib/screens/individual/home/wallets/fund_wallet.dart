@@ -49,18 +49,18 @@ class _FundWalletState extends State<FundWallet> {
           child: Scaffold(
             body: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+                padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const ProgressStyle(
-                      stage: 50,
+                      stage: 0,
                       pageName: "Fund Wallet",
                       // backRoute: DashboardHome(userDetails: userFullDetails),
                     ),
                     SizedBox(
-                      height: 3.h,
+                      height: 4.h,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -137,7 +137,7 @@ class _FundWalletState extends State<FundWallet> {
                           height: 3.h,
                         ),
                         Container(
-                          height: 87,
+                          // height: 87,
                           decoration: const BoxDecoration(
                             color: fagoSecondaryColorWithOpacity10,
                           ),
@@ -268,7 +268,7 @@ class _FundWalletState extends State<FundWallet> {
                       height: 2.h,
                     ),
                     Container(
-                      height: 115,
+                      // height: 115,
                       decoration: const BoxDecoration(
                         color: fagoSecondaryColorWithOpacity10,
                       ),

@@ -29,7 +29,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
 
   @override
   void dispose() {
-    _billsController.phoneController.clear();
+    _billsController.airtimePhoneController.clear();
     _billsController.amountController.clear();
     super.dispose();
   }
@@ -188,19 +188,19 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                   width: 90.w,
                   child: TextFormField(
                     maxLength: 14,
-                    controller: _billsController.phoneController,
+                    controller: _billsController.airtimePhoneController,
                     keyboardType: TextInputType.phone,
                     onChanged: ((value) {
                       setState(() {
                         buyAirtimeFields.setPhone =
-                            _billsController.phoneController.text;
+                            _billsController.airtimePhoneController.text;
                       });
                     }),
                     style: const TextStyle(
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: signInPlaceholder),
+                        color: stepsColor),
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
@@ -260,7 +260,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                 //   ),
                 // ),
                 SizedBox(
-                  height: 2.h,
+                  height: 0.h,
                 ),
                 const AutoSizeText(
                   "Amount",
@@ -289,7 +289,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: signInPlaceholder),
+                        color: stepsColor),
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
