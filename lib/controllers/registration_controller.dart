@@ -21,7 +21,7 @@ class RegistrationController extends GetxController {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController passCode = TextEditingController();
   TextEditingController passCodeConfirm = TextEditingController();
- late final accountType = registrationData.getAccountType;
+  late final accountType = registrationData.getAccountType;
 
   Future<dynamic> selectAccountType() async {
     String typeKey = "";
@@ -31,8 +31,8 @@ class RegistrationController extends GetxController {
       typeKey = 'phone_number';
     }
     try {
-      var requestBody = jsonEncode(
-          {'account_type': accountType, typeKey: typeKey == 'email' ? email.text : phone.text});
+      var requestBody =
+          jsonEncode({typeKey: typeKey == 'email' ? email.text : phone.text});
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}register",
         headers: BaseAPI.headers,
@@ -59,29 +59,29 @@ class RegistrationController extends GetxController {
     }
   }
 
-  Future<dynamic> registerDetails() async {
-    final userIdentifier = await SecureStorage.readUserIdentifier();
-    try {
-      var requestBody = jsonEncode({
-        'first_name': firstname.text,
-        "last_name": lastname.text,
-        'email': email.text,
-        'phone_number': phone.text,
-        'password': password.text,
-        'password_confirmation': confirmPassword.text,
-        'referal_by': referral.text,
-        'identifier': '$userIdentifier'
-      });
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.userPath}register-detail",
-        headers: BaseAPI.headers,
-        body: requestBody,
-      );
-      return responseData;
-    } catch (e) {
-      throw Exception('Error: $e');
-    }
-  }
+  // Future<dynamic> registerDetails() async {
+  //   final userIdentifier = await SecureStorage.readUserIdentifier();
+  //   try {
+  //     var requestBody = jsonEncode({
+  //       'first_name': firstname.text,
+  //       "last_name": lastname.text,
+  //       'email': email.text,
+  //       'phone_number': phone.text,
+  //       'password': password.text,
+  //       'password_confirmation': confirmPassword.text,
+  //       'referal_by': referral.text,
+  //       'identifier': '$userIdentifier'
+  //     });
+  //     final responseData = await NetworkHelper.postRequest(
+  //       url: "${BaseAPI.userPath}register-detail",
+  //       headers: BaseAPI.headers,
+  //       body: requestBody,
+  //     );
+  //     return responseData;
+  //   } catch (e) {
+  //     throw Exception('Error: $e');
+  //   }
+  // }
 
   Future<dynamic> setPassCode() async {
     final token = await SecureStorage.readUserToken();
