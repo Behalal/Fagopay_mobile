@@ -1,5 +1,6 @@
 import '../controllers/admin_controller.dart';
 import '../controllers/company_controller.dart';
+import '../controllers/purse_controller.dart';
 import '../controllers/sales_controller.dart';
 
 import '../controllers/customers_controller.dart';
@@ -23,6 +24,7 @@ class AppBinding extends Bindings {
     Get.put(TransactionController(), permanent: true);
     Get.put(BillController(), permanent: true);
     Get.put(RequestMoney(), permanent: true);
+    Get.put(PurseController(), permanent: true);
     Get.lazyPut(() => SupplierController());
     Get.lazyPut(() => CustomerController());
     Get.lazyPut(() => LocationsController());

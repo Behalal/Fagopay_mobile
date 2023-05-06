@@ -128,6 +128,7 @@ class _DashboardState extends State<Dashboard> {
   Widget currentScreen = DashboardHome(
     userDetails: _userUcontroller.user!,
     accountDetails: _userUcontroller.userAccountDetails,
+    // accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : ''
   );
   bool isclicked = false;
 
@@ -150,7 +151,7 @@ class _DashboardState extends State<Dashboard> {
     'Home',
     'Transaction',
     '',
-    'Fagopay Cards',
+    'Purse',
     'Profile',
   ];
 
@@ -161,7 +162,7 @@ class _DashboardState extends State<Dashboard> {
       body: buildPages(),
       bottomNavigationBar: Container(
         constraints: const BoxConstraints(),
-        height: Get.height * 0.11,
+        height: Get.height * 0.13,
         decoration: const BoxDecoration(
           color: white,
         ),
@@ -197,7 +198,7 @@ class _DashboardState extends State<Dashboard> {
                     left: Get.width * .03,
                   ),
                   width: Get.width * .128,
-                  height: Get.width * .014,
+                  height: Get.width * .010,
                 ),
                 index == 2
                     ? SvgPicture.asset(
@@ -245,9 +246,10 @@ class _DashboardState extends State<Dashboard> {
     switch (selectedIndex) {
       case 0:
         return DashboardHome(
-            userDetails: _userUcontroller.user!,
-            accountDetails: _userUcontroller.userAccountDetails,
-            accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : '');
+          userDetails: _userUcontroller.user!,
+          accountDetails: _userUcontroller.userAccountDetails,
+          // accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : ''
+        );
 
       case 1:
         return const TransactionHistoryPage();

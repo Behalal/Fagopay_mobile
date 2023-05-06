@@ -26,7 +26,7 @@ class EmailPhone extends StatelessWidget {
             fontFamily: "Work Sans",
             fontWeight: FontWeight.w400,
             fontSize: 14,
-            color: signInPlaceholder),
+            color: stepsColor),
         decoration: InputDecoration(
           errorText: errorText,
           enabledBorder: OutlineInputBorder(

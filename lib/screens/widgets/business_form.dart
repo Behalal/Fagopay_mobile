@@ -58,7 +58,7 @@ class _BusinessFormState extends State<BusinessForm> {
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: signInPlaceholder),
+                color: stepsColor),
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
@@ -115,7 +115,7 @@ class _BusinessFormState extends State<BusinessForm> {
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: signInPlaceholder),
+                color: stepsColor),
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
@@ -172,7 +172,7 @@ class _BusinessFormState extends State<BusinessForm> {
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: signInPlaceholder),
+                color: stepsColor),
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
@@ -374,7 +374,7 @@ class _BusinessFormState extends State<BusinessForm> {
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: signInPlaceholder),
+                color: stepsColor),
             decoration: InputDecoration(
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
