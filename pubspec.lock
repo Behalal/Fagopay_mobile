@@ -306,10 +306,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_identity_kyc
-      sha256: f1fc153a024a5715813b7d8d69c5c3c2ea1f9903c0e7c3d1ab840a516a080e49
+      sha256: b40707a0c200cd67e8b498a20f709db5dd4fccaecb44bdd528c10b7a6e478440
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.6"
   flutter_inappwebview:
     dependency: transitive
     description:
