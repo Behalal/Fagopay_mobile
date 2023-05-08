@@ -18,6 +18,7 @@ class CustomDropdownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+      iconSize: 3.h,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
         enabledBorder: OutlineInputBorder(
@@ -48,6 +49,7 @@ class CustomDropdownButton extends StatelessWidget {
       value: value,
       items: items,
       onChanged: onChanged,
+      
     );
   }
 }

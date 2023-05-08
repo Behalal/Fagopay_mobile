@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/colors.dart';
@@ -23,7 +24,7 @@ class CustomCustomerCard extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
           border: Border(
-        bottom: BorderSide(width: 0.2, color: black),
+        bottom: BorderSide(width: 0.2, color: blackWithOpacity3),
       )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,7 +35,9 @@ class CustomCustomerCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset("assets/images/customer_pic.png"),
+                SvgPicture.asset(
+                  "assets/images/customer_pic.svg",
+                ),
                 SizedBox(
                   width: 2.w,
                 ),
@@ -123,7 +126,7 @@ class CustomCustomerCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset("assets/images/biz_call.png"),
+                          SvgPicture.asset("assets/images/call.svg"),
                           AutoSizeText(
                             phoneNumber,
                             style: const TextStyle(

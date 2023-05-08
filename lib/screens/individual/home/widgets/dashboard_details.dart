@@ -67,42 +67,18 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                         height: 18.h,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage("assets/images/image 1.png"),
+                            image: AssetImage("assets/images/image1.png"),
                           ),
                         ),
                         child: Stack(
                           alignment: AlignmentDirectional.center,
                           children: [
-                            Stack(
-                              alignment: AlignmentDirectional.centerStart,
-                              children: [
-                                Positioned(
-                                  top: 6.2.h,
-                                  width: 13.w,
-                                  height: 60.09,
-                                  left: 4.w,
-                                  child: Image.asset(
-                                      "assets/images/sign_in_vector 1.png"),
-                                ),
-                                Positioned(
-                                  top: 9.5.h,
-                                  width: 13.w,
-                                  height: 95.12,
-                                  left: 4.w,
-                                  child: Image.asset(
-                                    "assets/images/sign_in_vector 2.png",
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 10.h,
-                                  width: 13.w,
-                                  height: 60.09,
-                                  left: 6.w,
-                                  child: Image.asset(
-                                    "assets/images/sign_in_vector 3.png",
-                                  ),
-                                ),
-                              ],
+                            Positioned(
+                              top: 6.2.h,
+                              width: 13.w,
+                              height: 60.09,
+                              left: 4.w,
+                               child: SvgPicture.asset("assets/images/Frame.svg"),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,

@@ -4,6 +4,8 @@ import 'package:fagopay/screens/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../functions.dart';
+
 class CustomSupplierCard extends StatelessWidget {
   const CustomSupplierCard({
     Key? key,
@@ -40,16 +42,14 @@ class CustomSupplierCard extends StatelessWidget {
                 ),
                 SizedBox(
                   width: 65.w,
-                  child: FittedBox(
-                    child: AutoSizeText(
-                      supplierName,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 20,
-                          color: inactiveTab,
-                          fontWeight: FontWeight.w500),
-                    ),
+                  child: AutoSizeText(
+                    capitalize(supplierName),
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 20,
+                        color: inactiveTab,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
