@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/models/company_model.dart';
 import '../../../controllers/company_controller.dart';
-import '../../../models/company_model.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';
 import '../../authentication/account_creation/select_type.dart';
@@ -45,10 +45,10 @@ class _DashboardHomeState extends State<DashboardHome> {
   final _companyController = Get.find<CompanyController>();
 
   @override
-  void didChangeDependencies() async {
-    await getUserDetails();
-    await getCompany();
-    super.didChangeDependencies();
+  void initState() {
+    getUserDetails();
+    getCompany();
+    super.initState();
   }
 
   @override
@@ -926,7 +926,7 @@ class _DashboardHomeState extends State<DashboardHome> {
   Future<void> getCompany() async {
     final response = await _companyController.getCompany();
     final companyjsonBodyData = response['data']['company_detail'];
-    final companyDetails = Company.fromJson(companyjsonBodyData);
+    final companyDetails = Company.fromJson(companyjsonBodyData[0]);
     _companyController.setCompany = companyDetails;
   }
 }

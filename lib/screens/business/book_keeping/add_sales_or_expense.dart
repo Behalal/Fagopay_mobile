@@ -1,6 +1,10 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/expenses_controller.dart';
+import 'package:fagopay/controllers/suppliers_controller.dart';
+import 'package:fagopay/models/expenses_model.dart';
+import 'package:fagopay/models/supplier_model.dart';
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/customers_controller.dart';
 import '../../../controllers/sales_controller.dart';
@@ -16,7 +20,6 @@ import 'package:sizer/sizer.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../widgets/head_style_extra_pages.dart';
-import '../widgets/customer_details.dart';
 
 class AddSalesOrExpenses extends StatefulWidget {
   const AddSalesOrExpenses({super.key});
@@ -29,24 +32,16 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
   bool salesTab = true;
 
   final _customerController = Get.find<CustomerController>();
+  final _supplierController = Get.find<SupplierController>();
   final _salesController = Get.find<SalesController>();
   final _companyController = Get.find<CompanyController>();
+  final _expensesContoller = Get.find<ExpensesController>();
+  List<ExpenseCategory> expenseCategories = [];
 
   String selectedCustomerId = "";
+  String selectedSupplierId = "";
   String selectedPaymentStatus = "";
-
-  List supplierList = [
-    {'name': 'Select Customer', 'value': ''},
-    {'name': 'Customer1', 'value': 'dhd'},
-    {'name': 'Customer2', 'value': 'gha'}
-  ]; // Option 2
-  String? selectedSupplier;
-
-  List categoryList = [
-    {'name': 'Select Category', 'value': ''},
-    {'name': 'Category 1', 'value': '1'},
-  ]; // Option 2
-  String? selectedCategory;
+  String selectedExpenseCategoryId = "";
 
   String? paymentType;
 
@@ -67,6 +62,8 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
   @override
   void initState() {
     getCustomers();
+    getSuppliers();
+    getBusinessExpenseCategories();
     super.initState();
   }
 
@@ -75,6 +72,9 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
     _salesController.salesAmountController.clear();
     _salesController.amountPaidController.clear();
     _salesController.salesDescriptionController.clear();
+    // _expensesContoller.expenseAmountController.clear();
+    _expensesContoller.expenseReasonController.clear();
+    _expensesContoller.expenseDescriptionController.clear();
     super.dispose();
   }
 
@@ -584,8 +584,74 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // const AutoSizeText(
+                          //   "Enter Transaction Amount",
+                          //   style: TextStyle(
+                          //     fontFamily: "Work Sans",
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: welcomeText,
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 0.5.h,
+                          // ),
+                          // SizedBox(
+                          //   width: 90.w,
+                          //   child: TextFormField(
+                          //     controller:
+                          //         _expensesContoller.expenseAmountController,
+                          //     style: const TextStyle(
+                          //       fontFamily: "Work Sans",
+                          //       fontWeight: FontWeight.w400,
+                          //       fontSize: 14,
+                          //       color: welcomeText,
+                          //     ),
+                          //     decoration: InputDecoration(
+                          //       contentPadding: EdgeInsets.symmetric(
+                          //         horizontal: 4.w,
+                          //         vertical: 1.h,
+                          //       ),
+                          //       enabledBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(5.0),
+                          //         borderSide: const BorderSide(
+                          //           color: textBoxBorderColor,
+                          //           width: 1.0,
+                          //         ),
+                          //       ),
+                          //       focusedBorder: const OutlineInputBorder(
+                          //         borderRadius:
+                          //             BorderRadius.all(Radius.circular(5)),
+                          //         borderSide: BorderSide(
+                          //           color: linearGradient1,
+                          //           width: 1.0,
+                          //           style: BorderStyle.solid,
+                          //         ),
+                          //       ),
+                          //       border: const OutlineInputBorder(
+                          //         borderRadius:
+                          //             BorderRadius.all(Radius.circular(5)),
+                          //         borderSide: BorderSide(
+                          //           color: textBoxBorderColor,
+                          //           width: 1.0,
+                          //           style: BorderStyle.solid,
+                          //         ),
+                          //       ),
+                          //       hintText: "Enter Transaction Amount",
+                          //       hintStyle: const TextStyle(
+                          //         fontFamily: "Work Sans",
+                          //         fontWeight: FontWeight.w400,
+                          //         fontSize: 14,
+                          //         color: signInPlaceholder,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 2.h,
+                          // ),
                           const AutoSizeText(
-                            "Enter Transaction Amount",
+                            "Expense Category",
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,
@@ -594,56 +660,25 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                             ),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 0.5.h,
                           ),
-                          SizedBox(
-                            width: 90.w,
-                            child: TextFormField(
-                              style: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: welcomeText,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 1.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
+                          CustomDropdownButton(
+                            hint: 'Select Category',
+                            items: expenseCategories
+                                .map(
+                                  (category) => DropdownMenuItem(
+                                    value: category.id,
+                                    child: Text(category.categoryName!),
                                   ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: linearGradient1,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                hintText: "Enter Transaction Amount",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                              ),
-                            ),
+                                )
+                                .toList(),
+                            onChanged: (selectedValue) {
+                              if (selectedValue != null) {
+                                setState(() {
+                                  selectedExpenseCategoryId = selectedValue;
+                                });
+                              }
+                            },
                           ),
                           SizedBox(
                             height: 2.h,
@@ -667,7 +702,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                                   activeColor: fagoBlackColor,
                                   selectedTileColor: fagoBlackColor,
                                   dense: false,
-                                  value: "male",
+                                  value: "suppliers",
                                   groupValue: paymentType,
                                   onChanged: (value) {
                                     setState(() {
@@ -681,7 +716,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                                 child: RadioListTile(
                                   activeColor: fagoBlackColor,
                                   selectedTileColor: fagoBlackColor,
-                                  value: "female",
+                                  value: "others",
                                   groupValue: paymentType,
                                   onChanged: (value) {
                                     setState(() {
@@ -725,96 +760,135 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                               ),
                             ],
                           ),
+                          // SizedBox(
+                          //   height: 2.h,
+                          // ),
+                          // const AutoSizeText(
+                          //   "Supplier Details",
+                          //   style: TextStyle(
+                          //     fontFamily: "Work Sans",
+                          //     fontSize: 14,
+                          //     fontWeight: FontWeight.w400,
+                          //     color: fagoSecondaryColor,
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: 1.5.h,
+                          // ),
+                          // const BusinessCustomerDetails(),
                           SizedBox(
                             height: 2.h,
                           ),
-                          const AutoSizeText(
-                            "Supplier Details",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: fagoSecondaryColor,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          const BusinessCustomerDetails(),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Select Category",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          DropdownButtonFormField(
-                            style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: signInPlaceholder,
-                            ),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 1.5.h),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: const BorderSide(
-                                  color: textBoxBorderColor,
-                                  width: 1.0,
+                          // if (paymentType == null || paymentType == 'suppliers')
+
+                          paymentType != null && paymentType == 'others'
+                              ? Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const AutoSizeText(
+                                      "Enter Reason",
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: welcomeText,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 0.5.h,
+                                    ),
+                                    SizedBox(
+                                      width: 90.w,
+                                      child: TextFormField(
+                                        controller: _expensesContoller
+                                            .expenseReasonController,
+                                        style: const TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: welcomeText,
+                                        ),
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 4.w,
+                                            vertical: 1.h,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(5.0),
+                                            borderSide: const BorderSide(
+                                              color: textBoxBorderColor,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                            borderSide: BorderSide(
+                                              color: linearGradient1,
+                                              width: 1.0,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(5)),
+                                            borderSide: BorderSide(
+                                              color: textBoxBorderColor,
+                                              width: 1.0,
+                                              style: BorderStyle.solid,
+                                            ),
+                                          ),
+                                          hintText: "Enter reason",
+                                          hintStyle: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: signInPlaceholder,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    const AutoSizeText(
+                                      "Select Supplier",
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: welcomeText,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 0.5.h,
+                                    ),
+                                    CustomDropdownButton(
+                                      hint: 'Select Supplier',
+                                      items: _supplierController.suppliers
+                                          .map(
+                                            (supplier) => DropdownMenuItem(
+                                              value: supplier.id,
+                                              child: Text(supplier.name!),
+                                            ),
+                                          )
+                                          .toList(),
+                                      onChanged: (selectedValue) {
+                                        if (selectedValue != null) {
+                                          setState(() {
+                                            selectedSupplierId = selectedValue;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                      color: linearGradient1,
-                                      width: 1.0,
-                                      style: BorderStyle.solid)),
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                      color: textBoxBorderColor,
-                                      width: 1.0,
-                                      style: BorderStyle.solid)),
-                              hintText: "Select Category",
-                              hintStyle: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: signInPlaceholder,
-                              ),
-                            ),
-                            value: (selectedCategory == '')
-                                ? null
-                                : selectedCategory,
-                            hint: const Text("Select customer"),
-                            onChanged: (value) {
-                              setState(() {
-                                if (value != null) {
-                                  selectedCategory = value;
-                                } else {
-                                  selectedCategory = "";
-                                }
-                              });
-                            },
-                            items: categoryList.map((country) {
-                              return DropdownMenuItem<String>(
-                                value: country['value'],
-                                child: Text(country['name']),
-                              );
-                            }).toList(),
-                          ),
                           SizedBox(
                             height: 2.h,
                           ),
@@ -828,7 +902,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                             ),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 0.5.h,
                           ),
                           GestureDetector(
                             onTap: () => selectDate(context),
@@ -881,11 +955,13 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                             ),
                           ),
                           SizedBox(
-                            height: 2.h,
+                            height: 0.5.h,
                           ),
                           SizedBox(
                             width: 90.w,
                             child: TextFormField(
+                              controller: _expensesContoller
+                                  .expenseDescriptionController,
                               style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
@@ -967,6 +1043,23 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                             );
                             return;
                           }
+                          if (_expensesContoller
+                                      .expenseDescriptionController.text !=
+                                  "" &&
+                              selectedDate.toString() != "" &&
+                              selectedExpenseCategoryId != "") {
+                            await createBusinessExpense(context);
+                            return;
+                          }
+                          Fluttertoast.showToast(
+                            msg: "Fill in the form properly!",
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.TOP,
+                            timeInSecForIosWeb: 2,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
                         },
                         child: AuthButtons(
                           text: "Submit",
@@ -1028,6 +1121,61 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
     );
   }
 
+  Future<void> createBusinessExpense(BuildContext context) async {
+    final progress = ProgressHUD.of(context);
+    progress!.show();
+
+    final companyId = _companyController.company!.id!;
+    final response = await _expensesContoller.createBusinessExpense(
+      companyId: companyId,
+      supplierId: selectedSupplierId,
+      reason: _expensesContoller.expenseReasonController.text,
+      expenseCategory: selectedExpenseCategoryId,
+      expenseDate: selectedDate.toString(),
+      note: _expensesContoller.expenseDescriptionController.text,
+    );
+
+    final jsonBody = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      progress.dismiss();
+      if (!mounted) return;
+      Navigator.of(context).pop();
+      Fluttertoast.showToast(
+        msg: "Expense Created Successfully",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.TOP,
+        timeInSecForIosWeb: 2,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      return;
+    }
+    progress.dismiss();
+    Fluttertoast.showToast(
+      msg: "${jsonBody['data']['error']}",
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.TOP,
+      timeInSecForIosWeb: 2,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+
+  Future<void> getBusinessExpenseCategories() async {
+    final response = await _expensesContoller.getBusinessExpenseCategories();
+    final jsonBody = response['data']['category_list'];
+    final returnedCategories = jsonBody
+        .map<ExpenseCategory>(
+            (expenseCategory) => ExpenseCategory.fromJson(expenseCategory))
+        .toList();
+    setState(() {
+      expenseCategories = returnedCategories;
+    });
+  }
+
   Future<void> getCustomers() async {
     final response = await _customerController.getCustomers();
     final resBody = response['data']['customers'];
@@ -1036,6 +1184,17 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
         .toList();
     setState(() {
       _customerController.customers = returnedCustomers;
+    });
+  }
+
+  Future<void> getSuppliers() async {
+    final response = await _supplierController.getSuppliers();
+    final resBody = response['data']['suppliers_list'];
+    final returnedSuppliers = resBody
+        .map<Supplier>((supplier) => Supplier.fromJson(supplier))
+        .toList();
+    setState(() {
+      _supplierController.suppliers = returnedSuppliers;
     });
   }
 }

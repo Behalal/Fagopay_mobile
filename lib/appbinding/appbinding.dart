@@ -1,3 +1,5 @@
+import 'package:fagopay/controllers/expenses_controller.dart';
+
 import '../controllers/admin_controller.dart';
 import '../controllers/company_controller.dart';
 import '../controllers/sales_controller.dart';
@@ -29,6 +31,7 @@ class AppBinding extends Bindings {
     Get.lazyPut(() => CompanyController());
     Get.lazyPut(() => AdminController());
     Get.lazyPut(() => SalesController());
+    Get.lazyPut(() => ExpensesController());
     //Get.put(RegistrationController(), permanent: true);
   }
 }
