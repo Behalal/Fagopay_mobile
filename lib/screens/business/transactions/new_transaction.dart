@@ -228,7 +228,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: stepsColor,
+                        color: signInPlaceholder,
                       ),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
@@ -290,7 +290,7 @@ class _NewTransactionState extends State<NewTransaction> {
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
-                          color: stepsColor),
+                          color: signInPlaceholder),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 4.w, vertical: 1.h),
@@ -345,7 +345,7 @@ class _NewTransactionState extends State<NewTransaction> {
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w400,
                           fontSize: 14,
-                          color: stepsColor),
+                          color: signInPlaceholder),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 4.w, vertical: 1.h),

@@ -312,21 +312,6 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 services[index].route!,
                                           ),
                                         );
-                                      } else if (services[index].route ==
-                                              null &&
-                                          widget.userDetails.kycVerified == 1 &&
-                                          services[index].bill == 'special') {
-                                        showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(20),
-                                              ),
-                                            ),
-                                            context: context,
-                                            builder: (context) =>
-                                                const BillsPayment());
                                       }
                                     },
                                     child: Column(children: [
