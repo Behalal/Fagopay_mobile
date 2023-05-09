@@ -11,8 +11,7 @@ class PasswordInput extends StatelessWidget {
     required this.controller,
     this.icon,
     this.prefixIcon,
-    this.suffixIcon,
-    this.obscure,
+    this.suffixIcon, this.obscure,
   });
 
   @override
@@ -22,14 +21,14 @@ class PasswordInput extends StatelessWidget {
       width: 341,
       child: TextFormField(
         controller: controller,
-        obscureText: obscure ?? false,
+       obscureText: obscure ?? false,
         enableSuggestions: false,
         autocorrect: false,
         style: const TextStyle(
             fontFamily: "Work Sans",
             fontWeight: FontWeight.w400,
             fontSize: 14,
-            color: stepsColor),
+            color: signInPlaceholder),
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
@@ -60,7 +59,7 @@ class PasswordInput extends StatelessWidget {
           ),
           prefixIcon:
               const Image(image: AssetImage("assets/images/password_icon.png")),
-          suffixIcon: suffixIcon,
+               suffixIcon: suffixIcon,
         ),
       ),
     );

@@ -36,7 +36,7 @@ List<Services> services = [
   ),
   const Services(
     image: 'assets/icons/new_paymentLink_icon.svg',
-    itemName: 'Fago 2 Fago',
+    itemName: 'Fago2Fago',
     route: FagoToFago(),
   ),
   const Services(

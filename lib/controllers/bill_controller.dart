@@ -31,7 +31,6 @@ enum InitiateSwapEnum {
 
 class BillController extends GetxController {
   TextEditingController phoneController = TextEditingController();
-  TextEditingController airtimePhoneController = TextEditingController();
   TextEditingController confirmPhoneController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController meterNoController = TextEditingController();

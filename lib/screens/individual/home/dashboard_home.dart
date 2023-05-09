@@ -340,7 +340,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             width: 2.5.w,
                                           ),
                                           SizedBox(
-                                            height: 1.0.h,
+                                            height: 1.5.h,
                                           ),
                                           AutoSizeText(
                                             services[index].itemName,
@@ -386,7 +386,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 2.h, vertical: 2.h),
-                            // height: 10.h,
+                            height: 10.h,
                             width: Get.width,
                             decoration: BoxDecoration(
                                 color: fagoSecondaryColor.withOpacity(0.05),
@@ -431,7 +431,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         style: TextStyle(
                                           fontFamily: "Work Sans",
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 5,
+                                          fontSize: 10,
                                           color: black,
                                         ),
                                       ),
@@ -584,7 +584,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 3.h, vertical: 2.h),
-                                // height: 20.h,
+                                height: 20.h,
                                 width: Get.width,
                                 color: fagoSecondaryColor.withOpacity(0.05),
                                 child: Column(
@@ -601,9 +601,6 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: fagoSecondaryColor,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 1.5.h,
-                                    ),
                                     const AutoSizeText(
                                       'Do you own a business with corporate registration? Manage them within this App or manage for others',
                                       textAlign: TextAlign.start,
@@ -614,15 +611,12 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: stepsColor,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 1.5.h,
-                                    ),
                                     InkWell(
                                       onTap: () {
                                         Get.to(() => const SelectType());
                                       },
                                       child: Container(
-                                        width: 20.h,
+                                        width: 30.w,
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),

@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/bill_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/screens/individual/bills/how_it_works.dart';
-import 'package:fagopay/screens/individual/bills/models/bill_post_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
@@ -70,19 +68,19 @@ class _SwapAirtimeState extends State<SwapAirtime> {
     }
     setState(() => searchOnStoppedTyping = Timer(duration, () {
           _billsController.swapCharge(
-              amount: _billsController.amountController.text.toString(),
-              network: 'mtn'
-              // network: if(mtnActive == true){
-              //   mtnActive == 'mtn'
-              // }else if(gloActive == true){
-              //   gloActive == 'glo'
-              // }else if(airtelActive == true){
-              //   airtelActive == 'airtel'
-              // }lse if(etisatActive == true){
-              //   etisatActive == 'etisalat'
-              // }
-              // ,
-              );
+            amount: _billsController.amountController.text.toString(),
+            network: mtnActive ? 'mtn' : 'glo',
+            // network: if(mtnActive == true){
+            //   mtnActive == 'mtn'
+            // }else if(gloActive == true){
+            //   gloActive == 'glo'
+            // }else if(airtelActive == true){
+            //   airtelActive == 'airtel'
+            // }lse if(etisatActive == true){
+            //   etisatActive == 'etisalat'
+            // }
+            // ,
+          );
           search(value);
           print('okay aske here');
         }));
@@ -142,7 +140,6 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                   airtelActive = false;
                                   gloActive = false;
                                   etisatActive = false;
-                                  buyDataFields.setServiceid = "mtn";
                                 });
                               }),
                               child: Container(
@@ -169,7 +166,6 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                   airtelActive = true;
                                   gloActive = false;
                                   etisatActive = false;
-                                  buyDataFields.setServiceid = "airtel";
                                 });
                               }),
                               child: Container(
@@ -196,7 +192,6 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                   airtelActive = false;
                                   gloActive = true;
                                   etisatActive = false;
-                                  buyDataFields.setServiceid = "glo";
                                 });
                               }),
                               child: Container(
@@ -223,7 +218,6 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                   airtelActive = false;
                                   gloActive = false;
                                   etisatActive = true;
-                                  buyDataFields.setServiceid = "etisalat";
                                 });
                               }),
                               child: Container(
@@ -660,40 +654,38 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                         Obx(() {
                           return InkWell(
                             onTap: () {
-                              SwappingDetailModel swapDetails = SwappingDetailModel(
-                                  userId: _userUcontroller.user!.id,
-                                  phoneNumber: _billsController
-                                      .phoneController.text
-                                      .trim(),
-                                  confirm_phone_number: _billsController
-                                      .confirmPhoneController.text
-                                      .trim(),
-                                  network: _billsController
-                                      .userchargesAmount!.network!,
-                                  amount: _billsController.amountController.text
-                                      .trim(),
-                                  airtimeValue: _billsController
-                                      .userchargesAmount!.swappingAmount,
-                                  fee: _billsController.userchargesAmount!.fee
-                                      .toString());
+                              SwappingDetailModel swapDetails =
+                                  SwappingDetailModel(
+                                      userId: _userUcontroller.user!.id,
+                                      phoneNumber: _billsController
+                                          .phoneController.text
+                                          .trim(),
+                                      confirm_phone_number:
+                                          _billsController.confirmPhoneController
+                                              .text
+                                              .trim(),
+                                      network: _billsController
+                                          .userchargesAmount!.network!,
+                                      amount: _billsController
+                                          .amountController.text
+                                          .trim(),
+                                      airtimeValue: _billsController
+                                          .userchargesAmount!.swappingAmount,
+                                      fee: _billsController
+                                          .userchargesAmount!.fee
+                                          .toString());
 
                               if (kDebugMode) {
-                                print('Swap details: ${swapDetails.toJson()}');
+                                print('Next of kin: ${swapDetails.toJson()}');
                               }
-
+                              print('here i am');
                               if (_billsController.initiateSwapStatus !=
                                       InitiateSwapEnum.loading &&
                                   formKey.currentState!.validate()) {
+                                print('here i am 3');
                                 _billsController.initiateSwap(swapDetails);
                               }
-                              Get.to(() => HowItWorks(
-                                    network: _billsController
-                                        .userchargesAmount!.network!,
-                                    amount:
-                                        _billsController.amountController.text,
-                                    number:
-                                        _billsController.phoneController.text,
-                                  ));
+                              print('here i am 2');
                             },
                             child: Container(
                                 height: 50,

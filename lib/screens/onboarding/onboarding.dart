@@ -1,6 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
-import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -42,7 +40,8 @@ class _OnboardingState extends State<Onboarding> {
             child: SizedBox(
               width: 100.w,
               height: 0.h,
-              child: PageView.builder(
+              child: 
+              PageView.builder(
                   controller: _controller,
                   itemCount: contents.length,
                   onPageChanged: (int index) {
@@ -118,15 +117,14 @@ class _OnboardingState extends State<Onboarding> {
 
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        const SelectVerificationType(),
+                    builder: (BuildContext context) => const SelectType(),
                   ),
                 );
               },
               child: AuthButtons(
                 form: false,
                 text: "Get Started",
-                route: const SelectVerificationType(),
+                route: const SelectType(),
               ),
             ),
           ),
