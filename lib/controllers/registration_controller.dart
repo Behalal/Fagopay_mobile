@@ -83,12 +83,15 @@ class RegistrationController extends GetxController {
   //   }
   // }
 
-  Future<dynamic> setPassCode() async {
+  Future<dynamic> setPassCode(  String id, String passcode, String confirmedPasscode) async {
     final token = await SecureStorage.readUserToken();
     try {
       var requestBody = jsonEncode({
-        'passcode': passCode.text,
-      });
+      'passcode': id,
+      'confirm_passcode': passcode,
+      'identifier': confirmedPasscode,
+    });
+      
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}passcode-setup",
         headers: {

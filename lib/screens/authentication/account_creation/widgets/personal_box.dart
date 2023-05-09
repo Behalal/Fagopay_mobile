@@ -1,5 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/screens/authentication/account_creation/widgets/terms_and_cond.dart';
+import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
+import 'package:fagopay/screens/kyc/personal_verification_page.dart';
+import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
+import 'package:fagopay/screens/kyc/busin_verification_page.dart';
+import 'package:fagopay/screens/kyc/kyc2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
@@ -20,6 +26,7 @@ class _PersonalBoxState extends State<PersonalBox> {
     return Padding(
       padding: EdgeInsets.only(left: 4.w, right: 5.w),
       child: Container(
+        // height: (widget.isBiz == true) ? 15.h : 9.h,
         padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
         decoration: (widget.isBiz)
             ? DottedDecoration(
@@ -89,9 +96,11 @@ class _PersonalBoxState extends State<PersonalBox> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
+                            (widget.isBiz == true)
+                                ? SizedBox(
+                                    height: 1.h,
+                                  )
+                                : Container(),
                             (widget.isBiz == true)
                                 ? SizedBox(
                                     width: 50.w,
@@ -120,9 +129,11 @@ class _PersonalBoxState extends State<PersonalBox> {
                                     ),
                                   )
                                 : Container(),
-                            SizedBox(
-                              height: 1.h,
-                            ),
+                            (widget.isBiz == true)
+                                ? SizedBox(
+                                    height: 1.h,
+                                  )
+                                : Container(),
                             (widget.isBiz == true)
                                 ? SizedBox(
                                     width: 50.w,
@@ -151,9 +162,11 @@ class _PersonalBoxState extends State<PersonalBox> {
                                     ),
                                   )
                                 : Container(),
-                            SizedBox(
-                              height: 1.h,
-                            ),
+                            (widget.isBiz == true)
+                                ? SizedBox(
+                                    height: 1.h,
+                                  )
+                                : Container(),
                             (widget.isBiz == true)
                                 ? SizedBox(
                                     width: 50.w,
@@ -182,9 +195,11 @@ class _PersonalBoxState extends State<PersonalBox> {
                                     ),
                                   )
                                 : Container(),
-                            SizedBox(
-                              height: 1.h,
-                            ),
+                            (widget.isBiz == true)
+                                ? SizedBox(
+                                    height: 1.h,
+                                  )
+                                : Container(),
                             (widget.isBiz == true)
                                 ? SizedBox(
                                     width: 50.w,
@@ -213,9 +228,11 @@ class _PersonalBoxState extends State<PersonalBox> {
                                     ),
                                   )
                                 : Container(),
-                            SizedBox(
-                              height: 1.h,
-                            ),
+                            (widget.isBiz == true)
+                                ? SizedBox(
+                                    height: 1.h,
+                                  )
+                                : Container(),
                             (widget.isBiz == true)
                                 ? SizedBox(
                                     width: 50.w,
@@ -244,10 +261,55 @@ class _PersonalBoxState extends State<PersonalBox> {
                                     ),
                                   )
                                 : Container(),
+                            (widget.isBiz == true)
+                                ? SizedBox(
+                                    height: 1.h,
+                                  )
+                                : Container(),
                           ],
                         )
                       ],
                     ),
+                    (widget.isBiz == true)
+                        ? SizedBox(
+                            height: 2.h,
+                          )
+                        : Container(),
+                    (widget.isBiz == true) ? const TermsAndCond() : Container(),
+                    (widget.isBiz == true)
+                        ? SizedBox(
+                            height: 2.h,
+                          )
+                        : Container(),
+                    (widget.isBiz == true)
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.w),
+                            child: GestureDetector(
+                              onTap: () {
+                                // if (personalSelected) {
+                                //   registrationData.setAccountType = "2";
+                                // } else {
+                                //   registrationData.setAccountType = "1";
+                                // }
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const ProfileKycPage()
+
+                                      //     KycVerfication(
+                                      //   accountType: "individual",
+                                      // ),
+                                      ),
+                                );
+                              },
+                              child: AuthButtons(
+                                form: true,
+                                text: 'Proceed to Verification',
+                                route: const IdentityPassPage(),
+                              ),
+                            ),
+                          )
+                        : Container()
                   ],
                 ),
               ),

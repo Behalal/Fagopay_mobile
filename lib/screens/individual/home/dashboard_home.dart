@@ -7,7 +7,7 @@ import '../../authentication/account_creation/select_type.dart';
 import '../../business/customers/customer.dart';
 import '../../business/suppliers/all_supplies.dart';
 import 'widgets/services_widget.dart';
-import '../profile/profile_kyc_page.dart';
+import '../../kyc/personal_verification_page.dart';
 import '../sales/sales_page.dart';
 import '../../../controllers/login_controller.dart';
 import '../../../controllers/user_controller.dart';
@@ -949,7 +949,7 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> getCompany() async {
     final response = await _companyController.getCompany();
-    final companyjsonBodyData = response['data']['company_detail'];
+    final companyjsonBodyData = response!['data']['company_detail'];
     final companyDetails = Company.fromJson(companyjsonBodyData);
     _companyController.setCompany = companyDetails;
   }

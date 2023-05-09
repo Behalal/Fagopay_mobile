@@ -3,7 +3,7 @@ import '../authentication/widgets/auth_buttons.dart';
 import 'Bvn_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'kyc1.dart';
+import 'busin_verification_page.dart';
 
 import '../constants/colors.dart';
 

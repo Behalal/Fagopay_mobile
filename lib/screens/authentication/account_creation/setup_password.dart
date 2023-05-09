@@ -545,7 +545,9 @@ class _SetupPasswordState extends State<SetupPassword> {
                         imageheight: (_isLoading) ? 30 : null,
                         form: true,
                         text: (_isLoading) ? "" : "Continue",
-                        route: const SetupPassCode()),
+                        route: SetupPassCode(
+                          id: widget.id,
+                        )),
                   ),
                 )
               ]),
@@ -579,6 +581,8 @@ class _SetupPasswordState extends State<SetupPassword> {
     print(' code is ${jsonBody}');
     final userToken = jsonBody['token'];
     if (response.statusCode == 200) {
+      // final validateUserIdentifier = jsonBody['data']['identifier'];
+      // SecureStorage.setUserIdentifier(validateUserIdentifier);
       setState(() {
         _isLoading = false;
       });
@@ -586,12 +590,14 @@ class _SetupPasswordState extends State<SetupPassword> {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => const SetupPassCode(),
+            builder: (BuildContext context) => SetupPassCode(
+              id: widget.id,
+            ),
           ),
         );
       });
-      SecureStorage.setUserToken(userToken);
-      if ((!mounted)) return;
+      // SecureStorage.setUserToken(userToken);
+      // if ((!mounted)) return;
       Fluttertoast.showToast(
         msg: "Registration successful",
         toastLength: Toast.LENGTH_LONG,

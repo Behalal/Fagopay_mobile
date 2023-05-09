@@ -7,7 +7,7 @@ import 'package:fagopay/screens/individual/profile/change_passcode.dart';
 import 'package:fagopay/screens/individual/profile/change_password.dart';
 import 'package:fagopay/screens/individual/profile/edit_profile.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
-import 'package:fagopay/screens/individual/profile/profile_kyc_page.dart';
+import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';

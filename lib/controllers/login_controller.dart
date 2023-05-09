@@ -17,12 +17,13 @@ enum OtpForgotVerifyStatus {
   error,
   success,
 }
-
+//owin.abir@findours.com
+//Bigdaddy@123
 class LoginController extends GetxController {
   TextEditingController emailController =
-      TextEditingController(text: 'owin.abir@findours.com');
+      TextEditingController(text: 'kennyobey@gmail.com');
   TextEditingController passwordController =
-      TextEditingController(text: 'Bigdaddy@123');
+      TextEditingController(text: 'Basket12*');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
 
