@@ -188,7 +188,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   fontFamily: "Work Sans",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
-                                  color: stepsColor),
+                                  color: signInPlaceholder),
                               decoration: InputDecoration(
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0),
