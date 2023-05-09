@@ -146,7 +146,130 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                           ],
                                         ),
                                       ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 100.h,
+          // height: 30.h,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+            linearGradient2,
+            linearGradient1,
+          ])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 1.w,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 40, bottom: 0),
+                      width: 95.w,
+                      height: 18.h,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/image 1.png"),
+                        ),
+                      ),
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Stack(
+                            alignment: AlignmentDirectional.centerStart,
+                            children: [
+                              Positioned(
+                                top: 6.2.h,
+                                width: 13.w,
+                                height: 60.09,
+                                left: 4.w,
+                                child: Image.asset(
+                                    "assets/images/sign_in_vector 1.png"),
+                              ),
+                              Positioned(
+                                top: 9.5.h,
+                                width: 13.w,
+                                height: 95.12,
+                                left: 4.w,
+                                child: Image.asset(
+                                  "assets/images/sign_in_vector 2.png",
+                                ),
+                              ),
+                              Positioned(
+                                top: 10.h,
+                                width: 13.w,
+                                height: 60.09,
+                                left: 6.w,
+                                child: Image.asset(
+                                  "assets/images/sign_in_vector 3.png",
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: SizedBox(
+                                  width: 7.w,
+                                ),
+                              ),
+                              const CircleAvatar(
+                                radius: 25, // Image radius
+                                backgroundImage:
+                                    AssetImage('assets/images/fago(2).png'),
+                              ),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          style: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: white,
+                                          ),
+                                          children: [
+                                            const TextSpan(text: 'Hello'),
+                                            TextSpan(
+                                              text: ' ${widget.user.firstName}',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
 
+                                      SizedBox(height: 3.h),
+                                      // PopupMenuButton<String>(
+                                      //   offset: const Offset(0, 50),
+                                      //   initialValue: widget.accountType ==
+                                      //           "Individual"
+                                      //       ? AccountType.individual.toString()
+                                      //       : AccountType.business.toString(),
+                                      //   onSelected: (selectedItem) {
+                                      //     if (selectedItem ==
+                                      //         AccountType.business.toString()) {
+                                      //       Navigator.of(context)
+                                      //           .pushReplacement(
+                                      //         MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 const BusinessDashboard()
                                       SizedBox(height: 3.h),
                                       // PopupMenuButton<String>(
                                       //   offset: const Offset(0, 50),
