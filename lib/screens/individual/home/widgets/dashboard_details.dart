@@ -577,7 +577,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
             ),
           ),
         ],
-      ),
+      
     );
   }
 }
@@ -965,7 +965,7 @@ class _ManageAccountState extends State<ManageAccount> {
                 ),
               ],
             ),
-          )
+          ))
         : SizedBox(
             height: 50.h,
             child: Column(
