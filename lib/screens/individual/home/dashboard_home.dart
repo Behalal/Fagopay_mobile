@@ -932,8 +932,8 @@ class _DashboardHomeState extends State<DashboardHome> {
     final companyjsonBodyData = response['data']['company_detail'];
     final companyDetails = Company.fromJson(companyjsonBodyData[0]);
 
-    final companyjsonBodyData = response!['data']['company_detail'];
-    final companyDetails = Company.fromJson(companyjsonBodyData);
+    // final companyjsonBodyData = response!['data']['company_detail'];
+    // final companyDetails = Company.fromJson(companyjsonBodyData);
 
     _companyController.setCompany = companyDetails;
   }
