@@ -41,7 +41,7 @@ class _AllSuppliesState extends State<AllSupplies> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ProgressStyle(
+                      const ProgressStyle(
                       stage: 0,
                       pageName: "My Suppliers",
                     ),
@@ -93,8 +93,8 @@ class _AllSuppliesState extends State<AllSupplies> {
                       height: 2.h,
                     ),
                     CustomerBox(
-                      firstBoxImage: "assets/images/customers.png",
-                      secondBoxImage: "assets/images/no_of_transaction_box.png",
+                      firstBoxImage: "assets/images/people.svg",
+                      secondBoxImage: "assets/images/archive-book.svg",
                       firstBoxDescription: "No. of Customers",
                       firstBoxMainValue:
                           _supplierController.suppliers.length.toString(),

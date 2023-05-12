@@ -1,10 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../book_keeping/models/model.dart';
 import '../../functions.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../widgets/head_style_extra_pages.dart';
@@ -78,7 +78,7 @@ class _AllInvoiceState extends State<AllInvoice> {
                       width: 45.w,
                       child: Container(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 7.w,
+                          horizontal: 8.w,
                           vertical: 1.h,
                         ),
                         decoration: const BoxDecoration(
@@ -91,8 +91,8 @@ class _AllInvoiceState extends State<AllInvoice> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              "assets/images/fluent_receipt-20-filled.png",
+                            SvgPicture.asset(
+                              "assets/images/stickynote.svg",
                               color: white,
                             ),
                             const AutoSizeText(
@@ -116,7 +116,7 @@ class _AllInvoiceState extends State<AllInvoice> {
               ),
               SizedBox(
                 width: 100.w,
-                height: 11.h,
+                height: 12.h,
                 child: PageView.builder(
                     controller: _controller,
                     padEnds: false,
@@ -127,90 +127,82 @@ class _AllInvoiceState extends State<AllInvoice> {
                       });
                     },
                     itemBuilder: (context, i) {
-                      return Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              // goToPage(context, const AllSales());
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 2.w, vertical: 1.h),
-                              decoration: const BoxDecoration(
-                                  color: white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: blackWithOpacity,
-                                        offset: Offset.zero,
-                                        spreadRadius: 2,
-                                        blurRadius: 8),
-                                  ]),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(bookKeepingContent[i].imagePath),
-                                  SizedBox(width: 2.w),
-                                  Container(
-                                    height: 53,
-                                    decoration: DottedDecoration(
-                                        color: blackWithOpacity5,
-                                        // dash: const [1, 1, 1],
-                                        linePosition: LinePosition.right),
+                      return SizedBox(
+                        width: 43.w,
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                // goToPage(context, const AllSales());
+                              },
+                              child: SizedBox(
+                                width: 43.w,
+                                child: Card(
+                                  elevation: 1.5,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(bookKeepingContent[i].imagePath),
+                                        SizedBox(width: 1.w),
+                                        SvgPicture.asset(
+                                                "assets/images/Line.svg"),
+                                        SizedBox(width: 1.w),
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            AutoSizeText(
+                                              bookKeepingContent[i].accountType,
+                                              style: const TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 12,
+                                                color: inactiveTab,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            SizedBox(height: 1.h),
+                                            AutoSizeText(
+                                              "$currencySymbol${bookKeepingContent[i].balance}",
+                                              style: TextStyle(
+                                                  fontFamily: "Work Sans",
+                                                  fontSize: 18,
+                                                  color: (i == 1 ||
+                                                          i ==
+                                                              (bookKeepingContent
+                                                                      .length -
+                                                                  1))
+                                                      ? fagoSecondaryColor
+                                                      : inactiveTab,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                            SizedBox(height: 1.h),
+                                            AutoSizeText(
+                                              bookKeepingContent[i].description,
+                                              style: TextStyle(
+                                                  fontFamily: "Work Sans",
+                                                  fontSize: 10,
+                                                  color: (i == 2)
+                                                      ? fagoGreenColor
+                                                      : inactiveTabWithOpacity30,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(width: 2.w),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      AutoSizeText(
-                                        bookKeepingContent[i].accountType,
-                                        style: const TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 12,
-                                          color: inactiveTab,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                      SizedBox(height: 1.h),
-                                      AutoSizeText(
-                                        "$currencySymbol${bookKeepingContent[i].balance}",
-                                        style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 18,
-                                            color: (i == 1 ||
-                                                    i ==
-                                                        (bookKeepingContent
-                                                                .length -
-                                                            1))
-                                                ? fagoSecondaryColor
-                                                : inactiveTab,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                      SizedBox(height: 1.h),
-                                      AutoSizeText(
-                                        bookKeepingContent[i].description,
-                                        style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 10,
-                                            color: (i == 2)
-                                                ? fagoGreenColor
-                                                : inactiveTabWithOpacity30,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ],
-                                  )
-                                ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 1.5.w,
-                          )
-                        ],
+                            SizedBox(
+                              width: 1.5.w,
+                            )
+                          ],
+                        ),
                       ); // ]
                     }),
               ),
@@ -397,8 +389,8 @@ class _AllInvoiceState extends State<AllInvoice> {
                                               CircleAvatar(
                                                 radius: 3.w,
                                                 backgroundColor: fagoSecondaryColorWithOpacity10,
-                                                child: Image.asset(
-                                                    "assets/images/stickynote.png",
+                                                child: SvgPicture.asset(
+                                                    "assets/images/stickynote.svg",
                                                     color: ( i == 0 || i == 6)? inactiveTabWithOpacity30 : null,
                                                     ),
                                               ),
@@ -442,7 +434,7 @@ class _AllInvoiceState extends State<AllInvoice> {
                                         ],
                                       ),
                                     ),
-                                    if ( i == 0 || i == 6) SizedBox(width: 10.w ,child: Image.asset("assets/images/paidBanner.png")),
+                                    if ( i == 0 || i == 6) SizedBox(width: 10.w ,child: Image.asset("assets/images/paidBanner.png", height: 6.h,)),
                                     if ( i != 0 && i != 6) SizedBox(width: 10.w),
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.end,

@@ -20,7 +20,7 @@ enum OtpForgotVerifyStatus {
 
 class LoginController extends GetxController {
   TextEditingController emailController =
-      TextEditingController(text: 'owin.abir@findours.com');
+      TextEditingController(text: 'adrick.damauri@foundtoo.com');
   TextEditingController passwordController =
       TextEditingController(text: 'Bigdaddy@123');
 

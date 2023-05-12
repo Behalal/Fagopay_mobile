@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
@@ -149,8 +150,8 @@ class _AddInvoiceState extends State<AddInvoice> {
                     CircleAvatar(
                       radius: 3.w,
                       backgroundColor: fagoSecondaryColorWithOpacity10,
-                      child: Image.asset(
-                        "assets/images/gallery.png",
+                      child: SvgPicture.asset(
+                        "assets/images/gallery.svg",
                       ),
                     ),
                     SizedBox(
@@ -677,8 +678,8 @@ class RemoveItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/images/archive.png",
+                SvgPicture.asset(
+                  "assets/images/archive.svg",
                 ),
                 SizedBox(
                   width: 0.3.w,

@@ -49,15 +49,18 @@ class ProgressStyle extends StatelessWidget {
           //   SizedBox(
           //     width: 20,
           //   ),
-          Text(
-            pageName,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontFamily: "Work Sans",
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: fagoSecondaryColor,
+          SizedBox(
+            width: 50.w,
+            child: Text(
+              pageName,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                fontFamily: "Work Sans",
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: fagoSecondaryColor,
+              ),
             ),
           ),
           // if (icon != null)

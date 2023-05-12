@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
@@ -9,6 +10,7 @@ class AuthButtons extends StatelessWidget {
   bool form;
   String? hasImage;
   String? suffixImage;
+  String? suffixSvg;
   double? imageheight;
   double? imageWidth;
   Color? color;
@@ -22,6 +24,7 @@ class AuthButtons extends StatelessWidget {
       this.color,
       this.imageWidth,
       this.imageheight,
+      this.suffixSvg,
       required this.form,
   });
 
@@ -65,13 +68,24 @@ class AuthButtons extends StatelessWidget {
                       color: white),
                 ),
               if (suffixImage != null ) SizedBox(width: 1.2.w),
-               if (suffixImage != null)
-                Image.asset(
-                  suffixImage!,
-                  width: imageWidth,
-                  height: imageheight,
-                  fit: BoxFit.fitWidth,
-                ),
+               if (suffixImage != null) ...[
+                  if ( suffixSvg != null  ) ...[
+                    SvgPicture.asset(
+                      suffixImage!,
+                      width: imageWidth,
+                      height: imageheight,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ]else ...[
+                    Image.asset(
+                      suffixImage!,
+                      width: imageWidth,
+                      height: imageheight,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ]
+               ]
+                
             ],
           ),
         ),
