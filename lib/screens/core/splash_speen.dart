@@ -2,6 +2,7 @@ import 'dart:async';
 
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 // import 'package:sizer/sizer.dart';
 
@@ -39,34 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
           colors: [linearGradient1, linearGradient2],
         )),
         child: Center(
-          child: SizedBox(
-            width: 108,
-            height: 146,
-            child: Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Positioned(
-                    top: 0,
-                    left: 6.93,
-                    right: 0.04,
-                    bottom: 90,
-                    child: Image.asset("assets/images/Vector (1).png")),
-                Positioned(
-                    top: 21.28,
-                    left: 0.1,
-                    right: 12.71,
-                    bottom: 0.07,
-                    child: Image.asset("assets/images/Vector (2).png")),
-                Positioned(
-                  top: 41.29,
-                  left: 23.71,
-                  right: 24.56,
-                  bottom: 3.16,
-                  child: Image.asset("assets/images/Vector.png"),
-                )
-              ],
-            ),
-          ),
+          child: SvgPicture.asset("assets/images/FagoLogo.svg"),
         ),
       ),
     );

@@ -38,6 +38,59 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
 
   @override
   Widget build(BuildContext context) {
+
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 100.h,
+            // height: 30.h,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+              linearGradient2,
+              linearGradient1,
+            ])),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 1.w,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 40, bottom: 0),
+                        width: 95.w,
+                        height: 18.h,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/image1.png"),
+                          ),
+                        ),
+                        child: Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: [
+                            Positioned(
+                              top: 6.2.h,
+                              width: 13.w,
+                              height: 60.09,
+                              left: 4.w,
+                               child: SvgPicture.asset("assets/images/Frame.svg"),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: SizedBox(
+                                    width: 7.w,
+                                  ),
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,6 +143,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 left: 4.w,
                                 child: Image.asset(
                                   "assets/images/sign_in_vector 2.png",
+
                                 ),
                               ),
                               Positioned(
