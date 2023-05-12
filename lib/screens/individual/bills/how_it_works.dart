@@ -4,29 +4,22 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/requests/payme_page.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
-import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class HowItWorks extends StatefulWidget {
-  final String? network;
-  final String? number;
-  final String? amount;
-  const HowItWorks({
+class SharePaymentLink extends StatefulWidget {
+  const SharePaymentLink({
     super.key,
-    this.network,
-    this.number,
-    this.amount,
   });
 
   @override
-  State<HowItWorks> createState() => _HowItWorksState();
+  State<SharePaymentLink> createState() => _SharePaymentLinkState();
 }
 
-class _HowItWorksState extends State<HowItWorks> {
+class _SharePaymentLinkState extends State<SharePaymentLink> {
   bool isIndividual = false;
   int? myRequestType;
   var number = "";
@@ -43,7 +36,7 @@ class _HowItWorksState extends State<HowItWorks> {
                 children: [
                   const ProgressStyle(
                     stage: 0,
-                    pageName: "Swap Airtime",
+                    pageName: "Payment Link",
                     // backRoute: MakeRequest(),
                   ),
                   SizedBox(
@@ -54,10 +47,46 @@ class _HowItWorksState extends State<HowItWorks> {
                         padding: EdgeInsets.symmetric(
                             vertical: 2.h, horizontal: 2.w),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  width: 22.w,
+                                  decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
+                                      color: buttonColor),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 3.w, vertical: .7.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: const [
+                                        AutoSizeText(
+                                          "Edit Link",
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
                             const AutoSizeText(
-                              "How it works?",
+                              "Get paid from anyone",
                               style: TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 22,
@@ -68,234 +97,77 @@ class _HowItWorksState extends State<HowItWorks> {
                             SizedBox(
                               height: 3.h,
                             ),
-                            RichText(
+                            const AutoSizeText(
+                              "Copy and share your payment link with anyone and start receiving money.",
                               textAlign: TextAlign.center,
-                              text: TextSpan(
-                                text: 'Kindly transfer ',
-                                style: const TextStyle(
-                                  color: stepsColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: '$widget.network'.toUpperCase(),
-                                    style: const TextStyle(
-                                      color: fagoSecondaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const TextSpan(
-                                    text: ' Airtime of',
-                                    style: TextStyle(
-                                      color: stepsColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '$widget.amount',
-                                    style: const TextStyle(
-                                      color: fagoSecondaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  const TextSpan(
-                                    text: ' to',
-                                    style: TextStyle(
-                                      color: stepsColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: inactiveTab,
                               ),
                             ),
                             SizedBox(
                               height: 3.h,
                             ),
                             Container(
-                              padding: EdgeInsets.all(2.h),
-                              height: 8.h,
+                              height: 25.h,
                               width: Get.width,
-                              decoration: const BoxDecoration(
-                                color: fagoSecondaryColorWithOpacity10,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Image(
-                                      image:
-                                          AssetImage("assets/images/mtn.png")),
-                                  SizedBox(
-                                    width: 2.h,
-                                  ),
-                                  AutoSizeText(
-                                    '$widget.number',
-                                    style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: fagoSecondaryColor,
-                                    ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    blurRadius: 2,
+                                    offset:
+                                        const Offset(2, 3), // Shadow position
                                   ),
                                 ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              "and check your wallet in 5 minutes",
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: stepsColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(2.h),
-                              //  height: 8.h,
-                              width: Get.width,
-                              decoration: const BoxDecoration(
-                                color: fagoSecondaryColorWithOpacity10,
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
+                                  SvgPicture.asset('assets/icons/Group 95.svg'),
                                   const AutoSizeText(
-                                    "How to make MTN Transfer",
+                                    "Ibrahim Lukman",
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
-                                      fontSize: 14,
+                                      fontSize: 22,
                                       fontWeight: FontWeight.w700,
-                                      color: fagoSecondaryColor,
+                                      color: stepsColor,
                                     ),
                                   ),
-                                  const Divider(),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      AutoSizeText(
-                                        "Format:",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: stepsColor,
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        "*600*08102837593*1000*pin#",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: stepsColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 2.h,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      AutoSizeText(
-                                        "Click the link below",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: stepsColor,
-                                        ),
-                                      ),
-                                      AutoSizeText(
-                                        "*600*08102837593*1000*pin#",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: fagoSecondaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 2.h,
-                                  ),
-                                  RichText(
-                                    textAlign: TextAlign.start,
-                                    text: const TextSpan(
-                                      text: 'Default PIN: ',
-                                      style: TextStyle(
-                                        color: stepsColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                  Container(
+                                    // padding: const EdgeInsets.only(left: 20),
+                                    height: 6.h,
+                                    width: 35.5.h,
+                                    decoration: BoxDecoration(
+                                        color: white,
+                                        borderRadius: BorderRadius.circular(36),
+                                        border: Border.all(
+                                            color: fagoSecondaryColor)),
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        TextSpan(
-                                          text: ' 0000',
+                                        const AutoSizeText(
+                                          'https://fagopay.link/ibrahim',
                                           style: TextStyle(
-                                            color: fagoSecondaryColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text:
-                                              ' (Note: default pin must be changed)',
-                                          style: TextStyle(
-                                            color: stepsColor,
+                                            fontFamily: "Work Sans",
                                             fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 2.h,
-                                  ),
-                                  RichText(
-                                    textAlign: TextAlign.start,
-                                    text: const TextSpan(
-                                      text: 'Default PIN: ',
-                                      style: TextStyle(
-                                        color: stepsColor,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      children: [
-                                        TextSpan(
-                                          text: ' 0000',
-                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
                                             color: fagoSecondaryColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        TextSpan(
-                                          text:
-                                              ' (Note: default pin must be changed)',
-                                          style: TextStyle(
-                                            color: stepsColor,
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
+                                        // const Spacer(),
+                                        SvgPicture.asset(
+                                            'assets/icons/copy-svgrepo-com 1.svg')
                                       ],
                                     ),
                                   ),
@@ -303,28 +175,12 @@ class _HowItWorksState extends State<HowItWorks> {
                               ),
                             ),
                             SizedBox(
-                              height: 4.h,
+                              height: 8.h,
                             ),
-                            Center(
-                              child: InkWell(
-                                onTap: () => Navigator.of(context)
-                                    .pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Dashboard()),
-                                        (Route<dynamic> route) => false),
-                                child: const AutoSizeText(
-                                  "Go to Dashboard",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: "Work Sans",
-                                      fontWeight: FontWeight.w400,
-                                      color: buttonColor,
-                                      decoration: TextDecoration.underline),
-                                ),
-                              ),
-                            ),
+                            AuthButtons(
+                                form: false,
+                                text: "Share Payment Link",
+                                route: const PleasePayMePage()),
                           ],
                         )),
                   ),

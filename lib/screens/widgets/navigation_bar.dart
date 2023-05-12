@@ -162,7 +162,7 @@ class _DashboardState extends State<Dashboard> {
       body: buildPages(),
       bottomNavigationBar: Container(
         constraints: const BoxConstraints(),
-        height: Get.height * 0.13,
+        height: Get.height * 0.11,
         decoration: const BoxDecoration(
           color: white,
         ),
@@ -198,7 +198,7 @@ class _DashboardState extends State<Dashboard> {
                     left: Get.width * .03,
                   ),
                   width: Get.width * .128,
-                  height: Get.width * .010,
+                  height: Get.width * .014,
                 ),
                 index == 2
                     ? SvgPicture.asset(

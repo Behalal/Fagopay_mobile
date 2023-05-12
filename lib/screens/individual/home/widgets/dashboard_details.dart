@@ -38,6 +38,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
 
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -89,57 +90,132 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                   child: SizedBox(
                                     width: 7.w,
                                   ),
-                                ),
-                                const CircleAvatar(
-                                  radius: 25, // Image radius
-                                  backgroundImage:
-                                      AssetImage('assets/images/fago(2).png'),
-                                ),
-                                SizedBox(
-                                  width: 3.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            style: const TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: white,
-                                            ),
-                                            children: [
-                                              const TextSpan(text: 'Hello'),
-                                              TextSpan(
-                                                text:
-                                                    ' ${widget.user.firstName}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
 
-                                        SizedBox(height: 3.h),
-                                        // PopupMenuButton<String>(
-                                        //   offset: const Offset(0, 50),
-                                        //   initialValue: widget.accountType ==
-                                        //           "Individual"
-                                        //       ? AccountType.individual.toString()
-                                        //       : AccountType.business.toString(),
-                                        //   onSelected: (selectedItem) {
-                                        //     if (selectedItem ==
-                                        //         AccountType.business.toString()) {
-                                        //       Navigator.of(context)
-                                        //           .pushReplacement(
-                                        //         MaterialPageRoute(
-                                        //             builder: (context) =>
-                                        //                 const BusinessDashboard()
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 100.h,
+          // height: 30.h,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(colors: [
+            linearGradient2,
+            linearGradient1,
+          ])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 1.w,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 40, bottom: 0),
+                      width: 95.w,
+                      height: 18.h,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/image 1.png"),
+                        ),
+                      ),
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Stack(
+                            alignment: AlignmentDirectional.centerStart,
+                            children: [
+                              Positioned(
+                                top: 6.2.h,
+                                width: 13.w,
+                                height: 60.09,
+                                left: 4.w,
+                                child: Image.asset(
+                                    "assets/images/sign_in_vector 1.png"),
+                              ),
+                              Positioned(
+                                top: 9.5.h,
+                                width: 13.w,
+                                height: 95.12,
+                                left: 4.w,
+                                child: Image.asset(
+                                  "assets/images/sign_in_vector 2.png",
+
+                                ),
+                              ),
+                              Positioned(
+                                top: 10.h,
+                                width: 13.w,
+                                height: 60.09,
+                                left: 6.w,
+                                child: Image.asset(
+                                  "assets/images/sign_in_vector 3.png",
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: SizedBox(
+                                  width: 7.w,
+                                ),
+                              ),
+                              const CircleAvatar(
+                                radius: 25, // Image radius
+                                backgroundImage:
+                                    AssetImage('assets/images/fago(2).png'),
+                              ),
+                              SizedBox(
+                                width: 3.w,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          style: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: white,
+                                          ),
+                                          children: [
+                                            const TextSpan(text: 'Hello'),
+                                            TextSpan(
+                                              text: ' ${widget.user.firstName}',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      SizedBox(height: 3.h),
+                                      // PopupMenuButton<String>(
+                                      //   offset: const Offset(0, 50),
+                                      //   initialValue: widget.accountType ==
+                                      //           "Individual"
+                                      //       ? AccountType.individual.toString()
+                                      //       : AccountType.business.toString(),
+                                      //   onSelected: (selectedItem) {
+                                      //     if (selectedItem ==
+                                      //         AccountType.business.toString()) {
+                                      //       Navigator.of(context)
+                                      //           .pushReplacement(
+                                      //         MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 const BusinessDashboard()
 
                                         //             //     BusinessHome(
                                         //             //   userDetails: widget.user,
@@ -555,7 +631,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
             ),
           ),
         ],
-      ),
+      
     );
   }
 }
@@ -577,7 +653,7 @@ class _ManageAccountState extends State<ManageAccount> {
     return widget.userDetails.kycVerified == 1
         ? Container(
             padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 2.h),
-            height: Get.height * .7,
+            height: Get.height * .9,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -591,180 +667,75 @@ class _ManageAccountState extends State<ManageAccount> {
                           color: fagoSecondaryColor,
                         ),
 
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                        const AutoSizeText(
-                          'Manage Accounts',
-                          style: TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            color: fagoSecondaryColor,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                        Divider(
-                          color: stepsColor.withOpacity(0.3),
-                        ),
-                        // ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const AutoSizeText(
-                    'Personal Account',
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: stepsColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Get.to(() => const Dashboard());
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(18),
-                      width: Get.width,
-                      //height: 10.h,
-                      decoration: BoxDecoration(
-                        color: fagoSecondaryColor.withOpacity(0.05),
+                      SizedBox(
+                        height: 1.h,
                       ),
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const CircleAvatar(
-                              radius: 27, // Image radius
-                              backgroundImage:
-                                  AssetImage('assets/images/fago(2).png'),
-                            ),
-                            SizedBox(
-                              width: 1.h,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    AutoSizeText(
-                                      _userUcontroller.user!.firstName ?? '',
-                                      style: const TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: welcomeText,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 0.5.h,
-                                    ),
-                                    AutoSizeText(
-                                      _userUcontroller.user!.lastName ?? '',
-                                      style: const TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                        color: welcomeText,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: .5.h,
-                                ),
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 1.h),
-                                  //height: 2.5.h,
-                                  // width: 11.5.h,
-                                  decoration: BoxDecoration(
-                                      color: white,
-                                      borderRadius: BorderRadius.circular(25)),
-                                  alignment: Alignment.center,
-                                  child: const AutoSizeText(
-                                    'Owner',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
-                                      color: fagoSecondaryColor,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                            const Spacer(),
-                            SvgPicture.asset('assets/icons/owner_icon.svg')
-                          ]),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 1.5.h,
-                  ),
-                  Divider(
-                    color: stepsColor.withOpacity(0.3),
-                  ),
-                  // ),
-                  SizedBox(
-                    height: 1.5.h,
-                  ),
-                  const AutoSizeText(
-                    'Business I manage',
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: stepsColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: InkWell(
-                      onTap: () {
-                        print('cliked');
-                        Get.to(() => const Dashboard());
-                        //  Get.to(() => FagoMainPage());
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(18),
-                        width: Get.width,
-                        //height: 10.h,
-                        decoration: BoxDecoration(
-                          color: fagoSecondaryColor.withOpacity(0.05),
+                      const AutoSizeText(
+                        'Manage Accounts',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
                         ),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                      ),
+                      SizedBox(
+                        height: 1.5.h,
+                      ),
+                      const Divider(
+                        color: stepsColor,
+                      ),
+                      // ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                    ],
+                  ),
+                ),
+                const AutoSizeText(
+                  'Personal Account',
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: stepsColor,
+                  ),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(() => const Dashboard());
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(18),
+                    width: Get.width,
+                    height: 10.h,
+                    decoration: BoxDecoration(
+                      color: fagoSecondaryColor.withOpacity(0.05),
+                    ),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CircleAvatar(
+                            radius: 27, // Image radius
+                            backgroundImage:
+                                AssetImage('assets/images/fago(2).png'),
+                          ),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const CircleAvatar(
-                                radius: 27, // Image radius
-                                backgroundImage:
-                                    AssetImage('assets/images/fago(2).png'),
-                              ),
-                              SizedBox(
-                                width: 1.h,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                              Row(
                                 children: [
-                                  const AutoSizeText(
-                                    'Obasana Designs',
-                                    style: TextStyle(
+                                  AutoSizeText(
+                                    _userUcontroller.user!.firstName ?? '',
+                                    style: const TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
@@ -772,45 +743,81 @@ class _ManageAccountState extends State<ManageAccount> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: .5.h,
+                                    width: 0.5.h,
                                   ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 1.h),
-                                    height: 2.5.h,
-                                    // width: 11.5.h,
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
-                                    alignment: Alignment.center,
-                                    child: const AutoSizeText(
-                                      'Owner',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        color: fagoSecondaryColor,
-                                      ),
+                                  AutoSizeText(
+                                    _userUcontroller.user!.lastName ?? '',
+                                    style: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: welcomeText,
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
-                              const Spacer(),
-                              SvgPicture.asset('assets/icons/arrow_front.svg')
-                            ]),
-                      ),
-                    ),
+                              SizedBox(
+                                height: .5.h,
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 1.h),
+                                height: 2.5.h,
+                                // width: 11.5.h,
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.circular(25)),
+                                alignment: Alignment.center,
+                                child: const AutoSizeText(
+                                  'Owner',
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: fagoSecondaryColor,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset('assets/icons/owner_icon.svg')
+                        ]),
                   ),
-                  SizedBox(
-                    height: 2.h,
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                const Divider(
+                  color: stepsColor,
+                ),
+                // ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                const AutoSizeText(
+                  'Business I manage',
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: stepsColor,
                   ),
-                  InkWell(
-                    onTap: () {},
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: InkWell(
+                    onTap: () {
+                      print('cliked');
+                      Get.to(() => const Dashboard());
+                      //  Get.to(() => FagoMainPage());
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(18),
                       width: Get.width,
-                      //  height: 10.h,
+                      height: 10.h,
                       decoration: BoxDecoration(
                         color: fagoSecondaryColor.withOpacity(0.05),
                       ),
@@ -831,7 +838,7 @@ class _ManageAccountState extends State<ManageAccount> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const AutoSizeText(
-                                  'Fagopay Limited',
+                                  'Obasana Designs',
                                   style: TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 18,
@@ -852,7 +859,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                       borderRadius: BorderRadius.circular(25)),
                                   alignment: Alignment.center,
                                   child: const AutoSizeText(
-                                    'Manager',
+                                    'Owner',
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 10,
@@ -868,93 +875,151 @@ class _ManageAccountState extends State<ManageAccount> {
                           ]),
                     ),
                   ),
-                  SizedBox(
-                    height: 1.5.h,
-                  ),
-                  Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      SvgPicture.asset('assets/icons/Ellipse 278.svg'),
-                      SvgPicture.asset('assets/icons/Ellipse 279.svg'),
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 3.h, vertical: 2.h),
-                        // height: 17.h,
-                        width: Get.width,
-                        color: fagoSecondaryColor.withOpacity(0.05),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const AutoSizeText(
-                              'Manage individualn Business \nAccounts in One App',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: fagoSecondaryColor,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    padding: const EdgeInsets.all(18),
+                    width: Get.width,
+                    height: 10.h,
+                    decoration: BoxDecoration(
+                      color: fagoSecondaryColor.withOpacity(0.05),
+                    ),
+                    child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CircleAvatar(
+                            radius: 27, // Image radius
+                            backgroundImage:
+                                AssetImage('assets/images/fago(2).png'),
+                          ),
+                          SizedBox(
+                            width: 1.h,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const AutoSizeText(
+                                'Fagopay Limited',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: welcomeText,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 1.5.h,
-                            ),
-                            const AutoSizeText(
-                              'Do you own a business with corporate registration? Manage them within this App or manage for others',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: stepsColor,
+                              SizedBox(
+                                height: .5.h,
                               ),
-                            ),
-                            SizedBox(
-                              height: 1.5.h,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.to(() => const SelectType());
-                              },
-                              child: Container(
-                                width: 60.w,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15)),
-                                    color: buttonColor),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 3.w, vertical: .8.h),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/icons/fundAccount_icon.svg'),
-                                      const AutoSizeText(
-                                        "Create New Business Account",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.w600,
-                                          color: white,
-                                        ),
-                                      ),
-                                    ],
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 1.h),
+                                height: 2.5.h,
+                                // width: 11.5.h,
+                                decoration: BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.circular(25)),
+                                alignment: Alignment.center,
+                                child: const AutoSizeText(
+                                  'Manager',
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: fagoSecondaryColor,
                                   ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset('assets/icons/arrow_front.svg')
+                        ]),
+                  ),
+                ),
+                SizedBox(
+                  height: 1.5.h,
+                ),
+                Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    SvgPicture.asset('assets/icons/Ellipse 278.svg'),
+                    SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 3.h, vertical: 2.h),
+                      height: 17.h,
+                      width: Get.width,
+                      color: fagoSecondaryColor.withOpacity(0.05),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const AutoSizeText(
+                            'Manage individualn Business \nAccounts in One App',
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: fagoSecondaryColor,
+                            ),
+                          ),
+                          const AutoSizeText(
+                            'Do you own a business with corporate registration? Manage them within this App or manage for others',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: stepsColor,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => const SelectType());
+                            },
+                            child: Container(
+                              width: 55.w,
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15)),
+                                  color: buttonColor),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 3.w, vertical: .8.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/fundAccount_icon.svg'),
+                                    const AutoSizeText(
+                                      "Create New Business Account",
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.w600,
+                                        color: white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
-          )
+          ))
         : SizedBox(
             height: 50.h,
             child: Column(

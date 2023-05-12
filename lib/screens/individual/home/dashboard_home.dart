@@ -7,7 +7,7 @@ import '../../authentication/account_creation/select_type.dart';
 import '../../business/customers/customer.dart';
 import '../../business/suppliers/all_supplies.dart';
 import 'widgets/services_widget.dart';
-import '../profile/profile_kyc_page.dart';
+import '../../kyc/personal_verification_page.dart';
 import '../sales/sales_page.dart';
 import '../../../controllers/login_controller.dart';
 import '../../../controllers/user_controller.dart';
@@ -287,7 +287,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 shrinkWrap: true,
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 4.0.h,
-                                mainAxisSpacing: 3.0.h,
+                                mainAxisSpacing: 2.0.h,
                                 childAspectRatio: 0.10.h,
                                 children:
                                     List.generate(services.length, (index) {
@@ -312,21 +312,6 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 services[index].route!,
                                           ),
                                         );
-                                      } else if (services[index].route ==
-                                              null &&
-                                          widget.userDetails.kycVerified == 1 &&
-                                          services[index].bill == 'special') {
-                                        showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(20),
-                                              ),
-                                            ),
-                                            context: context,
-                                            builder: (context) =>
-                                                const BillsPayment());
                                       }
                                     },
                                     child: Column(children: [
@@ -340,7 +325,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             width: 2.5.w,
                                           ),
                                           SizedBox(
-                                            height: 1.0.h,
+                                            height: 1.5.h,
                                           ),
                                           AutoSizeText(
                                             services[index].itemName,
@@ -386,7 +371,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 2.h, vertical: 2.h),
-                            // height: 10.h,
+                            height: 10.h,
                             width: Get.width,
                             decoration: BoxDecoration(
                                 color: fagoSecondaryColor.withOpacity(0.05),
@@ -431,7 +416,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         style: TextStyle(
                                           fontFamily: "Work Sans",
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 5,
+                                          fontSize: 10,
                                           color: black,
                                         ),
                                       ),
@@ -584,7 +569,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 3.h, vertical: 2.h),
-                                // height: 20.h,
+                                height: 20.h,
                                 width: Get.width,
                                 color: fagoSecondaryColor.withOpacity(0.05),
                                 child: Column(
@@ -601,9 +586,6 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: fagoSecondaryColor,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 1.5.h,
-                                    ),
                                     const AutoSizeText(
                                       'Do you own a business with corporate registration? Manage them within this App or manage for others',
                                       textAlign: TextAlign.start,
@@ -614,15 +596,12 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: stepsColor,
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 1.5.h,
-                                    ),
                                     InkWell(
                                       onTap: () {
                                         Get.to(() => const SelectType());
                                       },
                                       child: Container(
-                                        width: 20.h,
+                                        width: 30.w,
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),
@@ -949,8 +928,13 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> getCompany() async {
     final response = await _companyController.getCompany();
+
     final companyjsonBodyData = response['data']['company_detail'];
     final companyDetails = Company.fromJson(companyjsonBodyData[0]);
+
+    final companyjsonBodyData = response!['data']['company_detail'];
+    final companyDetails = Company.fromJson(companyjsonBodyData);
+
     _companyController.setCompany = companyDetails;
   }
 }

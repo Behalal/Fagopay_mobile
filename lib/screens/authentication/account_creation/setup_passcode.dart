@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -14,7 +17,8 @@ import 'success_acount_creation.dart';
 import 'widgets/current_step.dart';
 
 class SetupPassCode extends StatefulWidget {
-  const SetupPassCode({super.key});
+  final String id;
+  const SetupPassCode({super.key, required this.id});
 
   @override
   State<SetupPassCode> createState() => _SetupPassCodeState();
@@ -48,7 +52,8 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CurrentStep(
-                      step: "4", backRoute: const SelectVerificationType()),
+                    step: "4",
+                  ),
                   SizedBox(height: 5.h),
                   Padding(
                       padding: EdgeInsets.only(left: 2.5.w),
@@ -203,7 +208,13 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                           setState(() {
                             _isLoading = true;
                           });
-                          await setPassCode(context);
+                          await setPassCode(
+                            context,
+                            confirmedPasscode:
+                                _registrationController.passCodeConfirm.text,
+                            id: widget.id,
+                            passcode: _registrationController.passCode.text,
+                          );
                         }
                       },
                       child: AuthButtons(
@@ -226,52 +237,61 @@ class _SetupPassCodeState extends State<SetupPassCode> {
     );
   }
 
-  Future<void> setPassCode(BuildContext context) async {
-    final response = await _registrationController.setPassCode();
-
+  Future<void> setPassCode(BuildContext context,
+      {required String id,
+      required String passcode,
+      required String confirmedPasscode}) async {
+    final response = await _registrationController.setPassCode(
+        id, passcode, confirmedPasscode);
+    print(response.body);
+    final jsonBody = jsonDecode(response.body);
+    final userToken = jsonBody['token'];
     if (response.statusCode != 200) {
       setState(() {
         _isLoading = false;
       });
+
+      SecureStorage.setUserToken(userToken);
+      if ((!mounted)) return;
       Fluttertoast.showToast(
-        msg: "Error setting up Passcode!",
+        msg: "Pin successfully set",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.green,
         textColor: Colors.white,
         fontSize: 16.0,
       );
-
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
-      //     content: Text('Error setting up Passcode!'),
+      //     content: Text('Pin successfully set'),
       //   ),
       // );
-      return;
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (BuildContext context) => const SuccessAccountCreation(),
+            ),
+          );
+        });
+      });
     }
     Fluttertoast.showToast(
-      msg: "Pin successfully set",
+      msg: "Error setting up Passcode!",
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.red,
       textColor: Colors.white,
       fontSize: 16.0,
     );
+
     // ScaffoldMessenger.of(context).showSnackBar(
     //   const SnackBar(
-    //     content: Text('Pin successfully set'),
+    //     content: Text('Error setting up Passcode!'),
     //   ),
     // );
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) => const SuccessAccountCreation(),
-          ),
-        );
-      });
-    });
+    return;
   }
 }

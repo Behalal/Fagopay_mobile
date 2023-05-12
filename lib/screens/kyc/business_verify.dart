@@ -3,7 +3,7 @@ import '../authentication/widgets/auth_buttons.dart';
 import 'Bvn_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'kyc1.dart';
+import 'busin_verification_page.dart';
 
 import '../constants/colors.dart';
 
@@ -93,7 +93,7 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -151,7 +151,7 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -209,7 +209,7 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -267,7 +267,7 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -325,7 +325,7 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),

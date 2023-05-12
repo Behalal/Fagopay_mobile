@@ -18,6 +18,8 @@ enum OtpForgotVerifyStatus {
   success,
 }
 
+//owin.abir@findours.com
+//Bigdaddy@123
 class LoginController extends GetxController {
   TextEditingController emailController =
       TextEditingController(text: 'adrick.damauri@foundtoo.com');
@@ -82,15 +84,15 @@ class LoginController extends GetxController {
   }
 
   Future<dynamic> createNewPassword(
-      String otp, String password, String confirmedPassword) async {
+      String id, String password, String confirmedPassword) async {
     var requestBody = jsonEncode({
-      'code': otp,
+      'identifier': id,
       'password': password,
       'password_confirmation': confirmedPassword,
     });
     try {
       final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.userPath}create-new-password",
+        url: "${BaseAPI.userPath}new-user-password",
         headers: BaseAPI.headers,
         body: requestBody,
       );
@@ -100,6 +102,26 @@ class LoginController extends GetxController {
       throw Exception('Failed');
     }
   }
+
+  //   Future<dynamic> createNewPassword(
+  //     String id, String password, String confirmedPassword) async {
+  //   var requestBody = jsonEncode({
+  //     'identifier': id,
+  //     'password': password,
+  //     'password_confirmation': confirmedPassword,
+  //   });
+  //   try {
+  //     final responseData = await NetworkHelper.postRequest(
+  //       url: "${BaseAPI.userPath}create-new-password",
+  //       headers: BaseAPI.headers,
+  //       body: requestBody,
+  //     );
+  //     return responseData;
+  //   } catch (e) {
+  //     log(e.toString());
+  //     throw Exception('Failed');
+  //   }
+  // }
 
 // Future<dynamic> validateForgotResetPassword(
 //       String otp, String password, String confirmedPassword) async {

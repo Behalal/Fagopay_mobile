@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,11 @@ import 'setup_passcode.dart';
 import 'widgets/current_step.dart';
 
 class SetupPassword extends StatefulWidget {
-  const SetupPassword({super.key});
+  final String id;
+  const SetupPassword({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<SetupPassword> createState() => _SetupPasswordState();
@@ -34,6 +39,7 @@ class _SetupPasswordState extends State<SetupPassword> {
   bool _symbolSpecial = false;
   Functions function = Functions();
   final _registrationController = Get.find<RegistrationController>();
+  final _loginController = Get.find<LoginController>();
 
   @override
   void dispose() {
@@ -59,7 +65,8 @@ class _SetupPasswordState extends State<SetupPassword> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CurrentStep(
-                    step: "4", backRoute: const SelectVerificationType()),
+                  step: "4",
+                ),
                 SizedBox(height: 5.h),
                 Padding(
                     padding: EdgeInsets.only(left: 2.5.w),
@@ -168,7 +175,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: stepsColor),
+                        color: signInPlaceholder),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -239,7 +246,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: stepsColor),
+                        color: signInPlaceholder),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -516,7 +523,16 @@ class _SetupPasswordState extends State<SetupPassword> {
                           fontSize: 16.0,
                         );
                       } else {
-                        await registerUserDetails(context);
+                        print(
+                            ' code is ${_registrationController.password.text.trim()}');
+                        print(widget.id);
+
+                        await registerUserDetails(context,
+                            confirmedPassword:
+                                _registrationController.confirmPassword.text,
+                            id: widget.id,
+                            password:
+                                _registrationController.confirmPassword.text);
                       }
                     },
                     child: AuthButtons(
@@ -529,7 +545,9 @@ class _SetupPasswordState extends State<SetupPassword> {
                         imageheight: (_isLoading) ? 30 : null,
                         form: true,
                         text: (_isLoading) ? "" : "Continue",
-                        route: const SetupPassCode()),
+                        route: SetupPassCode(
+                          id: widget.id,
+                        )),
                   ),
                 )
               ]),
@@ -548,27 +566,48 @@ class _SetupPasswordState extends State<SetupPassword> {
     return met;
   }
 
-  Future<void> registerUserDetails(BuildContext context) async {
+  Future<void> registerUserDetails(BuildContext context,
+      {required String id,
+      required String password,
+      required String confirmedPassword}) async {
     setState(() {
       _isLoading = true;
     });
-    final response = await _registrationController.registerDetails();
+    final response = await _loginController.createNewPassword(
+        id, password, confirmedPassword);
     print(response.body);
     final jsonBody = jsonDecode(response.body);
+
+    print(' code is ${jsonBody}');
     final userToken = jsonBody['token'];
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
+      // final validateUserIdentifier = jsonBody['data']['identifier'];
+      // SecureStorage.setUserIdentifier(validateUserIdentifier);
       setState(() {
         _isLoading = false;
       });
+
+      Future.delayed(const Duration(seconds: 2), () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) => SetupPassCode(
+              id: widget.id,
+            ),
+          ),
+        );
+      });
+      // SecureStorage.setUserToken(userToken);
+      // if ((!mounted)) return;
       Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
+        msg: "Registration successful",
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.green,
         textColor: Colors.white,
         fontSize: 16.0,
       );
+
       // if (!mounted) return;
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
@@ -577,14 +616,13 @@ class _SetupPasswordState extends State<SetupPassword> {
       // );
       return;
     }
-    SecureStorage.setUserToken(userToken);
-    if (!mounted) return;
+
     Fluttertoast.showToast(
-      msg: "Registration successful",
+      msg: "${jsonBody['data']['error']}",
       toastLength: Toast.LENGTH_LONG,
       gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 2,
-      backgroundColor: Colors.green,
+      backgroundColor: Colors.red,
       textColor: Colors.white,
       fontSize: 16.0,
     );
@@ -593,12 +631,5 @@ class _SetupPasswordState extends State<SetupPassword> {
     //     content: Text('Registration successful'),
     //   ),
     // );
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => const SetupPassCode(),
-        ),
-      );
-    });
   }
 }

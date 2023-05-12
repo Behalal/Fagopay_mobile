@@ -73,8 +73,8 @@ class ProgressStyle extends StatelessWidget {
           )
         ],
       ),
-      SizedBox(
-        height: 1.h,
+      const SizedBox(
+        height: 0,
       ),
       Row(
         children: [
