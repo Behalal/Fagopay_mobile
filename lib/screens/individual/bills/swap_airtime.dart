@@ -69,7 +69,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
     setState(() => searchOnStoppedTyping = Timer(duration, () {
           _billsController.swapCharge(
             amount: _billsController.amountController.text.toString(),
-            network: mtnActive ? 'mtn' : 'glo',
+            network: 'mtn'
             // network: if(mtnActive == true){
             //   mtnActive == 'mtn'
             // }else if(gloActive == true){

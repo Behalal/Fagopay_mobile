@@ -80,98 +80,630 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
 
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
-      child: Builder(
-        builder: (context) => GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
-                child: Column(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ProgressStyle(
+                stage: 0,
+                pageName: (salesTab) ? "Add Sales" : "Add Expenses",
+              ),
+              SizedBox(
+                height: 4.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (!salesTab) {
+                          salesTab = !salesTab;
+                        }
+                      });
+                    },
+                    child: Container(
+                      width: 40.w,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 0.5,
+                              color: (salesTab)
+                                  ? fagoSecondaryColor
+                                  : Colors.transparent),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 1.h),
+                        child: AutoSizeText(
+                          "Sales",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "Work Sans",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                (salesTab) ? fagoSecondaryColor : inactiveTab,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: (() {
+                      setState(() {
+                        if (salesTab) {
+                          salesTab = !salesTab;
+                        }
+                      });
+                    }),
+                    child: Container(
+                      width: 40.w,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 0.5,
+                              color: (!salesTab)
+                                  ? fagoSecondaryColor
+                                  : Colors.transparent),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 1.h),
+                        child: AutoSizeText(
+                          "Expenses",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontFamily: "Work Sans",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                (!salesTab) ? fagoSecondaryColor : inactiveTab,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 2.h,
+              ),
+              if (salesTab) ...[
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProgressStyle(
-                      stage: 0,
-                      pageName: (salesTab) ? "Add Sales" : "Add Expenses",
+                    const AutoSizeText(
+                      "Enter Transaction Amount",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
                     ),
                     SizedBox(
-                      height: 4.h,
+                      height: 2.h,
+                    ),
+                    SizedBox(
+                      width: 90.w,
+                      child: TextFormField(
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: welcomeText,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 1.h,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: const BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: linearGradient1,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          hintText: "Enter Transaction Amount",
+                          hintStyle: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Select Customer",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    DropdownButtonFormField(
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w, vertical: 1.5.h),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: const BorderSide(
+                            color: textBoxBorderColor,
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                color: linearGradient1,
+                                width: 1.0,
+                                style: BorderStyle.solid)),
+                        border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                color: textBoxBorderColor,
+                                width: 1.0,
+                                style: BorderStyle.solid)),
+                        hintText: "Enter country",
+                        hintStyle: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: signInPlaceholder,
+                        ),
+                      ),
+                      value: (selectedCustomer == '') ? null : selectedCustomer,
+                      hint: const Text("Select customer"),
+                      onChanged: (value) {
+                        setState(() {
+                          if (value != null) {
+                            selectedCustomer = value;
+                          } else {
+                            selectedCustomer = "";
+                          }
+                        });
+                      },
+                      items: customer.map((country) {
+                        return DropdownMenuItem<String>(
+                          value: country['value'],
+                          child: Text(country['name']),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 0.7.h,
+                    ),
+                    RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                          color: inactiveTab,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'If customer does not exist yet, ',
+                          ),
+                          TextSpan(
+                            text: 'click here ',
+                            style: TextStyle(
+                              color: fagoSecondaryColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          TextSpan(
+                            text: 'to add',
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Customer",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: fagoSecondaryColor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 4.h,
+                          child: CircleAvatar(
+                            backgroundColor: fagoSecondaryColorWithOpacity10,
+                            child: Image.asset("assets/images/gallery.png"),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
+                        SizedBox(
+                          width: 70.w,
+                          child: const AutoSizeText(
+                            "Obasa Yussuf",
+                            style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 16,
+                                color: inactiveTab,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Payment Status",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    DropdownButtonFormField(
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w, vertical: 1.5.h),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: const BorderSide(
+                            color: textBoxBorderColor,
+                            width: 1.0,
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                color: linearGradient1,
+                                width: 1.0,
+                                style: BorderStyle.solid)),
+                        border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                color: textBoxBorderColor,
+                                width: 1.0,
+                                style: BorderStyle.solid)),
+                        hintText: "Enter country",
+                        hintStyle: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: signInPlaceholder,
+                        ),
+                      ),
+                      value: (selectedCustomer == '') ? null : selectedCustomer,
+                      hint: const Text("Select customer"),
+                      onChanged: (value) {
+                        setState(() {
+                          if (value != null) {
+                            selectedCustomer = value;
+                          } else {
+                            selectedCustomer = "";
+                          }
+                        });
+                      },
+                      items: customer.map((country) {
+                        return DropdownMenuItem<String>(
+                          value: country['value'],
+                          child: Text(country['name']),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Sales Date",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    GestureDetector(
+                      onTap: () => selectDate(context),
+                      child: Container(
+                        width: 90.w,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 4.w,
+                          vertical: 1.5.h,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: textBoxBorderColor,
+                            width: 1.0,
+                            style: BorderStyle.solid,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            AutoSizeText(
+                              "${selectedDate.toLocal()}".split(' ')[0],
+                              style: const TextStyle(
+                                fontFamily: "Work Sans",
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: signInPlaceholder,
+                              ),
+                            ),
+                            Image.asset(
+                              "assets/images/arrow-down.png",
+                              height: 2.h,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Sales Description",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    SizedBox(
+                      width: 90.w,
+                      child: TextFormField(
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: welcomeText,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 1.h,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: const BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: linearGradient1,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          hintText: "Customer bought a pair of shoe",
+                          hintStyle: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+              if (!salesTab) ...[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AutoSizeText(
+                      "Enter Transaction Amount",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    SizedBox(
+                      width: 90.w,
+                      child: TextFormField(
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: welcomeText,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 1.h,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: const BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: linearGradient1,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          hintText: "Enter Transaction Amount",
+                          hintStyle: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "What is the payment for?",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 40.w,
+                          child: RadioListTile(
+                            activeColor: fagoBlackColor,
+                            selectedTileColor: fagoBlackColor,
+                            dense: false,
+                            value: "male",
+                            groupValue: paymentType,
+                            onChanged: (value) {
+                              setState(() {
+                                paymentType = value.toString();
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          width: 40.w,
+                          child: RadioListTile(
+                            activeColor: fagoBlackColor,
+                            selectedTileColor: fagoBlackColor,
+                            value: "female",
+                            groupValue: paymentType,
+                            onChanged: (value) {
+                              setState(() {
+                                paymentType = value.toString();
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 0.2.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              if (!salesTab) {
-                                salesTab = !salesTab;
-                              }
-                            });
-                          },
-                          child: Container(
-                            width: 40.w,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    width: 0.5,
-                                    color: (salesTab)
-                                        ? fagoSecondaryColor
-                                        : Colors.transparent),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 1.h),
-                              child: AutoSizeText(
-                                "Sales",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: (salesTab)
-                                      ? fagoSecondaryColor
-                                      : inactiveTab,
-                                ),
-                              ),
+                        SizedBox(
+                          width: 40.w,
+                          child: const AutoSizeText(
+                            "Payment to Supplier",
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: fagoBlackColor,
                             ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: (() {
-                            setState(() {
-                              if (salesTab) {
-                                salesTab = !salesTab;
-                              }
-                            });
-                          }),
-                          child: Container(
-                            width: 40.w,
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    width: 0.5,
-                                    color: (!salesTab)
-                                        ? fagoSecondaryColor
-                                        : Colors.transparent),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 1.h),
-                              child: AutoSizeText(
-                                "Expenses",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: (!salesTab)
-                                      ? fagoSecondaryColor
-                                      : inactiveTab,
-                                ),
-                              ),
+                        SizedBox(
+                          width: 40.w,
+                          child: const AutoSizeText(
+                            "Others",
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: fagoBlackColor,
                             ),
                           ),
                         ),
@@ -180,804 +712,215 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
                     SizedBox(
                       height: 2.h,
                     ),
-                    if (salesTab) ...[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const AutoSizeText(
-                            "Enter Sales Amount",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          SizedBox(
-                            width: 90.w,
-                            child: TextFormField(
-                              controller:
-                                  _salesController.salesAmountController,
-                              style: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: welcomeText,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 1.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: linearGradient1,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                hintText: "Enter Transaction Amount",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Select Customer",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          CustomDropdownButton(
-                            hint: 'Select Customer',
-                            items: _customerController.customers
-                                .map(
-                                  (customer) => DropdownMenuItem(
-                                    value: customer.id,
-                                    child: Text(customer.fullname!),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (selectedValue) {
-                              if (selectedValue != null) {
-                                setState(() {
-                                  selectedCustomerId = selectedValue;
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 0.7.h,
-                          ),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const AddCustomer(),
-                              ),
-                            ),
-                            child: RichText(
-                              text: const TextSpan(
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400,
-                                  color: inactiveTab,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'If customer does not exist yet, ',
-                                  ),
-                                  TextSpan(
-                                    text: 'click here ',
-                                    style: TextStyle(
-                                      color: fagoSecondaryColor,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'to add',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          // const AutoSizeText(
-                          //   "Customer",
-                          //   style: TextStyle(
-                          //     fontFamily: "Work Sans",
-                          //     fontSize: 14,
-                          //     fontWeight: FontWeight.w400,
-                          //     color: fagoSecondaryColor,
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 1.5.h,
-                          // ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.start,
-                          //   crossAxisAlignment: CrossAxisAlignment.center,
-                          //   children: [
-                          //     SizedBox(
-                          //       height: 4.h,
-                          //       child: CircleAvatar(
-                          //         backgroundColor: fagoSecondaryColorWithOpacity10,
-                          //         child: Image.asset("assets/images/gallery.png"),
-                          //       ),
-                          //     ),
-                          //     SizedBox(
-                          //       width: 4.w,
-                          //     ),
-                          //     SizedBox(
-                          //       width: 70.w,
-                          //       child: const AutoSizeText(
-                          //         "Obasa Yussuf",
-                          //         style: TextStyle(
-                          //             fontFamily: "Work Sans",
-                          //             fontSize: 16,
-                          //             color: inactiveTab,
-                          //             fontWeight: FontWeight.w500),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          // SizedBox(
-                          //   height: 2.h,
-                          // ),
-                          const AutoSizeText(
-                            "Payment Status",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          CustomDropdownButton(
-                            hint: 'Select status',
-                            items: PaymentStatus.values
-                                .map((status) => DropdownMenuItem(
-                                      value: status.value,
-                                      child: Text(
-                                        status.title,
-                                      ),
-                                    ))
-                                .toList(),
-                            onChanged: (selectedValue) {
-                              if (selectedValue != null) {
-                                setState(() {
-                                  selectedPaymentStatus = selectedValue;
-                                });
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Enter Amount Paid",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          SizedBox(
-                            width: 90.w,
-                            child: TextFormField(
-                              controller: _salesController.amountPaidController,
-                              style: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: welcomeText,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 1.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: linearGradient1,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                hintText: "Enter Transaction Amount",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-
-                          const AutoSizeText(
-                            "Sales Date",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          GestureDetector(
-                            onTap: () => selectDate(context),
-                            child: Container(
-                              width: 90.w,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 4.w,
-                                vertical: 1.5.h,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                  color: textBoxBorderColor,
-                                  width: 1.0,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AutoSizeText(
-                                    "${selectedDate.toLocal()}".split(' ')[0],
-                                    style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                      color: signInPlaceholder,
-                                    ),
-                                  ),
-                                  Image.asset(
-                                    "assets/images/arrow-down.png",
-                                    height: 2.h,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Sales Description",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.5.h,
-                          ),
-                          SizedBox(
-                            width: 90.w,
-                            child: TextFormField(
-                              controller:
-                                  _salesController.salesDescriptionController,
-                              style: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: welcomeText,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 1.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: linearGradient1,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                hintText: "Customer bought a pair of shoe",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                    const AutoSizeText(
+                      "Supplier Details",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: fagoSecondaryColor,
                       ),
-                    ],
-                    if (!salesTab) ...[
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const AutoSizeText(
-                            "Enter Transaction Amount",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
+                    ),
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
+                    const BusinessCustomerDetails(),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Select Category",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    DropdownButtonFormField(
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
+                      ),
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w, vertical: 1.5.h),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0),
+                          borderSide: const BorderSide(
+                            color: textBoxBorderColor,
+                            width: 1.0,
                           ),
-                          SizedBox(
-                            height: 2.h,
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                color: linearGradient1,
+                                width: 1.0,
+                                style: BorderStyle.solid)),
+                        border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                color: textBoxBorderColor,
+                                width: 1.0,
+                                style: BorderStyle.solid)),
+                        hintText: "Select Category",
+                        hintStyle: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: signInPlaceholder,
+                        ),
+                      ),
+                      value: (selectedCategory == '') ? null : selectedCategory,
+                      hint: const Text("Select customer"),
+                      onChanged: (value) {
+                        setState(() {
+                          if (value != null) {
+                            selectedCategory = value;
+                          } else {
+                            selectedCategory = "";
+                          }
+                        });
+                      },
+                      items: categoryList.map((country) {
+                        return DropdownMenuItem<String>(
+                          value: country['value'],
+                          child: Text(country['name']),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Sales Date",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    GestureDetector(
+                      onTap: () => selectDate(context),
+                      child: Container(
+                        width: 90.w,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 4.w,
+                          vertical: 1.5.h,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: textBoxBorderColor,
+                            width: 1.0,
+                            style: BorderStyle.solid,
                           ),
-                          SizedBox(
-                            width: 90.w,
-                            child: TextFormField(
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            AutoSizeText(
+                              "${selectedDate.toLocal()}".split(' ')[0],
                               style: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: welcomeText,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 1.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: linearGradient1,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                hintText: "Enter Transaction Amount",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "What is the payment for?",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 40.w,
-                                child: RadioListTile(
-                                  activeColor: fagoBlackColor,
-                                  selectedTileColor: fagoBlackColor,
-                                  dense: false,
-                                  value: "male",
-                                  groupValue: paymentType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      paymentType = value.toString();
-                                    });
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: 40.w,
-                                child: RadioListTile(
-                                  activeColor: fagoBlackColor,
-                                  selectedTileColor: fagoBlackColor,
-                                  value: "female",
-                                  groupValue: paymentType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      paymentType = value.toString();
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 0.2.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 40.w,
-                                child: const AutoSizeText(
-                                  "Payment to Supplier",
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: fagoBlackColor,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 40.w,
-                                child: const AutoSizeText(
-                                  "Others",
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: fagoBlackColor,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Supplier Details",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: fagoSecondaryColor,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 1.5.h,
-                          ),
-                          const BusinessCustomerDetails(),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Select Category",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          DropdownButtonFormField(
-                            style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: signInPlaceholder,
-                            ),
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 1.5.h),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0),
-                                borderSide: const BorderSide(
-                                  color: textBoxBorderColor,
-                                  width: 1.0,
-                                ),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                      color: linearGradient1,
-                                      width: 1.0,
-                                      style: BorderStyle.solid)),
-                              border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                      color: textBoxBorderColor,
-                                      width: 1.0,
-                                      style: BorderStyle.solid)),
-                              hintText: "Select Category",
-                              hintStyle: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
                                 color: signInPlaceholder,
                               ),
                             ),
-                            value: (selectedCategory == '')
-                                ? null
-                                : selectedCategory,
-                            hint: const Text("Select customer"),
-                            onChanged: (value) {
-                              setState(() {
-                                if (value != null) {
-                                  selectedCategory = value;
-                                } else {
-                                  selectedCategory = "";
-                                }
-                              });
-                            },
-                            items: categoryList.map((country) {
-                              return DropdownMenuItem<String>(
-                                value: country['value'],
-                                child: Text(country['name']),
-                              );
-                            }).toList(),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Sales Date",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
+                            Image.asset(
+                              "assets/images/arrow-down.png",
+                              height: 2.h,
                             ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          GestureDetector(
-                            onTap: () => selectDate(context),
-                            child: Container(
-                              width: 90.w,
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 4.w,
-                                vertical: 1.5.h,
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                  color: textBoxBorderColor,
-                                  width: 1.0,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  AutoSizeText(
-                                    "${selectedDate.toLocal()}".split(' ')[0],
-                                    style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                      color: signInPlaceholder,
-                                    ),
-                                  ),
-                                  Image.asset(
-                                    "assets/images/arrow-down.png",
-                                    height: 2.h,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            "Notes",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          SizedBox(
-                            width: 90.w,
-                            child: TextFormField(
-                              style: const TextStyle(
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: welcomeText,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 4.w,
-                                  vertical: 1.h,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: linearGradient1,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid,
-                                  ),
-                                ),
-                                hintText:
-                                    "Share anything about the transaction",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ],
-                    SizedBox(
-                      height: 4.h,
                     ),
-                    Center(
-                      child: GestureDetector(
-                        onTap: () async {
-                          if (salesTab) {
-                            if (_salesController.salesAmountController.text !=
-                                    "" &&
-                                selectedCustomerId != "" &&
-                                selectedPaymentStatus != "" &&
-                                _salesController.amountPaidController.text !=
-                                    "" &&
-                                selectedDate.toString() != "" &&
-                                _salesController
-                                        .salesDescriptionController.text !=
-                                    "") {
-                              await createBusinessSales(context);
-                              return;
-                            }
-                            Fluttertoast.showToast(
-                              msg: "Fill in the form properly!",
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.TOP,
-                              timeInSecForIosWeb: 2,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            return;
-                          }
-                        },
-                        child: AuthButtons(
-                          text: "Submit",
-                          form: true,
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    const AutoSizeText(
+                      "Notes",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    SizedBox(
+                      width: 90.w,
+                      child: TextFormField(
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: welcomeText,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 4.w,
+                            vertical: 1.h,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: const BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: linearGradient1,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                          ),
+                          hintText: "Share anything about the transaction",
+                          hintStyle: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
+              ],
+              SizedBox(
+                height: 4.h,
               ),
-            ),
+              Center(
+                  child: AuthButtons(
+                text: "Submit",
+                form: true,
+              ))
+            ],
           ),
         ),
       ),
