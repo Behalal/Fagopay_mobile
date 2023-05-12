@@ -1,6 +1,5 @@
 // import 'dart:ui';
 import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
@@ -15,11 +14,12 @@ import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../constants/colors.dart';
+import '../functions.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -97,36 +97,18 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                         padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
                         width: 371,
                         height: 208,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image:
-                                    AssetImage("assets/images/image 1.png"))),
+                        decoration:  const BoxDecoration(
+                            // image: svgDecorationImage("assets/images/image1.svg")),
+                          image: DecorationImage(image: AssetImage("assets/images/image1.png"))
+                        ),
                         child: Stack(
                           alignment: AlignmentDirectional.centerStart,
                           children: [
                             Positioned(
                               top: 35.66,
-                              width: 71.92,
-                              height: 60.09,
-                              left: 15.26,
-                              child: Image.asset(
-                                  "assets/images/sign_in_vector 1.png"),
+                              left: 8,
+                              child: SvgPicture.asset("assets/images/Frame.svg"),
                             ),
-                            Positioned(
-                              top: 63.48,
-                              width: 67.35,
-                              height: 95.12,
-                              left: 18.29,
-                              child: Image.asset(
-                                  "assets/images/sign_in_vector 2.png"),
-                            ),
-                            Positioned(
-                                top: 51.26,
-                                right: 54.38,
-                                bottom: -6.81,
-                                left: -189,
-                                child: Image.asset(
-                                    "assets/images/sign_in_vector 3.png")),
                           ],
                         ),
                       ),
@@ -302,6 +284,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       }),
     );
   }
+
 
   Future<void> loginUser(BuildContext context) async {
     final progress = ProgressHUD.of(context);

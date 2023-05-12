@@ -48,7 +48,11 @@ dependencies:
   dropdown_button2: ^2.1.0
   syncfusion_flutter_sliders: ^21.1.41
   jiffy: ^6.1.0
+
+  flutter_svg_provider: ^1.0.3
+
   image_picker: ^0.8.7+4
+
 
 dev_dependencies:
   build_runner: ^2.3.3

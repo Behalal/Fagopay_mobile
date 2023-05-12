@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/sales_controller.dart';
 import '../../../models/sales_model.dart';
@@ -29,8 +30,6 @@ class _BookKeepingState extends State<BookKeeping> {
   final _salesController = Get.find<SalesController>();
   final _companyController = Get.find<CompanyController>();
 
-  bool inflowTab = true;
-  bool recordFound = true;
   List salesFilter = [
     {'type': 'All', 'value': ""},
     {'type': 'Paid', 'value': '7'},
@@ -48,6 +47,8 @@ class _BookKeepingState extends State<BookKeeping> {
   String? selectedFilter = '';
   int currentIndex = 0;
   late final PageController _controller = PageController(viewportFraction: 0.5);
+  late bool inflowTab = true;
+  late bool recordFound = true;
 
   @override
   void didChangeDependencies() {
@@ -64,6 +65,7 @@ class _BookKeepingState extends State<BookKeeping> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: getBusinessSales,
@@ -106,9 +108,10 @@ class _BookKeepingState extends State<BookKeeping> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                  "assets/images/fluent_receipt-20-filled.png",
+                                SvgPicture.asset(
+                                  "assets/images/archive-book.svg",
                                   color: white,
+                                  height: 3.h,
                                 ),
                                 const AutoSizeText(
                                   "New Transaction",
@@ -131,7 +134,7 @@ class _BookKeepingState extends State<BookKeeping> {
                   ),
                   SizedBox(
                     width: 100.w,
-                    height: 11.h,
+                    height: 12.h,
                     child: PageView.builder(
                         controller: _controller,
                         padEnds: false,
@@ -142,98 +145,114 @@ class _BookKeepingState extends State<BookKeeping> {
                           });
                         },
                         itemBuilder: (context, i) {
-                          return Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  // goToPage(context, const AllSales());
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 2.w, vertical: 1.h),
-                                  decoration: const BoxDecoration(
-                                      color: white,
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: blackWithOpacity,
-                                            offset: Offset.zero,
-                                            spreadRadius: 2,
-                                            blurRadius: 8),
-                                      ]),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                          bookKeepingContent[i].imagePath),
-                                      SizedBox(width: 2.w),
-                                      Container(
-                                        height: 53,
-                                        decoration: DottedDecoration(
-                                            color: blackWithOpacity5,
-                                            // dash: const [1, 1, 1],
-                                            linePosition: LinePosition.right),
+                          return SizedBox(
+                            width: 43.w,
+                            child: Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    // goToPage(context, const AllSales());
+                                  },
+                                  // child: Container(
+                                  //   padding: EdgeInsets.symmetric(
+                                  //       horizontal: 2.w, vertical: 1.h),
+                                  //   decoration: const BoxDecoration(
+                                  //       color: white,
+                                  //       borderRadius:
+                                  //           BorderRadius.all(Radius.circular(5)),
+                                  //       boxShadow: [
+                                  //         BoxShadow(
+                                  //           color: blackWithOpacity,
+                                  //           offset: Offset.zero,
+                                  //           spreadRadius: 1,
+                                  //           blurRadius: 3,
+                                  //         ),
+                                  //       ]),
+                                  child: SizedBox(
+                                    width: 43.w,
+                                    child: Card(
+                                      elevation: 1.5,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                bookKeepingContent[i].imagePath),
+                                            SizedBox(width: 1.w),
+                                            // Container(
+                                            //   height: 53,
+                                            //   decoration: DottedDecoration(
+                                            //       color: blackWithOpacity5,
+                                            //       // dash: const [1, 1, 1],
+                                            //       linePosition: LinePosition.right),
+                                            // ),
+                                            SvgPicture.asset(
+                                                "assets/images/Line.svg"),
+                                            SizedBox(width: 2.w),
+                                            SizedBox(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  AutoSizeText(
+                                                    bookKeepingContent[i].accountType,
+                                                    style: const TextStyle(
+                                                      fontFamily: "Work Sans",
+                                                      fontSize: 12,
+                                                      color: inactiveTab,
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 1.h),
+                                                  AutoSizeText(
+                                                    "$currencySymbol${bookKeepingContent[i].balance}",
+                                                    style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontSize: 18,
+                                                        color: (i == 1 ||
+                                                                i ==
+                                                                    (bookKeepingContent
+                                                                            .length -
+                                                                        1))
+                                                            ? fagoSecondaryColor
+                                                            : inactiveTab,
+                                                        fontWeight: FontWeight.w700),
+                                                  ),
+                                                  SizedBox(height: 1.h),
+                                                  AutoSizeText(
+                                                    bookKeepingContent[i].description,
+                                                    style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontSize: 10,
+                                                        color: (i == 2)
+                                                            ? fagoGreenColor
+                                                            : inactiveTabWithOpacity30,
+                                                        fontWeight: FontWeight.w600),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                      SizedBox(width: 2.w),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AutoSizeText(
-                                            bookKeepingContent[i].accountType,
-                                            style: const TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 12,
-                                              color: inactiveTab,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          SizedBox(height: 1.h),
-                                          AutoSizeText(
-                                            "$currencySymbol${bookKeepingContent[i].balance}",
-                                            style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 18,
-                                                color: (i == 1 ||
-                                                        i ==
-                                                            (bookKeepingContent
-                                                                    .length -
-                                                                1))
-                                                    ? fagoSecondaryColor
-                                                    : inactiveTab,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                          SizedBox(height: 1.h),
-                                          AutoSizeText(
-                                            bookKeepingContent[i].description,
-                                            style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 10,
-                                                color: (i == 2)
-                                                    ? fagoGreenColor
-                                                    : inactiveTabWithOpacity30,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 1.5.w,
-                              )
-                            ],
+                                SizedBox(
+                                  width: 1.5.w,
+                                )
+                              ],
+                            ),
                           ); // ]
                         }),
                   ),
                   SizedBox(
-                    height: 1.2.h,
+                    height: 1.5.h,
                   ),
                   // Dots
                   Row(
@@ -414,17 +433,21 @@ class _BookKeepingState extends State<BookKeeping> {
                     height: 2.h,
                   ),
                   // Record Found
-                  if (recordFound)
+                  if (recordFound) ...[
                     Container(
                       height: 38.h,
                       padding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                      decoration: const BoxDecoration(
-                          color: fagoSecondaryColorWithOpacity10),
+                      decoration: BoxDecoration(
+                          color: _salesController.sales.isEmpty ? Colors.transparent: fagoSecondaryColorWithOpacity10
+                        ),
                       child: _salesController.sales.isEmpty
-                          ? const Center(
-                              child: AutoSizeText('No Sales yet'),
-                            )
+                          ? const NoRecordFound(
+                            recordDescription:
+                                'Record a Sales now to keep track of your daily sales and expenses.',
+                            recordRoute: AddSalesOrExpenses(),
+                            recordText: 'Transactions',
+                          )
                           : ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
@@ -575,14 +598,16 @@ class _BookKeepingState extends State<BookKeeping> {
                       //   ],
                       // ],
                     ),
-                  // No record Found
-                  if (!recordFound)
+                  ]else ...[
+                    // No Record Found
                     const NoRecordFound(
                       recordDescription:
                           'Record a transaction now to keep track of your daily sales and expenses.',
                       recordRoute: AddSalesOrExpenses(),
                       recordText: 'Transactions',
-                    )
+                    ),
+                  ],
+                    
                 ],
               ),
             ),

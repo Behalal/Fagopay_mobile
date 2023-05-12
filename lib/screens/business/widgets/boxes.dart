@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
@@ -54,7 +55,7 @@ class CustomerBox extends StatelessWidget {
                   height: 4.h,
                   child: CircleAvatar(
                     backgroundColor: white,
-                    child: Image.asset(
+                    child: SvgPicture.asset(
                       firstBoxImage!,
                       color: textImageColor,
                       height: 3.h,
@@ -126,7 +127,7 @@ class CustomerBox extends StatelessWidget {
                   height: 4.h,
                   child: CircleAvatar(
                     backgroundColor: white,
-                    child: Image.asset(
+                    child: SvgPicture.asset(
                       secondBoxImage!,
                       color: textImageColor,
                       height: 3.h,

@@ -1,65 +1,45 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 class Company {
   String? id;
   String? rcNumber;
   String? companyName;
-  String? emailAddress;
-  String? branchAddress;
-  String? state;
-  String? country;
-  String? city;
-  String? address;
-  String? companyStatus;
-  String? lga;
-  String? dateOfRegistration;
   int? otpVerified;
+  int? isVerified;
   String? userId;
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
+  // List<Customer>? customers;
+  // List<Supplier>? suppliers;
+  // List<Sales>? sales;
 
   Company({
     this.id,
     this.rcNumber,
     this.companyName,
-    this.emailAddress,
-    this.branchAddress,
-    this.state,
-    this.country,
-    this.city,
-    this.address,
-    this.companyStatus,
-    this.lga,
-    this.dateOfRegistration,
     this.otpVerified,
+    this.isVerified,
     this.userId,
-    this.createdAt,
-    this.updatedAt,
-    this.deletedAt,
+    // this.customers,
+    // this.suppliers,
+    // this.sales,
   });
 
   static Company fromJson(json) => Company(
         id: json['id'] as String?,
         rcNumber: json['rc_number'] as String?,
         companyName: json['company_name'] as String?,
-        emailAddress: json['email_address'] as String?,
-        branchAddress: json['branchAddress'] as String?,
-        state: json['state'] as String?,
-        country: json['country'] as String?,
-        city: json['city'] as String?,
-        address: json['address'] as String?,
-        companyStatus: json['company_status'] as String?,
-        lga: json['lga'] as String?,
-        dateOfRegistration: json['date_of_registration'] as String?,
         otpVerified: json['otp_verified'] as int?,
+        isVerified: json['is_verified'] as int?,
         userId: json['user_id'] as String?,
-        createdAt: json['created_at'] as String?,
-        updatedAt: json['updated_at'] as String?,
-        deletedAt: json['deleted_at'] as String?,
+        // customers: json['customer'].map<Customer>(Customer.fromJson).toList()
+        //     as List<Customer>?,
+        // suppliers: json['suppliers'].map<Supplier>(Supplier.fromJson).toList()
+        //     as List<Supplier>?,
+        // sales:
+        //     json['sales'].map<Sales>(Sales.fromJson).toList() as List<Sales>?,
       );
 
   @override
   String toString() {
-    return 'Company(id: $id, rcNumber: $rcNumber, companyName: $companyName, emailAddress: $emailAddress, branchAddress: $branchAddress, state: $state, country: $country, city: $city, address: $address, companyStatus: $companyStatus, lga: $lga, dateOfRegistration: $dateOfRegistration, otpVerified: $otpVerified, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt)';
+    return 'Company(id: $id, rcNumber: $rcNumber, companyName: $companyName, otpVerified: $otpVerified, isVerified: $isVerified, userId: $userId)';
   }
 }

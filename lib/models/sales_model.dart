@@ -11,6 +11,7 @@ class Sales {
   String? paymentStatus;
   String? salesDate;
   String? salesDescription;
+  String? transactionId;
   String? createdBy;
   String? createdAt;
   String? updatedAt;
@@ -26,6 +27,7 @@ class Sales {
     this.paymentStatus,
     this.salesDate,
     this.salesDescription,
+    this.transactionId,
     this.createdBy,
     this.createdAt,
     this.updatedAt,
@@ -42,6 +44,7 @@ class Sales {
         paymentStatus: json['payment_status'] as String?,
         salesDate: json['sales_date'] as String?,
         salesDescription: json['sales_description'] as String?,
+        transactionId: json['transaction_id'] as String?,
         createdBy: json['created_by'] as String?,
         createdAt: json['created_at'] as String?,
         updatedAt: json['updated_at'] as String?,
@@ -51,6 +54,6 @@ class Sales {
 
   @override
   String toString() {
-    return 'Sales(id: $id, companyId: $companyId, customerId: $customerId, salesAmount: $salesAmount, amountPaid: $amountPaid, paymentStatus: $paymentStatus, salesDate: $salesDate, salesDescription: $salesDescription, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Sales(id: $id, companyId: $companyId, customerId: $customerId, salesAmount: $salesAmount, amountPaid: $amountPaid, paymentStatus: $paymentStatus, salesDate: $salesDate, salesDescription: $salesDescription, transactionId: $transactionId, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, companyDetails: $companyDetails, customerDetails: $customerDetails)';
   }
 }

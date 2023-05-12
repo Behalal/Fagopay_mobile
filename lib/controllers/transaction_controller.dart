@@ -73,6 +73,24 @@ class TransactionController extends GetxController {
     }
   }
 
+  Future<dynamic> getAccountDetailsByPhone(String phoneNo) async {
+    final token = await SecureStorage.readUserToken();
+
+    try {
+      final responseData = await NetworkHelper.getRequest(
+        url: "${BaseAPI.transactionsPath}account-lookup-by-phone/$phoneNo",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+      throw Exception('Failed');
+    }
+  }
+
   Future<dynamic> fundWallet(String amount) async {
     final token = await SecureStorage.readUserToken();
     var requestBody = jsonEncode({

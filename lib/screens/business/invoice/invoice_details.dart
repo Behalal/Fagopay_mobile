@@ -778,7 +778,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                     child: AuthButtons(
                       text: "Mail Invoice",
                       form: false,
-                      suffixImage: "assets/images/sms-tracking.png",
+                      suffixSvg: "true",
+                      suffixImage: "assets/images/sms-tracking.svg",
                     ),
                   ),
                   SizedBox(
@@ -786,8 +787,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                     child: AuthButtons(
                       text: "Download",
                       form: false,
+                      suffixSvg: "true",
                       color: fagoPrimaryColor,
-                      suffixImage: "assets/images/document-download.png",
+                      suffixImage: "assets/images/document-download.svg",
                     ),
                   ),
                 ],
