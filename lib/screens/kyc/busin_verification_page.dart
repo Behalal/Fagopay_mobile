@@ -29,9 +29,9 @@ class KycVerficationstate extends State<KycVerfication> {
 
   @override
   Widget build(BuildContext context) {
-    print(
-      'Id is ${_userUcontroller.user!.id}',
-    );
+    // print(
+    //   'Id is ${_userUcontroller.user!.id}',
+    // );
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(

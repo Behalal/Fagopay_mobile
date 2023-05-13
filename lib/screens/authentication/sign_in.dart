@@ -97,17 +97,18 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                         padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
                         width: 371,
                         height: 208,
-                        decoration:  const BoxDecoration(
+                        decoration: const BoxDecoration(
                             // image: svgDecorationImage("assets/images/image1.svg")),
-                          image: DecorationImage(image: AssetImage("assets/images/image1.png"))
-                        ),
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/image1.png"))),
                         child: Stack(
                           alignment: AlignmentDirectional.centerStart,
                           children: [
                             Positioned(
                               top: 35.66,
                               left: 8,
-                              child: SvgPicture.asset("assets/images/Frame.svg"),
+                              child:
+                                  SvgPicture.asset("assets/images/Frame.svg"),
                             ),
                           ],
                         ),
@@ -285,7 +286,6 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     );
   }
 
-
   Future<void> loginUser(BuildContext context) async {
     final progress = ProgressHUD.of(context);
     final response = await _loginController.loginUser();
@@ -374,8 +374,9 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (
-          // BuildContext context) =>  const BookKeeping(),
-          BuildContext context) => const Dashboard(),
+                // BuildContext context) =>  const BookKeeping(),
+                BuildContext context) =>
+            const Dashboard(),
 
         //  DashboardHome(
         //   userDetails: userDetails,

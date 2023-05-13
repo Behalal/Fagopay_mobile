@@ -45,20 +45,16 @@ class _PersonalBoxState extends State<PersonalBox> {
                     Container(
                         alignment: Alignment.topRight,
                         child: (widget.isBiz == true)
-                            ? Image.asset("assets/images/check_Icon.png")
+                            ? SvgPicture.asset(
+                                "assets/icons/account_choosed_logo.svg")
                             : null),
                     SizedBox(
                       height: 1.h,
                     ),
                     Row(
                       children: [
-                        Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: [
-                            Image.asset("assets/images/Ellipse 62.png"),
-                            Image.asset("assets/images/personal_Icon.png")
-                          ],
-                        ),
+                        SvgPicture.asset(
+                            "assets/icons/personal_account_logo.svg"),
                         SizedBox(
                           width: 3.w,
                         ),
@@ -102,31 +98,28 @@ class _PersonalBoxState extends State<PersonalBox> {
                                   )
                                 : Container(),
                             (widget.isBiz == true)
-                                ? SizedBox(
-                                    width: 50.w,
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/mark_icon.svg'),
-                                        SizedBox(
-                                          width: 1.h,
+                                ? Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/icons/mark_icon.svg'),
+                                      SizedBox(
+                                        width: 1.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "Personal name in account details",
+                                        // "hello",
+                                        textAlign: TextAlign.left,
+                                        minFontSize: 10,
+                                        stepGranularity: 10,
+                                        maxLines: 4,
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300,
                                         ),
-                                        const AutoSizeText(
-                                          "Personal name in account details",
-                                          // "hello",
-                                          textAlign: TextAlign.left,
-                                          minFontSize: 10,
-                                          stepGranularity: 10,
-                                          maxLines: 4,
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 12,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   )
                                 : Container(),
                             (widget.isBiz == true)
@@ -135,31 +128,28 @@ class _PersonalBoxState extends State<PersonalBox> {
                                   )
                                 : Container(),
                             (widget.isBiz == true)
-                                ? SizedBox(
-                                    width: 50.w,
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/mark_icon.svg'),
-                                        SizedBox(
-                                          width: 1.h,
+                                ? Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/icons/mark_icon.svg'),
+                                      SizedBox(
+                                        width: 1.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "Access to business tool such as \ninvoice, bookkeeping, & customer \nmanagement.",
+                                        // "hello",
+                                        textAlign: TextAlign.left,
+                                        minFontSize: 10,
+                                        stepGranularity: 10,
+                                        maxLines: 4,
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w300,
                                         ),
-                                        const AutoSizeText(
-                                          "Access to business tool such as \ninvoice, bookkeeping, & customer \nmanagement.",
-                                          // "hello",
-                                          textAlign: TextAlign.left,
-                                          minFontSize: 10,
-                                          stepGranularity: 10,
-                                          maxLines: 4,
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 12,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   )
                                 : Container(),
                             (widget.isBiz == true)

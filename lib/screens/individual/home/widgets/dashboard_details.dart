@@ -105,22 +105,22 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                     Row(
                                       children: [
                                         RichText(
-                                          text: TextSpan(
-                                            style: const TextStyle(
+                                          text: const TextSpan(
+                                            style: TextStyle(
                                               fontFamily: "Work Sans",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
                                               color: white,
                                             ),
                                             children: [
-                                              const TextSpan(text: 'Hello'),
-                                              TextSpan(
-                                                text:
-                                                    ' ${widget.user.firstName}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
+                                              TextSpan(text: 'Welcome'),
+                                              // TextSpan(
+                                              //   text:
+                                              //       ' ${widget.user.firstName}',
+                                              //   style: const TextStyle(
+                                              //     fontWeight: FontWeight.w700,
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -221,11 +221,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4, vertical: 0.4.h),
-                                          child: Row(
+                                          child: const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              const AutoSizeText(
+                                              AutoSizeText(
                                                 "Switch Account",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
@@ -238,7 +238,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                               Stack(
                                                 alignment:
                                                     AlignmentDirectional.center,
-                                                children: const [
+                                                children: [
                                                   Image(
                                                     image: AssetImage(
                                                         "assets/images/box.png"),

@@ -31,9 +31,7 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
   final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
-    print(
-      'Id is ${_userUcontroller.user!.id}',
-    );
+   
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

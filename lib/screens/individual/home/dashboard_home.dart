@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/models/company_model.dart';
+import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';
@@ -7,7 +8,6 @@ import '../../authentication/account_creation/select_type.dart';
 import '../../business/customers/customer.dart';
 import '../../business/suppliers/all_supplies.dart';
 import 'widgets/services_widget.dart';
-import '../../kyc/personal_verification_page.dart';
 import '../sales/sales_page.dart';
 import '../../../controllers/login_controller.dart';
 import '../../../controllers/user_controller.dart';
@@ -180,7 +180,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                     );
                                   },
                                   child: Container(
-                                    height: 10.2.h,
+                                    // height: 10.2.h,
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 2.h, vertical: 2.h),
                                     width: Get.width,
@@ -215,16 +215,24 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.stretch,
                                               children: [
-                                                Text(
-                                                  'Attention ${widget.userDetails.firstName}!',
-                                                  style: const TextStyle(
+                                                const Text(
+                                                  'Attention',
+                                                  style: TextStyle(
                                                     fontSize: 12,
                                                     fontWeight: FontWeight.w700,
                                                     color: Colors.white,
                                                   ),
                                                 ),
+                                                //  Text(
+                                                //   'Attention ${widget.userDetails.firstName}!',
+                                                //   style: const TextStyle(
+                                                //     fontSize: 12,
+                                                //     fontWeight: FontWeight.w700,
+                                                //     color: Colors.white,
+                                                //   ),
+                                                // ),
                                                 SizedBox(
-                                                  height: .5.h,
+                                                  height: .4.h,
                                                 ),
                                                 const Text(
                                                   'Complete your KYC requirements to access our banking services. It will help secure & protect your account from impersonation.',
@@ -249,7 +257,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 // ),
                               )
                             : SizedBox(
-                                height: 1.h,
+                                height: 0.h,
                               ),
 
                         Padding(
@@ -288,7 +296,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 4.0.h,
                                 mainAxisSpacing: 3.0.h,
-                                childAspectRatio: 0.1.h,
+                                childAspectRatio: 0.10.h,
                                 children:
                                     List.generate(services.length, (index) {
                                   return InkWell(
@@ -312,6 +320,21 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 services[index].route!,
                                           ),
                                         );
+                                      } else if (services[index].route ==
+                                              null &&
+                                          widget.userDetails.kycVerified == 1 &&
+                                          services[index].bill == 'special') {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) =>
+                                                const BillsPayment());
                                       }
                                     },
                                     child: Column(children: [
@@ -325,7 +348,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             width: 2.5.w,
                                           ),
                                           SizedBox(
-                                            height: 1.5.h,
+                                            height: 1.0.h,
                                           ),
                                           AutoSizeText(
                                             services[index].itemName,
@@ -371,7 +394,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 2.h, vertical: 2.h),
-                            height: 10.h,
+                            // height: 10.h,
                             width: Get.width,
                             decoration: BoxDecoration(
                                 color: fagoSecondaryColor.withOpacity(0.05),
@@ -416,7 +439,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         style: TextStyle(
                                           fontFamily: "Work Sans",
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 10,
+                                          fontSize: 5,
                                           color: black,
                                         ),
                                       ),
@@ -569,7 +592,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 3.h, vertical: 2.h),
-                                height: 20.h,
+                                // height: 20.h,
                                 width: Get.width,
                                 color: fagoSecondaryColor.withOpacity(0.05),
                                 child: Column(
@@ -586,6 +609,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: fagoSecondaryColor,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
                                     const AutoSizeText(
                                       'Do you own a business with corporate registration? Manage them within this App or manage for others',
                                       textAlign: TextAlign.start,
@@ -596,12 +622,15 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         color: stepsColor,
                                       ),
                                     ),
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
                                     InkWell(
                                       onTap: () {
                                         Get.to(() => const SelectType());
                                       },
                                       child: Container(
-                                        width: 30.w,
+                                        width: 20.h,
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),
@@ -928,13 +957,8 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> getCompany() async {
     final response = await _companyController.getCompany();
-
     final companyjsonBodyData = response['data']['company_detail'];
     final companyDetails = Company.fromJson(companyjsonBodyData[0]);
-
-    // final companyjsonBodyData = response!['data']['company_detail'];
-    // final companyDetails = Company.fromJson(companyjsonBodyData);
-
     _companyController.setCompany = companyDetails;
   }
 }

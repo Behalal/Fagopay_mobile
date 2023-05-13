@@ -34,6 +34,6 @@ class AppBinding extends Bindings {
     Get.lazyPut(() => AdminController());
     Get.lazyPut(() => SalesController());
     Get.lazyPut(() => ExpensesController());
-    //Get.put(RegistrationController(), permanent: true);
+    Get.put(RegistrationController(), permanent: true);
   }
 }

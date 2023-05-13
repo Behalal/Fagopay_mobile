@@ -42,25 +42,21 @@ class _BusinessBoxState extends State<BusinessBox> {
                   Container(
                     alignment: Alignment.topRight,
                     child: (widget.isBiz == true)
-                        ? Image.asset("assets/images/check_Icon.png")
+                        ? SvgPicture.asset(
+                            "assets/icons/account_choosed_logo.svg")
                         : SizedBox(
                             height: 2.h,
                           ),
                   ),
                   Row(
                     children: [
-                      Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: [
-                          Image.asset("assets/images/Ellipse 62.png"),
-                          Image.asset("assets/images/biz_Icon.png")
-                        ],
-                      ),
+                      SvgPicture.asset(' assets/icons/business_type_icon.svg'),
                       SizedBox(
                         width: 3.w,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
                             width: 50.w,
@@ -101,31 +97,28 @@ class _BusinessBoxState extends State<BusinessBox> {
                                 )
                               : Container(),
                           (widget.isBiz == true)
-                              ? SizedBox(
-                                  width: 50.w,
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/icons/mark_icon.svg'),
-                                      SizedBox(
-                                        width: 1.h,
+                              ? Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/mark_icon.svg'),
+                                    SizedBox(
+                                      width: 1.h,
+                                    ),
+                                    const AutoSizeText(
+                                      "Account details in Business Name",
+                                      // "hello",
+                                      textAlign: TextAlign.left,
+                                      minFontSize: 10,
+                                      stepGranularity: 10,
+                                      maxLines: 4,
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
                                       ),
-                                      const AutoSizeText(
-                                        "Account details in Business Name",
-                                        // "hello",
-                                        textAlign: TextAlign.left,
-                                        minFontSize: 10,
-                                        stepGranularity: 10,
-                                        maxLines: 4,
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 )
                               : Container(),
                           (widget.isBiz == true)
@@ -233,31 +226,28 @@ class _BusinessBoxState extends State<BusinessBox> {
                                 )
                               : Container(),
                           (widget.isBiz == true)
-                              ? SizedBox(
-                                  width: 50.w,
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/icons/mark_icon.svg'),
-                                      SizedBox(
-                                        width: 1.h,
+                              ? Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/mark_icon.svg'),
+                                    SizedBox(
+                                      width: 1.h,
+                                    ),
+                                    const AutoSizeText(
+                                      "Create upto 3 Business Account",
+                                      // "hello",
+                                      textAlign: TextAlign.left,
+                                      minFontSize: 10,
+                                      stepGranularity: 10,
+                                      maxLines: 4,
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
                                       ),
-                                      const AutoSizeText(
-                                        "Create upto 3 Business Account",
-                                        // "hello",
-                                        textAlign: TextAlign.left,
-                                        minFontSize: 10,
-                                        stepGranularity: 10,
-                                        maxLines: 4,
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 )
                               : Container(),
                           (widget.isBiz == true)

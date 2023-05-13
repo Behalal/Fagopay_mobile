@@ -41,6 +41,10 @@ class _SetupPassCodeState extends State<SetupPassCode> {
 
   @override
   Widget build(BuildContext context) {
+    print('the id is ${widget.id}');
+    print('the passcode is ${_registrationController.passCode.text}');
+    print(
+        'the Confirmpasscode is ${_registrationController.passCodeConfirm.text}');
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -246,12 +250,21 @@ class _SetupPassCodeState extends State<SetupPassCode> {
     print(response.body);
     final jsonBody = jsonDecode(response.body);
     final userToken = jsonBody['token'];
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
       setState(() {
         _isLoading = false;
       });
 
-      SecureStorage.setUserToken(userToken);
+      // SecureStorage.setUserToken(userToken);
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (BuildContext context) => const SuccessAccountCreation(),
+            ),
+          );
+        });
+      });
       if ((!mounted)) return;
       Fluttertoast.showToast(
         msg: "Pin successfully set",
@@ -267,15 +280,6 @@ class _SetupPassCodeState extends State<SetupPassCode> {
       //     content: Text('Pin successfully set'),
       //   ),
       // );
-      Future.delayed(const Duration(seconds: 1), () {
-        setState(() {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (BuildContext context) => const SuccessAccountCreation(),
-            ),
-          );
-        });
-      });
     }
     Fluttertoast.showToast(
       msg: "Error setting up Passcode!",
