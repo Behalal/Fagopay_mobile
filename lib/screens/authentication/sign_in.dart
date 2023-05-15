@@ -381,7 +381,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     if (kDebugMode) {
       print('User details response is $userjsonBodyData');
     }
-    final userAccountjsonBodyData = response['data']['accountdetail'];
+    final userAccountjsonBodyData = userjsonBodyData['accountdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
     _userController.setUser = userDetails;
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
@@ -391,8 +391,9 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (
-          // BuildContext context) =>  const BookKeeping(),
-          BuildContext context) => const Dashboard(),
+                // BuildContext context) =>  const BookKeeping(),
+                BuildContext context) =>
+            const Dashboard(),
 
         //  DashboardHome(
         //   userDetails: userDetails,

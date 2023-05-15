@@ -213,9 +213,9 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   fontSize: 14,
                                   color: signInPlaceholder,
                                 ),
-                                prefixIcon: Stack(
+                                prefixIcon: const Stack(
                                   alignment: AlignmentDirectional.center,
-                                  children: const [
+                                  children: [
                                     Image(
                                         image: AssetImage(
                                             "assets/images/shield.png")),

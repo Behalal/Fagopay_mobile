@@ -73,11 +73,11 @@ class _ReferCenterState extends State<ReferCenter> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(
+                                            const Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              children: const [
+                                              children: [
                                                 AutoSizeText(
                                                   'Reward Balance',
                                                   style: TextStyle(
@@ -101,11 +101,11 @@ class _ReferCenterState extends State<ReferCenter> {
                                             SizedBox(
                                               height: 0.5.h,
                                             ),
-                                            Row(
+                                            const Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              children: const [
+                                              children: [
                                                 AutoSizeText(
                                                   'NGN 50,400.00',
                                                   style: TextStyle(
@@ -131,10 +131,10 @@ class _ReferCenterState extends State<ReferCenter> {
                                         SizedBox(
                                           height: 1.5.h,
                                         ),
-                                        Row(
+                                        const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: const [
+                                          children: [
                                             AutoSizeText(
                                               'Reward Balance',
                                               style: TextStyle(
@@ -158,10 +158,10 @@ class _ReferCenterState extends State<ReferCenter> {
                                         SizedBox(
                                           height: 1.5.h,
                                         ),
-                                        Row(
+                                        const Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: const [
+                                          children: [
                                             AutoSizeText(
                                               '23',
                                               style: TextStyle(
@@ -338,12 +338,12 @@ class _ReferCenterState extends State<ReferCenter> {
                                       SizedBox(
                                         width: 2.h,
                                       ),
-                                      Column(
+                                      const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'Jafar Zubaird',
                                             style: TextStyle(
@@ -394,12 +394,12 @@ class _ReferCenterState extends State<ReferCenter> {
                                       SizedBox(
                                         width: 2.h,
                                       ),
-                                      Column(
+                                      const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'Jafar Zubaird',
                                             style: TextStyle(

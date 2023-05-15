@@ -127,7 +127,7 @@ class TransactionHistoryModel {
   String? toFrom;
   DateTime createdAt;
   DateTime updatedAt;
-  dynamic? meta;
+  dynamic meta;
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) =>
       TransactionHistoryModel(

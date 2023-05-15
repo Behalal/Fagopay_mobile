@@ -9,8 +9,8 @@ class UserModel {
   });
 
   static UserModel fromJson(json) => UserModel(
-        userdetail: json['userdetail'] as User?,
-        accountdetail: json['accountdetail'] as AccountDetail?,
+        userdetail: User.fromJson(json['userdetail']),
+        accountdetail: AccountDetail.fromJson(json['accountdetail']),
       );
 }
 

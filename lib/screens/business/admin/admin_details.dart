@@ -39,10 +39,10 @@ class _AdminDetailsState extends State<AdminDetails> {
                     Image.asset("assets/images/customer_ellipse.png"),
                     SizedBox(
                       width: 60.w,
-                      child: Column(
+                      child: const Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           AutoSizeText(
                             "Obasa Yussuff",
                             // textAlign: TextAlign.center,
@@ -64,10 +64,10 @@ class _AdminDetailsState extends State<AdminDetails> {
                         ],
                       ),
                     ),
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: const [
+                      children: [
                         AutoSizeText(
                           "3",
                           textAlign: TextAlign.right,

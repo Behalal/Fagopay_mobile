@@ -115,9 +115,9 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(
                                   image: AssetImage(
                                       "assets/images/bi_shield-lock.png")),
@@ -173,9 +173,9 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(
                                   image: AssetImage(
                                       "assets/images/bi_shield-lock.png")),
@@ -231,9 +231,9 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(
                                   image: AssetImage(
                                       "assets/images/bi_shield-lock.png")),
@@ -289,9 +289,9 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(
                                   image: AssetImage(
                                       "assets/images/bi_shield-lock.png")),
@@ -347,9 +347,9 @@ class BusinessVerifyState extends State<BusinessVerify> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(
                                   image: AssetImage(
                                       "assets/images/bi_shield-lock.png")),

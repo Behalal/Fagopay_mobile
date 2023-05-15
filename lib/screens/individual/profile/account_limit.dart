@@ -126,7 +126,7 @@ class _AccountLimitState extends State<AccountLimit> {
                                     height: 40.h,
                                     width: Get.width,
                                     color: fagoSecondaryColor,
-                                    child: Column(children: const []),
+                                    child: const Column(children: []),
                                   )
                                 : Container(
                                     padding: EdgeInsets.symmetric(
@@ -152,10 +152,10 @@ class _AccountLimitState extends State<AccountLimit> {
                                           SizedBox(
                                             height: 2.h,
                                           ),
-                                          Row(
+                                          const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: const [
+                                            children: [
                                               AutoSizeText(
                                                 'Daily Transfer Limit',
                                                 style: TextStyle(
@@ -192,10 +192,10 @@ class _AccountLimitState extends State<AccountLimit> {
                                           SizedBox(
                                             height: 1.h,
                                           ),
-                                          Row(
+                                          const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: const [
+                                            children: [
                                               AutoSizeText(
                                                 'Amount Remaining to spend',
                                                 style: TextStyle(
@@ -225,10 +225,10 @@ class _AccountLimitState extends State<AccountLimit> {
                                           SizedBox(
                                             height: 2.h,
                                           ),
-                                          Row(
+                                          const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: const [
+                                            children: [
                                               AutoSizeText(
                                                 'Account Balance Limit',
                                                 style: TextStyle(
@@ -265,10 +265,10 @@ class _AccountLimitState extends State<AccountLimit> {
                                           SizedBox(
                                             height: 1.h,
                                           ),
-                                          Row(
+                                          const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: const [
+                                            children: [
                                               AutoSizeText(
                                                 'Amount Remaining to spend',
                                                 style: TextStyle(
@@ -298,10 +298,10 @@ class _AccountLimitState extends State<AccountLimit> {
                                           SizedBox(
                                             height: 2.h,
                                           ),
-                                          Row(
+                                          const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: const [
+                                            children: [
                                               AutoSizeText(
                                                 'Daily Deposit Limit',
                                                 style: TextStyle(
@@ -338,10 +338,10 @@ class _AccountLimitState extends State<AccountLimit> {
                                           SizedBox(
                                             height: 1.h,
                                           ),
-                                          Row(
+                                          const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
-                                            children: const [
+                                            children: [
                                               AutoSizeText(
                                                 'Amount Remaining to spend',
                                                 style: TextStyle(

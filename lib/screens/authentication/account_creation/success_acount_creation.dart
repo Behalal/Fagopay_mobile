@@ -66,9 +66,9 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
               SizedBox(
                 height: 10.h,
               ),
-              Stack(
+              const Stack(
                 alignment: AlignmentDirectional.center,
-                children: const [
+                children: [
                   Positioned(
                     child:
                         Image(image: AssetImage("assets/images/bg_image.png")),

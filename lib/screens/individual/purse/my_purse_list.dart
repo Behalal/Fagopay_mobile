@@ -186,10 +186,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                       SizedBox(
                                         height: 1.5.h,
                                       ),
-                                      Row(
+                                      const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'Amount Spent',
                                             style: TextStyle(
@@ -213,10 +213,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                       SizedBox(
                                         height: 0.5.h,
                                       ),
-                                      Row(
+                                      const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'NGN 380,000.00',
                                             style: TextStyle(
@@ -254,9 +254,9 @@ class _MyPurseListState extends State<MyPurseList> {
                             SizedBox(
                               height: 3.h,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: const [
+                              children: [
                                 AutoSizeText(
                                   'Monthly Budget',
                                   style: TextStyle(
@@ -294,12 +294,12 @@ class _MyPurseListState extends State<MyPurseList> {
                                     SizedBox(
                                       width: 2.h,
                                     ),
-                                    Column(
+                                    const Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: const [
+                                      children: [
                                         AutoSizeText(
                                           'Food and Drinks',
                                           style: TextStyle(
@@ -355,12 +355,12 @@ class _MyPurseListState extends State<MyPurseList> {
                                     SizedBox(
                                       width: 2.h,
                                     ),
-                                    Column(
+                                    const Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      children: const [
+                                      children: [
                                         AutoSizeText(
                                           'Food and Drinks',
                                           style: TextStyle(

@@ -48,9 +48,9 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
               SizedBox(
                 height: 8.h,
               ),
-              Stack(
+              const Stack(
                 alignment: AlignmentDirectional.center,
-                children: const [
+                children: [
                   Image(
                     image: AssetImage("assets/images/success_bg.png"),
                   ),

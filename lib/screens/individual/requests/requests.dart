@@ -580,14 +580,14 @@ class _RequestHomeState extends State<RequestHome> {
                                                                             3.w,
                                                                         vertical:
                                                                             0.5.h),
-                                                                child: Row(
+                                                                child: const Row(
                                                                   mainAxisAlignment:
                                                                       MainAxisAlignment
                                                                           .center,
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .center,
-                                                                  children: const [
+                                                                  children: [
                                                                     AutoSizeText(
                                                                       "View",
                                                                       style:
@@ -647,9 +647,9 @@ class _RequestHomeState extends State<RequestHome> {
           SizedBox(
             height: 1.5.h,
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               AutoSizeText(
                 "Are you sure to reject this",
                 style: TextStyle(

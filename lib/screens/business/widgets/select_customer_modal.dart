@@ -146,10 +146,10 @@ class _SelectCustomerState extends State<SelectCustomer> {
                             ],
                           ),
                         ),
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
+                          children: [
                             AutoSizeText(
                               "Select",
                               style: TextStyle(

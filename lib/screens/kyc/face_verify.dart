@@ -46,9 +46,9 @@ class FaceVerifystate extends State<FaceVerify> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
-                  child: Stack(
+                  child: const Stack(
                     alignment: AlignmentDirectional.center,
-                    children: const [
+                    children: [
                       Image(
                         image: AssetImage("assets/images/Ellipse 45.png"),
                       ),
@@ -91,9 +91,9 @@ class FaceVerifystate extends State<FaceVerify> {
                         builder: (BuildContext context) =>
                             const BvnVerification()));
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(
                         "Cannot verify facial?",
                         textAlign: TextAlign.center,

@@ -510,9 +510,9 @@ class _FundWalletState extends State<FundWallet> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Stack(
+                        const Stack(
                           alignment: AlignmentDirectional.center,
-                          children: const [
+                          children: [
                             Image(
                                 image: AssetImage("assets/images/shield.png")),
                             Image(image: AssetImage("assets/images/key.png")),

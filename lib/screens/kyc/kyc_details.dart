@@ -94,9 +94,9 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(image: AssetImage("assets/images/call.png")),
                             ],
                           ),
@@ -137,9 +137,9 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(
                                   image:
                                       AssetImage("assets/images/lastname.png")),
@@ -182,9 +182,9 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontSize: 14,
                             color: signInPlaceholder,
                           ),
-                          prefixIcon: Stack(
+                          prefixIcon: const Stack(
                             alignment: AlignmentDirectional.center,
-                            children: const [
+                            children: [
                               Image(image: AssetImage("assets/images/dob.png")),
                             ],
                           ),

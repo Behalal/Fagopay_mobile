@@ -116,10 +116,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 AutoSizeText(
                                   "Invoice No.",
                                   style: TextStyle(
@@ -143,10 +143,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 AutoSizeText(
                                   "Issued Date:",
                                   style: TextStyle(
@@ -170,10 +170,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children: [
                                 AutoSizeText(
                                   "Due Date:",
                                   style: TextStyle(
@@ -475,10 +475,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       AutoSizeText(
                         "Total",
                         style: TextStyle(
@@ -502,10 +502,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   SizedBox(
                     height: 3.h,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       AutoSizeText(
                         "Tax (7.5% VAT)",
                         style: TextStyle(
@@ -529,10 +529,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       AutoSizeText(
                         "Discount (12%)",
                         style: TextStyle(

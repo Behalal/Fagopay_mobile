@@ -263,9 +263,9 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
               decoration: const BoxDecoration(
                   color: buttonColor,
                   borderRadius: BorderRadius.all(Radius.circular(25))),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   AutoSizeText(
                     "Continue",
                     textAlign: TextAlign.center,

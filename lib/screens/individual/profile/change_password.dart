@@ -273,10 +273,10 @@ class _PasswordVerificationChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return const Wrap(
       spacing: 1,
       runSpacing: 2,
-      children: const [
+      children: [
         Chip(
           label: Text(
             'At least 8 character strong',
