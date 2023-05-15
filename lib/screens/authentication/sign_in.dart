@@ -360,15 +360,23 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       _isLoading = false;
     });
     progress?.dismiss();
+    final userNextOfKinBodyData = response['data']['userdetail']['nextofkin'];
+    if (kDebugMode) {
+      print('User NoK details response is $userNextOfKinBodyData');
+    }
     final userjsonBodyData = response['data']['userdetail'];
     if (kDebugMode) {
       print('User details response is $userjsonBodyData');
     }
-    final userAccountjsonBodyData = response['data']['accountdetail'];
+    final userAccountjsonBodyData = response['data']['userdetail']['accountdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
+     if (kDebugMode) {
+      print('-----------User d response is $userAccountjsonBodyData');
+    }
     _userController.setUser = userDetails;
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
+   
     // Future.delayed(const Duration(seconds: 1), () {
     if (!mounted) return;
     Navigator.of(context).pushReplacement(

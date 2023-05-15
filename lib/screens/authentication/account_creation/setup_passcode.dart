@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -12,7 +11,6 @@ import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
 import '../../constants/colors.dart';
 import '../widgets/auth_buttons.dart';
-import 'select_verification_type.dart';
 import 'success_acount_creation.dart';
 import 'widgets/current_step.dart';
 
@@ -25,8 +23,6 @@ class SetupPassCode extends StatefulWidget {
 }
 
 class _SetupPassCodeState extends State<SetupPassCode> {
-  final bool _passvisibility = false;
-  final bool _confirmpassvisibility = false;
   bool _requirementMet = false;
   bool _isLoading = false;
   Functions function = Functions();
@@ -248,8 +244,6 @@ class _SetupPassCodeState extends State<SetupPassCode> {
     final response = await _registrationController.setPassCode(
         id, passcode, confirmedPasscode);
     print(response.body);
-    final jsonBody = jsonDecode(response.body);
-    final userToken = jsonBody['token'];
     if (response.statusCode == 200) {
       setState(() {
         _isLoading = false;

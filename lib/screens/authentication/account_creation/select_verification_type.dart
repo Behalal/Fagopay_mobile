@@ -12,7 +12,7 @@ import '../../../functions/functions.dart';
 import '../../../service/secure_storage/secure_storage.dart';
 import '../../constants/colors.dart';
 import '../widgets/auth_buttons.dart';
-import 'individual_details.dart';
+
 import 'select_type.dart';
 import 'verify_code.dart';
 import 'widgets/current_step.dart';

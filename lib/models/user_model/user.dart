@@ -75,31 +75,78 @@ class User {
 }
 
 class AccountDetail {
+  String? id;
   String? accountNumber;
   String? accountName;
   String? bankName;
   String? accountType;
   String? status;
   String? currency;
+  String? manager;
   int? balance;
 
   AccountDetail({
+    this.id,
     this.accountNumber,
     this.accountName,
     this.bankName,
     this.accountType,
     this.status,
     this.currency,
+    this.manager,
     this.balance,
   });
 
-  static AccountDetail fromJson(json) => AccountDetail(
-        accountNumber: json['account_number'] as String?,
-        accountName: json['account_name'] as String?,
-        bankName: json['bank_name'] as String?,
-        accountType: json['account_type'] as String?,
-        status: json['status'] as String?,
-        currency: json['currency'] as String?,
-        balance: json['balance'] as int?,
+  factory AccountDetail.fromJson(Map<String, dynamic> json) => AccountDetail(
+        id: json["id"] as String,
+        accountNumber: json["account_number"] as String,
+        accountName: json["account_name"] as String,
+        bankName: json["bank_name"] as String,
+        accountType: json["account_type"] as String,
+        status: json["status"] as String,
+        currency: json["currency"] as String,
+        manager: json["manager"] ?? '',
+        balance: json["balance"] as int,
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "account_number": accountNumber,
+        "account_name": accountName,
+        "bank_name": bankName,
+        "account_type": accountType,
+        "status": status,
+        "currency": currency,
+        "manager": manager,
+        "balance": balance,
+      };
 }
+// class AccountDetail {
+//   String? accountNumber;
+//   String? accountName;
+//   String? bankName;
+//   String? accountType;
+//   String? status;
+//   String? currency;
+//   int? balance;
+
+//   AccountDetail({
+//     this.accountNumber,
+//     this.accountName,
+//     this.bankName,
+//     this.accountType,
+//     this.status,
+//     this.currency,
+//     this.balance,
+//   });
+
+//   static AccountDetail fromJson(json) => AccountDetail(
+//         accountNumber: json['account_number'] as String?,
+//         accountName: json['account_name'] as String?,
+//         bankName: json['bank_name'] as String?,
+//         accountType: json['account_type'] as String?,
+//         status: json['status'] as String?,
+//         currency: json['currency'] as String?,
+//         balance: json['balance'] as int?,
+//       );
+// }
