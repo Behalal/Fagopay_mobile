@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fagopay/models/expenses_model.dart';
 import 'package:flutter/material.dart';
 
 import '../service/constants/constants.dart';
@@ -9,39 +10,39 @@ import '../service/secure_storage/secure_storage.dart';
 import 'package:get/get.dart';
 
 class ExpensesController extends GetxController {
-  // final Rx<List<Sales>> _sales = Rx([]);
+  final Rx<List<Expenses>> _expenses = Rx([]);
 
-  // List<Sales> get sales {
-  //   return [..._sales.value];
-  // }
+  List<Expenses> get expenses {
+    return [..._expenses.value];
+  }
 
-  // set sales(List<Sales> sales) {
-  //   _sales(sales);
-  // }
+  set expenses(List<Expenses> expenses) {
+    _expenses(expenses);
+  }
 
-  // Sales findExpenseById(String id) {
-  //   return sales.firstWhere((sale) => sale.id == id);
-  // }
+  Expenses findExpenseById(String id) {
+    return expenses.firstWhere((expense) => expense.id == id);
+  }
 
   // TextEditingController expenseAmountController = TextEditingController();
   TextEditingController expenseReasonController = TextEditingController();
   TextEditingController expenseDescriptionController = TextEditingController();
 
-  // Future<dynamic> getBusinessExpenses(String companyId) async {
-  //   final token = await SecureStorage.readUserToken();
-  //   try {
-  //     final responseData = await NetworkHelper.getRequest(
-  //       url: "${BaseAPI.businessSalesPath}/$companyId",
-  //       headers: {
-  //         "Content-Type": "application/json; charset=UTF-8",
-  //         "Authorization": "Bearer $token",
-  //       },
-  //     );
-  //     return responseData;
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-  // }
+  Future<dynamic> getBusinessExpenses(String companyId) async {
+    final token = await SecureStorage.readUserToken();
+    try {
+      final responseData = await NetworkHelper.getRequest(
+        url: "${BaseAPI.businessExpensesPath}/$companyId",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token",
+        },
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+    }
+  }
 
   Future<dynamic> createBusinessExpense(
       {required String companyId,

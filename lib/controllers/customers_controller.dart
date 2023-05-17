@@ -32,11 +32,11 @@ class CustomerController extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
-  Future<dynamic> getCustomers() async {
+  Future<dynamic> getCustomers(String companyId) async {
     final token = await SecureStorage.readUserToken();
     try {
       final responseData = await NetworkHelper.getRequest(
-        url: BaseAPI.customersPath,
+        url: "${BaseAPI.customersPath}/company/$companyId",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Authorization": "Bearer $token",

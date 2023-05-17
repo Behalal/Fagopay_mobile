@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import '../../../controllers/suppliers_controller.dart';
 import '../../../models/supplier_model.dart';
 import 'components/custom_supplier_card.dart';
@@ -22,6 +23,7 @@ class AllSupplies extends StatefulWidget {
 
 class _AllSuppliesState extends State<AllSupplies> {
   final _supplierController = Get.find<SupplierController>();
+  final _companyController = Get.find<CompanyController>();
 
   @override
   void initState() {
@@ -172,7 +174,8 @@ class _AllSuppliesState extends State<AllSupplies> {
   }
 
   Future<void> getSuppliers() async {
-    final response = await _supplierController.getSuppliers();
+    final companyId = _companyController.company!.id!;
+    final response = await _supplierController.getSuppliers(companyId);
     final resBody = response['data']['suppliers_list'];
     final returnedSuppliers = resBody
         .map<Supplier>((supplier) => Supplier.fromJson(supplier))

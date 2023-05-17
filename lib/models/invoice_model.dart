@@ -2,7 +2,9 @@
 class Invoice {
   String? id;
   String? customerId;
+  String? customerName;
   String? companyId;
+  String? companyName;
   String? status;
   String? total;
   String? subtotal;
@@ -23,7 +25,9 @@ class Invoice {
   Invoice({
     this.id,
     this.customerId,
+    this.customerName,
     this.companyId,
+    this.companyName,
     this.status,
     this.total,
     this.subtotal,
@@ -45,7 +49,9 @@ class Invoice {
   static Invoice fromJson(json) => Invoice(
         id: json['id'] as String?,
         customerId: json['customer_id'] as String?,
+        customerName: json['customer_name'] as String?,
         companyId: json['company_id'] as String?,
+        companyName: json['company_name'] as String?,
         status: json['status'] as String?,
         total: json['total'] as String?,
         subtotal: json['subtotal'] as String?,
@@ -68,7 +74,7 @@ class Invoice {
 
   @override
   String toString() {
-    return 'Invoice(id: $id, customerId: $customerId, companyId: $companyId, status: $status, total: $total, subtotal: $subtotal, amountPaid: $amountPaid, transactionId: $transactionId, paymentMode: $paymentMode, discountRate: $discountRate, discountAmount: $discountAmount, taxRate: $taxRate, taxAmount: $taxAmount, markAsPaidBy: $markAsPaidBy, paidOn: $paidOn, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, invoiceDetails: $invoiceDetails)';
+    return 'Invoice(id: $id, customerId: $customerId, customerName: $customerName, companyId: $companyId, companyName: $companyName, status: $status, total: $total, subtotal: $subtotal, amountPaid: $amountPaid, transactionId: $transactionId, paymentMode: $paymentMode, discountRate: $discountRate, discountAmount: $discountAmount, taxRate: $taxRate, taxAmount: $taxAmount, markAsPaidBy: $markAsPaidBy, paidOn: $paidOn, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, invoiceDetails: $invoiceDetails)';
   }
 }
 

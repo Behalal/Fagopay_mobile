@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/invoice_controller.dart';
+import 'package:get/get.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -15,8 +17,12 @@ class InvoiceDetails extends StatefulWidget {
 }
 
 class _InvoiceDetailsState extends State<InvoiceDetails> {
+  final _invoiceController = Get.find<InvoiceController>();
+
   @override
   Widget build(BuildContext context) {
+    final invoiceId = ModalRoute.of(context)!.settings.arguments as String;
+    final invoice = _invoiceController.findInvoiceById(invoiceId);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

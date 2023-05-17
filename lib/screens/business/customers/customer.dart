@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
@@ -22,6 +23,7 @@ class CustomerPage extends StatefulWidget {
 
 class _CustomerPageState extends State<CustomerPage> {
   final _customerController = Get.find<CustomerController>();
+  final _companyController = Get.find<CompanyController>();
 
   @override
   void initState() {
@@ -128,17 +130,15 @@ class _CustomerPageState extends State<CustomerPage> {
                             email: _customerController.customers[index].email!,
                             phoneNumber: _customerController
                                 .customers[index].phoneNumber!,
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const CustomerDetails(),
-                                  settings: RouteSettings(
-                                    arguments: _customerController
-                                        .customers[index].id!,
-                                  ),
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const CustomerDetails(),
+                                settings: RouteSettings(
+                                  arguments:
+                                      _customerController.customers[index].id!,
                                 ),
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         ),
                       )
@@ -152,7 +152,8 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   Future<void> getCustomers() async {
-    final response = await _customerController.getCustomers();
+    final companyId = _companyController.company!.id!;
+    final response = await _customerController.getCustomers(companyId);
     final resBody = response['data']['customers'];
     final returnedCustomers = resBody
         .map<Customer>((customer) => Customer.fromJson(customer))

@@ -95,7 +95,7 @@ class CustomSaleHistoryCard extends StatelessWidget {
                 height: 0.5.h,
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.8.h),
+                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.6.h),
                 decoration: const BoxDecoration(
                     color: fagoGreenColorWithOpacity10,
                     borderRadius: BorderRadius.all(Radius.circular(25))),

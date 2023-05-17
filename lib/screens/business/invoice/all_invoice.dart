@@ -1,13 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import '../book_keeping/models/model.dart';
-import '../../functions.dart';
+import 'package:fagopay/screens/business/invoice/components/custom_invoice_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:sizer/sizer.dart';
+
+import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/controllers/invoice_controller.dart';
+import 'package:fagopay/models/invoice_model.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
+import '../../functions.dart';
 import '../../widgets/head_style_extra_pages.dart';
+import '../book_keeping/models/model.dart';
 import '../home/models/sales.model.dart';
 import '../widgets/no_record.dart';
 import 'add_invoice.dart';
@@ -21,6 +29,9 @@ class AllInvoice extends StatefulWidget {
 }
 
 class _AllInvoiceState extends State<AllInvoice> {
+  final _invoiceController = Get.find<InvoiceController>();
+  final _companyController = Get.find<CompanyController>();
+
   bool allTab = true;
   bool unPaidTab = false;
   bool partPaidTab = false;
@@ -42,6 +53,12 @@ class _AllInvoiceState extends State<AllInvoice> {
   String? selectedFilter = '';
   int currentIndex = 0;
   late final PageController _controller = PageController(viewportFraction: 0.5);
+
+  @override
+  void initState() {
+    getBusinessInvoices();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -359,146 +376,35 @@ class _AllInvoiceState extends State<AllInvoice> {
                 Container(
                   height: 45.h,
                   padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
-                  decoration: const BoxDecoration(
-                      color: Colors.transparent),
-                  child: ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      children: [
-                        // if (allTab) ...[
-                          for (var i = 0; i < 7; i++) ...[
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            InkWell(
-                              onTap: () => goToPage(context, const InvoiceDetails()),
-                              child: SizedBox(
-                                width: 90.w,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 60.w,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              CircleAvatar(
-                                                radius: 3.w,
-                                                backgroundColor: fagoSecondaryColorWithOpacity10,
-                                                child: Image.asset(
-                                                    "assets/images/stickynote.png",
-                                                    color: ( i == 0 || i == 6)? inactiveTabWithOpacity30 : null,
-                                                    ),
-                                              ),
-                                              SizedBox(
-                                                width: 2.w,
-                                              ),
-                                              SizedBox(
-                                                width: 50.w,
-                                                child: Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      width: 50.w,
-                                                      child: AutoSizeText(
-                                                        "Halal Payment Limited",
-                                                        style: TextStyle(
-                                                            fontFamily: "Work Sans",
-                                                            fontSize: 14,
-                                                            color: ( i == 0 || i == 6)? inactiveTabWithOpacity30 :inactiveTab,
-                                                            fontWeight:
-                                                                FontWeight.w600),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 1.h,),
-                                                    SizedBox(
-                                                      width: 50.w,
-                                                      child: AutoSizeText(
-                                                        "Date Paid: 24 Mar 2023 ",
-                                                        style: TextStyle(
-                                                            fontFamily: "Work Sans",
-                                                            fontSize: 12,
-                                                            color: ( i == 0 || i == 6)? inactiveTabWithOpacity30 :inactiveTab,
-                                                            fontWeight:
-                                                                FontWeight.w500),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    if ( i == 0 || i == 6) SizedBox(width: 10.w ,child: Image.asset("assets/images/paidBanner.png")),
-                                    if ( i != 0 && i != 6) SizedBox(width: 10.w),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
-                                          "$currencySymbol 20,000",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 12,
-                                              color: ( i == 0 || i == 6)? fagoGreenColorWithOpacity17 : fagoSecondaryColor,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                        SizedBox(
-                                          height: 0.5.h,
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 2.w, vertical: .5.h),
-                                          decoration: BoxDecoration(
-                                              color: ( i == 0 || i == 6)? fagoGreenColorWithOpacity17 : fagoSecondaryColorWithOpacity10,
-                                              borderRadius: const BorderRadius.all(
-                                                  Radius.circular(25),),),
-                                          child: AutoSizeText(
-                                            (i == 0 || i == 6)? "Paid" :"Unpaid",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 8,
-                                                color: ( i == 0 || i == 6)? inactiveTabWithOpacity30 : fagoGreenColor,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                  decoration: const BoxDecoration(color: Colors.transparent),
+                  child: _invoiceController.invoices.isEmpty
+                      ? const Center(
+                          child: AutoSizeText('No Invoice yet'),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: _invoiceController.invoices.length,
+                          itemBuilder: (context, index) => CustomInvoiceCard(
+                            customerName: _invoiceController
+                                .invoices[index].customerName!,
+                            date: Jiffy.parse(_invoiceController
+                                    .invoices[index].createdAt!)
+                                .format(pattern: 'dd MMM yyyy'),
+                            total: _invoiceController.invoices[index].total!,
+                            status: _invoiceController.invoices[index].status!,
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const InvoiceDetails(),
+                                settings: RouteSettings(
+                                  arguments:
+                                      _invoiceController.invoices[index].id!,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 1.5.h,),
-                            if (i != 6) ...[
-                              Padding(
-                                 padding: EdgeInsets.symmetric(horizontal: 8.w),
-                                child: Container(
-                                  height: 0.2,
-                                  decoration: const BoxDecoration(
-                                    color: fagoBlackColorWithOpacity20
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ],
-                        // ],
-                      ]),
+                          ),
+                        ),
                 ),
               // No record Found
               if (!recordFound)
@@ -527,5 +433,16 @@ class _AllInvoiceState extends State<AllInvoice> {
             : fagoSecondaryColorWithOpacity,
       ),
     );
+  }
+
+  Future<void> getBusinessInvoices() async {
+    final companyId = _companyController.company!.id!;
+    final response = await _invoiceController.getInvoices(companyId);
+    final resBody = response['data']['Invoice_List'];
+    final returnedInvoiceList =
+        resBody.map<Invoice>((invoice) => Invoice.fromJson(invoice)).toList();
+    setState(() {
+      _invoiceController.invoices = returnedInvoiceList;
+    });
   }
 }

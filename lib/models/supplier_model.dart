@@ -8,12 +8,12 @@ class Supplier {
   String? email;
   String? phone;
   String? address;
-  String? countryId;
-  String? stateId;
-  String? cityId;
+  String? country;
+  String? state;
+  String? city;
   String? companyId;
-  String? updatedAt;
-  String? createdAt;
+  // String? updatedAt;
+  // String? createdAt;
 
   Supplier({
     this.id,
@@ -24,12 +24,10 @@ class Supplier {
     this.email,
     this.phone,
     this.address,
-    this.countryId,
-    this.stateId,
-    this.cityId,
+    this.country,
+    this.state,
+    this.city,
     this.companyId,
-    this.updatedAt,
-    this.createdAt,
   });
 
   static Supplier fromJson(json) => Supplier(
@@ -41,16 +39,16 @@ class Supplier {
         email: json['email'] as String?,
         phone: json['phone'] as String?,
         address: json['address'] as String?,
-        countryId: json['country_id'] as String?,
-        stateId: json['state_id'] as String?,
-        cityId: json['city_id'] as String?,
+        country: json['country'] as String?,
+        state: json['state'] as String?,
+        city: json['city'] as String?,
         companyId: json['company_id'] as String?,
-        updatedAt: json['updated_at'] as String?,
-        createdAt: json['created_at'] as String?,
+        // updatedAt: json['updated_at'] as String?,
+        // createdAt: json['created_at'] as String?,
       );
 
   @override
   String toString() {
-    return 'Supplier(id: $id, bankCode: $bankCode, accountNumber: $accountNumber, accountName: $accountName, name: $name, email: $email, phone: $phone, address: $address, countryId: $countryId, stateId: $stateId, cityId: $cityId, companyId: $companyId, updatedAt: $updatedAt, createdAt: $createdAt)';
+    return 'Supplier(id: $id, bankCode: $bankCode, accountNumber: $accountNumber, accountName: $accountName, name: $name, email: $email, phone: $phone, address: $address, country: $country, state: $state, city: $city, companyId: $companyId)';
   }
 }

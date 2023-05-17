@@ -1177,7 +1177,8 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
   }
 
   Future<void> getCustomers() async {
-    final response = await _customerController.getCustomers();
+    final companyId = _companyController.company!.id!;
+    final response = await _customerController.getCustomers(companyId);
     final resBody = response['data']['customers'];
     final returnedCustomers = resBody
         .map<Customer>((customer) => Customer.fromJson(customer))
@@ -1188,7 +1189,8 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
   }
 
   Future<void> getSuppliers() async {
-    final response = await _supplierController.getSuppliers();
+    final companyId = _companyController.company!.id!;
+    final response = await _supplierController.getSuppliers(companyId);
     final resBody = response['data']['suppliers_list'];
     final returnedSuppliers = resBody
         .map<Supplier>((supplier) => Supplier.fromJson(supplier))

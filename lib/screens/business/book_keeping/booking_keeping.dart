@@ -1,5 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/controllers/expenses_controller.dart';
+import 'package:fagopay/models/expenses_model.dart';
+import 'package:fagopay/screens/business/book_keeping/components/custom_expense_history_card.dart';
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/sales_controller.dart';
 import '../../../models/sales_model.dart';
@@ -28,6 +31,7 @@ class BookKeeping extends StatefulWidget {
 class _BookKeepingState extends State<BookKeeping> {
   final _salesController = Get.find<SalesController>();
   final _companyController = Get.find<CompanyController>();
+  final _expenseController = Get.find<ExpensesController>();
 
   bool inflowTab = true;
   bool recordFound = true;
@@ -52,6 +56,7 @@ class _BookKeepingState extends State<BookKeeping> {
   @override
   void didChangeDependencies() {
     getBusinessSales();
+    getBusinessExpenses();
     super.didChangeDependencies();
   }
 
@@ -429,151 +434,46 @@ class _BookKeepingState extends State<BookKeeping> {
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
                               physics: const AlwaysScrollableScrollPhysics(),
-                              itemCount: _salesController.sales.length,
-                              itemBuilder: (context, index) =>
-                                  CustomSaleHistoryCard(
-                                customerName: _salesController
-                                    .sales[index].customerDetails!.fullname!,
-                                salesDescription: _salesController
-                                    .sales[index].salesDescription!,
-                                salesStatus: _salesController
-                                            .sales[index].paymentStatus ==
-                                        '2'
-                                    ? 'Fully Paid'
-                                    : _salesController
-                                                .sales[index].paymentStatus ==
-                                            '1'
-                                        ? 'Part Paid'
-                                        : 'Not Paid',
-                                salesAmount:
-                                    _salesController.sales[index].salesAmount!,
-                                salesDate: Jiffy.parse(_salesController
-                                        .sales[index].salesDate!)
-                                    .format(pattern: 'dd MMM yyyy'),
-                              ),
+                              itemCount: inflowTab
+                                  ? _salesController.sales.length
+                                  : _expenseController.expenses.length,
+                              itemBuilder: (context, index) => inflowTab
+                                  ? CustomSaleHistoryCard(
+                                      customerName: _salesController
+                                          .sales[index].customerName!,
+                                      salesDescription: _salesController
+                                          .sales[index].salesDescription!,
+                                      salesStatus: _salesController
+                                                  .sales[index].paymentStatus ==
+                                              '2'
+                                          ? 'Fully Paid'
+                                          : _salesController.sales[index]
+                                                      .paymentStatus ==
+                                                  '1'
+                                              ? 'Part Paid'
+                                              : 'Not Paid',
+                                      salesAmount: _salesController
+                                          .sales[index].salesAmount!,
+                                      salesDate: Jiffy.parse(_salesController
+                                              .sales[index].salesDate!)
+                                          .format(pattern: 'dd MMM yyyy'),
+                                    )
+                                  : SupplierExpenseHistoryCard(
+                                      supplierName: _expenseController
+                                                  .expenses[index].supplier !=
+                                              null
+                                          ? _expenseController
+                                              .expenses[index].supplier!.name!
+                                          : _expenseController
+                                              .expenses[index].reason!,
+                                      note: _expenseController
+                                          .expenses[index].note!,
+                                      expenseDate: Jiffy.parse(
+                                              _expenseController
+                                                  .expenses[index].expenseDate!)
+                                          .format(pattern: 'dd MMM yyyy'),
+                                    ),
                             ),
-                      // if (!inflowTab) ...[
-                      //   for (var i = 0; i < 7; i++) ...[
-                      //     SizedBox(
-                      //       height: 1.5.h,
-                      //     ),
-                      //     SizedBox(
-                      //       width: 90.w,
-                      //       child: Row(
-                      //         mainAxisAlignment:
-                      //             MainAxisAlignment.spaceBetween,
-                      //         crossAxisAlignment: CrossAxisAlignment.center,
-                      //         children: [
-                      //           SizedBox(
-                      //             width: 60.w,
-                      //             child: Row(
-                      //               mainAxisAlignment:
-                      //                   MainAxisAlignment.start,
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.center,
-                      //               children: [
-                      //                 Image.asset(
-                      //                   'assets/images/outflow.png',
-                      //                   // width: 8.w,
-                      //                 ),
-                      //                 SizedBox(
-                      //                   width: 2.w,
-                      //                 ),
-                      //                 Column(
-                      //                   mainAxisAlignment:
-                      //                       MainAxisAlignment.start,
-                      //                   crossAxisAlignment:
-                      //                       CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     const AutoSizeText(
-                      //                       "Tunde Akande",
-                      //                       textAlign: TextAlign.center,
-                      //                       style: TextStyle(
-                      //                           fontFamily: "Work Sans",
-                      //                           fontSize: 14,
-                      //                           color: inactiveTab,
-                      //                           fontWeight: FontWeight.w600),
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 0.5.h,
-                      //                     ),
-                      //                     SizedBox(
-                      //                       width: 50.w,
-                      //                       child: const AutoSizeText(
-                      //                         "Paid employee salary",
-                      //                         textAlign: TextAlign.left,
-                      //                         style: TextStyle(
-                      //                             fontFamily: "Work Sans",
-                      //                             fontSize: 12,
-                      //                             color: inactiveTab,
-                      //                             fontWeight:
-                      //                                 FontWeight.w500),
-                      //                       ),
-                      //                     ),
-                      //                     SizedBox(
-                      //                       height: 0.5.h,
-                      //                     ),
-                      //                     const AutoSizeText(
-                      //                       "24 Mar 2023",
-                      //                       textAlign: TextAlign.center,
-                      //                       style: TextStyle(
-                      //                           fontFamily: "Work Sans",
-                      //                           fontSize: 12,
-                      //                           color: inactiveTab,
-                      //                           fontWeight: FontWeight.w400),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //           ),
-                      //           Column(
-                      //             mainAxisAlignment: MainAxisAlignment.start,
-                      //             crossAxisAlignment:
-                      //                 CrossAxisAlignment.start,
-                      //             children: [
-                      //               const AutoSizeText(
-                      //                 "NGN 500",
-                      //                 textAlign: TextAlign.right,
-                      //                 style: TextStyle(
-                      //                     fontFamily: "Work Sans",
-                      //                     fontSize: 10,
-                      //                     color: fagoSecondaryColor,
-                      //                     fontWeight: FontWeight.w700),
-                      //               ),
-                      //               SizedBox(
-                      //                 height: 0.5.h,
-                      //               ),
-                      //               Container(
-                      //                 padding: EdgeInsets.symmetric(
-                      //                     horizontal: 2.w, vertical: 1.h),
-                      //                 decoration: const BoxDecoration(
-                      //                     color:
-                      //                         fagoSecondaryColorWithOpacity10,
-                      //                     borderRadius: BorderRadius.all(
-                      //                         Radius.circular(25))),
-                      //                 child: const AutoSizeText(
-                      //                   "Fully Paid",
-                      //                   textAlign: TextAlign.center,
-                      //                   style: TextStyle(
-                      //                       fontFamily: "Work Sans",
-                      //                       fontSize: 8,
-                      //                       color: fagoSecondaryColor,
-                      //                       fontWeight: FontWeight.w400),
-                      //                 ),
-                      //               ),
-                      //             ],
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     if (i != 6) ...[
-                      //       SizedBox(
-                      //         height: 1.5.h,
-                      //       ),
-                      //     ],
-                      //   ],
-                      // ],
                     ),
                   // No record Found
                   if (!recordFound)
@@ -614,6 +514,17 @@ class _BookKeepingState extends State<BookKeeping> {
         resBody.map<Sales>((sale) => Sales.fromJson(sale)).toList();
     setState(() {
       _salesController.sales = returnedSalesList;
+    });
+  }
+
+  Future<void> getBusinessExpenses() async {
+    final companyId = _companyController.company!.id!;
+    final response = await _expenseController.getBusinessExpenses(companyId);
+    final resBody = response['data']['expenses_list'];
+    final returnedExpensesList =
+        resBody.map<Expenses>((expense) => Expenses.fromJson(expense)).toList();
+    setState(() {
+      _expenseController.expenses = returnedExpensesList;
     });
   }
 }

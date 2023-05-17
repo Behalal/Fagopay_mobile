@@ -29,11 +29,11 @@ class SupplierController extends GetxController {
   final phoneNumberController = TextEditingController();
   final addressController = TextEditingController();
 
-  Future<dynamic> getSuppliers() async {
+  Future<dynamic> getSuppliers(String companyId) async {
     final token = await SecureStorage.readUserToken();
     try {
       final responseData = await NetworkHelper.getRequest(
-        url: BaseAPI.suppliersPath,
+        url: "${BaseAPI.suppliersPath}/list/$companyId",
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
           "Authorization": "Bearer $token",
@@ -45,7 +45,7 @@ class SupplierController extends GetxController {
     }
   }
 
-    Future<dynamic> createNewSupplier(
+  Future<dynamic> createNewSupplier(
       {required String bankCode,
       required String accountNumber,
       required String accountName,
@@ -58,16 +58,16 @@ class SupplierController extends GetxController {
     final token = await SecureStorage.readUserToken();
 
     var requestBody = jsonEncode({
-  "bank_code": bankCode,
-  "account_number": accountNumber,
-  "account_name": accountName,
-  "name": accountName,
-  "email": email,
-  "phone": phone,
-  "address": address,
-  "country_id": countryId,
-  "state_id": stateId,
-  "city_id": cityId
+      "bank_code": bankCode,
+      "account_number": accountNumber,
+      "account_name": accountName,
+      "name": accountName,
+      "email": email,
+      "phone": phone,
+      "address": address,
+      "country_id": countryId,
+      "state_id": stateId,
+      "city_id": cityId
     });
 
     try {

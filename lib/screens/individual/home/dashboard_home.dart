@@ -942,7 +942,7 @@ class ViewAccountModal extends StatefulWidget {
 }
 
 class _ViewAccountModalState extends State<ViewAccountModal> {
-  final _userUcontroller = Get.find<UserController>();
+  // final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
