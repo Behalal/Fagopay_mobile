@@ -83,12 +83,12 @@ class _MyPurseListState extends State<MyPurseList> {
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 3.w, vertical: .9.h),
-                                      child: Row(
+                                      child: const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           // SvgPicture.asset(
                                           //     'assets/icons/record_spending_wallet.svg'),
                                           AutoSizeText(

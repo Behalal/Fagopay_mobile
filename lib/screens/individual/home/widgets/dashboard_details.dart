@@ -17,13 +17,13 @@ class DashBoardDetails extends StatefulWidget {
   final User user;
   final User userDetails;
   final String? accountType;
-  final AccountDetail accountDetails;
+  final AccountDetail? accountDetails;
 
   const DashBoardDetails({
     Key? key,
     required this.user,
     this.accountType,
-    required this.accountDetails,
+    this.accountDetails,
     required this.userDetails,
   }) : super(key: key);
 
@@ -78,7 +78,8 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                               width: 13.w,
                               height: 60.09,
                               left: 4.w,
-                               child: SvgPicture.asset("assets/images/Frame.svg"),
+                              child:
+                                  SvgPicture.asset("assets/images/Frame.svg"),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -286,7 +287,8 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                       MaterialPageRoute(
                                         builder: (context) => BusinessHome(
                                           userDetails: widget.userDetails,
-                                          accountDetails: widget.accountDetails,
+                                          accountDetails:
+                                              widget.accountDetails!,
                                         ),
                                       ),
                                     );
@@ -323,234 +325,310 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                     ),
                   ],
                 ),
-                widget.userDetails.kycVerified == 1
-                    ? Padding(
-                        padding: EdgeInsets.only(left: 9.w, bottom: 20),
-                        child: Column(
+                if (widget.userDetails.kycVerified == 1)
+                  Padding(
+                    padding: EdgeInsets.only(left: 9.w, bottom: 20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AutoSizeText(
+                          "Wallet Balance",
+                          style: TextStyle(
+                            fontFamily: "Work Sans",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: white,
+                          ),
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const AutoSizeText(
-                              "Wallet Balance",
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: white,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Obx(() => AutoSizeText(
-                                      (balanceVisible)
-                                          ? ((widget.accountDetails.balance
-                                                      .toString() ==
-                                                  "")
-                                              ? " 0.00"
-                                              : "$currencySymbol ${_userController.userAccountDetails!.balance}.00")
-                                          : notVisibleText,
-                                      style: const TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w700,
-                                          color: white),
-                                    )),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      balanceVisible = !balanceVisible;
-                                    });
-                                  },
-                                  child: Icon(
-                                    (balanceVisible)
-                                        ? Icons.visibility_off_rounded
-                                        : Icons.visibility_rounded,
-                                    color: white,
-                                    size: 20,
-                                  ),
-                                )
-                              ],
-                            ),
+                            Obx(() => AutoSizeText(
+                                  (balanceVisible)
+                                      ? ((widget.accountDetails!.balance
+                                                  .toString() ==
+                                              "")
+                                          ? " 0.00"
+                                          : "$currencySymbol ${_userController.userAccountDetails!.balance}.00")
+                                      : notVisibleText,
+                                  style: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700,
+                                      color: white),
+                                )),
                             SizedBox(
-                              height: 1.h,
+                              width: 2.w,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                if (widget.accountDetails.accountName != "")
-                                  Column(
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  balanceVisible = !balanceVisible;
+                                });
+                              },
+                              child: Icon(
+                                (balanceVisible)
+                                    ? Icons.visibility_off_rounded
+                                    : Icons.visibility_rounded,
+                                color: white,
+                                size: 20,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            if (widget.accountDetails!.accountName != "")
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          AutoSizeText(
-                                            widget.accountDetails.bankName!,
-                                            style: const TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.w600,
-                                                color: white),
-                                          ),
-                                          SizedBox(
-                                            width: 1.5.w,
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {},
-                                            child: const Icon(
-                                              Icons.copy,
-                                              color: white,
-                                              size: 18,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 0.2.h,
-                                      ),
                                       AutoSizeText(
-                                        widget.accountDetails.accountNumber!,
+                                        widget.accountDetails!.bankName!,
                                         style: const TextStyle(
                                             fontFamily: "Work Sans",
-                                            fontSize: 16,
+                                            fontSize: 10,
                                             fontWeight: FontWeight.w600,
                                             color: white),
                                       ),
+                                      SizedBox(
+                                        width: 1.5.w,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {},
+                                        child: const Icon(
+                                          Icons.copy,
+                                          color: white,
+                                          size: 18,
+                                        ),
+                                      )
                                     ],
                                   ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 10.w),
-                                  child: GestureDetector(
-                                    onTap: (() {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              FundWallet(
-                                            accountDetails:
-                                                widget.accountDetails,
-                                          ),
-                                        ),
-                                      );
-                                    }),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/fundAccount_icon.svg'),
-                                        SizedBox(
-                                          width: 1.w,
-                                        ),
-                                        const AutoSizeText(
-                                          "Fund Account",
-                                          style: TextStyle(
+                                  SizedBox(
+                                    height: 0.2.h,
+                                  ),
+                                  AutoSizeText(
+                                    widget.accountDetails!.accountNumber!,
+                                    style: const TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: white),
+                                  ),
+                                ],
+                              ),
+                            Padding(
+                              padding: EdgeInsets.only(right: 10.w),
+                              child: GestureDetector(
+                                onTap: (() {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          FundWallet(
+                                        accountDetails: widget.accountDetails!,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/fundAccount_icon.svg'),
+                                    SizedBox(
+                                      width: 1.w,
+                                    ),
+                                    const AutoSizeText(
+                                      "Fund Account",
+                                      style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                else if (widget.userDetails.kycVerified == 2 &&
+                    widget.accountDetails == null)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 15.0, left: 8, right: 8, top: 1),
+                    child: Center(
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          SvgPicture.asset('assets/icons/Ellipse 278.svg'),
+                          SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                          Container(
+                            padding: EdgeInsets.only(top: 2.h, bottom: 1.h),
+                            height: 12.h,
+                            width: 40.h,
+                            decoration: const BoxDecoration(
+                              color: white,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const AutoSizeText(
+                                  "Account Creation in Progress",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: fagoSecondaryColor,
+                                  ),
+                                ),
+                                AutoSizeText(
+                                  "Verify your identity and ",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 5.sp,
+                                    color: stepsColor,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => const SelectType());
+                                  },
+                                  child: Container(
+                                    width: 35.w,
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                        color: buttonColor),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 3.w, vertical: .9.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/icons/fundAccount_icon.svg'),
+                                          const AutoSizeText(
+                                            "Get an Account",
+                                            style: TextStyle(
                                               fontFamily: "Work Sans",
-                                              fontSize: 14,
+                                              fontSize: 8,
                                               fontWeight: FontWeight.w600,
-                                              color: white),
-                                        ),
-                                      ],
+                                              color: white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 15.0, left: 8, right: 8, top: 1),
-                        child: Center(
-                          child: Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              SvgPicture.asset('assets/icons/Ellipse 278.svg'),
-                              SvgPicture.asset('assets/icons/Ellipse 279.svg'),
-                              Container(
-                                padding: EdgeInsets.only(top: 2.h, bottom: 1.h),
-                                height: 12.h,
-                                width: 40.h,
-                                decoration: const BoxDecoration(
-                                  color: white,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const AutoSizeText(
-                                      "No account created",
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                        color: fagoSecondaryColor,
-                                      ),
-                                    ),
-                                    AutoSizeText(
-                                      "Verify your identity and ",
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 5.sp,
-                                        color: stepsColor,
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        Get.to(() => const SelectType());
-                                      },
-                                      child: Container(
-                                        width: 35.w,
-                                        decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15)),
-                                            color: buttonColor),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 3.w, vertical: .9.h),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SvgPicture.asset(
-                                                  'assets/icons/fundAccount_icon.svg'),
-                                              const AutoSizeText(
-                                                "Get an Account",
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 8,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: white,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                          )
+                        ],
                       ),
+                    ),
+                  )
+                else if (widget.userDetails.kycVerified == 0)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 15.0, left: 8, right: 8, top: 1),
+                    child: Center(
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          SvgPicture.asset('assets/icons/Ellipse 278.svg'),
+                          SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                          Container(
+                            padding: EdgeInsets.only(top: 2.h, bottom: 1.h),
+                            height: 12.h,
+                            width: 40.h,
+                            decoration: const BoxDecoration(
+                              color: white,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const AutoSizeText(
+                                  "No account created",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: fagoSecondaryColor,
+                                  ),
+                                ),
+                                AutoSizeText(
+                                  "Verify your identity and ",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 5.sp,
+                                    color: stepsColor,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Get.to(() => const SelectType());
+                                  },
+                                  child: Container(
+                                    width: 35.w,
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                        color: buttonColor),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 3.w, vertical: .9.h),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/icons/fundAccount_icon.svg'),
+                                          const AutoSizeText(
+                                            "Get an Account",
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontSize: 8,
+                                              fontWeight: FontWeight.w600,
+                                              color: white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
               ],
             ),
           ),
@@ -1042,7 +1120,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                 Get.to(() => const SelectType());
                               },
                               child: Container(
-                                width: 35.w,
+                                width: 37.w,
                                 decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(15)),

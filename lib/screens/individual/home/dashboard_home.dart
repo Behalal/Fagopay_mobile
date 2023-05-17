@@ -950,7 +950,7 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> getUserDetails() async {
     final response = await _loginController.getUserDetails();
-    final userAccountjsonBodyData = response['data']['accountdetail'];
+    final userAccountjsonBodyData = response['data']['userdetail']['nextofkin'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
   }

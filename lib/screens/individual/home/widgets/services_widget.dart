@@ -65,7 +65,7 @@ List<Services> services = [
     route: SwapAirtime(),
   ),
   const Services(
-    image: 'assets/icons/new_link_icon.svg',
+    image: 'assets/icons/new_payment_link.svg',
     itemName: 'Payment Link',
     route: ReferAndEarn(),
   )

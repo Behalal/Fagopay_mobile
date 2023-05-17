@@ -4,8 +4,6 @@ import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
-import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -16,18 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
 
-class IdentificationVerification extends StatefulWidget {
-  const IdentificationVerification({
+class BusinessVerification extends StatefulWidget {
+  const BusinessVerification({
     super.key,
   });
 
   @override
-  State<IdentificationVerification> createState() =>
-      _IdentificationVerificationState();
+  State<BusinessVerification> createState() =>
+      _BusinessVerificationState();
 }
 
-class _IdentificationVerificationState
-    extends State<IdentificationVerification> {
+class _BusinessVerificationState
+    extends State<BusinessVerification> {
   File? image;
   Future pickImageFromGallery() async {
     try {

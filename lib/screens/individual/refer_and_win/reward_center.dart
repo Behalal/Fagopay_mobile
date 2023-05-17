@@ -338,12 +338,12 @@ class _ReferCenterState extends State<ReferCenter> {
                                       SizedBox(
                                         width: 2.h,
                                       ),
-                                      Column(
+                                      const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'Jafar Zubaird',
                                             style: TextStyle(
@@ -394,12 +394,12 @@ class _ReferCenterState extends State<ReferCenter> {
                                       SizedBox(
                                         width: 2.h,
                                       ),
-                                      Column(
+                                      const Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'Jafar Zubaird',
                                             style: TextStyle(

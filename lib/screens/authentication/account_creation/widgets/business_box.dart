@@ -50,7 +50,7 @@ class _BusinessBoxState extends State<BusinessBox> {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(' assets/icons/business_type_icon.svg'),
+                      SvgPicture.asset('assets/icons/business_type_icon.svg'),
                       SizedBox(
                         width: 3.w,
                       ),
@@ -292,7 +292,12 @@ class _BusinessBoxState extends State<BusinessBox> {
                           height: 2.h,
                         )
                       : Container(),
-                  (widget.isBiz == true) ? const TermsAndCond() : Container(),
+                  (widget.isBiz == true)
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const TermsAndCond(),
+                        )
+                      : Container(),
                   (widget.isBiz == true)
                       ? SizedBox(
                           height: 2.h,
