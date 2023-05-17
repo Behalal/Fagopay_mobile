@@ -19,6 +19,7 @@ class TransactionSuccessful extends StatefulWidget {
 }
 
 class _TransactionSuccessfulState extends State<TransactionSuccessful> {
+  // ignore: unused_field
   final _userUcontroller = Get.find<UserController>();
 
   @override

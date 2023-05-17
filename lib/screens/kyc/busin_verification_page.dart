@@ -4,6 +4,7 @@ import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/kyc/business_verification.dart';
 import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/kyc/identity_verification.dart';
+import 'package:fagopay/screens/kyc/proof_of_address.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ import 'package:sizer/sizer.dart';
 
 import '../authentication/account_creation/widgets/current_step.dart';
 import '../constants/colors.dart';
-import 'business_verify.dart';
+
 
 class KycVerfication extends StatefulWidget {
   final String? accountType;
@@ -26,6 +27,7 @@ class KycVerfication extends StatefulWidget {
 }
 
 class KycVerficationstate extends State<KycVerfication> {
+  // ignore: unused_field
   final _userUcontroller = Get.find<UserController>();
 
   @override
@@ -471,45 +473,66 @@ class KycVerficationstate extends State<KycVerfication> {
                       Stack(alignment: Alignment.bottomRight, children: [
                         SvgPicture.asset('assets/icons/Ellipse 278.svg'),
                         SvgPicture.asset('assets/icons/Ellipse 279.svg'),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 3.h, vertical: 2.h),
-                          // height: 27.h,
-                          width: Get.width,
-                          color: fagoSecondaryColorWithOpacity10,
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  //  SvgPicture.asset('assets/icons/tag-2.svg'),
-                                  const AutoSizeText(
-                                    'Proof of Address',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: stepsColor,
+                        InkWell(
+                          onTap: () {
+                            Get.to(() => const ProofOfAddress());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 3.h, vertical: 2.h),
+                            // height: 27.h,
+                            width: Get.width,
+                            color: fagoSecondaryColorWithOpacity10,
+                            child: Row(
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    //  SvgPicture.asset('assets/icons/tag-2.svg'),
+                                    const AutoSizeText(
+                                      'Proof of Address',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                        color: stepsColor,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 1.h, vertical: 0.7.h),
-                                    //height: 2.5.h,
-                                    width: 10.h,
-                                    decoration: BoxDecoration(
-                                        color: fagoSecondaryColorWithOpacity10,
-                                        borderRadius: BorderRadius.circular(25),
-                                        border: Border.all(
-                                            color: fagoSecondaryColor)),
-                                    alignment: Alignment.center,
-                                    child: const AutoSizeText(
-                                      'Utility Bill',
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 1.h, vertical: 0.7.h),
+                                      //height: 2.5.h,
+                                      width: 10.h,
+                                      decoration: BoxDecoration(
+                                          color:
+                                              fagoSecondaryColorWithOpacity10,
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          border: Border.all(
+                                              color: fagoSecondaryColor)),
+                                      alignment: Alignment.center,
+                                      child: const AutoSizeText(
+                                        'Utility Bill',
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w500,
+                                          color: fagoSecondaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
+                                Column(
+                                  children: [
+                                    const AutoSizeText(
+                                      'STEP 1',
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 10,
@@ -517,31 +540,17 @@ class KycVerficationstate extends State<KycVerfication> {
                                         color: fagoSecondaryColor,
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                children: [
-                                  const AutoSizeText(
-                                    'STEP 1',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w500,
+                                    SizedBox(
+                                      height: 1.5.h,
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/verify_suxf.svg',
                                       color: fagoSecondaryColor,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 1.5.h,
-                                  ),
-                                  SvgPicture.asset(
-                                    'assets/icons/verify_suxf.svg',
-                                    color: fagoSecondaryColor,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ]),

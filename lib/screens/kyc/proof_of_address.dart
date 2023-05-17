@@ -15,16 +15,16 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
 
-class BusinessVerification extends StatefulWidget {
-  const BusinessVerification({
+class ProofOfAddress extends StatefulWidget {
+  const ProofOfAddress({
     super.key,
   });
 
   @override
-  State<BusinessVerification> createState() => _BusinessVerificationState();
+  State<ProofOfAddress> createState() => _ProofOfAddressState();
 }
 
-class _BusinessVerificationState extends State<BusinessVerification> {
+class _ProofOfAddressState extends State<ProofOfAddress> {
   File? image;
   Future pickImageFromGallery() async {
     try {
@@ -52,11 +52,11 @@ class _BusinessVerificationState extends State<BusinessVerification> {
 
   String? selectedAcount;
   final List<String> items = [
-    'RN',
-    'BN',
-    'IT',
-    'LL',
-    'LLP',
+    'Bank Statement',
+    'Rent Bill',
+    'Waste Bill',
+    'Electricity Bill',
+    'Water Bill',
   ];
 
   int? myRequestType;
@@ -71,7 +71,7 @@ class _BusinessVerificationState extends State<BusinessVerification> {
             child: Column(children: [
               const ProgressStyle(
                 stage: 0,
-                pageName: "Business Verification",
+                pageName: "Proof of Address",
                 // backRoute: MakeRequest(),
               ),
               SizedBox(
@@ -86,7 +86,7 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const AutoSizeText(
-                            'CAC Documents',
+                            'Upload Utility Bill',
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 24,
@@ -98,7 +98,7 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                             height: 3.h,
                           ),
                           const AutoSizeText(
-                            'Please provide us information about issued certificate from the corporate affairs commission to certify that your business is registered.',
+                            'Please upload a document that shows your current business address. We accept bank statement, rent receipt, waste bill, water bill, electricity bill, or Cable Bill.',
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,
@@ -109,8 +109,14 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                           SizedBox(
                             height: 2.h,
                           ),
+                          Divider(
+                            color: stepsColor.withOpacity(0.3),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
                           const AutoSizeText(
-                            'Tell us your Business Name',
+                            'Tell us your current Business Address',
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,
@@ -123,7 +129,7 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                           ),
                           NameTextfield(
                             // controller: _pursecontroller.budgetController,
-                            title: 'Enter ID Number',
+                            title: '12, adjascent KFC, Ikoyi estate, island',
                             keyboadType: TextInputType.text,
                             boarderColor: stepsColor.withOpacity(0.3),
                             validate: (value) {
@@ -136,8 +142,165 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                           SizedBox(
                             height: 2.h,
                           ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const AutoSizeText(
+                                      'State',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: stepsColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 0.5.h,
+                                    ),
+                                    Container(
+                                      width: Get.width,
+                                      height: 7.h,
+                                      margin: const EdgeInsets.only(top: 8),
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          border: Border.all(
+                                              color: textBoxBorderColor)),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton2(
+                                          hint: Text(
+                                            'Select State',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            ),
+                                          ),
+                                          items: items
+                                              .map((item) =>
+                                                  DropdownMenuItem<String>(
+                                                    value: item,
+                                                    child: Text(
+                                                      item,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                          value: selectedAcount,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedAcount = value as String;
+                                            });
+                                          },
+                                          buttonStyleData:
+                                              const ButtonStyleData(
+                                            height: 40,
+                                            width: 140,
+                                          ),
+                                          menuItemStyleData:
+                                              const MenuItemStyleData(
+                                            height: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2.h,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const AutoSizeText(
+                                      'City',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: stepsColor,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 0.5.h,
+                                    ),
+                                    Container(
+                                      width: Get.width,
+                                      height: 7.h,
+                                      margin: const EdgeInsets.only(top: 8),
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          border: Border.all(
+                                              color: textBoxBorderColor)),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton2(
+                                          hint: Text(
+                                            'Select City',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            ),
+                                          ),
+                                          items: items
+                                              .map((item) =>
+                                                  DropdownMenuItem<String>(
+                                                    value: item,
+                                                    child: Text(
+                                                      item,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                          value: selectedAcount,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedAcount = value as String;
+                                            });
+                                          },
+                                          buttonStyleData:
+                                              const ButtonStyleData(
+                                            height: 40,
+                                            width: 140,
+                                          ),
+                                          menuItemStyleData:
+                                              const MenuItemStyleData(
+                                            height: 40,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
+
+                          Divider(
+                            color: stepsColor.withOpacity(0.3),
+                          ),
+                          SizedBox(
+                            height: 2.h,
+                          ),
                           const AutoSizeText(
-                            'Select Company Type',
+                            'Utility Bill Type',
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,
@@ -147,17 +310,17 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                           ),
                           Container(
                             width: Get.width,
-                            height: 48,
+                            height: 7.h,
                             margin: const EdgeInsets.only(top: 8),
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                                 color: white,
-                                borderRadius: BorderRadius.circular(0),
+                                borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: textBoxBorderColor)),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton2(
                                 hint: Text(
-                                  'Select Company Type',
+                                  'Bank Statement',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Theme.of(context).hintColor,
@@ -190,38 +353,12 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                               ),
                             ),
                           ),
+
                           SizedBox(
                             height: 2.h,
                           ),
                           const AutoSizeText(
-                            'Provide CAC Number',
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: stepsColor,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          NameTextfield(
-                            // controller: _pursecontroller.budgetController,
-                            title: 'Enter CAC Number',
-                            keyboadType: TextInputType.number,
-                            boarderColor: stepsColor.withOpacity(0.3),
-                            validate: (value) {
-                              if (value!.isEmpty) {
-                                return 'Amount must not be empty';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 2.h,
-                          ),
-                          const AutoSizeText(
-                            'Upload ID Document',
+                            'Upload Document',
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,
@@ -233,10 +370,10 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                             height: 1.h,
                           ),
                           const AutoSizeText(
-                            'Please ensure that all document and bind into one pdf including the certificate, shares page and mermat.',
+                            'Bank statement must show your name and address clearly',
                             style: TextStyle(
                               fontFamily: "Work Sans",
-                              fontSize: 10,
+                              fontSize: 8,
                               fontWeight: FontWeight.w400,
                               color: stepsColor,
                             ),
@@ -305,53 +442,53 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                           SizedBox(
                             height: 2.h,
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 15),
-                            width: Get.width,
-                            //height: ,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                    color: stepsColor.withOpacity(0.3))),
-                            child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  const Row(
-                                    children: [
-                                      AutoSizeText(
-                                        'See Example Image',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w500,
-                                          color: fagoSecondaryColor,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Image.asset(
-                                            'assets/images/sample document.png'),
-                                      ),
-                                      const Expanded(
-                                        child: AutoSizeText(
-                                          'You can find the ID Number circled with red line on the example image.',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w500,
-                                            color: stepsColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ]),
-                          ),
+                          // Container(
+                          //   padding: const EdgeInsets.symmetric(
+                          //       horizontal: 10, vertical: 15),
+                          //   width: Get.width,
+                          //   //height: ,
+                          //   decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.circular(8),
+                          //       border: Border.all(
+                          //           color: stepsColor.withOpacity(0.3))),
+                          //   child: Column(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceEvenly,
+                          //       children: [
+                          //         const Row(
+                          //           children: [
+                          //             AutoSizeText(
+                          //               'See Example Image',
+                          //               style: TextStyle(
+                          //                 fontFamily: "Work Sans",
+                          //                 fontSize: 10,
+                          //                 fontWeight: FontWeight.w500,
+                          //                 color: fagoSecondaryColor,
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //         Row(
+                          //           children: [
+                          //             Expanded(
+                          //               child: Image.asset(
+                          //                   'assets/images/sample document.png'),
+                          //             ),
+                          //             const Expanded(
+                          //               child: AutoSizeText(
+                          //                 'You can find the ID Number circled with red line on the example image.',
+                          //                 style: TextStyle(
+                          //                   fontFamily: "Work Sans",
+                          //                   fontSize: 10,
+                          //                   fontWeight: FontWeight.w500,
+                          //                   color: stepsColor,
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ],
+                          //         ),
+                          //       ]),
+                          // ),
                         ],
                       ),
                     )),
