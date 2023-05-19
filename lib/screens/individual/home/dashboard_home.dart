@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/models/company_model.dart';
+import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
@@ -46,8 +47,8 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   @override
   void initState() {
-    getUserDetails();
-    getCompany();
+    //getUserDetails();
+    //getCompany();
     super.initState();
   }
 
@@ -276,97 +277,97 @@ class _DashboardHomeState extends State<DashboardHome> {
                         SizedBox(
                           height: 1.h,
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.w,
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 2.h, vertical: 2.h),
-                            //height: 23.h,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                                color: fagoSecondaryColor.withOpacity(0.05),
-                                borderRadius: BorderRadius.circular(8)),
-                            alignment: Alignment.center,
-                            child: GridView.count(
-                                padding: EdgeInsets.zero,
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                crossAxisCount: 4,
-                                crossAxisSpacing: 4.0.h,
-                                mainAxisSpacing: 3.0.h,
-                                childAspectRatio: 0.10.h,
-                                children:
-                                    List.generate(services.length, (index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      if (services[index].route != null &&
-                                          widget.userDetails.kycVerified == 0) {
-                                        Get.defaultDialog(
-                                            title: "",
-                                            middleText: "",
-                                            titlePadding: EdgeInsets.zero,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 5.h,
-                                                    vertical: 3.h),
-                                            content: unverifiedUserDialogue());
-                                      } else if (services[index].route !=
-                                          null) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                services[index].route!,
-                                          ),
-                                        );
-                                      } else if (services[index].route ==
-                                              null &&
-                                          widget.userDetails.kycVerified == 1 &&
-                                          services[index].bill == 'special') {
-                                        showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(20),
-                                              ),
-                                            ),
-                                            context: context,
-                                            builder: (context) =>
-                                                const BillsPayment());
-                                      }
-                                    },
-                                    child: Column(children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            services[index].image,
-                                            height: 2.5.h,
-                                            width: 2.5.w,
-                                          ),
-                                          SizedBox(
-                                            height: 1.0.h,
-                                          ),
-                                          AutoSizeText(
-                                            services[index].itemName,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 0,
-                                              color: black,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ]),
-                                  );
-                                })),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(
+                        //     horizontal: 5.w,
+                        //   ),
+                        //   child: Container(
+                        //     padding: EdgeInsets.symmetric(
+                        //         horizontal: 2.h, vertical: 2.h),
+                        //     //height: 23.h,
+                        //     width: Get.width,
+                        //     decoration: BoxDecoration(
+                        //         color: fagoSecondaryColor.withOpacity(0.05),
+                        //         borderRadius: BorderRadius.circular(8)),
+                        //     alignment: Alignment.center,
+                        //     child: GridView.count(
+                        //         padding: EdgeInsets.zero,
+                        //         physics: const NeverScrollableScrollPhysics(),
+                        //         shrinkWrap: true,
+                        //         crossAxisCount: 4,
+                        //         crossAxisSpacing: 4.0.h,
+                        //         mainAxisSpacing: 3.0.h,
+                        //         childAspectRatio: 0.10.h,
+                        //         children:
+                        //             List.generate(services.length, (index) {
+                        //           return InkWell(
+                        //             onTap: () {
+                        //               if (services[index].route != null &&
+                        //                   widget.userDetails.kycVerified == 0) {
+                        //                 Get.defaultDialog(
+                        //                     title: "",
+                        //                     middleText: "",
+                        //                     titlePadding: EdgeInsets.zero,
+                        //                     contentPadding:
+                        //                         EdgeInsets.symmetric(
+                        //                             horizontal: 5.h,
+                        //                             vertical: 3.h),
+                        //                     content: unverifiedUserDialogue());
+                        //               } else if (services[index].route !=
+                        //                   null) {
+                        //                 Navigator.of(context).push(
+                        //                   MaterialPageRoute(
+                        //                     builder: (BuildContext context) =>
+                        //                         services[index].route!,
+                        //                   ),
+                        //                 );
+                        //               } else if (services[index].route ==
+                        //                       null &&
+                        //                   widget.userDetails.kycVerified == 1 &&
+                        //                   services[index].bill == 'special') {
+                        //                 showModalBottomSheet(
+                        //                     isScrollControlled: true,
+                        //                     shape: const RoundedRectangleBorder(
+                        //                       borderRadius:
+                        //                           BorderRadius.vertical(
+                        //                         top: Radius.circular(20),
+                        //                       ),
+                        //                     ),
+                        //                     context: context,
+                        //                     builder: (context) =>
+                        //                         const BillsPayment());
+                        //               }
+                        //             },
+                        //             child: Column(children: [
+                        //               Column(
+                        //                 crossAxisAlignment:
+                        //                     CrossAxisAlignment.center,
+                        //                 children: [
+                        //                   SvgPicture.asset(
+                        //                     services[index].image,
+                        //                     height: 2.5.h,
+                        //                     width: 2.5.w,
+                        //                   ),
+                        //                   SizedBox(
+                        //                     height: 1.0.h,
+                        //                   ),
+                        //                   AutoSizeText(
+                        //                     services[index].itemName,
+                        //                     textAlign: TextAlign.center,
+                        //                     style: const TextStyle(
+                        //                       fontFamily: "Work Sans",
+                        //                       fontWeight: FontWeight.w400,
+                        //                       fontSize: 0,
+                        //                       color: black,
+                        //                     ),
+                        //                   ),
+                        //                 ],
+                        //               )
+                        //             ]),
+                        //           );
+                        //         })),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 2.h,
                         ),
@@ -671,9 +672,14 @@ class _DashboardHomeState extends State<DashboardHome> {
                           padding: EdgeInsets.symmetric(
                             horizontal: 5.w,
                           ),
-                          child: Image.asset(
-                            'assets/images/refer-earn.png',
-                            fit: BoxFit.cover,
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(() => const ReferAndEarn());
+                            },
+                            child: Image.asset(
+                              'assets/images/refer-earn.png',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -973,7 +979,7 @@ class ViewAccountModal extends StatefulWidget {
 }
 
 class _ViewAccountModalState extends State<ViewAccountModal> {
-  final _userUcontroller = Get.find<UserController>();
+  //final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(

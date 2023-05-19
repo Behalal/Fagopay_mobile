@@ -484,10 +484,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "68ffe73e87bb27bab5fd82a417c44cdbe91635bcabdb94bc31d902a14ec2bff8"
+      sha256: "80e37516b8d452d982fc32bd7bb22adbd20e422612ef2b3e1df8b8350cbf199b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "7.0.1"
   google_fonts:
     dependency: "direct main"
     description:
@@ -540,10 +540,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: "89ba2aa6904d8180ca44fd5f5014523f02319101904e3e571fbe792e395b77ed"
+      sha256: "364967c8d581f5d75fc05f6c79fcf1115e3c05db3d3eee1aaca52e0da3f7501c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.6+14"
+    version: "0.8.6+15"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -1017,10 +1017,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "3a82c9a216b46b88617e3714dd74227eaca20c501c4abcc213e56db26b9caa00"
+      sha256: b4d6710e1200e96845747e37338ea8a819a12b51689a3bcf31eff0003b37a0b9
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.8+2"
+    version: "2.2.8+4"
   sqflite_common:
     dependency: transitive
     description:
@@ -1065,18 +1065,18 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: dfd138a0cea87d6b1c624513b4b620f06515d884d65f1fa5fb93345266c7592c
+      sha256: b2ad1c93239b094d6de1b4679c1835b1bc4332e6c6548bd2da44bd2594e6cdc5
       url: "https://pub.dev"
     source: hosted
-    version: "21.2.4"
+    version: "21.2.5"
   syncfusion_flutter_sliders:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_sliders
-      sha256: e7e3feaa16ab5821b0062b7addcb98f7d4bd734cff37909c5169e494fb717d91
+      sha256: "5d24cccdbe7a0d51c9e4f66539c43cc4e7673093a1e153e93bd74de5529136ca"
       url: "https://pub.dev"
     source: hosted
-    version: "21.2.4"
+    version: "21.2.5"
   synchronized:
     dependency: transitive
     description:
@@ -1137,10 +1137,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: "7aac14be5f4731b923cc697ae2d42043945076cd0dbb8806baecc92c1dc88891"
+      sha256: "1a5848f598acc5b7d8f7c18b8cb834ab667e59a13edc3c93e9d09cf38cc6bc87"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.33"
+    version: "6.0.34"
   url_launcher_ios:
     dependency: transitive
     description:

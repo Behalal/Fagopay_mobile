@@ -145,8 +145,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           AutoSizeText(
-                                            _userUcontroller
-                                                    .user!.referralCode ??
+                                            _userUcontroller.user!.phone ??
                                                 'No referral Code',
                                             style: const TextStyle(
                                               fontFamily: "Work Sans",
