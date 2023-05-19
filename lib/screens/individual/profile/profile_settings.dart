@@ -236,7 +236,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
-                                            'assets/icons/change_password.svg'),
+                                            'assets/icons/change_passcode.svg'),
                                         SizedBox(
                                           width: 1.h,
                                         ),

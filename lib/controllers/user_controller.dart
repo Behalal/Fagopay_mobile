@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:fagopay/models/referal_earnings/referal_earning.dart';
+import 'package:fagopay/models/referal_earnings.dart/referal_earning.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';

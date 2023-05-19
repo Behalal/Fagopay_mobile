@@ -123,11 +123,13 @@ class _CustomerPageState extends State<CustomerPage> {
                           itemCount: _customerController.customers.length,
                           itemBuilder: (context, index) => CustomCustomerCard(
                             // fullName: "Korede",
-                            fullName: _customerController.customers[index].fullname!,
+                            fullName:
+                                _customerController.customers[index].fullname!,
                             // email: "akored@gmail.com",
                             email: _customerController.customers[index].email!,
                             // phoneNumber: "080976543445",
-                            phoneNumber: _customerController.customers[index].phoneNumber!,
+                            phoneNumber: _customerController
+                                .customers[index].phoneNumber!,
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(

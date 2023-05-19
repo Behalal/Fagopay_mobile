@@ -1,6 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/models/company_model.dart';
+import 'package:fagopay/screens/individual/bills/data.dart';
+import 'package:fagopay/screens/individual/bills/swap_airtime.dart';
 import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
+import 'package:fagopay/screens/individual/requests/requests.dart';
+import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
+import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
@@ -302,41 +307,41 @@ class _DashboardHomeState extends State<DashboardHome> {
                         //             List.generate(services.length, (index) {
                         //           return InkWell(
                         //             onTap: () {
-                        //               if (services[index].route != null &&
-                        //                   widget.userDetails.kycVerified == 0) {
-                        //                 Get.defaultDialog(
-                        //                     title: "",
-                        //                     middleText: "",
-                        //                     titlePadding: EdgeInsets.zero,
-                        //                     contentPadding:
-                        //                         EdgeInsets.symmetric(
-                        //                             horizontal: 5.h,
-                        //                             vertical: 3.h),
-                        //                     content: unverifiedUserDialogue());
-                        //               } else if (services[index].route !=
-                        //                   null) {
-                        //                 Navigator.of(context).push(
-                        //                   MaterialPageRoute(
-                        //                     builder: (BuildContext context) =>
-                        //                         services[index].route!,
-                        //                   ),
-                        //                 );
-                        //               } else if (services[index].route ==
-                        //                       null &&
-                        //                   widget.userDetails.kycVerified == 1 &&
-                        //                   services[index].bill == 'special') {
-                        //                 showModalBottomSheet(
-                        //                     isScrollControlled: true,
-                        //                     shape: const RoundedRectangleBorder(
-                        //                       borderRadius:
-                        //                           BorderRadius.vertical(
-                        //                         top: Radius.circular(20),
-                        //                       ),
-                        //                     ),
-                        //                     context: context,
-                        //                     builder: (context) =>
-                        //                         const BillsPayment());
-                        //               }
+                        //               // if (services[index].route != null &&
+                        //               //     widget.userDetails.kycVerified == 0) {
+                        //               //   Get.defaultDialog(
+                        //               //       title: "",
+                        //               //       middleText: "",
+                        //               //       titlePadding: EdgeInsets.zero,
+                        //               //       contentPadding:
+                        //               //           EdgeInsets.symmetric(
+                        //               //               horizontal: 5.h,
+                        //               //               vertical: 3.h),
+                        //               //       content: unverifiedUserDialogue());
+                        //               // } else if (services[index].route !=
+                        //               //     null) {
+                        //               //   Navigator.of(context).push(
+                        //               //     MaterialPageRoute(
+                        //               //       builder: (BuildContext context) =>
+                        //               //           services[index].route!,
+                        //               //     ),
+                        //               //   );
+                        //               // } else if (services[index].route ==
+                        //               //         null &&
+                        //               //     widget.userDetails.kycVerified == 1 &&
+                        //               //     services[index].bill == 'special') {
+                        //               //   showModalBottomSheet(
+                        //               //       isScrollControlled: true,
+                        //               //       shape: const RoundedRectangleBorder(
+                        //               //         borderRadius:
+                        //               //             BorderRadius.vertical(
+                        //               //           top: Radius.circular(20),
+                        //               //         ),
+                        //               //       ),
+                        //               //       context: context,
+                        //               //       builder: (context) =>
+                        //               //           const BillsPayment());
+                        //               // }
                         //             },
                         //             child: Column(children: [
                         //               Column(
@@ -368,6 +373,418 @@ class _DashboardHomeState extends State<DashboardHome> {
                         //         })),
                         //   ),
                         // ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 5.w,
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 2.h, vertical: 2.h),
+                            // height: 10.h,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                                color: fagoSecondaryColor.withOpacity(0.05),
+                                borderRadius: BorderRadius.circular(8)),
+                            alignment: Alignment.center,
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) => FagoToBank(
+                                              userDetails:
+                                                  _userController.user!,
+                                              accountDetails: _userController
+                                                  .userAccountDetails!,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_tansfer_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Transfer\n Money",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const FagoToFago()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_paymentLink_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Fago 2 \nFago",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        // Navigator.of(context).push(
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) => FagoToBank(
+                                        //       userDetails:
+                                        //           _userController.user!,
+                                        //       accountDetails: _userController
+                                        //           .userAccountDetails!,
+                                        //     ),
+                                        //   ),
+                                        // );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_scanToPay_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Scan to \nPay",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RequestHome()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_requestMoney_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Request \nMoney",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Divider(
+                                  color: stepsColor.withOpacity(0.5),
+                                ),
+                                SizedBox(
+                                  height: 1.h,
+                                ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const BuyData()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_airtime_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Airtime \n& Data",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const BuyData()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_payInternet_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Bills \nPayment",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SwapAirtime()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_swapAirtime_icon.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Swap \nAirtime",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (widget.userDetails.kycVerified ==
+                                            0) {
+                                          Get.defaultDialog(
+                                              title: "",
+                                              middleText: "",
+                                              titlePadding: EdgeInsets.zero,
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 8),
+                                              content:
+                                                  unverifiedUserDialogue());
+                                          return;
+                                        }
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SwapAirtime()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icons/new_payment_link.svg',
+                                            height: 2.5.h,
+                                            width: 2.5.w,
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          const AutoSizeText(
+                                            "Payment \nLink",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontFamily: "Work Sans",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 5,
+                                              color: black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 2.h,
                         ),

@@ -26,39 +26,39 @@ class Services {
 
 final _userController = Get.find<UserController>();
 List<Services> services = [
-  // Services(
-  //   image: 'assets/icons/new_tansfer_icon.svg',
-  //   itemName: 'Transfer',
-  //   route: FagoToBank(
-  //     userDetails: _userController.user!,
-  //     accountDetails: _userController.userAccountDetails!,
-  //   ),
-  // ),
-  // const Services(
-  //   image: 'assets/icons/new_paymentLink_icon.svg',
-  //   itemName: 'Fago 2 Fago',
-  //   route: FagoToFago(),
-  // ),
-  // const Services(
-  //   image: 'assets/icons/new_scanToPay_icon.svg',
-  //   itemName: 'Scan to Pay',
-  //   route: null,
-  // ),
-  // const Services(
-  //   image: 'assets/icons/new_requestMoney_icon.svg',
-  //   itemName: 'Request Money',
-  //   route: RequestHome(),
-  // ),
-  // const Services(
-  //   image: 'assets/icons/new_airtime_icon.svg',
-  //   itemName: 'Airtime & Data',
-  //   route: BuyData(),
-  // ),
-  // const Services(
-  //     image: 'assets/icons/new_payInternet_icon.svg',
-  //     itemName: 'Bills Payment',
-  //     route: null,
-  //     bill: 'special'),
+  Services(
+    image: 'assets/icons/new_tansfer_icon.svg',
+    itemName: 'Transfer',
+    route: FagoToBank(
+      userDetails: _userController.user!,
+      accountDetails: _userController.userAccountDetails!,
+    ),
+  ),
+  const Services(
+    image: 'assets/icons/new_paymentLink_icon.svg',
+    itemName: 'Fago 2 Fago',
+    route: FagoToFago(),
+  ),
+  const Services(
+    image: 'assets/icons/new_scanToPay_icon.svg',
+    itemName: 'Scan to Pay',
+    route: null,
+  ),
+  const Services(
+    image: 'assets/icons/new_requestMoney_icon.svg',
+    itemName: 'Request Money',
+    route: RequestHome(),
+  ),
+  const Services(
+    image: 'assets/icons/new_airtime_icon.svg',
+    itemName: 'Airtime & Data',
+    route: BuyData(),
+  ),
+  const Services(
+      image: 'assets/icons/new_payInternet_icon.svg',
+      itemName: 'Bills Payment',
+      route: null,
+      bill: 'special'),
   const Services(
     image: 'assets/icons/new_swapAirtime_icon.svg',
     itemName: 'Swap Airtime',
