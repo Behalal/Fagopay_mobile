@@ -150,15 +150,10 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                                   context: context,
                                                   merchantKey:
                                                       "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
-                                                  firstName: _userUcontroller
-                                                      .user!.firstName,
-                                                  lastName: _userUcontroller
-                                                      .user!.lastName,
-                                                  email: _userUcontroller
-                                                          .user!.email ??
-                                                      '',
-                                                  userRef:
-                                                      _userUcontroller.user!.id,
+                                                  firstName: 'Kehinde',
+                                                  lastName: 'Obe',
+                                                  email: 'kennyobey@gmail.com',
+                                                  userRef: '10',
                                                   onCancel: (response) {
                                                     if (kDebugMode) {
                                                       print(response);
