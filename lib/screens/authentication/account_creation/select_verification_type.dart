@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controllers/registration_controller.dart';
@@ -12,8 +16,6 @@ import '../../../functions/functions.dart';
 import '../../../service/secure_storage/secure_storage.dart';
 import '../../constants/colors.dart';
 import '../widgets/auth_buttons.dart';
-
-import 'select_type.dart';
 import 'verify_code.dart';
 import 'widgets/current_step.dart';
 
@@ -25,6 +27,7 @@ class SelectVerificationType extends StatefulWidget {
 }
 
 class _SelectVerificationTypeState extends State<SelectVerificationType> {
+  var number = "";
   final int currentIndex = 0;
   bool usePhone = true;
   bool useEmail = false;
@@ -49,93 +52,89 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CurrentStep(step: "2", backRoute: const SelectType()),
+                      CurrentStep(step: "2", backRoute: const Onboarding()),
                       SizedBox(height: 5.h),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 2.w, vertical: 1.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  usePhone = true;
-                                  useEmail = false;
-                                });
-                              },
-                              child: Container(
-                                width: 38.w,
-                                height: 6.h,
-                                decoration: BoxDecoration(
-                                    color:
-                                        (usePhone) ? fagoSecondaryColor : white,
-                                    border: Border.all(
-                                      color: (usePhone)
-                                          ? fagoSecondaryColor
-                                          : fagoSecondaryColorWithOpacity,
-                                    ),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(5))),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      "Use Phone Number",
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: (usePhone) ? white : inactiveTab,
-                                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                usePhone = true;
+                                useEmail = false;
+                              });
+                            },
+                            child: Container(
+                              width: 38.w,
+                              height: 6.h,
+                              decoration: BoxDecoration(
+                                  color:
+                                      (usePhone) ? fagoSecondaryColor : white,
+                                  border: Border.all(
+                                    color: (usePhone)
+                                        ? fagoSecondaryColor
+                                        : fagoSecondaryColorWithOpacity,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5))),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    "Use Phone Number",
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: (usePhone) ? white : inactiveTab,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: 3.w,
-                            ),
-                            GestureDetector(
-                              onTap: (() {
-                                setState(() {
-                                  usePhone = false;
-                                  useEmail = true;
-                                });
-                              }),
-                              child: Container(
-                                width: 38.w,
-                                height: 6.h,
-                                decoration: BoxDecoration(
-                                    color:
-                                        (useEmail) ? fagoSecondaryColor : white,
-                                    border: Border.all(
-                                      color: (useEmail)
-                                          ? fagoSecondaryColor
-                                          : fagoSecondaryColorWithOpacity,
-                                    ),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(5))),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 10),
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      "Use Email Address",
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: (useEmail) ? white : inactiveTab,
-                                      ),
+                          ),
+                          SizedBox(
+                            width: 3.w,
+                          ),
+                          GestureDetector(
+                            onTap: (() {
+                              setState(() {
+                                usePhone = false;
+                                useEmail = true;
+                              });
+                            }),
+                            child: Container(
+                              width: 38.w,
+                              height: 6.h,
+                              decoration: BoxDecoration(
+                                  color:
+                                      (useEmail) ? fagoSecondaryColor : white,
+                                  border: Border.all(
+                                    color: (useEmail)
+                                        ? fagoSecondaryColor
+                                        : fagoSecondaryColorWithOpacity,
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(5))),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    "Use Email Address",
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      color: (useEmail) ? white : inactiveTab,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 3.h,
@@ -158,75 +157,125 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 2.5.w),
-                        child: SizedBox(
-                          width: 80.w,
-                          child: AutoSizeText(
-                            (usePhone)
-                                ? "Within some few step, your account will be all set and ready for use. Kindly input your phone number for verification:"
-                                : "Within some few step, your account will be all set and ready for use. Kindly input your email address for verification",
-                            style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: inactiveTab,
-                            ),
+                        child: AutoSizeText(
+                          (usePhone)
+                              ? "Within some few step, your account will be all set and ready for use. Kindly input your phone number for verification:"
+                              : "Within some few step, your account will be all set and ready for use. Kindly input your email address for verification",
+                          style: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: inactiveTab,
                           ),
                         ),
                       ),
                       SizedBox(
                         height: 5.h,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 2.5.w),
-                        child: SizedBox(
-                            width: 80.w,
-                            child: TextFormField(
-                              controller: !usePhone
-                                  ? _registrationController.email
-                                  : _registrationController.phone,
-                              style: const TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder),
+                      (usePhone)
+                          ? IntlPhoneField(
+                              disableLengthCheck: true,
+                              keyboardType: Platform.isIOS
+                                  ? const TextInputType.numberWithOptions(
+                                      signed: true, decimal: false)
+                                  : TextInputType.phone,
+                              flagsButtonMargin: const EdgeInsets.only(left: 8),
+                              style: GoogleFonts.roboto(
+                                color: stepsColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
                               decoration: InputDecoration(
+                                fillColor: white,
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 15),
+                                filled: true,
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                      color: fagoSecondaryColorWithOpacity,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10)),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  borderSide: const BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                  ),
-                                ),
-                                border: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
-                                    borderSide: BorderSide(
-                                        color: textBoxBorderColor,
-                                        width: 1.0,
-                                        style: BorderStyle.solid)),
-                                hintText: (usePhone)
-                                    ? "Enter your phone number"
-                                    : "Enter your email",
-                                hintStyle: const TextStyle(
-                                  fontFamily: "Work Sans",
+                                    borderSide: const BorderSide(
+                                        color: fagoSecondaryColorWithOpacity,
+                                        width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                border: OutlineInputBorder(
+                                    borderSide: const BorderSide(
+                                        color: fagoSecondaryColorWithOpacity,
+                                        width: 1),
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Phone Number',
+                                hintStyle: GoogleFonts.roboto(
+                                  color: stepsColor,
+                                  fontSize: 13,
+                                  fontStyle: FontStyle.normal,
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 14,
-                                  color: signInPlaceholder,
-                                ),
-                                prefixIcon: Stack(
-                                  alignment: AlignmentDirectional.center,
-                                  children: const [
-                                    Image(
-                                        image: AssetImage(
-                                            "assets/images/shield.png")),
-                                    Image(
-                                        image: AssetImage(
-                                            "assets/images/key.png")),
-                                  ],
                                 ),
                               ),
-                            )),
-                      ),
+                              controller: _registrationController.phone,
+                              initialCountryCode: "NG",
+                              validator: (data) {
+                                number = data!.number;
+                                if (number.length < 10 || number.length > 10) {
+                                  return "Invalid phone number";
+                                } else if (!RegExp(r'^[0-9]+$')
+                                    .hasMatch(number)) {
+                                  return "Please enter only digits";
+                                }
+                                return null;
+                              },
+                              onChanged: (data) {
+                                number = data.countryCode;
+                              })
+                          : Padding(
+                              padding: EdgeInsets.only(left: 2.5.w),
+                              child: TextFormField(
+                                controller: _registrationController.email,
+                                style: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: signInPlaceholder),
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderSide: const BorderSide(
+                                      color: textBoxBorderColor,
+                                      width: 1.0,
+                                    ),
+                                  ),
+                                  border: const OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                      borderSide: BorderSide(
+                                          color: textBoxBorderColor,
+                                          width: 1.0,
+                                          style: BorderStyle.solid)),
+                                  hintText: (usePhone)
+                                      ? "Enter your phone number"
+                                      : "Enter your email",
+                                  hintStyle: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: signInPlaceholder,
+                                  ),
+                                  prefixIcon: const Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      Image(
+                                          image: AssetImage(
+                                              "assets/images/shield.png")),
+                                      Image(
+                                          image: AssetImage(
+                                              "assets/images/key.png")),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                       SizedBox(
                         height: 3.h,
                       ),
@@ -255,6 +304,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                             right: 10.w, left: 8.w, bottom: 3.h),
                         child: GestureDetector(
                           onTap: () {
+                            print(number + _registrationController.phone.text);
                             if (_isLoading != true) {
                               if (!usePhone &&
                                       _registrationController
@@ -282,10 +332,10 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                               }
 
                               if (usePhone &&
-                                  !function.validatePhone(
+                                  !function.validatePhone(number +
                                       _registrationController.phone.text)) {
-                                Get.snackbar(
-                                    'Error', 'Kindly Insert a valid phone number');
+                                Get.snackbar('Error',
+                                    'Kindly Insert a valid phone number');
                                 // ScaffoldMessenger.of(context).showSnackBar(
                                 //   const SnackBar(
                                 //     content:
@@ -386,7 +436,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
               userIdentifier: registeredUserIdentifier,
               userVerificationData: !usePhone
                   ? _registrationController.email.text
-                  : _registrationController.phone.text,
+                  : number + _registrationController.phone.text,
             ),
           ),
         );

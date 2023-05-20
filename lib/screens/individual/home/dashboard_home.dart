@@ -6,6 +6,9 @@ import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
 import 'package:fagopay/screens/individual/requests/requests.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
+import 'package:fagopay/screens/kyc/countdown_page.dart';
+import 'package:fagopay/screens/kyc/countdown_page2.dart';
+import 'package:fagopay/screens/kyc/kyc_success.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
@@ -431,7 +434,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             height: 1.5.h,
                                           ),
                                           const AutoSizeText(
-                                            "Transfer\n Money",
+                                            "Transfer \nMoney",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily: "Work Sans",
@@ -589,7 +592,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                   height: 1.h,
                                 ),
                                 Divider(
-                                  color: stepsColor.withOpacity(0.5),
+                                  color: stepsColor.withOpacity(0.3),
                                 ),
                                 SizedBox(
                                   height: 1.h,
@@ -660,11 +663,23 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                   unverifiedUserDialogue());
                                           return;
                                         }
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const BuyData()),
-                                        );
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            builder: (context) =>
+                                                const BillsPayment());
+
+                                        // Navigator.of(context).push(
+                                        //   MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           const BuyData()),
+                                        // );
                                       },
                                       child: Column(
                                         children: [
@@ -750,11 +765,21 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                   unverifiedUserDialogue());
                                           return;
                                         }
+                                        // Navigator.of(context).push(
+                                        //   MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           const CountdownPage2()),
+                                        // );
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const SwapAirtime()),
+                                                  const kyc_success()),
                                         );
+                                        // Navigator.of(context).push(
+                                        //   MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           const SwapAirtime()),
+                                        // );
                                       },
                                       child: Column(
                                         children: [
@@ -1048,7 +1073,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         Get.to(() => const SelectType());
                                       },
                                       child: Container(
-                                        width: 20.h,
+                                        width: 21.h,
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),
@@ -1065,7 +1090,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               SvgPicture.asset(
                                                   'assets/icons/fundAccount_icon.svg'),
                                               const AutoSizeText(
-                                                "New Account",
+                                                "Create New Account",
                                                 style: TextStyle(
                                                   fontFamily: "Work Sans",
                                                   fontSize: 8,

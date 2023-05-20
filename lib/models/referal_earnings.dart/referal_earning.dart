@@ -31,18 +31,21 @@ class RefaralEarningData {
   int? referalJoin;
   int? completedReferal;
   int? totalEarned;
+  int? rewardbalance;
   List<dynamic>? referals;
 
   RefaralEarningData({
-     this.referalJoin,
-     this.completedReferal,
-     this.totalEarned,
-     this.referals,
+    this.referalJoin,
+    this.completedReferal,
+    this.totalEarned,
+    this.referals,
+    this.rewardbalance,
   });
 
   factory RefaralEarningData.fromJson(Map<String, dynamic> json) =>
       RefaralEarningData(
         referalJoin: json["referal_join"] ?? '',
+        rewardbalance: json["reward_balance"] ?? '',
         completedReferal: json["completed_referal"] ?? '',
         totalEarned: json["total_earned"] ?? '',
         referals: List<dynamic>.from(json["referals"].map((x) => x)),

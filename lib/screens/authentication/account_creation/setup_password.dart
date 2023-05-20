@@ -9,10 +9,8 @@ import 'package:sizer/sizer.dart';
 
 import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
-import '../../../service/secure_storage/secure_storage.dart';
 import '../../constants/colors.dart';
 import '../widgets/auth_buttons.dart';
-import 'select_verification_type.dart';
 import 'setup_passcode.dart';
 import 'widgets/current_step.dart';
 

@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -104,14 +105,15 @@ class _ReferCenterState extends State<ReferCenter> {
                                             SizedBox(
                                               height: 0.5.h,
                                             ),
-                                            const Row(
+                                            Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
                                                 AutoSizeText(
-                                                  'NGN 50,400.00',
-                                                  style: TextStyle(
+                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.rewardbalance.toString()}' ??
+                                                      '0',
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w600,
@@ -119,8 +121,9 @@ class _ReferCenterState extends State<ReferCenter> {
                                                   ),
                                                 ),
                                                 AutoSizeText(
-                                                  'NGN 120,000.00',
-                                                  style: TextStyle(
+                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.totalEarned.toString()}' ??
+                                                      '0',
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w600,
@@ -148,7 +151,7 @@ class _ReferCenterState extends State<ReferCenter> {
                                               ),
                                             ),
                                             AutoSizeText(
-                                              'Completed Referrer ',
+                                              'Completed Referrer',
                                               style: TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 10,

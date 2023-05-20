@@ -318,14 +318,14 @@ class _BusinessDashboardState extends State<BusinessDashboard> {
   List<String> selectedIcons = [
     'assets/icons/selected_home.svg',
     'assets/icons/selected_transaction.svg',
-    //'assets/icons/home_nav_logo.svg',
+    'assets/icons/home_nav_logo.svg',
     'assets/icons/fago_pay_card_icon.svg',
     'assets/icons/selected_profile.svg',
   ];
   List<String> unSelectedIcons = [
     'assets/icons/home_icon.svg',
     'assets/icons/transaction_icon.svg',
-   // 'assets/icons/home_nav_logo.svg',
+    'assets/icons/home_nav_logo.svg',
     'assets/icons/fago_pay_card_icon.svg',
     'assets/icons/profile_icon.svg',
   ];

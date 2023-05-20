@@ -37,10 +37,10 @@ class kyc_success extends StatelessWidget {
               SizedBox(
                 height: 5.h,
               ),
-              const Text(
-                "Hello Ibrahim! Congratulations ",
+               Text(
+                "Hello ${userUcontroller.user!.firstName}! Congratulations ",
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontFamily: "Work Sans",
                   fontWeight: FontWeight.w700,
@@ -63,9 +63,9 @@ class kyc_success extends StatelessWidget {
               SizedBox(
                 height: 5.h,
               ),
-              Stack(
+              const Stack(
                 alignment: AlignmentDirectional.center,
-                children: const [
+                children: [
                   Positioned(
                     child: Image(image: AssetImage("assets/images/Group.png")),
                   ),
@@ -94,9 +94,9 @@ class kyc_success extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: buttonColor,
                           borderRadius: BorderRadius.all(Radius.circular(25))),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           AutoSizeText(
                             "Continue",
                             textAlign: TextAlign.center,
