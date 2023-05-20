@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
+import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:get/get.dart';
@@ -136,14 +137,7 @@ class _CountdownPage2State extends State<CountdownPage2> {
                   // This Callback will execute when the Countdown Ends.
                   onComplete: () {
                     // Here, do whatever you want
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (context) => DashboardHome(
-                            userDetails: userUcontroller.user!,
-                            accountDetails: userUcontroller.userAccountDetails,
-                          ),
-                        ),
-                        (Route<dynamic> route) => false);
+                    Get.to(() => const Dashboard());
                   },
 
                   // This Callback will execute when the Countdown Changes.

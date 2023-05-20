@@ -770,16 +770,16 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         //       builder: (context) =>
                                         //           const CountdownPage2()),
                                         // );
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const kyc_success()),
-                                        );
                                         // Navigator.of(context).push(
                                         //   MaterialPageRoute(
                                         //       builder: (context) =>
-                                        //           const SwapAirtime()),
+                                        //           const kyc_success()),
                                         // );
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SwapAirtime()),
+                                        );
                                       },
                                       child: Column(
                                         children: [
@@ -1073,7 +1073,13 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         Get.to(() => const SelectType());
                                       },
                                       child: Container(
-                                        width: 21.h,
+                                        //width: 21.h,
+                                        constraints: BoxConstraints(
+                                          maxWidth: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.45,
+                                        ),
                                         decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15)),
