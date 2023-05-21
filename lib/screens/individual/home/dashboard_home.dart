@@ -4,6 +4,7 @@ import 'package:fagopay/screens/individual/bills/data.dart';
 import 'package:fagopay/screens/individual/bills/swap_airtime.dart';
 import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
 import 'package:fagopay/screens/individual/requests/requests.dart';
+import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
 import 'package:fagopay/screens/kyc/countdown_page.dart';
@@ -778,7 +779,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const SwapAirtime()),
+                                                  const SharePaymentLink()),
                                         );
                                       },
                                       child: Column(
