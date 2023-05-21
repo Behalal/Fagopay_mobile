@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fagopay/models/expenses_model.dart';
+import '../models/expenses_model.dart';
 import 'package:flutter/material.dart';
 
 import '../service/constants/constants.dart';

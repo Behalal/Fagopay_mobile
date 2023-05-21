@@ -1,5 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/company_model.dart';
+import '../../../models/company_model.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';

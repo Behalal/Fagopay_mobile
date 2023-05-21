@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import '../../../../controllers/user_controller.dart';
 import '../../bills/data.dart';
 import '../../bills/electricity.dart';
@@ -5,8 +8,6 @@ import '../../refer_and_win/refer_page.dart';
 import '../../requests/requests.dart';
 import '../../transactions/fago_to_bank.dart';
 import '../../transactions/fago_to_fago.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Services {
   final String image;

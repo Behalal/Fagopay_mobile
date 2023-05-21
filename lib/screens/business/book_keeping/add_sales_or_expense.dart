@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/expenses_controller.dart';
-import 'package:fagopay/controllers/suppliers_controller.dart';
-import 'package:fagopay/models/expenses_model.dart';
-import 'package:fagopay/models/supplier_model.dart';
+import '../../../controllers/expenses_controller.dart';
+import '../../../controllers/suppliers_controller.dart';
+import '../../../models/expenses_model.dart';
+import '../../../models/supplier_model.dart';
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/customers_controller.dart';
 import '../../../controllers/sales_controller.dart';

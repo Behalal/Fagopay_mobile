@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/models/invoice_model.dart';
 import 'package:fagopay/screens/business/invoice/components/custom_invoice_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,6 @@ import 'package:sizer/sizer.dart';
 
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/invoice_controller.dart';
-import 'package:fagopay/models/invoice_model.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
@@ -31,6 +31,7 @@ class AllInvoice extends StatefulWidget {
 class _AllInvoiceState extends State<AllInvoice> {
   final _invoiceController = Get.find<InvoiceController>();
   final _companyController = Get.find<CompanyController>();
+  List loadedInvoices = [];
 
   bool allTab = true;
   bool unPaidTab = false;
@@ -377,7 +378,8 @@ class _AllInvoiceState extends State<AllInvoice> {
                   height: 45.h,
                   padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
                   decoration: const BoxDecoration(color: Colors.transparent),
-                  child: _invoiceController.invoices.isEmpty
+                  child: _invoiceController.invoices.isEmpty ||
+                          loadedInvoices.isEmpty
                       ? const Center(
                           child: AutoSizeText('No Invoice yet'),
                         )
@@ -387,8 +389,8 @@ class _AllInvoiceState extends State<AllInvoice> {
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: _invoiceController.invoices.length,
                           itemBuilder: (context, index) => CustomInvoiceCard(
-                            customerName: _invoiceController
-                                .invoices[index].customerName!,
+                            customerName: loadedInvoices[index]['customer']
+                                ['fullname'],
                             date: Jiffy.parse(_invoiceController
                                     .invoices[index].createdAt!)
                                 .format(pattern: 'dd MMM yyyy'),
@@ -439,10 +441,12 @@ class _AllInvoiceState extends State<AllInvoice> {
     final companyId = _companyController.company!.id!;
     final response = await _invoiceController.getInvoices(companyId);
     final resBody = response['data']['Invoice_List'];
-    final returnedInvoiceList =
-        resBody.map<Invoice>((invoice) => Invoice.fromJson(invoice)).toList();
+    final returnedInvoiceList = resBody.map((invoice) => invoice).toList();
+    final returnedInvoices =
+        resBody.map<Invoice>((invoic) => Invoice.fromJson(invoic)).toList();
     setState(() {
-      _invoiceController.invoices = returnedInvoiceList;
+      _invoiceController.invoices = returnedInvoices;
+      loadedInvoices = returnedInvoiceList;
     });
   }
 }

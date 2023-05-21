@@ -425,6 +425,8 @@ class NameTextfield extends StatelessWidget {
   final String? validatorText;
   final Function(String)? onChanged;
   final String? Function(String?)? validate;
+  final Color? boarderColor;
+
   const NameTextfield({
     super.key,
     this.errorText,
@@ -433,7 +435,7 @@ class NameTextfield extends StatelessWidget {
     this.title,
     this.validate,
     this.validatorText,
-    this.keyboadType,
+    this.keyboadType, this.boarderColor,
   });
 
   @override

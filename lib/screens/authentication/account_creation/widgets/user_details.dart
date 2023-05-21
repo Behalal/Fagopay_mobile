@@ -1,9 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fagopay/controllers/registration_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../../controllers/registration_controller.dart';
 import '../../../constants/colors.dart';
 
 class UserData extends StatelessWidget {
@@ -13,10 +12,9 @@ class UserData extends StatelessWidget {
   // final TextEditingController phone;
   // final TextEditingController referrer;
 
-  const UserData(
-      {Key? key,
-      })
-      : super(key: key);
+  const UserData({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +119,9 @@ class UserData extends StatelessWidget {
           child: SizedBox(
               width: 80.w,
               child: TextFormField(
-                controller: registrationController.email.text != '' ? registrationController.phone : registrationController.email,
+                controller: registrationController.email.text != ''
+                    ? registrationController.phone
+                    : registrationController.email,
                 style: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,
@@ -143,7 +143,9 @@ class UserData extends StatelessWidget {
                       style: BorderStyle.solid,
                     ),
                   ),
-                  hintText: registrationController.email.text != '' ? "Phone" : "Email",
+                  hintText: registrationController.email.text != ''
+                      ? "Phone"
+                      : "Email",
                   hintStyle: const TextStyle(
                     fontFamily: "Work Sans",
                     fontWeight: FontWeight.w400,

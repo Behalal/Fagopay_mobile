@@ -1,8 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
-import 'package:fagopay/controllers/expenses_controller.dart';
-import 'package:fagopay/models/expenses_model.dart';
-import 'package:fagopay/screens/business/book_keeping/components/custom_expense_history_card.dart';
+import '../../../controllers/expenses_controller.dart';
+import '../../../models/expenses_model.dart';
+import 'components/custom_expense_history_card.dart';
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/sales_controller.dart';
 import '../../../models/sales_model.dart';

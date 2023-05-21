@@ -4,32 +4,35 @@ class Company {
   String? id;
   String? rcNumber;
   String? companyName;
-  int? otpVerified;
+  String? companyStatus;
   int? isVerified;
   String? userId;
+  String? companyType;
   // List<Customer>? customers;
   // List<Supplier>? suppliers;
   // List<Sales>? sales;
 
   Company({
-    this.id,
-    this.rcNumber,
-    this.companyName,
-    this.otpVerified,
-    this.isVerified,
-    this.userId,
     // this.customers,
     // this.suppliers,
     // this.sales,
+    this.id,
+    this.rcNumber,
+    this.companyName,
+    this.companyStatus,
+    this.isVerified,
+    this.userId,
+    this.companyType,
   });
 
   static Company fromJson(json) => Company(
         id: json['id'] as String?,
         rcNumber: json['rc_number'] as String?,
         companyName: json['company_name'] as String?,
-        otpVerified: json['otp_verified'] as int?,
-        isVerified: json['is_verified'] as int?,
+        companyStatus: json['company_status'] as String?,
+        isVerified: json['verification_status'] as int?,
         userId: json['user_id'] as String?,
+        companyType: json['company_type'] as String?,
         // customers: json['customer'].map<Customer>(Customer.fromJson).toList()
         //     as List<Customer>?,
         // suppliers: json['suppliers'].map<Supplier>(Supplier.fromJson).toList()
@@ -40,6 +43,10 @@ class Company {
 
   @override
   String toString() {
-    return 'Company(id: $id, rcNumber: $rcNumber, companyName: $companyName, otpVerified: $otpVerified, isVerified: $isVerified, userId: $userId)';
+    return 'Company(id: $id, rcNumber: $rcNumber, companyName: $companyName, companyStatus: $companyStatus, isVerified: $isVerified, userId: $userId, companyType: $companyType)';
   }
+
+  toMap() {}
+
+  static fromMap(Map<String, dynamic> map) {}
 }

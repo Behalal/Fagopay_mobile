@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/company_controller.dart';
-import 'package:fagopay/controllers/customers_controller.dart';
-import 'package:fagopay/controllers/invoice_controller.dart';
-import 'package:fagopay/models/customer_model.dart';
-import 'package:fagopay/screens/widgets/custom_dropdown_field.dart';
+import '../../../controllers/company_controller.dart';
+import '../../../controllers/customers_controller.dart';
+import '../../../controllers/invoice_controller.dart';
+import '../../../models/customer_model.dart';
+import '../../widgets/custom_dropdown_field.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 import '../../authentication/widgets/auth_buttons.dart';
@@ -25,6 +25,7 @@ class _AddInvoiceState extends State<AddInvoice> {
   final _customerController = Get.find<CustomerController>();
   final _invoiceController = Get.find<InvoiceController>();
   final _companyController = Get.find<CompanyController>();
+  List<Widget> sectionOrderItems = [];
 
   String selectedCustomerId = "";
 
@@ -309,41 +310,35 @@ class _AddInvoiceState extends State<AddInvoice> {
                 // SizedBox(
                 //   height: 1.5.h,
                 // ),
-                InvoiceItemSection(
-                  itemController: _invoiceController.itemNameController,
-                  qtyController: _invoiceController.quantityController,
-                  priceController: _invoiceController.priceController,
+                Column(
+                  children: [
+                    InvoiceItemSection(
+                      itemController: _invoiceController.itemNameController,
+                      qtyController: _invoiceController.quantityController,
+                      priceController: _invoiceController.priceController,
+                    ),
+                    ...sectionOrderItems
+                  ],
                 ),
                 SizedBox(
                   height: 1.5.h,
                 ),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 1.h, horizontal: 30.w),
-                  decoration: const BoxDecoration(
-                    color: fagoSecondaryColorWithOpacity10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "assets/images/addIcon.png",
-                      ),
-                      SizedBox(
-                        width: 1.w,
-                      ),
-                      const AutoSizeText(
-                        "Order Item",
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: fagoSecondaryColor,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      sectionOrderItems.add(
+                        InvoiceItemSection(
+                          itemController: _invoiceController.itemNameController,
+                          qtyController: _invoiceController.quantityController,
+                          priceController: _invoiceController.priceController,
+                          remove: () {
+                            print('object');
+                          },
                         ),
-                      ),
-                    ],
-                  ),
+                      );
+                    });
+                  },
+                  child: const OrderItemButton(),
                 ),
                 SizedBox(
                   height: 2.5.h,
@@ -613,17 +608,19 @@ class InvoiceItemSection extends StatelessWidget {
     required this.itemController,
     required this.qtyController,
     required this.priceController,
+    this.remove,
   });
 
   final TextEditingController itemController;
   final TextEditingController qtyController;
   final TextEditingController priceController;
+  final VoidCallback? remove;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const RemoveItem(),
+        GestureDetector(onTap: remove, child: const RemoveItem()),
         SizedBox(
           height: 1.5.h,
         ),
@@ -659,6 +656,9 @@ class InvoiceItemSection extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        SizedBox(
+          height: 1.5.h,
         ),
       ],
     );
@@ -785,6 +785,43 @@ class RemoveItem extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class OrderItemButton extends StatelessWidget {
+  const OrderItemButton({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 30.w),
+      decoration: const BoxDecoration(
+        color: fagoSecondaryColorWithOpacity10,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            "assets/images/addIcon.png",
+          ),
+          SizedBox(
+            width: 1.w,
+          ),
+          const AutoSizeText(
+            "Order Item",
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: fagoSecondaryColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
