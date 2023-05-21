@@ -47,7 +47,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
           child: Scaffold(
               body: SingleChildScrollView(
             child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
+                padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 6.w),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +55,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                       CurrentStep(step: "2", backRoute: const Onboarding()),
                       SizedBox(height: 5.h),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
                             onTap: () {
@@ -65,7 +65,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                               });
                             },
                             child: Container(
-                              width: 38.w,
+                              width: 42.w,
                               height: 6.h,
                               decoration: BoxDecoration(
                                   color:
@@ -105,7 +105,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                               });
                             }),
                             child: Container(
-                              width: 38.w,
+                              width: 42.w,
                               height: 6.h,
                               decoration: BoxDecoration(
                                   color:
@@ -117,18 +117,14 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   ),
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(5))),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Center(
-                                  child: AutoSizeText(
-                                    "Use Email Address",
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600,
-                                      color: (useEmail) ? white : inactiveTab,
-                                    ),
+                              child: Center(
+                                child: AutoSizeText(
+                                  "Use Email Address",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: (useEmail) ? white : inactiveTab,
                                   ),
                                 ),
                               ),
@@ -139,34 +135,27 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                       SizedBox(
                         height: 3.h,
                       ),
-                      Padding(
-                          padding: EdgeInsets.only(left: 2.5.w),
-                          child: AutoSizeText(
-                            (usePhone)
-                                ? "Enter Phone Number"
-                                : "Enter your Email",
-                            style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700,
-                              color: fagoSecondaryColor,
-                            ),
-                          )),
+                      AutoSizeText(
+                        (usePhone) ? "Enter Phone Number" : "Enter your Email",
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 2.5.w),
-                        child: AutoSizeText(
-                          (usePhone)
-                              ? "Within some few step, your account will be all set and ready for use. Kindly input your phone number for verification:"
-                              : "Within some few step, your account will be all set and ready for use. Kindly input your email address for verification",
-                          style: const TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: inactiveTab,
-                          ),
+                      AutoSizeText(
+                        (usePhone)
+                            ? "Within some few step, your account will be all set and ready for use. Kindly input your phone number for verification:"
+                            : "Within some few step, your account will be all set and ready for use. Kindly input your email address for verification",
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: inactiveTab,
                         ),
                       ),
                       SizedBox(
@@ -229,75 +218,121 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                               onChanged: (data) {
                                 number = data.countryCode;
                               })
-                          : Padding(
-                              padding: EdgeInsets.only(left: 2.5.w),
-                              child: TextFormField(
-                                controller: _registrationController.email,
-                                style: const TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    color: signInPlaceholder),
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    borderSide: const BorderSide(
-                                      color: textBoxBorderColor,
-                                      width: 1.0,
-                                    ),
+                          : TextFormField(
+                              controller: _registrationController.email,
+                              style: const TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: signInPlaceholder),
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: const BorderSide(
+                                    color: textBoxBorderColor,
+                                    width: 1.0,
                                   ),
-                                  border: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5)),
-                                      borderSide: BorderSide(
-                                          color: textBoxBorderColor,
-                                          width: 1.0,
-                                          style: BorderStyle.solid)),
-                                  hintText: (usePhone)
-                                      ? "Enter your phone number"
-                                      : "Enter your email",
-                                  hintStyle: const TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    color: signInPlaceholder,
-                                  ),
-                                  prefixIcon: const Stack(
-                                    alignment: AlignmentDirectional.center,
-                                    children: [
-                                      Image(
-                                          image: AssetImage(
-                                              "assets/images/shield.png")),
-                                      Image(
-                                          image: AssetImage(
-                                              "assets/images/key.png")),
-                                    ],
-                                  ),
+                                ),
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                    borderSide: BorderSide(
+                                        color: textBoxBorderColor,
+                                        width: 1.0,
+                                        style: BorderStyle.solid)),
+                                hintText: (usePhone)
+                                    ? "Enter your phone number"
+                                    : "Enter your email",
+                                hintStyle: const TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: signInPlaceholder,
+                                ),
+                                prefixIcon: const Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: [
+                                    Image(
+                                        image: AssetImage(
+                                            "assets/images/shield.png")),
+                                    Image(
+                                        image: AssetImage(
+                                            "assets/images/key.png")),
+                                  ],
                                 ),
                               ),
                             ),
                       SizedBox(
                         height: 3.h,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 2.5.w),
-                        child: SizedBox(
-                          width: 80.w,
-                          child: AutoSizeText(
-                            (!usePhone)
-                                ? "A verification code would be sent to your email address."
-                                : "A verification code would be sent to your number.",
-                            style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: verificationCodeText,
-                            ),
+                      SizedBox(
+                        width: 80.w,
+                        child: AutoSizeText(
+                          (!usePhone)
+                              ? "A verification code would be sent to your email address."
+                              : "A verification code would be sent to your number.",
+                          style: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: verificationCodeText,
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 3.h,
+                      ),
+                      Divider(
+                        color: stepsColor.withOpacity(0.3),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      const AutoSizeText(
+                        "Do you have a referral code?",
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: verificationCodeText,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      TextFormField(
+                        // controller: _registrationController.email,
+                        style: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder),
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0),
+                            borderSide: const BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                            ),
+                          ),
+                          border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: textBoxBorderColor,
+                                  width: 1.0,
+                                  style: BorderStyle.solid)),
+                          hintText: "Referral Code",
+                          hintStyle: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: signInPlaceholder,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 7.h,
                       ),
                       Padding(
                         padding: EdgeInsets.only(

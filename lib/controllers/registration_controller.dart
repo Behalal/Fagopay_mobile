@@ -32,7 +32,7 @@ class RegistrationController extends GetxController {
     }
     try {
       var requestBody =
-          jsonEncode({typeKey: typeKey == 'email' ? email.text : phone.text});
+          jsonEncode({typeKey: typeKey == 'email' ? email.text :  phone.text});
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}register",
         headers: BaseAPI.headers,

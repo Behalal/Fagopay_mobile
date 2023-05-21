@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:clipboard/clipboard.dart';
 
 import '../../constants/colors.dart';
 
@@ -145,7 +146,8 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           AutoSizeText(
-                                            _userUcontroller.user!.referralCode ??
+                                            _userUcontroller
+                                                    .user!.referralCode ??
                                                 'No referral Code',
                                             style: const TextStyle(
                                               fontFamily: "Work Sans",
@@ -154,8 +156,39 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                               color: fagoSecondaryColor,
                                             ),
                                           ),
-                                          SvgPicture.asset(
-                                              'assets/icons/copy-svgrepo-com 1.svg')
+                                          InkWell(
+                                            onTap: () {
+                                              if (_userUcontroller
+                                                      .user!.referralCode ==
+                                                  "") {
+                                                print('enter text');
+                                              } else {
+                                                print(_userUcontroller
+                                                    .user!.referralCode);
+                                                FlutterClipboard.copy(
+                                                    _userUcontroller
+                                                        .user!.referralCode!);
+                                                // Get.snackbar(
+                                                //     'Referral Code Copied',
+                                                //     '${_userUcontroller.user!.referralCode}',
+                                                //     snackPosition:
+                                                //         SnackPosition.BOTTOM,
+                                                //     padding:
+                                                //         EdgeInsets.symmetric(
+                                                //       horizontal: 3.h,
+                                                //       vertical: 2.h,
+                                                //     ));
+                                                // FlutterClipboard.copy(
+                                                //         _userUcontroller
+                                                //             .user!.referralCode
+                                                //             .toString())
+                                                //     .then((value) =>
+                                                //         print('copied'));
+                                              }
+                                            },
+                                            child: SvgPicture.asset(
+                                                'assets/icons/copy-svgrepo-com 1.svg'),
+                                          )
                                         ],
                                       ),
                                     ),
