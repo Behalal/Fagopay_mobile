@@ -42,6 +42,7 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
   final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
+    print(_userUcontroller.user!.id);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
