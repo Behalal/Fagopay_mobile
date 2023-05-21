@@ -90,10 +90,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           SizedBox(
                             width: 330,
                             child: TextField(
-                              controller: _loginController.emailController,
+                              controller:
+                                  _loginController.forgotPasswordController,
                               decoration: InputDecoration(
                                 focusColor: const Color(0XFFe8a5aa),
-                                hintText: 'Email address',
+                                hintText: 'Email address / Phone Number',
+                                
                                 hintStyle: const TextStyle(
                                   fontSize: 14,
                                 ),
@@ -123,10 +125,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             alignment: Alignment.center,
                             child: ElevatedButton(
                               onPressed: () async {
-                                if (_loginController.emailController.text !=
+                                if (_loginController
+                                        .forgotPasswordController.text !=
                                     "") {
-                                  await forgotPassword(context,
-                                      _loginController.emailController.text);
+                                  await forgotPassword(
+                                      context,
+                                      _loginController
+                                          .forgotPasswordController.text);
                                   return;
                                 }
                                 Fluttertoast.showToast(

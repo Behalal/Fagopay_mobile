@@ -5,6 +5,7 @@ import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
+import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/authentication/widgets/email_phone_input.dart';
 import 'package:fagopay/screens/authentication/widgets/forgot_pass_text.dart';
@@ -19,7 +20,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import '../constants/colors.dart';
-
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -258,7 +258,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const SelectType(),
+                                        const SelectVerificationType(),
                                   ),
                                 );
                               }),

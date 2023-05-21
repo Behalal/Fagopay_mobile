@@ -23,6 +23,7 @@ enum OtpForgotVerifyStatus {
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
+   TextEditingController forgotPasswordController = TextEditingController(text: '');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
 
