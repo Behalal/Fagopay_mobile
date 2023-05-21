@@ -65,6 +65,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                         .transactionHistoryStatus ==
                                     TransactionHistoryStatus.loading
                                 ? const LoadingWidget(
+                                    size: 50,
                                     color: fagoSecondaryColor,
                                   )
                                 : _transactionController
