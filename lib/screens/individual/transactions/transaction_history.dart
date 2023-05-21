@@ -26,7 +26,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
   int? transactionType;
   @override
   Widget build(BuildContext context) {
-    // _transactionController.getTransactionHistory();
+    _transactionController.getTransactionHistory();
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 5.w),

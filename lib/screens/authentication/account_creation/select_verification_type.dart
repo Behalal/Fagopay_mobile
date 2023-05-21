@@ -162,62 +162,105 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                         height: 5.h,
                       ),
                       (usePhone)
-                          ? IntlPhoneField(
-                              disableLengthCheck: true,
-                              keyboardType: Platform.isIOS
-                                  ? const TextInputType.numberWithOptions(
-                                      signed: true, decimal: false)
-                                  : TextInputType.phone,
-                              flagsButtonMargin: const EdgeInsets.only(left: 8),
-                              style: GoogleFonts.roboto(
-                                color: stepsColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              decoration: InputDecoration(
-                                fillColor: white,
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 20, horizontal: 15),
-                                filled: true,
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: fagoSecondaryColorWithOpacity,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: fagoSecondaryColorWithOpacity,
-                                        width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
-                                border: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                        color: fagoSecondaryColorWithOpacity,
-                                        width: 1),
-                                    borderRadius: BorderRadius.circular(10)),
-                                hintText: 'Phone Number',
-                                hintStyle: GoogleFonts.roboto(
-                                  color: stepsColor,
-                                  fontSize: 13,
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                          ? TextFormField(
                               controller: _registrationController.phone,
-                              initialCountryCode: "NG",
-                              validator: (data) {
-                                number = data!.number;
-                                if (number.length < 10 || number.length > 10) {
-                                  return "Invalid phone number";
-                                } else if (!RegExp(r'^[0-9]+$')
-                                    .hasMatch(number)) {
-                                  return "Please enter only digits";
-                                }
-                                return null;
-                              },
-                              onChanged: (data) {
-                                number = data.countryCode;
-                              })
+                              style: const TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: signInPlaceholder),
+                              decoration: InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  borderSide: const BorderSide(
+                                    color: textBoxBorderColor,
+                                    width: 1.0,
+                                  ),
+                                ),
+                                border: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                    borderSide: BorderSide(
+                                        color: textBoxBorderColor,
+                                        width: 1.0,
+                                        style: BorderStyle.solid)),
+                                hintText: (usePhone)
+                                    ? "Enter your phone number"
+                                    : "Enter your email",
+                                hintStyle: const TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  color: signInPlaceholder,
+                                ),
+                                prefixIcon: const Stack(
+                                  alignment: AlignmentDirectional.center,
+                                  children: [
+                                    Image(
+                                        image: AssetImage(
+                                            "assets/images/shield.png")),
+                                    Image(
+                                        image: AssetImage(
+                                            "assets/images/key.png")),
+                                  ],
+                                ),
+                              ))
+                          // ? IntlPhoneField(
+                          //     disableLengthCheck: true,
+                          //     keyboardType: Platform.isIOS
+                          //         ? const TextInputType.numberWithOptions(
+                          //             signed: true, decimal: false)
+                          //         : TextInputType.phone,
+                          //     flagsButtonMargin: const EdgeInsets.only(left: 8),
+                          //     style: GoogleFonts.roboto(
+                          //       color: stepsColor,
+                          //       fontSize: 14,
+                          //       fontWeight: FontWeight.w400,
+                          //     ),
+                          //     decoration: InputDecoration(
+                          //       fillColor: white,
+                          //       contentPadding: const EdgeInsets.symmetric(
+                          //           vertical: 20, horizontal: 15),
+                          //       filled: true,
+                          //       focusedBorder: OutlineInputBorder(
+                          //           borderSide: const BorderSide(
+                          //             color: fagoSecondaryColorWithOpacity,
+                          //             width: 1,
+                          //           ),
+                          //           borderRadius: BorderRadius.circular(10)),
+                          //       enabledBorder: OutlineInputBorder(
+                          //           borderSide: const BorderSide(
+                          //               color: fagoSecondaryColorWithOpacity,
+                          //               width: 1),
+                          //           borderRadius: BorderRadius.circular(10)),
+                          //       border: OutlineInputBorder(
+                          //           borderSide: const BorderSide(
+                          //               color: fagoSecondaryColorWithOpacity,
+                          //               width: 1),
+                          //           borderRadius: BorderRadius.circular(10)),
+                          //       hintText: 'Phone Number',
+                          //       hintStyle: GoogleFonts.roboto(
+                          //         color: stepsColor,
+                          //         fontSize: 13,
+                          //         fontStyle: FontStyle.normal,
+                          //         fontWeight: FontWeight.w400,
+                          //       ),
+                          //     ),
+                          //     controller: _registrationController.phone,
+                          //     initialCountryCode: "NG",
+                          //     validator: (data) {
+                          //       number = data!.number;
+                          //       if (number.length < 10 || number.length > 10) {
+                          //         return "Invalid phone number";
+                          //       } else if (!RegExp(r'^[0-9]+$')
+                          //           .hasMatch(number)) {
+                          //         return "Please enter only digits";
+                          //       }
+                          //       return null;
+                          //     },
+                          //     onChanged: (data) {
+                          //       number = data.countryCode;
+                          //     })
                           : TextFormField(
                               controller: _registrationController.email,
                               style: const TextStyle(
