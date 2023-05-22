@@ -42,6 +42,7 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
   final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
+    print(_userUcontroller.user!.id);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
@@ -150,10 +151,12 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                                   context: context,
                                                   merchantKey:
                                                       "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
-                                                  firstName: 'Kehinde',
-                                                  lastName: 'Obe',
-                                                  email: 'kennyobey@gmail.com',
-                                                  userRef: '10',
+                                                  firstName: 'demo',
+                                                  lastName: 'demo',
+                                                  email: "demo@domainame.com",
+                                                  userRef: _userUcontroller
+                                                      .user!.id
+                                                      .toString(),
                                                   onCancel: (response) {
                                                     if (kDebugMode) {
                                                       print(response);

@@ -33,6 +33,7 @@ class User {
   String? bvnId;
   int? kycVerified;
   String? deviceId;
+  String? dailyLimts;
 
   User({
     this.id,
@@ -53,6 +54,7 @@ class User {
     this.bvnId,
     this.kycVerified,
     this.deviceId,
+    this.dailyLimts,
   });
 
   static User fromJson(json) => User(
@@ -71,6 +73,7 @@ class User {
         referralCode: json['referal_code'] as String?,
         referralBy: json['referal_by'] as String?,
         ipAddress: json['ipaddress'] as String?,
+        dailyLimts: json['account_daily_limit'] as String?,
       );
 }
 

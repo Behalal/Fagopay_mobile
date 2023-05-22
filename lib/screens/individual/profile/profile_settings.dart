@@ -120,7 +120,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: welcomeText,
                                                   ),
@@ -134,7 +134,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: welcomeText,
                                                   ),
@@ -318,7 +318,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 width: Get.width,
-                                height: 24.h,
+                                height: 30.h,
                                 decoration: const BoxDecoration(
                                   color: fagoPrimaryColorWithOpacity10,
                                 ),
@@ -410,7 +410,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 ),
                                                 Container(
                                                   height: 2.5.h,
-                                                  width: 11.5.h,
+                                                  width: 21.5.h,
                                                   decoration: BoxDecoration(
                                                       color: white,
                                                       borderRadius:
@@ -468,7 +468,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                   height: 0.5.h,
                                                 ),
                                                 const AutoSizeText(
-                                                  'Be aware of your account threshold',
+                                                  'Be aware of your account\nthreshold',
                                                   style: TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 14,
@@ -532,6 +532,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(height: 10.h,),
                                 ],
                               )
                             ],

@@ -62,7 +62,7 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                 child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // SizedBox(height: 5.h),
                         const AutoSizeText(
@@ -117,7 +117,7 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                           defaultBorderColor: fagoSecondaryColor,
                           hasTextBorderColor: stepsColor,
                           highlightPinBoxColor: Colors.white,
-                          maxLength: 6,
+                          maxLength: 4,
                           hasError: hasError,
                           maskCharacter: '*',
                           onTextChanged: (text) {
@@ -179,7 +179,7 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                           defaultBorderColor: fagoSecondaryColor,
                           hasTextBorderColor: stepsColor,
                           highlightPinBoxColor: Colors.white,
-                          maxLength: 6,
+                          maxLength: 4,
                           hasError: hasError,
                           maskCharacter: '*',
                           onTextChanged: (text) {
@@ -234,7 +234,7 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                           defaultBorderColor: fagoSecondaryColor,
                           hasTextBorderColor: stepsColor,
                           highlightPinBoxColor: Colors.white,
-                          maxLength: 6,
+                          maxLength: 4,
                           hasError: hasError,
                           maskCharacter: '*',
                           onTextChanged: (text) {
