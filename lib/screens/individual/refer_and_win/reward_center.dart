@@ -77,11 +77,11 @@ class _ReferCenterState extends State<ReferCenter> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            const Row(
+                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              children: [
+                                              children: const [
                                                 AutoSizeText(
                                                   'Reward Balance',
                                                   style: TextStyle(
@@ -137,10 +137,10 @@ class _ReferCenterState extends State<ReferCenter> {
                                         SizedBox(
                                           height: 1.5.h,
                                         ),
-                                        const Row(
+                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: [
+                                          children: const [
                                             AutoSizeText(
                                               'Referrer Joined',
                                               style: TextStyle(

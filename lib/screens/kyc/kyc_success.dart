@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -63,9 +65,9 @@ class kyc_success extends StatelessWidget {
               SizedBox(
                 height: 5.h,
               ),
-              const Stack(
+               Stack(
                 alignment: AlignmentDirectional.center,
-                children: [
+                children: const [
                   Positioned(
                     child: Image(image: AssetImage("assets/images/Group.png")),
                   ),
@@ -94,9 +96,9 @@ class kyc_success extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: buttonColor,
                           borderRadius: BorderRadius.all(Radius.circular(25))),
-                      child: const Row(
+                      child:  Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           AutoSizeText(
                             "Continue",
                             textAlign: TextAlign.center,

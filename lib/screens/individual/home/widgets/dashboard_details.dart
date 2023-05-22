@@ -222,11 +222,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4, vertical: 0.4.h),
-                                          child: const Row(
+                                          child:  Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              AutoSizeText(
+                                            children:  [
+                                              const AutoSizeText(
                                                 "Switch Account",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
