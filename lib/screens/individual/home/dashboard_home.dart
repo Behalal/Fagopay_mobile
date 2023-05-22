@@ -7,9 +7,6 @@ import 'package:fagopay/screens/individual/requests/requests.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
-import 'package:fagopay/screens/kyc/countdown_page.dart';
-import 'package:fagopay/screens/kyc/countdown_page2.dart';
-import 'package:fagopay/screens/kyc/kyc_success.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
@@ -56,13 +53,15 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   @override
   void initState() {
-    //getUserDetails();
-    //getCompany();
+    getUserDetails();
+    getCompany();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(' user details is ${_loginController.getUserDetails()}');
+    print(' user details is ');
     return Scaffold(
       body: (isLoading)
           ? const Loading()
@@ -1405,9 +1404,14 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> getUserDetails() async {
     final response = await _loginController.getUserDetails();
-    final userAccountjsonBodyData = response['data']['userdetail']['nextofkin'];
+    final userjsonBodyData = response['data']['userdetail'];
+    final userDetails = User.fromJson(userjsonBodyData);
+    final userAccountjsonBodyData =
+        response['data']['userdetail']['accountdetail'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
+    _userController.setUser = userDetails;
+    print('User details are kyc number is ${userDetails.kycVerified}');
   }
 
   Future<void> getCompany() async {

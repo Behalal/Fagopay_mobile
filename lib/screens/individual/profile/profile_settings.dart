@@ -360,13 +360,17 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 SizedBox(
                                                   height: 0.5.h,
                                                 ),
-                                                const AutoSizeText(
-                                                  'Who is your beneficiary?',
-                                                  style: TextStyle(
+                                                AutoSizeText(
+                                                  _userUcontroller
+                                                          .user!
+                                                          .nextofkin
+                                                          ?.fullName ??
+                                                      '',
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: welcomeText,
+                                                    fontSize: 10,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: fagoSecondaryColor,
                                                   ),
                                                 ),
                                               ],
@@ -410,7 +414,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 ),
                                                 Container(
                                                   height: 2.5.h,
-                                                  width: 11.5.h,
+                                                  width: 12.5.h,
                                                   decoration: BoxDecoration(
                                                       color: white,
                                                       borderRadius:
@@ -418,7 +422,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                               25)),
                                                   alignment: Alignment.center,
                                                   child: const AutoSizeText(
-                                                    'Not Completed',
+                                                    'completed',
                                                     style: TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontSize: 10,
