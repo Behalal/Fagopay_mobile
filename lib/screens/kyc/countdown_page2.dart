@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/individual/home/dashboard_home.dart';
@@ -21,6 +22,7 @@ class _CountdownPage2State extends State<CountdownPage2> {
   final int _duration = 30;
   final CountDownController _controller = CountDownController();
   final userUcontroller = Get.find<UserController>();
+  final _loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +139,7 @@ class _CountdownPage2State extends State<CountdownPage2> {
                   // This Callback will execute when the Countdown Ends.
                   onComplete: () {
                     // Here, do whatever you want
+                    _loginController.getUserDetails();
                     Get.to(() => const Dashboard());
                   },
 

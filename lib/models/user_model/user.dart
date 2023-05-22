@@ -76,7 +76,7 @@ class User {
         referralBy: json['referal_by'] as String?,
         ipAddress: json['ipaddress'] as String?,
         dailyLimts: json['account_daily_limit'] as String?,
-        nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
+        // nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
       );
 }
 
