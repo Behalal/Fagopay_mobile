@@ -7,6 +7,7 @@ import 'package:fagopay/screens/individual/requests/requests.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
 import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
+import 'package:fagopay/screens/kyc/countdown_page2.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
@@ -765,21 +766,21 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                   unverifiedUserDialogue());
                                           return;
                                         }
-                                        // Navigator.of(context).push(
-                                        //   MaterialPageRoute(
-                                        //       builder: (context) =>
-                                        //           const CountdownPage2()),
-                                        // );
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const CountdownPage2()),
+                                        );
                                         // Navigator.of(context).push(
                                         //   MaterialPageRoute(
                                         //       builder: (context) =>
                                         //           const kyc_success()),
                                         // );
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SharePaymentLink()),
-                                        );
+                                        // Navigator.of(context).push(
+                                        //   MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           const SharePaymentLink()),
+                                        // );
                                       },
                                       child: Column(
                                         children: [
@@ -823,7 +824,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
-                              color: stepsColor,
+                              color: stepsColor, 
                             ),
                           ),
                         ),

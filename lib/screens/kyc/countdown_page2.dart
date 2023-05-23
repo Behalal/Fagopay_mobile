@@ -140,7 +140,7 @@ class _CountdownPage2State extends State<CountdownPage2> {
                   onComplete: () {
                     // Here, do whatever you want
                     _loginController.getUserDetails();
-                    Get.to(() => const Dashboard());
+                    Get.offAll(() => const Dashboard());
                   },
 
                   // This Callback will execute when the Countdown Changes.
