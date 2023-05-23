@@ -111,8 +111,7 @@ class _ReferCenterState extends State<ReferCenter> {
                                                       .spaceBetween,
                                               children: [
                                                 AutoSizeText(
-                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.rewardbalance.toString()}' ??
-                                                      '0',
+                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.rewardbalance.toString()}',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,
@@ -121,8 +120,7 @@ class _ReferCenterState extends State<ReferCenter> {
                                                   ),
                                                 ),
                                                 AutoSizeText(
-                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.totalEarned.toString()}' ??
-                                                      '0',
+                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.totalEarned.toString()}',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,

@@ -767,7 +767,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                       _userUcontroller.user!.firstName ?? '',
                                       style: const TextStyle(
                                         fontFamily: "Work Sans",
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: welcomeText,
                                       ),
@@ -779,7 +779,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                       _userUcontroller.user!.lastName ?? '',
                                       style: const TextStyle(
                                         fontFamily: "Work Sans",
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: welcomeText,
                                       ),
