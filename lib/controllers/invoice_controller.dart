@@ -46,7 +46,7 @@ class InvoiceController extends GetxController {
   }
 
   Future<dynamic> createBusinessInvoice({
-    required List invoiceDetails,
+    required List invoiceItemDetails,
     required String companyId,
     required String customerId,
     required String discountRate,
@@ -55,7 +55,7 @@ class InvoiceController extends GetxController {
     final token = await SecureStorage.readUserToken();
 
     var requestBody = jsonEncode({
-      "invoicedetail": [],
+      "invoicedetail": invoiceItemDetails,
       "company_id": companyId,
       "customer_id": customerId,
       "discount_rate": discountRate,

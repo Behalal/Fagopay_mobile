@@ -62,14 +62,10 @@ class _IdentificationVerificationState
 
   String? selectedDocumentType;
   final List<String> items = [
-    'Driver License',
+    'Driver_License',
     'NIN',
-    'International Passport'
+    'International_Passport'
   ];
-
-  int? myRequestType;
-  var number = "";
-  int? transactionType;
 
   @override
   Widget build(BuildContext context) {
@@ -305,23 +301,28 @@ class _IdentificationVerificationState
                                     border: Border.all(
                                         color: stepsColor.withOpacity(0.3))),
                                 child: _selectedImage != null
-                                    ? Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: Get.height * 0.05,
-                                            horizontal: Get.height * 0.05),
-                                        height: Get.height * 0.4,
-                                        width: Get.height * 0.4,
-                                        decoration: BoxDecoration(
-                                            color: fagoSecondaryColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(8.0)),
-                                            image: DecorationImage(
-                                              image: FileImage(
-                                                _selectedImage!,
-                                              ),
-                                              fit: BoxFit.cover,
-                                            )),
+                                    ? InkWell(
+                                        onTap: () async {
+                                          await _selectImageToUpload(context);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: Get.height * 0.05,
+                                              horizontal: Get.height * 0.05),
+                                          height: Get.height * 0.4,
+                                          width: Get.height * 0.4,
+                                          decoration: BoxDecoration(
+                                              color: fagoSecondaryColor,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(8.0)),
+                                              image: DecorationImage(
+                                                image: FileImage(
+                                                  _selectedImage!,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              )),
+                                        ),
                                       )
                                     : Column(
                                         mainAxisAlignment:

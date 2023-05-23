@@ -248,22 +248,29 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                                   border: Border.all(
                                       color: stepsColor.withOpacity(0.3))),
                               child: _selectedImage != null
-                                  ? Container(
-                                      padding: EdgeInsets.symmetric(
+                                  ? InkWell(
+                                      onTap: () {
+                                        _selectImageToUpload(context);
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(
                                           vertical: Get.height * 0.05,
-                                          horizontal: Get.height * 0.05),
-                                      height: Get.height * 0.4,
-                                      width: Get.height * 0.4,
-                                      decoration: BoxDecoration(
-                                          color: fagoSecondaryColor,
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(8.0)),
-                                          image: DecorationImage(
-                                            image: FileImage(
-                                              _selectedImage!,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          )),
+                                          horizontal: Get.height * 0.05,
+                                        ),
+                                        height: Get.height * 0.4,
+                                        width: Get.height * 0.4,
+                                        decoration: BoxDecoration(
+                                            color: fagoSecondaryColor,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(8.0)),
+                                            image: DecorationImage(
+                                              image: FileImage(
+                                                _selectedImage!,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
                                     )
                                   : Column(
                                       mainAxisAlignment:
@@ -406,7 +413,6 @@ class _BusinessVerificationState extends State<BusinessVerification> {
     );
 
     final jsonBody = jsonDecode(response.body);
-    print(jsonBody);
 
     if (response.statusCode == 200) {
       progress.dismiss();

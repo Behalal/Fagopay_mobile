@@ -33,11 +33,11 @@ class _CustomerPageState extends State<CustomerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        body: RefreshIndicator(
-          onRefresh: getCustomers,
-          child: Padding(
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: getCustomers,
+        child: Obx(
+          () => Padding(
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -141,13 +141,13 @@ class _CustomerPageState extends State<CustomerPage> {
                             ),
                           ),
                         ),
-                      )
+                      ),
               ],
             ),
           ),
         ),
-        // bottomNavigationBar: const LoadMore(),
       ),
+      // bottomNavigationBar: const LoadMore(),
     );
   }
 

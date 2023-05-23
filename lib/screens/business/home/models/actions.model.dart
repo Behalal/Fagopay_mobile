@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../admin/all_admin.dart';
-import '../../customers/customer.dart';
+import '../../customers/customers.dart';
 import '../../suppliers/all_supplies.dart';
 import '../../transactions/all_transactions.dart';
 

@@ -4,7 +4,7 @@ import '../../../controllers/company_controller.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';
 import '../../authentication/account_creation/select_type.dart';
-import '../../business/customers/customer.dart';
+import '../../business/customers/customers.dart';
 import '../../business/suppliers/all_supplies.dart';
 import 'widgets/services_widget.dart';
 import '../profile/profile_kyc_page.dart';

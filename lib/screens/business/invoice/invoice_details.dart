@@ -1,4 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/business/invoice/components/invoice_item_details_card.dart';
+import 'package:jiffy/jiffy.dart';
 import '../../../controllers/invoice_controller.dart';
 import 'package:get/get.dart';
 import '../../authentication/widgets/auth_buttons.dart';
@@ -18,6 +21,7 @@ class InvoiceDetails extends StatefulWidget {
 
 class _InvoiceDetailsState extends State<InvoiceDetails> {
   final _invoiceController = Get.find<InvoiceController>();
+  final _userController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -67,9 +71,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                     children: [
                       SizedBox(
                         width: 45.w,
-                        child: const AutoSizeText(
-                          "Obasana Designs",
-                          style: TextStyle(
+                        child: AutoSizeText(
+                          invoice.company!['company_name'],
+                          style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 14,
                             color: black,
@@ -83,21 +87,21 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const AutoSizeText(
-                              "+23490173458",
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 10,
-                                color: inactiveTab,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 0.5.h,
-                            ),
-                            const AutoSizeText(
-                              "obasana@gmail.com",
-                              style: TextStyle(
+                            // const AutoSizeText(
+                            //   "+23490173458",
+                            //   style: TextStyle(
+                            //     fontFamily: "Work Sans",
+                            //     fontSize: 10,
+                            //     color: inactiveTab,
+                            //     fontWeight: FontWeight.w400,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 0.5.h,
+                            // ),
+                            AutoSizeText(
+                              invoice.company!['email_address'] ?? '',
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 10,
                                 color: inactiveTab,
@@ -122,11 +126,11 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                AutoSizeText(
+                                const AutoSizeText(
                                   "Invoice No.",
                                   style: TextStyle(
                                     fontFamily: "Work Sans",
@@ -136,8 +140,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                   ),
                                 ),
                                 AutoSizeText(
-                                  "#INV124560",
-                                  style: TextStyle(
+                                  invoice.invoiceNo!,
+                                  style: const TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 10,
                                     color: inactiveTab,
@@ -149,11 +153,11 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                AutoSizeText(
+                                const AutoSizeText(
                                   "Issued Date:",
                                   style: TextStyle(
                                     fontFamily: "Work Sans",
@@ -163,8 +167,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                   ),
                                 ),
                                 AutoSizeText(
-                                  "23 Apr, 2023",
-                                  style: TextStyle(
+                                  Jiffy.parse(invoice.createdAt!)
+                                      .format(pattern: 'dd MMM, yyyy'),
+                                  style: const TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 10,
                                     color: inactiveTab,
@@ -190,7 +195,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                   ),
                                 ),
                                 AutoSizeText(
-                                  "04 May, 2023",
+                                  "",
                                   style: TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 10,
@@ -209,9 +214,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const AutoSizeText(
-                              "C14, bodija, ibadan,",
-                              style: TextStyle(
+                            AutoSizeText(
+                              "${invoice.company!['address'] ?? ''}, ${invoice.company!['city'] ?? ''},",
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 10,
                                 color: inactiveTab,
@@ -221,9 +226,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 0.5.h,
                             ),
-                            const AutoSizeText(
-                              "Oyo, Nigeria",
-                              style: TextStyle(
+                            AutoSizeText(
+                              invoice.company!['state'] ?? '',
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 10,
                                 color: inactiveTab,
@@ -269,9 +274,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            const AutoSizeText(
-                              "Halal Payment Limited",
-                              style: TextStyle(
+                            AutoSizeText(
+                              invoice.customer!['fullname'],
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 14,
                                 color: black,
@@ -281,9 +286,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            const AutoSizeText(
-                              "+2349017345 | obasana@gmail.com",
-                              style: TextStyle(
+                            AutoSizeText(
+                              "${invoice.customer!['phone_number'] ?? ''} | ${invoice.customer!['email'] ?? ''}",
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 10,
                                 color: inactiveTab,
@@ -299,9 +304,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const AutoSizeText(
-                              "C14, bodija, ibadan,",
-                              style: TextStyle(
+                            AutoSizeText(
+                              "${invoice.customer!['address'] ?? ''}, ${invoice.customer!['city'] ?? ''},",
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 10,
                                 color: inactiveTab,
@@ -311,9 +316,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 0.5.h,
                             ),
-                            const AutoSizeText(
-                              "Oyo, Nigeria",
-                              style: TextStyle(
+                            AutoSizeText(
+                              "${invoice.customer!['state'] ?? ''}, ${invoice.customer!['country'] ?? ''}",
+                              style: const TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 10,
                                 color: inactiveTab,
@@ -385,89 +390,16 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 40.w,
-                            child: const AutoSizeText(
-                              "Food items for Eid Kabir",
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 12,
-                                color: inactiveTab,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                    children: invoice.invoiceDetails!
+                        .map(
+                          (invoiceItem) => InvoiceItemDetailsCard(
+                            itemname: invoiceItem.itemName!,
+                            quantity: invoiceItem.quantity!,
+                            price: invoiceItem.price!,
+                            total: invoiceItem.total!,
                           ),
-                          const AutoSizeText(
-                            "1 * 200,000",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 12,
-                              color: fagoSecondaryColor,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const AutoSizeText(
-                            "200,000",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 12,
-                              color: fagoSecondaryColor,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Image.asset(
-                            "assets/images/archive.png",
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 40.w,
-                            child: const AutoSizeText(
-                              "Food items for Eid Kabir",
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 12,
-                                color: inactiveTab,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          const AutoSizeText(
-                            "1 * 200,000",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 12,
-                              color: fagoSecondaryColor,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const AutoSizeText(
-                            "200,000",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 12,
-                              color: fagoSecondaryColor,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Image.asset(
-                            "assets/images/archive.png",
-                          ),
-                        ],
-                      ),
-                    ],
+                        )
+                        .toList(),
                   ),
                   SizedBox(
                     height: 2.h,
@@ -481,11 +413,11 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      AutoSizeText(
+                      const AutoSizeText(
                         "Total",
                         style: TextStyle(
                           fontFamily: "Work Sans",
@@ -495,8 +427,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                         ),
                       ),
                       AutoSizeText(
-                        "200,000",
-                        style: TextStyle(
+                        invoice.total!,
+                        style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 12,
                           color: inactiveTab,
@@ -508,13 +440,13 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   SizedBox(
                     height: 3.h,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       AutoSizeText(
-                        "Tax (7.5% VAT)",
-                        style: TextStyle(
+                        "Tax (${double.parse(invoice.taxRate!).toStringAsFixed(1)}% VAT)",
+                        style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 12,
                           color: inactiveTab,
@@ -522,8 +454,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                         ),
                       ),
                       AutoSizeText(
-                        "200,000",
-                        style: TextStyle(
+                        invoice.taxAmount!,
+                        style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 12,
                           color: inactiveTab,
@@ -535,13 +467,13 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       AutoSizeText(
-                        "Discount (12%)",
-                        style: TextStyle(
+                        "Discount (${double.parse(invoice.discountRate!).toStringAsFixed(1)}%)",
+                        style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 12,
                           color: inactiveTab,
@@ -549,8 +481,8 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                         ),
                       ),
                       AutoSizeText(
-                        "200,000",
-                        style: TextStyle(
+                        invoice.discountAmount!,
+                        style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 12,
                           color: inactiveTab,
@@ -585,7 +517,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                         ),
                       ),
                       AutoSizeText(
-                        "${currencySymbol}200,000",
+                        "$currencySymbol${invoice.total}",
                         style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 12,
@@ -653,9 +585,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                       ),
                       SizedBox(
                         width: 50.w,
-                        child: const AutoSizeText(
-                          "Halal Payment Limited.",
-                          style: TextStyle(
+                        child: AutoSizeText(
+                          _userController.userAccountDetails!.accountName ?? '',
+                          style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 12,
                             color: inactiveTab,
@@ -695,9 +627,11 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                           children: [
                             SizedBox(
                               width: 20.w,
-                              child: const AutoSizeText(
-                                "2038274657",
-                                style: TextStyle(
+                              child: AutoSizeText(
+                                _userController
+                                        .userAccountDetails!.accountNumber ??
+                                    '',
+                                style: const TextStyle(
                                   fontFamily: "Work Sans",
                                   fontSize: 12,
                                   color: inactiveTab,
@@ -740,9 +674,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                       ),
                       SizedBox(
                         width: 50.w,
-                        child: const AutoSizeText(
-                          "Guaranty Trust Bank",
-                          style: TextStyle(
+                        child: AutoSizeText(
+                          _userController.userAccountDetails!.bankName ?? '',
+                          style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 12,
                             color: inactiveTab,

@@ -45,12 +45,12 @@ class GovernmentIdentityVerificationController extends GetxController {
     final token = await SecureStorage.readUserToken();
 
     var requestBody = jsonEncode({
-  "utility_type": utilityType,
-  "utility_url": imageUrl,
-  "address": address,
-  "city": cityId,
-  "state": stateId
-});
+      "utility_type": utilityType,
+      "utility_url": imageUrl,
+      "address": address,
+      "city": cityId,
+      "state": stateId
+    });
 
     try {
       final responseData = await NetworkHelper.postRequest(
