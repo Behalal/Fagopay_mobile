@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+//import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 void goToPage(BuildContext context, Widget route) {
   Navigator.of(context)
@@ -17,8 +17,8 @@ String capitalize(String str) {
       .join(' ');
 }
 
-DecorationImage svgDecorationImage(String asset) {
-    return DecorationImage(
-          image:
-              Svg(asset));
-  }
+// DecorationImage svgDecorationImage(String asset) {
+//     return DecorationImage(
+//           image:
+//               Svg(asset));
+//   }

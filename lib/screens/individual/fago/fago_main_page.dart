@@ -24,52 +24,53 @@ class _FagoMainPageState extends State<FagoMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const AutoSizeText(
-                    'Fago',
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: fagoSecondaryColor,
-                    ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const AutoSizeText(
+                'Fago',
+                style: TextStyle(
+                  fontFamily: "Work Sans",
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                  color: fagoSecondaryColor,
+                ),
+              ),
+              const Divider(thickness: 2, color: fagoPrimaryColorWithOpacity),
+              // ),
+              SizedBox(
+                height: 2.h,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const AutoSizeText(
+                        'Coming Soon !!',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: stepsColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                    ],
                   ),
-                  const Divider(
-                      thickness: 2, color: fagoPrimaryColorWithOpacity),
-                  // ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Expanded(
-                    child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 2.h, horizontal: 2.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const AutoSizeText(
-                              'Coming Soon !!',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                color: stepsColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            SizedBox(
-                              height: 8.h,
-                            ),
-                          ],
-                        )),
-                  ),
-                ])));
+                ),
+              ),
+            ]),
+      ),
+    );
   }
 }

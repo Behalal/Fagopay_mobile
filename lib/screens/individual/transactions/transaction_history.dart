@@ -65,6 +65,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                                         .transactionHistoryStatus ==
                                     TransactionHistoryStatus.loading
                                 ? const LoadingWidget(
+                                    size: 50,
                                     color: fagoSecondaryColor,
                                   )
                                 : _transactionController
@@ -301,6 +302,7 @@ class TransactionDetails extends StatefulWidget {
 }
 
 class _TransactionDetailsState extends State<TransactionDetails> {
+  // ignore: unused_field
   final _transactionController = Get.find<TransactionController>();
   @override
   Widget build(BuildContext context) {

@@ -33,6 +33,8 @@ class User {
   String? bvnId;
   int? kycVerified;
   String? deviceId;
+  String? dailyLimts;
+  Nextofkin? nextofkin;
 
   User({
     this.id,
@@ -53,6 +55,8 @@ class User {
     this.bvnId,
     this.kycVerified,
     this.deviceId,
+    this.dailyLimts,
+    this.nextofkin,
   });
 
   static User fromJson(json) => User(
@@ -71,35 +75,129 @@ class User {
         referralCode: json['referal_code'] as String?,
         referralBy: json['referal_by'] as String?,
         ipAddress: json['ipaddress'] as String?,
+        dailyLimts: json['account_daily_limit'] as String?,
+        // nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
       );
 }
 
 class AccountDetail {
+  String? id;
   String? accountNumber;
   String? accountName;
   String? bankName;
   String? accountType;
   String? status;
   String? currency;
+  String? manager;
   int? balance;
 
   AccountDetail({
+    this.id,
     this.accountNumber,
     this.accountName,
     this.bankName,
     this.accountType,
     this.status,
     this.currency,
+    this.manager,
     this.balance,
   });
 
-  static AccountDetail fromJson(json) => AccountDetail(
-        accountNumber: json['account_number'] as String?,
-        accountName: json['account_name'] as String?,
-        bankName: json['bank_name'] as String?,
-        accountType: json['account_type'] as String?,
-        status: json['status'] as String?,
-        currency: json['currency'] as String?,
-        balance: json['balance'] as int?,
+  factory AccountDetail.fromJson(Map<String, dynamic> json) => AccountDetail(
+        id: json["id"] as String,
+        accountNumber: json["account_number"] as String,
+        accountName: json["account_name"] as String,
+        bankName: json["bank_name"] as String,
+        accountType: json["account_type"] as String,
+        status: json["status"] as String,
+        currency: json["currency"] as String,
+        manager: json["manager"] ?? '',
+        balance: json["balance"] as int,
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "account_number": accountNumber,
+        "account_name": accountName,
+        "bank_name": bankName,
+        "account_type": accountType,
+        "status": status,
+        "currency": currency,
+        "manager": manager,
+        "balance": balance,
+      };
 }
+
+class Nextofkin {
+  String? id;
+  String? userId;
+  String? fullName;
+  String? bussinessId;
+  String? email;
+  String? phoneNumber;
+  String? houseAddress;
+  String? relationship;
+
+  Nextofkin({
+    this.id,
+    this.userId,
+    this.fullName,
+    this.bussinessId,
+    this.email,
+    this.phoneNumber,
+    this.houseAddress,
+    this.relationship,
+  });
+
+  factory Nextofkin.fromJson(Map<String, dynamic> json) => Nextofkin(
+        id: json["id"] ?? '',
+        userId: json["user_id"] ?? '',
+        fullName: json["full_name"] ?? '',
+        bussinessId: json["bussiness_id"] ?? '',
+        email: json["email"] ?? '',
+        phoneNumber: json["phone_number"] ?? '',
+        houseAddress: json["house_address"] ?? '',
+        relationship: json["relationship"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "user_id": userId,
+        "full_name": fullName,
+        "bussiness_id": bussinessId,
+        "email": email,
+        "phone_number": phoneNumber,
+        "house_address": houseAddress,
+        "relationship": relationship,
+      };
+}
+// class AccountDetail {
+//   String? accountNumber;
+//   String? accountName;
+//   String? bankName;
+//   String? accountType;
+//   String? status;
+//   String? currency;
+//   int? balance;
+
+//   AccountDetail({
+//     this.accountNumber,
+//     this.accountName,
+//     this.bankName,
+//     this.accountType,
+//     this.status,
+//     this.currency,
+//     this.balance,
+//   });
+
+//   static AccountDetail fromJson(json) => AccountDetail(
+//         accountNumber: json['account_number'] as String?,
+//         accountName: json['account_name'] as String?,
+//         bankName: json['bank_name'] as String?,
+//         accountType: json['account_type'] as String?,
+//         status: json['status'] as String?,
+//         currency: json['currency'] as String?,
+//         balance: json['balance'] as int?,
+//       );
+// }
+

@@ -5,6 +5,7 @@ import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
+import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/authentication/widgets/email_phone_input.dart';
 import 'package:fagopay/screens/authentication/widgets/forgot_pass_text.dart';
@@ -19,7 +20,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import '../constants/colors.dart';
-import '../functions.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -97,17 +97,18 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                         padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
                         width: 371,
                         height: 208,
-                        decoration:  const BoxDecoration(
+                        decoration: const BoxDecoration(
                             // image: svgDecorationImage("assets/images/image1.svg")),
-                          image: DecorationImage(image: AssetImage("assets/images/image1.png"))
-                        ),
+                            image: DecorationImage(
+                                image: AssetImage("assets/images/image1.png"))),
                         child: Stack(
                           alignment: AlignmentDirectional.centerStart,
                           children: [
                             Positioned(
                               top: 35.66,
                               left: 8,
-                              child: SvgPicture.asset("assets/images/Frame.svg"),
+                              child:
+                                  SvgPicture.asset("assets/images/Frame.svg"),
                             ),
                           ],
                         ),
@@ -257,7 +258,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                 Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const SelectType(),
+                                        const SelectVerificationType(),
                                   ),
                                 );
                               }),
@@ -285,7 +286,6 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     );
   }
 
-
   Future<void> loginUser(BuildContext context) async {
     final progress = ProgressHUD.of(context);
     final response = await _loginController.loginUser();
@@ -299,15 +299,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       }
       final userToken = jsonBody['token'];
       SecureStorage.setUserToken(userToken);
-      Fluttertoast.showToast(
-        msg: "Login Successfull",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text(
@@ -360,22 +352,33 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       _isLoading = false;
     });
     progress?.dismiss();
+    final userNextOfKinBodyData = response['data']['userdetail']['nextofkin'];
+    if (kDebugMode) {
+      print('User NoK details response is $userNextOfKinBodyData');
+    }
     final userjsonBodyData = response['data']['userdetail'];
     if (kDebugMode) {
       print('User details response is $userjsonBodyData');
     }
-    final userAccountjsonBodyData = response['data']['accountdetail'];
+    final userAccountjsonBodyData =
+        response['data']['userdetail']['accountdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
+    if (kDebugMode) {
+      print(
+          '-----------User userAccountDetails response is $userAccountjsonBodyData');
+    }
     _userController.setUser = userDetails;
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
+
     // Future.delayed(const Duration(seconds: 1), () {
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (
-          // BuildContext context) =>  const BookKeeping(),
-          BuildContext context) => const Dashboard(),
+                // BuildContext context) =>  const BookKeeping(),
+                BuildContext context) =>
+            const Dashboard(),
 
         //  DashboardHome(
         //   userDetails: userDetails,

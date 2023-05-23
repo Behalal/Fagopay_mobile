@@ -16,7 +16,7 @@ class Functions {
     return validPhone;
   }
 
-  bool checkUpperCase(String value){
+  bool checkUpperCase(String value) {
     String pattern = r'[A-Z]';
     RegExp regExp = RegExp(pattern);
 
@@ -25,7 +25,7 @@ class Functions {
     return validPhone;
   }
 
-  bool checkLoweCase(String value){
+  bool checkLoweCase(String value) {
     String pattern = r'[a-z]';
     RegExp regExp = RegExp(pattern);
 
@@ -34,7 +34,7 @@ class Functions {
     return validPhone;
   }
 
-  bool checknumbers(String value){
+  bool checknumbers(String value) {
     String pattern = r'[0-9]';
     RegExp regExp = RegExp(pattern);
 
@@ -43,7 +43,7 @@ class Functions {
     return validPhone;
   }
 
-  bool specialCharacters(String value){
+  bool specialCharacters(String value) {
     String pattern = r'[!@#$%^&*(),.?]';
     RegExp regExp = RegExp(pattern);
 

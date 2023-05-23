@@ -7,7 +7,6 @@ import 'package:fagopay/screens/authentication/account_creation/setup_password.d
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
@@ -15,7 +14,6 @@ import 'package:sizer/sizer.dart';
 import '../../../controllers/registration_controller.dart';
 import '../../constants/colors.dart';
 import '../../widgets.dart';
-import 'individual_details.dart';
 import 'select_verification_type.dart';
 import 'widgets/current_step.dart';
 

@@ -32,7 +32,7 @@ class RegistrationController extends GetxController {
     }
     try {
       var requestBody =
-          jsonEncode({typeKey: typeKey == 'email' ? email.text : phone.text});
+          jsonEncode({typeKey: typeKey == 'email' ? email.text :  phone.text});
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}register",
         headers: BaseAPI.headers,
@@ -83,12 +83,16 @@ class RegistrationController extends GetxController {
   //   }
   // }
 
-  Future<dynamic> setPassCode() async {
+  Future<dynamic> setPassCode(
+      String id, String passcode, String confirmedPasscode) async {
     final token = await SecureStorage.readUserToken();
     try {
       var requestBody = jsonEncode({
-        'passcode': passCode.text,
+        'passcode': passcode,
+        'confirm_passcode': confirmedPasscode,
+        'identifier': id,
       });
+
       final responseData = await NetworkHelper.postRequest(
         url: "${BaseAPI.userPath}passcode-setup",
         headers: {

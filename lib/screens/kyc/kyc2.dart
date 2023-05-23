@@ -8,7 +8,7 @@ import '../authentication/account_creation/widgets/current_step.dart';
 import '../authentication/widgets/auth_buttons.dart';
 import '../constants/colors.dart';
 import 'face_verify.dart';
-import 'kyc1.dart';
+import 'busin_verification_page.dart';
 import 'kyc_details.dart';
 
 class BvnVerification extends StatefulWidget {
@@ -88,7 +88,7 @@ class BvnVerificationState extends State<BvnVerification> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: stepsColor),
+                        color: signInPlaceholder),
                     decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),

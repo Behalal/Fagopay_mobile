@@ -29,23 +29,20 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
     return Scaffold(
       body: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 5.w),
+        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 0.w),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                width: 50.w,
-                child: const AutoSizeText(
-                  "Account Created Successfully",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: "Work Sans",
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: fagoSecondaryColor,
-                  ),
+              const AutoSizeText(
+                "Welcome Onboard",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: "Work Sans",
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  color: fagoSecondaryColor,
                 ),
               ),
               // Padding(
@@ -63,69 +60,78 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
               //     ),
               //   ),
               // ),
+              // SizedBox(
+              //   height: 10.h,
+              // ),
+              // Stack(
+              //   alignment: AlignmentDirectional.center,
+              //   children: const [
+              //     Positioned(
+              //       child:
+              //           Image(image: AssetImage("assets/images/bg_image.png")),
+              //     ),
+              //   ],
+              // ),
               SizedBox(
-                height: 10.h,
+                height: 3.h,
               ),
-              Stack(
-                alignment: AlignmentDirectional.center,
-                children: const [
-                  Positioned(
-                    child:
-                        Image(image: AssetImage("assets/images/bg_image.png")),
-                  ),
-                ],
+              Container(
+                color: fagoSecondaryColorWithOpacity10,
+                height: 45.h,
+                width: Get.width,
+                child:
+                     Stack(alignment: Alignment.bottomCenter, children: const [
+                  Image(
+                      image: AssetImage(
+                          "assets/images/iPhone 14 Pro Space Black Mockup.png")),
+                ]),
               ),
-              SizedBox(
-                height: 8.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 15.w),
-                child: SizedBox(
-                  width: 50.w,
-                  child: AutoSizeText(
-                    "Hello ${_registrationController.firstname.text}!",
-                    style: const TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: inactiveTab,
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(left: 15.w),
+              //   child: SizedBox(
+              //     width: 50.w,
+              //     child: AutoSizeText(
+              //       "Hello ${_registrationController.firstname.text}!",
+              //       style: const TextStyle(
+              //         fontFamily: "Work Sans",
+              //         fontSize: 22,
+              //         fontWeight: FontWeight.w700,
+              //         color: inactiveTab,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 4.h,
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 22.w),
-                child: SizedBox(
-                  width: 70.w,
-                  child: const AutoSizeText(
-                    "Welcome Onboard",
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      color: inactiveTab,
-                    ),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(left: 22.w),
+              //   child: SizedBox(
+              //     width: 70.w,
+              //     child: const AutoSizeText(
+              //       "Welcome Onboard",
+              //       style: TextStyle(
+              //         fontFamily: "Work Sans",
+              //         fontSize: 22,
+              //         fontWeight: FontWeight.w700,
+              //         color: inactiveTab,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 2.h,
               ),
               Padding(
-                padding: EdgeInsets.only(left: 10.w),
-                child: SizedBox(
-                  width: 70.w,
-                  child: const AutoSizeText(
-                    "Passcode is a tier-2 security level to help verify your identity after leaving the app for a while.",
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: successDescription,
-                    ),
+                padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 3.w),
+                child: const AutoSizeText(
+                  "We are glad to have you onboard. Please kindly proceed to login and enjoy our smooth banking services and financial management tools..",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400,
+                    color: stepsColor,
                   ),
                 ),
               ),

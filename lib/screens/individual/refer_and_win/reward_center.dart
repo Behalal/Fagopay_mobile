@@ -1,6 +1,8 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -18,12 +20,14 @@ class ReferCenter extends StatefulWidget {
 }
 
 class _ReferCenterState extends State<ReferCenter> {
+  final _userUcontroller = Get.find<UserController>();
   int? myRequestType;
   var number = "";
   int? transactionType;
 
   @override
   Widget build(BuildContext context) {
+    _userUcontroller.showReferalEarning();
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
@@ -50,7 +54,7 @@ class _ReferCenterState extends State<ReferCenter> {
                               Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 3.h, vertical: 3.h),
-                                  height: 27.h,
+                                  //height: 27.h,
                                   width: Get.width,
                                   color: fagoPrimaryColorWithOpacity10,
                                   child: Column(
@@ -73,7 +77,7 @@ class _ReferCenterState extends State<ReferCenter> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Row(
+                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
@@ -105,10 +109,10 @@ class _ReferCenterState extends State<ReferCenter> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment
                                                       .spaceBetween,
-                                              children: const [
+                                              children: [
                                                 AutoSizeText(
-                                                  'NGN 50,400.00',
-                                                  style: TextStyle(
+                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.rewardbalance.toString()}',
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w600,
@@ -116,8 +120,8 @@ class _ReferCenterState extends State<ReferCenter> {
                                                   ),
                                                 ),
                                                 AutoSizeText(
-                                                  'NGN 120,000.00',
-                                                  style: TextStyle(
+                                                  '$currencySymbol ${_userUcontroller.userReferalEarning?.totalEarned.toString()}',
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w600,
@@ -131,12 +135,12 @@ class _ReferCenterState extends State<ReferCenter> {
                                         SizedBox(
                                           height: 1.5.h,
                                         ),
-                                        Row(
+                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: const [
                                             AutoSizeText(
-                                              'Reward Balance',
+                                              'Referrer Joined',
                                               style: TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 10,
@@ -145,7 +149,7 @@ class _ReferCenterState extends State<ReferCenter> {
                                               ),
                                             ),
                                             AutoSizeText(
-                                              'Total Earned',
+                                              'Completed Referrer',
                                               style: TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 10,
@@ -161,10 +165,14 @@ class _ReferCenterState extends State<ReferCenter> {
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: const [
+                                          children: [
                                             AutoSizeText(
-                                              '23',
-                                              style: TextStyle(
+                                              _userUcontroller
+                                                      .userReferalEarning
+                                                      ?.referalJoin
+                                                      .toString() ??
+                                                  '0',
+                                              style: const TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w600,
@@ -172,8 +180,12 @@ class _ReferCenterState extends State<ReferCenter> {
                                               ),
                                             ),
                                             AutoSizeText(
-                                              '15',
-                                              style: TextStyle(
+                                              _userUcontroller
+                                                      .userReferalEarning
+                                                      ?.completedReferal
+                                                      .toString() ??
+                                                  '0',
+                                              style: const TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w600,
@@ -253,7 +265,7 @@ class _ReferCenterState extends State<ReferCenter> {
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 3.h, vertical: 2.h),
-                                height: 27.h,
+                                //height: 27.h,
                                 width: Get.width,
                                 color: fagoSecondaryColorWithOpacity10,
                                 child: Column(
@@ -323,115 +335,115 @@ class _ReferCenterState extends State<ReferCenter> {
                               SizedBox(
                                 height: 2.h,
                               ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 1.h),
-                                height: 6.h,
-                                width: Get.width,
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/reffered_list_icon.svg',
-                                      ),
-                                      SizedBox(
-                                        width: 2.h,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          AutoSizeText(
-                                            'Jafar Zubaird',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: stepsColor,
-                                            ),
-                                          ),
-                                          AutoSizeText(
-                                            'Complete',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color: fagoGreenColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      const AutoSizeText(
-                                        'NGN 500',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: fagoSecondaryColor,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
-                              const Divider(
-                                color: stepsColor,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 1.h),
-                                height: 6.h,
-                                width: Get.width,
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/reffered_list_icon.svg',
-                                      ),
-                                      SizedBox(
-                                        width: 2.h,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: const [
-                                          AutoSizeText(
-                                            'Jafar Zubaird',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: stepsColor,
-                                            ),
-                                          ),
-                                          AutoSizeText(
-                                            'Complete',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color: stepsColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      const AutoSizeText(
-                                        'NGN 500',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700,
-                                          color: fagoSecondaryColor,
-                                        ),
-                                      ),
-                                    ]),
-                              ),
+                              // Container(
+                              //   padding: EdgeInsets.symmetric(horizontal: 1.h),
+                              //   height: 6.h,
+                              //   width: Get.width,
+                              //   child: Row(
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.center,
+                              //       mainAxisAlignment: MainAxisAlignment.center,
+                              //       children: [
+                              //         SvgPicture.asset(
+                              //           'assets/icons/reffered_list_icon.svg',
+                              //         ),
+                              //         SizedBox(
+                              //           width: 2.h,
+                              //         ),
+                              //         const Column(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.spaceEvenly,
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.start,
+                              //           children: [
+                              //             AutoSizeText(
+                              //               'Jafar Zubaird',
+                              //               style: TextStyle(
+                              //                 fontFamily: "Work Sans",
+                              //                 fontSize: 14,
+                              //                 fontWeight: FontWeight.w600,
+                              //                 color: stepsColor,
+                              //               ),
+                              //             ),
+                              //             AutoSizeText(
+                              //               'Complete',
+                              //               style: TextStyle(
+                              //                 fontFamily: "Work Sans",
+                              //                 fontSize: 12,
+                              //                 fontWeight: FontWeight.w400,
+                              //                 color: fagoGreenColor,
+                              //               ),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //         const Spacer(),
+                              //         const AutoSizeText(
+                              //           'NGN 500',
+                              //           style: TextStyle(
+                              //             fontFamily: "Work Sans",
+                              //             fontSize: 12,
+                              //             fontWeight: FontWeight.w700,
+                              //             color: fagoSecondaryColor,
+                              //           ),
+                              //         ),
+                              //       ]),
+                              // ),
+                              // const Divider(
+                              //   color: stepsColor,
+                              // ),
+                              // Container(
+                              //   padding: EdgeInsets.symmetric(horizontal: 1.h),
+                              //   height: 6.h,
+                              //   width: Get.width,
+                              //   child: Row(
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.center,
+                              //       mainAxisAlignment: MainAxisAlignment.center,
+                              //       children: [
+                              //         SvgPicture.asset(
+                              //           'assets/icons/reffered_list_icon.svg',
+                              //         ),
+                              //         SizedBox(
+                              //           width: 2.h,
+                              //         ),
+                              //         const Column(
+                              //           mainAxisAlignment:
+                              //               MainAxisAlignment.spaceEvenly,
+                              //           crossAxisAlignment:
+                              //               CrossAxisAlignment.start,
+                              //           children: [
+                              //             AutoSizeText(
+                              //               'Jafar Zubaird',
+                              //               style: TextStyle(
+                              //                 fontFamily: "Work Sans",
+                              //                 fontSize: 14,
+                              //                 fontWeight: FontWeight.w600,
+                              //                 color: stepsColor,
+                              //               ),
+                              //             ),
+                              //             AutoSizeText(
+                              //               'Complete',
+                              //               style: TextStyle(
+                              //                 fontFamily: "Work Sans",
+                              //                 fontSize: 12,
+                              //                 fontWeight: FontWeight.w400,
+                              //                 color: stepsColor,
+                              //               ),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //         const Spacer(),
+                              //         const AutoSizeText(
+                              //           'NGN 500',
+                              //           style: TextStyle(
+                              //             fontFamily: "Work Sans",
+                              //             fontSize: 12,
+                              //             fontWeight: FontWeight.w700,
+                              //             color: fagoSecondaryColor,
+                              //           ),
+                              //         ),
+                              //       ]),
+                              // ),
                               const Divider(
                                 color: stepsColor,
                               ),

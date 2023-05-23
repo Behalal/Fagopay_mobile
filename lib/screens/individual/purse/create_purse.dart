@@ -603,47 +603,47 @@ class _CreatePurseState extends State<CreatePurse> {
                                 SizedBox(
                                   width: 2.h,
                                 ),
-                                // Center(
-                                //   child: InkWell(
-                                //     onTap: () {
-                                //       add();
-                                //       print(
-                                //           'List categorires ${categoryList.length}');
-                                //       print(
-                                //           'last categorires ${categoryList.first}');
-                                //     },
-                                //     child: Container(
-                                //       width: 30.w,
-                                //       decoration: const BoxDecoration(
-                                //           borderRadius: BorderRadius.all(
-                                //               Radius.circular(15)),
-                                //           color: buttonColor),
-                                //       child: Padding(
-                                //         padding: EdgeInsets.symmetric(
-                                //             horizontal: 3.w, vertical: .8.h),
-                                //         child: Row(
-                                //           mainAxisAlignment:
-                                //               MainAxisAlignment.spaceBetween,
-                                //           crossAxisAlignment:
-                                //               CrossAxisAlignment.center,
-                                //           children: [
-                                //             SvgPicture.asset(
-                                //                 'assets/icons/fundAccount_icon.svg'),
-                                //             const AutoSizeText(
-                                //               "Add Category",
-                                //               style: TextStyle(
-                                //                 fontFamily: "Work Sans",
-                                //                 fontSize: 8,
-                                //                 fontWeight: FontWeight.w600,
-                                //                 color: white,
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
+                                Center(
+                                  child: InkWell(
+                                    onTap: () {
+                                      add();
+                                      print(
+                                          'List categorires ${categoryList.length}');
+                                      print(
+                                          'last categorires ${categoryList.first}');
+                                    },
+                                    child: Container(
+                                      width: 30.w,
+                                      decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                          color: buttonColor),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 3.w, vertical: .8.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/icons/fundAccount_icon.svg'),
+                                            const AutoSizeText(
+                                              "Add Category",
+                                              style: TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.w600,
+                                                color: white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 // Center(
                                 //   child: InkWell(
                                 //     onTap: () {

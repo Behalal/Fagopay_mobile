@@ -19,6 +19,7 @@ class BaseAPI {
   static String businessExpensesCategoryPath = "${api}businessexpensecategory";
   static String validateResetOtp = "${api}verify/password-reset-code";
   static String nextofKin = "${api}kyc/create-update-nextofkin";
+  static String showReferalEarning = "${api}referal/detail";
 
 // RequestMoney Endpoint
   static String myRequest = "${api}transaction/requestee-request-list";
@@ -28,10 +29,8 @@ class BaseAPI {
   static String transactionHistory = "${api}transaction/history";
 
   //bills
-static String airtimeSwapCharges = "${api}airtimeswap/get_fee/";
-static String initiateSwap = "${api}airtimeswap";
-
- 
+  static String airtimeSwapCharges = "${api}airtimeswap/get_fee/";
+  static String initiateSwap = "${api}airtimeswap";
 
   // purse
   static String pulseCategory = "${api}pulsecategory";
