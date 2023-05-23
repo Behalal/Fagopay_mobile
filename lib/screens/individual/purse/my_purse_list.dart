@@ -83,7 +83,7 @@ class _MyPurseListState extends State<MyPurseList> {
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 3.w, vertical: .9.h),
-                                      child: Row(
+                                      child:  Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:

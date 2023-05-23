@@ -106,7 +106,6 @@ class TransactionHistoryModel {
     this.tag,
     this.toFrom,
     required this.createdAt,
-    required this.updatedAt,
   });
 
   String? id;
@@ -125,7 +124,6 @@ class TransactionHistoryModel {
   Tag? tag;
   String? toFrom;
   DateTime createdAt;
-  DateTime updatedAt;
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) =>
       TransactionHistoryModel(
@@ -146,7 +144,6 @@ class TransactionHistoryModel {
         tag: tagValues.map[json["tag"]],
         toFrom: json["to_from"] ?? '',
         createdAt: DateTime.parse(json["created_at"] ?? ''),
-        updatedAt: DateTime.parse(json["updated_at"] ?? ''),
       );
 
   Map<String, dynamic> toJson() => {
@@ -167,7 +164,6 @@ class TransactionHistoryModel {
         "tag": tagValues.reverse[tag],
         "to_from": toFrom,
         "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
       };
 }
 

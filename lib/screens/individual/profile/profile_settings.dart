@@ -7,7 +7,7 @@ import 'package:fagopay/screens/individual/profile/change_passcode.dart';
 import 'package:fagopay/screens/individual/profile/change_password.dart';
 import 'package:fagopay/screens/individual/profile/edit_profile.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
-import 'package:fagopay/screens/individual/profile/profile_kyc_page.dart';
+import 'package:fagopay/screens/kyc/personal_verification_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
@@ -120,7 +120,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: welcomeText,
                                                   ),
@@ -134,7 +134,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: welcomeText,
                                                   ),
@@ -236,7 +236,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
-                                            'assets/icons/change_password.svg'),
+                                            'assets/icons/change_passcode.svg'),
                                         SizedBox(
                                           width: 1.h,
                                         ),
@@ -318,7 +318,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 width: Get.width,
-                                height: 24.h,
+                                height: 30.h,
                                 decoration: const BoxDecoration(
                                   color: fagoPrimaryColorWithOpacity10,
                                 ),
@@ -360,11 +360,15 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 SizedBox(
                                                   height: 0.5.h,
                                                 ),
-                                                const AutoSizeText(
-                                                  'Who is your beneficiary?',
-                                                  style: TextStyle(
+                                                AutoSizeText(
+                                                  _userUcontroller
+                                                          .user!
+                                                          .nextofkin
+                                                          ?.fullName ??
+                                                      '',
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     fontWeight: FontWeight.w400,
                                                     color: welcomeText,
                                                   ),
@@ -410,7 +414,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 ),
                                                 Container(
                                                   height: 2.5.h,
-                                                  width: 11.5.h,
+                                                  width: 14.5.h,
                                                   decoration: BoxDecoration(
                                                       color: white,
                                                       borderRadius:
@@ -418,7 +422,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                               25)),
                                                   alignment: Alignment.center,
                                                   child: const AutoSizeText(
-                                                    'Not Completed',
+                                                    'completed',
                                                     style: TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontSize: 10,
@@ -468,10 +472,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                   height: 0.5.h,
                                                 ),
                                                 const AutoSizeText(
-                                                  'Be aware of your account threshold',
+                                                  'Be aware of your account\nthreshold',
                                                   style: TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     fontWeight: FontWeight.w400,
                                                     color: welcomeText,
                                                   ),
@@ -521,7 +525,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                             'Logout',
                                             style: TextStyle(
                                               fontFamily: "Work Sans",
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: fagoSecondaryColor,
                                             ),
@@ -532,8 +536,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ),
                                     ),
                                   ),
+                                 
                                 ],
-                              )
+                              ),
+                               SizedBox(height: 3.h,),
                             ],
                           ),
                         )),

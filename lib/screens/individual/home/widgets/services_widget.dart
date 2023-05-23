@@ -65,7 +65,7 @@ List<Services> services = [
     route: SwapAirtime(),
   ),
   const Services(
-    image: 'assets/icons/new_link_icon.svg',
+    image: 'assets/icons/new_payment_link.svg',
     itemName: 'Payment Link',
     route: ReferAndEarn(),
   )
@@ -138,7 +138,7 @@ class BillsPayment extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset("assets/icons/pay_electricity.svg"),
+                  SvgPicture.asset("assets/icons/Group 12793.svg"),
                   const AutoSizeText(
                     "Pay Electricity",
                     style: TextStyle(
@@ -169,7 +169,7 @@ class BillsPayment extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset("assets/icons/new_cable_tv.svg"),
+                  SvgPicture.asset("assets/icons/Group 12794.svg"),
                   const AutoSizeText(
                     "Pay Cable TV",
                     style: TextStyle(
@@ -200,7 +200,7 @@ class BillsPayment extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset("assets/icons/new_pay_internet.svg"),
+                  SvgPicture.asset("assets/icons/Group 12795.svg"),
                   const AutoSizeText(
                     "Pay Internet",
                     style: TextStyle(

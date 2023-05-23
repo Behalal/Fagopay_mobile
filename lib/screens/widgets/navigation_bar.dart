@@ -162,7 +162,7 @@ class _DashboardState extends State<Dashboard> {
       body: buildPages(),
       bottomNavigationBar: Container(
         constraints: const BoxConstraints(),
-        height: Get.height * 0.13,
+        height: Get.height * 0.11,
         decoration: const BoxDecoration(
           color: white,
         ),
@@ -189,16 +189,18 @@ class _DashboardState extends State<Dashboard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 1500),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  margin: EdgeInsets.only(
-                    bottom: index == selectedIndex ? 0 : Get.width * .001,
-                    right: Get.width * .03,
-                    left: Get.width * .03,
+                Expanded(
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 1500),
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    margin: EdgeInsets.only(
+                      bottom: index == selectedIndex ? 0 : Get.width * .001,
+                      right: Get.width * .03,
+                      left: Get.width * .03,
+                    ),
+                    width: Get.width * .128,
+                    height: Get.width * .014,
                   ),
-                  width: Get.width * .128,
-                  height: Get.width * .010,
                 ),
                 index == 2
                     ? SvgPicture.asset(

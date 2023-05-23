@@ -128,7 +128,7 @@ class _AddSuppliesState extends State<AddSupplies> {
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              color: stepsColor,
+                              color: signInPlaceholder,
                             ),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -228,7 +228,7 @@ class _AddSuppliesState extends State<AddSupplies> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: stepsColor),
+                                color: signInPlaceholder),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
@@ -288,7 +288,7 @@ class _AddSuppliesState extends State<AddSupplies> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: stepsColor),
+                                color: signInPlaceholder),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
@@ -492,7 +492,7 @@ class _AddSuppliesState extends State<AddSupplies> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: stepsColor),
+                                color: signInPlaceholder),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),

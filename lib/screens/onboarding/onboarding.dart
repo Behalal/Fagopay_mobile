@@ -1,10 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/account_creation/individual_details.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-
-import '../authentication/account_creation/select_type.dart';
 import '../authentication/sign_in.dart';
 import '../authentication/widgets/auth_buttons.dart';
 import '../constants/colors.dart';
@@ -115,13 +112,18 @@ class _OnboardingState extends State<Onboarding> {
                 //? Show login screen
                 // final prefs = await SharedPreferences.getInstance();
                 // prefs.setBool('showLogin', true);
-
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (BuildContext context) =>
                         const SelectVerificationType(),
                   ),
                 );
+
+                // Navigator.of(context).pushReplacement(
+                //   MaterialPageRoute(
+                //     builder: (BuildContext context) => const SelectType(),
+                //   ),
+                // );
               },
               child: AuthButtons(
                 form: false,

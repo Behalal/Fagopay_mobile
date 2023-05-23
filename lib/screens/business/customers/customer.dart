@@ -63,14 +63,16 @@ class _CustomerPageState extends State<CustomerPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset("assets/images/add_grp.png"),
-                          const AutoSizeText(
-                            "Add Customer",
-                            style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 10,
-                                color: white,
-                                fontWeight: FontWeight.w600),
+                          Image.asset("assets/images/add_grp.png", scale: 1.5,),
+                          const Expanded(
+                            child:  AutoSizeText(
+                              "Add Customer",
+                              style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 5,
+                                  color: white,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
@@ -80,6 +82,7 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   height: 2.h,
                 ),
+
                 CustomerBox(
                   firstBoxImage: "assets/images/people.svg",
                   secondBoxImage: "assets/images/archive-book.svg",
@@ -123,11 +126,13 @@ class _CustomerPageState extends State<CustomerPage> {
                           itemCount: _customerController.customers.length,
                           itemBuilder: (context, index) => CustomCustomerCard(
                             // fullName: "Korede",
-                            fullName: _customerController.customers[index].fullname!,
+                            fullName:
+                                _customerController.customers[index].fullname!,
                             // email: "akored@gmail.com",
                             email: _customerController.customers[index].email!,
                             // phoneNumber: "080976543445",
-                            phoneNumber: _customerController.customers[index].phoneNumber!,
+                            phoneNumber: _customerController
+                                .customers[index].phoneNumber!,
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(

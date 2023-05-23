@@ -24,7 +24,7 @@ class TermsAndCond extends StatelessWidget {
               maxLines: 4,
               style: TextStyle(
                 fontFamily: "Work Sans",
-                fontSize: 12,
+                fontSize: 11,
                 color: termsAndCond,
                 fontWeight: FontWeight.w400,
               ),

@@ -9,10 +9,8 @@ import 'package:sizer/sizer.dart';
 
 import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
-import '../../../service/secure_storage/secure_storage.dart';
 import '../../constants/colors.dart';
 import '../widgets/auth_buttons.dart';
-import 'select_verification_type.dart';
 import 'setup_passcode.dart';
 import 'widgets/current_step.dart';
 
@@ -175,7 +173,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: stepsColor),
+                        color: signInPlaceholder),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -246,7 +244,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
-                        color: stepsColor),
+                        color: signInPlaceholder),
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
@@ -545,7 +543,9 @@ class _SetupPasswordState extends State<SetupPassword> {
                         imageheight: (_isLoading) ? 30 : null,
                         form: true,
                         text: (_isLoading) ? "" : "Continue",
-                        route: const SetupPassCode()),
+                        route: SetupPassCode(
+                          id: widget.id,
+                        )),
                   ),
                 )
               ]),
@@ -579,6 +579,8 @@ class _SetupPasswordState extends State<SetupPassword> {
     print(' code is ${jsonBody}');
     final userToken = jsonBody['token'];
     if (response.statusCode == 200) {
+      // final validateUserIdentifier = jsonBody['data']['identifier'];
+      // SecureStorage.setUserIdentifier(validateUserIdentifier);
       setState(() {
         _isLoading = false;
       });
@@ -586,12 +588,14 @@ class _SetupPasswordState extends State<SetupPassword> {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (BuildContext context) => const SetupPassCode(),
+            builder: (BuildContext context) => SetupPassCode(
+              id: widget.id,
+            ),
           ),
         );
       });
-      SecureStorage.setUserToken(userToken);
-      if ((!mounted)) return;
+      // SecureStorage.setUserToken(userToken);
+      // if ((!mounted)) return;
       Fluttertoast.showToast(
         msg: "Registration successful",
         toastLength: Toast.LENGTH_LONG,

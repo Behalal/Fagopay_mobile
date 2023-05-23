@@ -5,7 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../authentication/account_creation/widgets/current_step.dart';
 import '../authentication/widgets/auth_buttons.dart';
 import '../constants/colors.dart';
-import 'kyc1.dart';
+import 'busin_verification_page.dart';
 import 'kyc2.dart';
 
 class KycDetailsScreen extends StatefulWidget {
@@ -72,7 +72,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -115,7 +115,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
@@ -160,7 +160,7 @@ class KycDetailsScreenState extends State<KycDetailsScreen> {
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
-                            color: stepsColor),
+                            color: signInPlaceholder),
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),

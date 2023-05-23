@@ -90,17 +90,6 @@ class _BuyDataState extends State<BuyData> {
               tabs: [
                 Tab(
                   child: Text(
-                    'Buy Airtime',
-                    style: TextStyle(
-                      color: fagoSecondaryColor,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Work Sans',
-                    ),
-                  ),
-                ),
-                Tab(
-                  child: Text(
                     'Buy Data',
                     style: TextStyle(
                       color: fagoSecondaryColor,
@@ -110,13 +99,15 @@ class _BuyDataState extends State<BuyData> {
                     ),
                   ),
                 ),
+                Tab(
+                  child: Text('Buy Airtime'),
+                ),
               ],
             ),
           ),
           body: Builder(builder: (context) {
             return TabBarView(
               children: [
-                const BuyAirtime(),
                 SingleChildScrollView(
                   child: Padding(
                     padding:
@@ -308,7 +299,7 @@ class _BuyDataState extends State<BuyData> {
                                 fontFamily: "Work Sans",
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14,
-                                color: stepsColor),
+                                color: signInPlaceholder),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 4.w, vertical: 1.h),
@@ -424,7 +415,7 @@ class _BuyDataState extends State<BuyData> {
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
-                              color: stepsColor,
+                              color: signInPlaceholder,
                             ),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.symmetric(
@@ -517,6 +508,7 @@ class _BuyDataState extends State<BuyData> {
                     ),
                   ),
                 ),
+                const BuyAirtime(),
               ],
             );
           }),

@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +24,7 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+  final _userUcontroller = Get.find<UserController>();
   var number = "";
   int? transactionType;
   @override
@@ -60,14 +62,31 @@ class _EditProfileState extends State<EditProfile> {
                                   SizedBox(
                                     height: 2.h,
                                   ),
-                                  const AutoSizeText(
-                                    'Obasana Nasir',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: welcomeText,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      AutoSizeText(
+                                        _userUcontroller.user!.firstName ?? '',
+                                        style: const TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: welcomeText,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 1.h,
+                                      ),
+                                      AutoSizeText(
+                                        _userUcontroller.user!.lastName ?? '',
+                                        style: const TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: welcomeText,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -129,14 +148,31 @@ class _EditProfileState extends State<EditProfile> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const AutoSizeText(
-                                      'Obasana Nasir',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: welcomeText,
-                                      ),
+                                    Row(
+                                      children: [
+                                        AutoSizeText(
+                                          _userUcontroller.user!.firstName ??
+                                              '',
+                                          style: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: welcomeText,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 1.h,
+                                        ),
+                                        AutoSizeText(
+                                          _userUcontroller.user!.lastName ?? '',
+                                          style: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: welcomeText,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     const Spacer(),
                                     SvgPicture.asset(
@@ -194,7 +230,7 @@ class _EditProfileState extends State<EditProfile> {
                                           color: fagoSecondaryColorWithOpacity,
                                           width: 1),
                                       borderRadius: BorderRadius.circular(10)),
-                                  hintText: 'Phone Number',
+                                  hintText: _userUcontroller.user!.phone ?? '',
                                   hintStyle: GoogleFonts.roboto(
                                     color: stepsColor,
                                     fontSize: 13,
@@ -275,9 +311,9 @@ class _EditProfileState extends State<EditProfile> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const AutoSizeText(
-                                      'Obasana@gmail.com',
-                                      style: TextStyle(
+                                    AutoSizeText(
+                                      _userUcontroller.user!.email ?? '',
+                                      style: const TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -305,5 +341,4 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ])));
   }
-  
 }

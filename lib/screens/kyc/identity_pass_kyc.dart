@@ -1,7 +1,10 @@
+import 'package:fagopay/screens/kyc/countdown_page2.dart';
+import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
+
 import 'kyc_success.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
+//import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -31,9 +34,6 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
   final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
-    print(
-      'Id is ${_userUcontroller.user!.id}',
-    );
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -55,7 +55,7 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
                   }
                 },
                 onVerified: (response) {
-                  Get.to(() => const kyc_success());
+                  Get.to(() => const CountdownPage2());
                   if (kDebugMode) {
                     print(response);
                   }
