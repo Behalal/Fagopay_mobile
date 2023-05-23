@@ -13,6 +13,20 @@ class CompanyController extends GetxController {
   final companyNameController = TextEditingController();
   final rcNumberController = TextEditingController();
 
+  final Rx<List<Company>> _companies = Rx([]);
+
+  List<Company> get companies {
+    return [..._companies.value];
+  }
+
+  set companies(List<Company> companies) {
+    _companies(companies);
+  }
+
+  Company findCompanyById(String id) {
+    return companies.firstWhere((company) => company.id == id);
+  }
+
   final Rx<Company?> _company = Rx(null);
 
   Company? get company => _company.value;

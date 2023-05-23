@@ -927,8 +927,14 @@ class _DashboardHomeState extends State<DashboardHome> {
   Future<void> getCompany() async {
     final response = await _companyController.getCompany();
     final companyjsonBodyData = response['data']['company_detail'];
+    final returnedCompanies = companyjsonBodyData
+        .map<Company>((company) => Company.fromJson(company))
+        .toList();
     final companyDetails = Company.fromJson(companyjsonBodyData[0]);
-    _companyController.setCompany = companyDetails;
+    setState(() {
+      _companyController.companies = returnedCompanies;
+      _companyController.setCompany = companyDetails;
+    });
   }
 }
 

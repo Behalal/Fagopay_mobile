@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
 import 'package:fagopay/screens/business/home/home.dart';
@@ -572,6 +573,8 @@ class ManageAccount extends StatefulWidget {
 
 class _ManageAccountState extends State<ManageAccount> {
   final _userUcontroller = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
+
   @override
   Widget build(BuildContext context) {
     return widget.userDetails.kycVerified == 1
@@ -803,68 +806,33 @@ class _ManageAccountState extends State<ManageAccount> {
                 SizedBox(
                   height: 2.h,
                 ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    padding: const EdgeInsets.all(18),
-                    width: Get.width,
-                    height: 10.h,
-                    decoration: BoxDecoration(
-                      color: fagoSecondaryColor.withOpacity(0.05),
-                    ),
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const CircleAvatar(
-                            radius: 27, // Image radius
-                            backgroundImage:
-                                AssetImage('assets/images/fago(2).png'),
-                          ),
-                          SizedBox(
-                            width: 1.h,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const AutoSizeText(
-                                'Fagopay Limited',
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600,
-                                  color: welcomeText,
-                                ),
-                              ),
-                              SizedBox(
-                                height: .5.h,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 1.h),
-                                height: 2.5.h,
-                                // width: 11.5.h,
-                                decoration: BoxDecoration(
-                                    color: white,
-                                    borderRadius: BorderRadius.circular(25)),
-                                alignment: Alignment.center,
-                                child: const AutoSizeText(
+                _companyController.companies.isEmpty
+                    ? const Center(
+                        child: Text('No Created Company Yet!'),
+                      )
+                    : ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: _companyController.companies.length,
+                        itemBuilder: (context, index) => CustomCompanyCard(
+                          companyName:
+                              _companyController.companies[index].companyName!,
+                          companyType:
+                              _companyController.companies[index].companyType ??
                                   'Manager',
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500,
-                                    color: fagoSecondaryColor,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          const Spacer(),
-                          SvgPicture.asset('assets/icons/arrow_front.svg')
-                        ]),
-                  ),
-                ),
+                          onPressed: () {
+                            setState(() {
+                              _companyController.setCompany =
+                                  _companyController.companies[index];
+                            });
+                          },
+                          isActive: _companyController.companies[index].id ==
+                                  _companyController.company!.id
+                              ? Colors.green
+                              : Colors.transparent,
+                        ),
+                      ),
                 SizedBox(
                   height: 1.5.h,
                 ),
@@ -1070,5 +1038,87 @@ class _ManageAccountState extends State<ManageAccount> {
               ],
             ),
           );
+  }
+}
+
+class CustomCompanyCard extends StatelessWidget {
+  const CustomCompanyCard({
+    super.key,
+    required this.companyName,
+    required this.companyType,
+    required this.onPressed,
+    required this.isActive,
+  });
+
+  final String companyName, companyType;
+  final VoidCallback onPressed;
+  final Color isActive;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        width: Get.width,
+        height: 10.h,
+        decoration: BoxDecoration(
+          color: fagoSecondaryColor.withOpacity(0.05),
+          border: Border.all(
+            width: 2,
+            color: isActive,
+          ),
+        ),
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                radius: 27, // Image radius
+                backgroundImage: AssetImage('assets/images/fago(2).png'),
+              ),
+              SizedBox(
+                width: 1.h,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoSizeText(
+                    companyName,
+                    style: const TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: welcomeText,
+                    ),
+                  ),
+                  SizedBox(
+                    height: .5.h,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 1.h),
+                    height: 2.5.h,
+                    // width: 11.5.h,
+                    decoration: BoxDecoration(
+                        color: white, borderRadius: BorderRadius.circular(25)),
+                    alignment: Alignment.center,
+                    child: AutoSizeText(
+                      companyType,
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        color: fagoSecondaryColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const Spacer(),
+              SvgPicture.asset('assets/icons/arrow_front.svg')
+            ]),
+      ),
+    );
   }
 }
