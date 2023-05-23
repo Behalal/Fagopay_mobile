@@ -111,15 +111,18 @@ class _BookKeepingState extends State<BookKeeping> {
                                 SvgPicture.asset(
                                   "assets/images/archive-book.svg",
                                   color: white,
-                                  height: 3.h,
+                                  height: 2.h,
+                                  width: 2.w,
                                 ),
-                                const AutoSizeText(
-                                  "New Transaction",
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: white,
+                                const Expanded(
+                                  child:  AutoSizeText(
+                                    "New Transaction",
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 5,
+                                      fontWeight: FontWeight.w600,
+                                      color: white,
+                                    ),
                                   ),
                                 ),
                               ],

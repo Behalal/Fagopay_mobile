@@ -59,9 +59,9 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.asset('assets/images/new-year 2.png'),
-                                  Image.asset('assets/images/gift 1.png'),
-                                  Image.asset('assets/images/new-year 1.png'),
+                                  Expanded(child: Image.asset('assets/images/new-year 2.png')),
+                                  Expanded(child: Image.asset('assets/images/gift 1.png')),
+                                  Expanded(child: Image.asset('assets/images/new-year 1.png')),
                                 ],
                               ),
                               SizedBox(
@@ -111,7 +111,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                               Container(
                                 padding: const EdgeInsets.only(left: 20),
                                 height: 6.5.h,
-                                width: 35.5.h,
+                                width: 38.5.h,
                                 decoration: BoxDecoration(
                                     color: fagoSecondaryColorWithOpacity10,
                                     borderRadius: BorderRadius.circular(36),
@@ -141,23 +141,8 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                               topRight: Radius.circular(36),
                                               bottomRight:
                                                   Radius.circular(36))),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          AutoSizeText(
-                                            _userUcontroller
-                                                    .user!.referralCode ??
-                                                'No referral Code',
-                                            style: const TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w600,
-                                              color: fagoSecondaryColor,
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
+                                      child: InkWell(
+                                         onTap: () {
                                               if (_userUcontroller
                                                       .user!.referralCode ==
                                                   "") {
@@ -168,28 +153,43 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                                 FlutterClipboard.copy(
                                                     _userUcontroller
                                                         .user!.referralCode!);
-                                                // Get.snackbar(
-                                                //     'Referral Code Copied',
-                                                //     '${_userUcontroller.user!.referralCode}',
-                                                //     snackPosition:
-                                                //         SnackPosition.BOTTOM,
-                                                //     padding:
-                                                //         EdgeInsets.symmetric(
-                                                //       horizontal: 3.h,
-                                                //       vertical: 2.h,
-                                                //     ));
-                                                // FlutterClipboard.copy(
-                                                //         _userUcontroller
-                                                //             .user!.referralCode
-                                                //             .toString())
-                                                //     .then((value) =>
-                                                //         print('copied'));
+                                                Get.snackbar(
+                                                    'Referral Code Copied',
+                                                    '${_userUcontroller.user!.referralCode}',
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal: 3.h,
+                                                      vertical: 2.h,
+                                                    ));
+                                                FlutterClipboard.copy(
+                                                        _userUcontroller
+                                                            .user!.referralCode
+                                                            .toString())
+                                                    .then((value) =>
+                                                        print('copied'));
                                               }
                                             },
-                                            child: SvgPicture.asset(
-                                                'assets/icons/copy-svgrepo-com 1.svg'),
-                                          )
-                                        ],
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            AutoSizeText(
+                                              _userUcontroller
+                                                      .user!.referralCode ??
+                                                  'No referral Code',
+                                              style: const TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600,
+                                                color: fagoSecondaryColor,
+                                              ),
+                                            ),
+                                            SvgPicture.asset(
+                                                'assets/icons/copy-svgrepo-com 1.svg')
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -208,7 +208,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                 ),
                               ),
                               SizedBox(
-                                height: 13.h,
+                                height: 5.h,
                               ),
                               Container(
                                 height: 6.5.h,

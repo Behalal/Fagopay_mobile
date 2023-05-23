@@ -223,11 +223,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4, vertical: 0.4.h),
-                                          child: const Row(
+                                          child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              AutoSizeText(
+                                              const AutoSizeText(
                                                 "Switch Account",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
@@ -237,24 +237,27 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                                   color: black,
                                                 ),
                                               ),
-                                              Stack(
-                                                alignment:
-                                                    AlignmentDirectional.center,
-                                                children: [
-                                                  Image(
-                                                    image: AssetImage(
-                                                        "assets/images/box.png"),
-                                                    height: 20,
-                                                    width: 20,
-                                                    color: stepsColor,
-                                                  ),
-                                                  Icon(
-                                                    Icons
-                                                        .keyboard_arrow_down_rounded,
-                                                    color: stepsColor,
-                                                    size: 15,
-                                                  )
-                                                ],
+                                              Expanded(
+                                                child: Stack(
+                                                  alignment:
+                                                      AlignmentDirectional
+                                                          .center,
+                                                  children: const [
+                                                    Image(
+                                                      image: AssetImage(
+                                                          "assets/images/box.png"),
+                                                      height: 20,
+                                                      width: 20,
+                                                      color: stepsColor,
+                                                    ),
+                                                    Icon(
+                                                      Icons
+                                                          .keyboard_arrow_down_rounded,
+                                                      color: stepsColor,
+                                                      size: 15,
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -303,21 +306,21 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 SizedBox(
                                   width: 2.w,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    // SecureStorage.deleteUserIdentifier();
-                                    // SecureStorage.deleteUserToken();
-                                    // Navigator.of(context).pushAndRemoveUntil(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => const SignIn()),
-                                    //     (route) => false);
-                                  },
-                                  child: const Icon(
-                                    Icons.notifications,
-                                    size: 20,
-                                    color: white,
-                                  ),
-                                ),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //     // SecureStorage.deleteUserIdentifier();
+                                //     // SecureStorage.deleteUserToken();
+                                //     // Navigator.of(context).pushAndRemoveUntil(
+                                //     //     MaterialPageRoute(
+                                //     //         builder: (context) => const SignIn()),
+                                //     //     (route) => false);
+                                //   },
+                                //   child: const Icon(
+                                //     Icons.notifications,
+                                //     size: 20,
+                                //     color: white,
+                                //   ),
+                                // ),
                               ],
                             )
                           ],
@@ -432,22 +435,16 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                                     .accountNumber!)
                                                 .then(
                                                     (value) => print('copied'));
-                                            // Get.snackbar(
-                                            //     'Account Number Copied',
-                                            //     widget.accountDetails!
-                                            //         .accountNumber!,
-                                            //     snackPosition:
-                                            //         SnackPosition.BOTTOM,
-                                            //     padding: EdgeInsets.symmetric(
-                                            //       horizontal: 3.h,
-                                            //       vertical: 2.h,
-                                            //     ));
-                                            // FlutterClipboard.copy(
-                                            //         _userUcontroller
-                                            //             .user!.referralCode
-                                            //             .toString())
-                                            //     .then((value) =>
-                                            //         print('copied'));
+                                            Get.snackbar(
+                                                'Account Number Copied',
+                                                widget.accountDetails!
+                                                    .accountNumber!,
+                                                snackPosition:
+                                                    SnackPosition.BOTTOM,
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 3.h,
+                                                  vertical: 2.h,
+                                                ));
                                           }
                                         },
                                         child: const Icon(
@@ -623,7 +620,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                     Get.to(() => const SelectType());
                                   },
                                   child: Container(
-                                    width: 35.w,
+                                    width: 40.w,
                                     decoration: const BoxDecoration(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15)),
@@ -770,7 +767,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                       _userUcontroller.user!.firstName ?? '',
                                       style: const TextStyle(
                                         fontFamily: "Work Sans",
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: welcomeText,
                                       ),
@@ -782,7 +779,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                       _userUcontroller.user!.lastName ?? '',
                                       style: const TextStyle(
                                         fontFamily: "Work Sans",
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.w600,
                                         color: welcomeText,
                                       ),

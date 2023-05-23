@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
@@ -181,40 +182,40 @@ class _FundWalletState extends State<FundWallet> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 42.w,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      AutoSizeText(
-                                        (widget.accountDetails.accountNumber!
-                                                .isNotEmpty)
-                                            ? " ${widget.accountDetails.bankName}"
-                                            : "",
-                                        style: const TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: verificationCodeText,
-                                        ),
-                                      ),
-                                      SizedBox(height: 3.h),
-                                      AutoSizeText(
-                                        (widget.accountDetails.accountNumber!
-                                                .isNotEmpty)
-                                            ? " ${widget.accountDetails.accountNumber}"
-                                            : "",
-                                        style: const TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                          color: verificationCodeText,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   width: 42.w,
+                                //   child: Column(
+                                //     mainAxisAlignment: MainAxisAlignment.start,
+                                //     crossAxisAlignment: CrossAxisAlignment.end,
+                                //     children: [
+                                //       AutoSizeText(
+                                //         (widget.accountDetails.accountNumber!
+                                //                 .isNotEmpty)
+                                //             ? " ${widget.accountDetails.bankName}"
+                                //             : "",
+                                //         style: const TextStyle(
+                                //           fontFamily: "Work Sans",
+                                //           fontSize: 14,
+                                //           fontWeight: FontWeight.w400,
+                                //           color: verificationCodeText,
+                                //         ),
+                                //       ),
+                                //       SizedBox(height: 3.h),
+                                //       AutoSizeText(
+                                //         (widget.accountDetails.accountNumber!
+                                //                 .isNotEmpty)
+                                //             ? " ${widget.accountDetails.accountNumber}"
+                                //             : "",
+                                //         style: const TextStyle(
+                                //           fontFamily: "Work Sans",
+                                //           fontSize: 14,
+                                //           fontWeight: FontWeight.w700,
+                                //           color: verificationCodeText,
+                                //         ),
+                                //       ),
+                                //     ],
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -232,8 +233,7 @@ class _FundWalletState extends State<FundWallet> {
                       children: [
                         SizedBox(
                           width: 45.w,
-                          child: const AutoSizeText(
-                            "Send money to account",
+                          child: const AutoSizeText("Fund account",
                             style: TextStyle(
                               fontFamily: "Work Sans",
                               fontSize: 14,
@@ -276,102 +276,114 @@ class _FundWalletState extends State<FundWallet> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(3.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              width: 42.w,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const AutoSizeText(
-                                    "Bank",
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: verificationCodeText,
-                                    ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const AutoSizeText(
+                                  "Bank",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: verificationCodeText,
                                   ),
-                                  SizedBox(height: 2.h),
-                                  const AutoSizeText(
-                                    "Account Name",
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: verificationCodeText,
-                                    ),
+                                ),
+                                AutoSizeText(
+                                  widget.accountDetails.bankName ?? "",
+                                  style: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: verificationCodeText,
                                   ),
-                                  SizedBox(height: 2.h),
-                                  const AutoSizeText(
-                                    "Account No",
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: verificationCodeText,
-                                    ),
-                                  )
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              width: 42.w,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  AutoSizeText(
-                                    widget.accountDetails.bankName ?? "",
-                                    style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: verificationCodeText,
-                                    ),
+                            SizedBox(height: 2.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const AutoSizeText(
+                                  "Account Name: ",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: verificationCodeText,
                                   ),
-                                  SizedBox(height: 2.h),
-                                  AutoSizeText(
-                                    widget.accountDetails.accountName ?? "",
-                                    style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                      color: verificationCodeText,
-                                    ),
+                                ),
+                                AutoSizeText(
+                                  widget.accountDetails.accountName ?? "",
+                                  style: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: verificationCodeText,
                                   ),
-                                  SizedBox(height: 2.h),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        AutoSizeText(
-                                          widget.accountDetails.accountNumber ??
-                                              "",
-                                          style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700,
-                                            color: verificationCodeText,
-                                          ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 2.h),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const AutoSizeText(
+                                  "Account No",
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: verificationCodeText,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    if (widget.accountDetails.accountNumber! ==
+                                        "") {
+                                      print('enter text');
+                                    } else {
+                                      print(
+                                          widget.accountDetails.accountNumber!);
+                                      FlutterClipboard.copy(widget
+                                              .accountDetails.accountNumber!)
+                                          .then((value) => print('copied'));
+                                      Get.snackbar('Account Number Copied',
+                                          widget.accountDetails.accountNumber!,
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 3.h,
+                                            vertical: 2.h,
+                                          ));
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      AutoSizeText(
+                                        widget.accountDetails.accountNumber ??
+                                            "",
+                                        style: const TextStyle(
+                                          decoration: TextDecoration.underline,
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          color: verificationCodeText,
                                         ),
-                                        SizedBox(width: 1.w),
-                                        const Icon(
-                                          Icons.copy_outlined,
-                                          size: 15,
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(width: 1.w),
+                                      const Icon(
+                                        Icons.copy_outlined,
+                                        size: 15,
+                                      )
+                                    ],
                                   ),
-                                ],
-                              ),
-                            ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),

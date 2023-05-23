@@ -120,9 +120,9 @@ class _IdentificationVerificationState
                                 color: white,
                                 borderRadius: BorderRadius.circular(8)),
 
-                            child: const Column(
+                            child:  Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: const [
                                 AutoSizeText(
                                   'Nigeria',
                                   style: TextStyle(
@@ -307,8 +307,8 @@ class _IdentificationVerificationState
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  const Row(
-                                    children: [
+                                   Row(
+                                    children: const [
                                       AutoSizeText(
                                         'See Example Image',
                                         style: TextStyle(

@@ -193,9 +193,9 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   fontSize: 14,
                                   color: signInPlaceholder,
                                 ),
-                                prefixIcon: const Stack(
+                                prefixIcon:  Stack(
                                   alignment: AlignmentDirectional.center,
-                                  children: [
+                                  children: const [
                                     Image(
                                         image: AssetImage(
                                             "assets/images/shield.png")),
@@ -264,7 +264,6 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                           : TextFormField(
                               controller: _registrationController.email,
                               style: const TextStyle(
-                                  fontFamily: "Work Sans",
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   color: signInPlaceholder),
@@ -292,9 +291,9 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                                   fontSize: 14,
                                   color: signInPlaceholder,
                                 ),
-                                prefixIcon: const Stack(
+                                prefixIcon:  Stack(
                                   alignment: AlignmentDirectional.center,
-                                  children: [
+                                  children: const [
                                     Image(
                                         image: AssetImage(
                                             "assets/images/shield.png")),

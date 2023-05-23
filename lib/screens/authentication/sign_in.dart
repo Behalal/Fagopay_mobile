@@ -299,15 +299,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       }
       final userToken = jsonBody['token'];
       SecureStorage.setUserToken(userToken);
-      Fluttertoast.showToast(
-        msg: "Login Successfull",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text(

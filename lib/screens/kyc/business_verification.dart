@@ -318,8 +318,8 @@ class _BusinessVerificationState extends State<BusinessVerification> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  const Row(
-                                    children: [
+                                   Row(
+                                    children: const[
                                       AutoSizeText(
                                         'See Example Image',
                                         style: TextStyle(

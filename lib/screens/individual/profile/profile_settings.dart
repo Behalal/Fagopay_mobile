@@ -120,7 +120,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: welcomeText,
                                                   ),
@@ -134,7 +134,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 18,
+                                                    fontSize: 14,
                                                     fontWeight: FontWeight.w600,
                                                     color: welcomeText,
                                                   ),
@@ -318,7 +318,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 width: Get.width,
-                                height: 24.h,
+                                height: 30.h,
                                 decoration: const BoxDecoration(
                                   color: fagoPrimaryColorWithOpacity10,
                                 ),
@@ -368,9 +368,9 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: fagoSecondaryColor,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: welcomeText,
                                                   ),
                                                 ),
                                               ],
@@ -414,7 +414,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 ),
                                                 Container(
                                                   height: 2.5.h,
-                                                  width: 12.5.h,
+                                                  width: 14.5.h,
                                                   decoration: BoxDecoration(
                                                       color: white,
                                                       borderRadius:
@@ -472,10 +472,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                   height: 0.5.h,
                                                 ),
                                                 const AutoSizeText(
-                                                  'Be aware of your account threshold',
+                                                  'Be aware of your account\nthreshold',
                                                   style: TextStyle(
                                                     fontFamily: "Work Sans",
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     fontWeight: FontWeight.w400,
                                                     color: welcomeText,
                                                   ),
@@ -525,7 +525,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                             'Logout',
                                             style: TextStyle(
                                               fontFamily: "Work Sans",
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               fontWeight: FontWeight.w500,
                                               color: fagoSecondaryColor,
                                             ),
@@ -536,8 +536,10 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ),
                                     ),
                                   ),
+                                 
                                 ],
-                              )
+                              ),
+                               SizedBox(height: 3.h,),
                             ],
                           ),
                         )),

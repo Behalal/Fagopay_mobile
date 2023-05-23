@@ -131,7 +131,7 @@ class _AccountLimitState extends State<AccountLimit> {
                                 : Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 3.h, vertical: 3.h),
-                                    height: 43.h,
+                                    height: 50.h,
                                     width: Get.width,
                                     color: fagoPrimaryColorWithOpacity10,
                                     child: Column(

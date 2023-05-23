@@ -61,13 +61,13 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                   child: Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 3.w, vertical: .7.h),
-                                    child: const Row(
+                                    child:  Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      children: [
-                                        AutoSizeText(
+                                      children: const [
+                                         AutoSizeText(
                                           "Edit Link",
                                           style: TextStyle(
                                             fontFamily: "Work Sans",
