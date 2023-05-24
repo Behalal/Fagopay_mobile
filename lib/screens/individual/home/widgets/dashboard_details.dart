@@ -223,11 +223,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4, vertical: 0.4.h),
-                                          child: Row(
+                                          child: const Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              const AutoSizeText(
+                                              AutoSizeText(
                                                 "Switch Account",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
@@ -242,7 +242,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                                   alignment:
                                                       AlignmentDirectional
                                                           .center,
-                                                  children: const [
+                                                  children: [
                                                     Image(
                                                       image: AssetImage(
                                                           "assets/images/box.png"),

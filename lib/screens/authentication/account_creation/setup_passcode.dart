@@ -275,15 +275,15 @@ class _SetupPassCodeState extends State<SetupPassCode> {
       //   ),
       // );
     }
-    Fluttertoast.showToast(
-      msg: "Error setting up Passcode!",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    // Fluttertoast.showToast(
+    //   msg: "Error setting up Passcode!",
+    //   toastLength: Toast.LENGTH_LONG,
+    //   gravity: ToastGravity.TOP,
+    //   timeInSecForIosWeb: 2,
+    //   backgroundColor: Colors.red,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
 
     // ScaffoldMessenger.of(context).showSnackBar(
     //   const SnackBar(
