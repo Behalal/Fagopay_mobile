@@ -72,12 +72,14 @@ class _DashboardHomeState extends State<DashboardHome> {
               children: [
                 SizedBox(
                   height: 32.5.h,
-                  child: DashBoardDetails(
-                    user: widget.userDetails,
-                    accountType: "Individual",
-                    accountDetails: widget.accountDetails!,
-                    userDetails: _userController.user!,
-                  ),
+                  child: Obx(() {
+                    return DashBoardDetails(
+                      user: widget.userDetails,
+                      accountType: "Individual",
+                      accountDetails: widget.accountDetails!,
+                      userDetails: _userController.user!,
+                    );
+                  }),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -824,7 +826,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
-                              color: stepsColor, 
+                              color: stepsColor,
                             ),
                           ),
                         ),
