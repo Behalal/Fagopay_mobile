@@ -44,10 +44,10 @@ class _CountdownPage2State extends State<CountdownPage2> {
               SizedBox(
                 height: 5.h,
               ),
-              Text(
-                "Hello ${userUcontroller.user!.firstName}! Congratulations ",
+              const Text(
+                "Hello Congratulations",
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontFamily: "Work Sans",
                   fontWeight: FontWeight.w700,

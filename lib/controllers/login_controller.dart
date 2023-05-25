@@ -18,14 +18,27 @@ enum OtpForgotVerifyStatus {
   success,
 }
 
+enum GetUserStatus {
+  empty,
+  loading,
+  error,
+  success,
+  available,
+}
+
 //owin.abir@findours.com
 //Bigdaddy@123
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController(text: '');
   TextEditingController passwordController = TextEditingController(text: '');
-   TextEditingController forgotPasswordController = TextEditingController(text: '');
+  TextEditingController forgotPasswordController =
+      TextEditingController(text: '');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
+  static final isgetKyc = false.obs;
+
+  final _getUserStatus = GetUserStatus.empty.obs;
+  GetUserStatus get getUserStatus => _getUserStatus.value;
 
   OtpForgotVerifyStatus get otpForgotVerifyStatus =>
       _otpForgotVerifyStatus.value;
@@ -49,6 +62,8 @@ class LoginController extends GetxController {
   }
 
   Future<dynamic> getUserDetails() async {
+    _getUserStatus(GetUserStatus.loading);
+    
     final token = await SecureStorage.readUserToken();
     try {
       final responseData = await NetworkHelper.getRequest(
@@ -60,8 +75,11 @@ class LoginController extends GetxController {
       );
       return responseData;
     } catch (e) {
+        _getUserStatus(GetUserStatus.loading);
       log(e.toString());
       throw Exception('Error fetching user details');
+    } finally {
+     
     }
   }
 
