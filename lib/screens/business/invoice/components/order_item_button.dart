@@ -26,7 +26,7 @@ class OrderItemButton extends StatelessWidget {
             width: 1.w,
           ),
           const AutoSizeText(
-            "Order Item",
+            "Add New Item",
             style: TextStyle(
               fontFamily: "Work Sans",
               fontSize: 14,

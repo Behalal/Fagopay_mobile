@@ -6,9 +6,9 @@ class InvoiceField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final FontWeight textWeight;
-  final bool hintcolor;
-  final bool bgColor;
-  final bool txtColor;
+  final bool hintcolor, bgColor, txtColor;
+  final bool? enabled;
+  final Function(String)? onChanged;
 
   const InvoiceField({
     super.key,
@@ -17,13 +17,15 @@ class InvoiceField extends StatelessWidget {
     this.textWeight = FontWeight.w600,
     this.hintcolor = false,
     this.bgColor = false,
-    this.txtColor = false,
+    this.txtColor = false, this.enabled, this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      enabled: enabled,
+      onChanged: onChanged,
       style: TextStyle(
         fontFamily: "Work Sans",
         fontWeight: textWeight,

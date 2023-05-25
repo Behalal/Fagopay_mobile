@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/business/invoice/components/invoice_field.dart';
+import 'package:fagopay/screens/business/invoice/components/invoice_item_details_card.dart';
 import 'package:fagopay/screens/business/invoice/components/order_item_button.dart';
 import 'package:fagopay/screens/business/invoice/components/remove_item.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
@@ -32,14 +33,28 @@ class _AddInvoiceState extends State<AddInvoice> {
   final _customerController = Get.find<CustomerController>();
   final _invoiceController = Get.find<InvoiceController>();
   final _companyController = Get.find<CompanyController>();
-  List<Widget> sectionOrderItems = [];
+  List<Map<String, String>> temporarilyAddedItems = [];
+  // TextEditingController taxCalcController = TextEditingController();
+  // TextEditingController discountCalcController = TextEditingController();
 
   String selectedCustomerId = "";
+  double taxAmount = 0;
+  double dicountAmount = 0;
 
   @override
   void initState() {
     getCustomers();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _invoiceController.discountRateController.clear();
+    _invoiceController.itemNameController.clear();
+    _invoiceController.priceController.clear();
+    _invoiceController.quantityController.clear();
+    _invoiceController.taxRateController.clear();
+    super.dispose();
   }
 
   DateTime selectedDate = DateTime.now();
@@ -58,6 +73,10 @@ class _AddInvoiceState extends State<AddInvoice> {
 
   @override
   Widget build(BuildContext context) {
+    // List<double> detailTotals = temporarilyAddedItems.map((item) {
+    //   return double.parse(item['quantity']!) * double.parse(item['price']!);
+    // }).toList();
+    // double detailTotal = detailTotals.reduce((a, b) => a + b);
     return ProgressHUD(
       child: Builder(
         builder: (context) => GestureDetector(
@@ -321,41 +340,110 @@ class _AddInvoiceState extends State<AddInvoice> {
                     // SizedBox(
                     //   height: 1.5.h,
                     // ),
-                    Column(
-                      children: [
-                        InvoiceItemSection(
-                          itemController: _invoiceController.itemNameController,
-                          qtyController: _invoiceController.quantityController,
-                          priceController: _invoiceController.priceController,
-                        ),
-                        ...sectionOrderItems
-                      ],
+                    InvoiceItemSection(
+                      itemController: _invoiceController.itemNameController,
+                      qtyController: _invoiceController.quantityController,
+                      priceController: _invoiceController.priceController,
                     ),
                     SizedBox(
                       height: 1.5.h,
                     ),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          sectionOrderItems.add(
-                            InvoiceItemSection(
-                              itemController:
-                                  _invoiceController.itemNameController,
-                              qtyController:
-                                  _invoiceController.quantityController,
-                              priceController:
-                                  _invoiceController.priceController,
-                              remove: () {
-                                print('object');
-                              },
-                            ),
-                          );
-                        });
+                        if (_invoiceController.itemNameController.text != "" &&
+                            _invoiceController.quantityController.text != "" &&
+                            _invoiceController.priceController.text != "") {
+                          temporarilyAddedItems.add({
+                            "itemname":
+                                _invoiceController.itemNameController.text,
+                            "quantity":
+                                _invoiceController.quantityController.text,
+                            "price": _invoiceController.priceController.text,
+                          });
+                          _invoiceController.itemNameController.clear();
+                          _invoiceController.priceController.clear();
+                          _invoiceController.quantityController.clear();
+                          setState(() {});
+                          return;
+                        }
+                        Fluttertoast.showToast(
+                          msg: "Fill the form properly!",
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.TOP,
+                          timeInSecForIosWeb: 2,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
                       },
                       child: const OrderItemButton(),
                     ),
                     SizedBox(
                       height: 2.5.h,
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 3.w, vertical: 1.5.h),
+                      decoration: const BoxDecoration(
+                          color: fagoSecondaryColorWithOpacity10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 40.w,
+                            child: const AutoSizeText(
+                              "Description",
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 12,
+                                color: fagoSecondaryColor,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                          const AutoSizeText(
+                            "Unit*Rate",
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 12,
+                              color: fagoSecondaryColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const AutoSizeText(
+                            "Total (NGN)",
+                            style: TextStyle(
+                              fontFamily: "Work Sans",
+                              fontSize: 12,
+                              color: fagoSecondaryColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: temporarilyAddedItems
+                          .map(
+                            (invoiceItem) => InvoiceItemDetailsCard(
+                              itemname: invoiceItem['itemname']!,
+                              quantity: int.parse(invoiceItem['quantity']!),
+                              price: invoiceItem['price']!,
+                              total:
+                                  '${int.parse(invoiceItem['quantity']!) * int.parse(invoiceItem['price']!)}',
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    SizedBox(
+                      height: 2.h,
                     ),
                     const AutoSizeText(
                       "Tax",
@@ -380,17 +468,34 @@ class _AddInvoiceState extends State<AddInvoice> {
                             controller: _invoiceController.taxRateController,
                             textWeight: FontWeight.w400,
                             hintcolor: true,
+                            onChanged: (p0) {
+                              List<double> detailTotals =
+                                  temporarilyAddedItems.map((item) {
+                                return double.parse(item['quantity']!) *
+                                    double.parse(item['price']!);
+                              }).toList();
+                              double detailTotal =
+                                  detailTotals.reduce((a, b) => a + b);
+                              setState(() {
+                                taxAmount = (double.parse(_invoiceController
+                                            .taxRateController.text) /
+                                        100) *
+                                    detailTotal;
+                              });
+                            },
                           ),
                         ),
-                        // SizedBox(
-                        //   width: 43.w,
-                        //   child: InvoiceField(
-                        //     hintText: "# 0.00",
-                        //     controller: priceController,
-                        //     textWeight: FontWeight.w400,
-                        //     hintcolor: true,
-                        //   ),
-                        // ),
+                        SizedBox(
+                          width: 43.w,
+                          child: InvoiceField(
+                            hintText: "# 0.00",
+                            enabled: false,
+                            controller:
+                                TextEditingController(text: '$taxAmount'),
+                            textWeight: FontWeight.w400,
+                            hintcolor: true,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -420,17 +525,34 @@ class _AddInvoiceState extends State<AddInvoice> {
                                 _invoiceController.discountRateController,
                             textWeight: FontWeight.w400,
                             hintcolor: true,
+                            onChanged: (p0) {
+                              setState(() {
+                                List<double> detailTotals =
+                                    temporarilyAddedItems.map((item) {
+                                  return double.parse(item['quantity']!) *
+                                      double.parse(item['price']!);
+                                }).toList();
+                                double detailTotal =
+                                    detailTotals.reduce((a, b) => a + b);
+                                dicountAmount = (double.parse(_invoiceController
+                                            .discountRateController.text) /
+                                        100) *
+                                    detailTotal;
+                              });
+                            },
                           ),
                         ),
-                        // SizedBox(
-                        //   width: 43.w,
-                        //   child: InvoiceField(
-                        //     hintText: "# 0.00",
-                        //     controller: priceController,
-                        //     textWeight: FontWeight.w400,
-                        //     hintcolor: true,
-                        //   ),
-                        // ),
+                        SizedBox(
+                          width: 43.w,
+                          child: InvoiceField(
+                            hintText: "# 0.00",
+                            enabled: false,
+                            controller:
+                                TextEditingController(text: '$dicountAmount'),
+                            textWeight: FontWeight.w400,
+                            hintcolor: true,
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -477,7 +599,7 @@ class _AddInvoiceState extends State<AddInvoice> {
                               SizedBox(
                                 width: 40.w,
                                 child: AutoSizeText(
-                                  "$currencySymbol 3,000",
+                                  "$currencySymbol 3,00",
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
                                     fontFamily: "Work Sans",
@@ -511,7 +633,7 @@ class _AddInvoiceState extends State<AddInvoice> {
                               SizedBox(
                                 width: 40.w,
                                 child: AutoSizeText(
-                                  "$currencySymbol 2,000",
+                                  "$currencySymbol 2,0",
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
                                     fontFamily: "Work Sans",
@@ -545,7 +667,7 @@ class _AddInvoiceState extends State<AddInvoice> {
                               SizedBox(
                                 width: 40.w,
                                 child: AutoSizeText(
-                                  "$currencySymbol 302,000",
+                                  "$currencySymbol detailTotal",
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
                                     fontFamily: "Work Sans",
@@ -574,7 +696,8 @@ class _AddInvoiceState extends State<AddInvoice> {
                           Center(
                             child: GestureDetector(
                               onTap: () async {
-                                if (selectedCustomerId != "") {
+                                if (selectedCustomerId != "" &&
+                                    temporarilyAddedItems.isNotEmpty) {
                                   await createInvoice(context);
                                   return;
                                 }
@@ -623,13 +746,13 @@ class _AddInvoiceState extends State<AddInvoice> {
     final progress = ProgressHUD.of(context);
     progress!.show();
     final companyId = _companyController.company!.id!;
-    final orderItem = {
-      "itemname": _invoiceController.itemNameController.text,
-      "quantity": _invoiceController.quantityController.text,
-      "price": _invoiceController.priceController.text,
-    };
+    // final orderItem = {
+    //   "itemname": _invoiceController.itemNameController.text,
+    //   "quantity": _invoiceController.quantityController.text,
+    //   "price": _invoiceController.priceController.text,
+    // };
     final response = await _invoiceController.createBusinessInvoice(
-      invoiceItemDetails: [orderItem],
+      invoiceItemDetails: [...temporarilyAddedItems],
       companyId: companyId,
       customerId: selectedCustomerId,
       discountRate: _invoiceController.discountRateController.text,

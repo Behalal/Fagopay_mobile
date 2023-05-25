@@ -13,7 +13,6 @@ import 'package:fagopay/controllers/invoice_controller.dart';
 
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
-import '../../functions.dart';
 import '../../widgets/head_style_extra_pages.dart';
 import '../book_keeping/models/model.dart';
 import '../home/models/sales.model.dart';
@@ -92,7 +91,9 @@ class _AllInvoiceState extends State<AllInvoice> {
                     children: [
                       InkWell(
                         onTap: () {
-                          goToPage(context, const AddInvoice());
+                          // goToPage(context, const AddInvoice());
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AddInvoice()));
                         },
                         child: SizedBox(
                           width: 45.w,
