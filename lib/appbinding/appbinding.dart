@@ -31,6 +31,7 @@ class AppBinding extends Bindings {
     Get.put(LocationsController(), permanent: true);
     Get.put(GovernmentIdentityVerificationController(), permanent: true);
     Get.put(PurseController(), permanent: true);
+    Get.put(InvoiceController(), permanent: true);
     Get.lazyPut(() => SupplierController());
     Get.lazyPut(() => CustomerController());
     Get.lazyPut(() => CompanyController());

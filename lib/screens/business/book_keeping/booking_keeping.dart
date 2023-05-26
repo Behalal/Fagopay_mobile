@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../controllers/expenses_controller.dart';
 import '../../../models/expenses_model.dart';
@@ -120,7 +119,7 @@ class _BookKeepingState extends State<BookKeeping> {
                                   width: 2.w,
                                 ),
                                 const Expanded(
-                                  child:  AutoSizeText(
+                                  child: AutoSizeText(
                                     "New Transaction",
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
@@ -181,14 +180,17 @@ class _BookKeepingState extends State<BookKeeping> {
                                     child: Card(
                                       elevation: 1.5,
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 1.w, vertical: 1.h),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
                                             SvgPicture.asset(
-                                                bookKeepingContent[i].imagePath),
+                                                bookKeepingContent[i]
+                                                    .imagePath),
                                             SizedBox(width: 1.w),
                                             // Container(
                                             //   height: 53,
@@ -208,12 +210,14 @@ class _BookKeepingState extends State<BookKeeping> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   AutoSizeText(
-                                                    bookKeepingContent[i].accountType,
+                                                    bookKeepingContent[i]
+                                                        .accountType,
                                                     style: const TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontSize: 12,
                                                       color: inactiveTab,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(height: 1.h),
@@ -229,18 +233,21 @@ class _BookKeepingState extends State<BookKeeping> {
                                                                         1))
                                                             ? fagoSecondaryColor
                                                             : inactiveTab,
-                                                        fontWeight: FontWeight.w700),
+                                                        fontWeight:
+                                                            FontWeight.w700),
                                                   ),
                                                   SizedBox(height: 1.h),
                                                   AutoSizeText(
-                                                    bookKeepingContent[i].description,
+                                                    bookKeepingContent[i]
+                                                        .description,
                                                     style: TextStyle(
                                                         fontFamily: "Work Sans",
                                                         fontSize: 10,
                                                         color: (i == 2)
                                                             ? fagoGreenColor
                                                             : inactiveTabWithOpacity30,
-                                                        fontWeight: FontWeight.w600),
+                                                        fontWeight:
+                                                            FontWeight.w600),
                                                   ),
                                                 ],
                                               ),
@@ -447,15 +454,16 @@ class _BookKeepingState extends State<BookKeeping> {
                       padding:
                           EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
                       decoration: BoxDecoration(
-                          color: _salesController.sales.isEmpty ? Colors.transparent: fagoSecondaryColorWithOpacity10
-                        ),
+                          color: _salesController.sales.isEmpty
+                              ? Colors.transparent
+                              : fagoSecondaryColorWithOpacity10),
                       child: _salesController.sales.isEmpty
                           ? const NoRecordFound(
-                            recordDescription:
-                                'Record a Sales now to keep track of your daily sales and expenses.',
-                            recordRoute: AddSalesOrExpenses(),
-                            recordText: 'Transactions',
-                          )
+                              recordDescription:
+                                  'Record a Sales now to keep track of your daily sales and expenses.',
+                              recordRoute: AddSalesOrExpenses(),
+                              recordText: 'Transactions',
+                            )
                           : ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
@@ -501,7 +509,7 @@ class _BookKeepingState extends State<BookKeeping> {
                                     ),
                             ),
                     ),
-                  ]else ...[
+                  ] else ...[
                     // No Record Found
                     const NoRecordFound(
                       recordDescription:
@@ -510,7 +518,6 @@ class _BookKeepingState extends State<BookKeeping> {
                       recordText: 'Transactions',
                     ),
                   ],
-                    
                 ],
               ),
             ),
