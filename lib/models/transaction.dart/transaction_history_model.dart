@@ -67,7 +67,7 @@ class AccountDetails {
   String bankName;
   String status;
   String currency;
-  int balance;
+  double balance;
 
   factory AccountDetails.fromJson(Map<String, dynamic> json) => AccountDetails(
         accountNumber: json["account_number"],
@@ -106,8 +106,6 @@ class TransactionHistoryModel {
     this.tag,
     this.toFrom,
     required this.createdAt,
-    required this.updatedAt,
-    this.meta,
   });
 
   String? id;
@@ -115,19 +113,17 @@ class TransactionHistoryModel {
   String? sessionId;
   String? reference;
   Category? category;
-  int? inflow;
-  int? outflow;
-  int? balanceBefore;
-  int? balanceAfter;
-  int? chargesFee;
+  dynamic? inflow;
+  dynamic? outflow;
+  dynamic? balanceBefore;
+  dynamic? balanceAfter;
+  dynamic? chargesFee;
   TransactionType? transactionType;
   TransactionStatus? transactionStatus;
   String? description;
   Tag? tag;
   String? toFrom;
   DateTime createdAt;
-  DateTime updatedAt;
-  dynamic meta;
 
   factory TransactionHistoryModel.fromJson(Map<String, dynamic> json) =>
       TransactionHistoryModel(
@@ -135,21 +131,19 @@ class TransactionHistoryModel {
         userId: json["user_id"] ?? '',
         sessionId: json["session_id"] ?? '',
         reference: json["reference"] ?? '',
-        category: categoryValues.map[json["category"]]!,
+        category: categoryValues.map[json["category"]],
         inflow: json["inflow"] ?? '',
         outflow: json["outflow"] ?? '',
         balanceBefore: json["balance_before"] ?? '',
         balanceAfter: json["balance_after"] ?? '',
         chargesFee: json["charges_fee"] ?? '',
-        transactionType: transactionTypeValues.map[json["transaction_type"]]!,
+        transactionType: transactionTypeValues.map[json["transaction_type"]],
         transactionStatus:
-            transactionStatusValues.map[json["transaction_status"]]!,
+            transactionStatusValues.map[json["transaction_status"]],
         description: json["description"] ?? '',
-        tag: tagValues.map[json["tag"]]!,
+        tag: tagValues.map[json["tag"]],
         toFrom: json["to_from"] ?? '',
         createdAt: DateTime.parse(json["created_at"] ?? ''),
-        updatedAt: DateTime.parse(json["updated_at"] ?? ''),
-        meta: json["meta"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -170,8 +164,6 @@ class TransactionHistoryModel {
         "tag": tagValues.reverse[tag],
         "to_from": toFrom,
         "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "meta": meta,
       };
 }
 

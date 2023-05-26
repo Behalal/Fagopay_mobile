@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,10 +39,10 @@ class kyc_success extends StatelessWidget {
               SizedBox(
                 height: 5.h,
               ),
-              const Text(
-                "Hello Ibrahim! Congratulations ",
+               Text(
+                "Hello ${userUcontroller.user!.firstName}! Congratulations ",
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontFamily: "Work Sans",
                   fontWeight: FontWeight.w700,

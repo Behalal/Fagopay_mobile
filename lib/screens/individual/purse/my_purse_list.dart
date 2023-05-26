@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:fagopay/controllers/purse_controller.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/individual/purse/purse_spending.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../authentication/recover_password_otp_screen.dart';
 import '../../constants/colors.dart';
 
 class MyPurseList extends StatefulWidget {
@@ -23,6 +25,7 @@ class MyPurseList extends StatefulWidget {
 }
 
 class _MyPurseListState extends State<MyPurseList> {
+  final _pursecontroller = Get.find<PurseController>();
   bool isIndividual = false;
   int? myRequestType;
   var number = "";
@@ -30,6 +33,8 @@ class _MyPurseListState extends State<MyPurseList> {
 
   @override
   Widget build(BuildContext context) {
+    _pursecontroller.showPurse('6f1a604f-69c0-458c-a524-d8c014722fa0');
+    _pursecontroller.purseDurationlist('8ebe6b44-2968-4560-ab6a-7e0e87287baf');
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
@@ -78,15 +83,15 @@ class _MyPurseListState extends State<MyPurseList> {
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 3.w, vertical: .9.h),
-                                      child: Row(
+                                      child: const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          SvgPicture.asset(
-                                              'assets/icons/record_spending_wallet.svg'),
-                                          const AutoSizeText(
+                                          // SvgPicture.asset(
+                                          //     'assets/icons/record_spending_wallet.svg'),
+                                          AutoSizeText(
                                             "Record Spending",
                                             style: TextStyle(
                                               fontFamily: "Work Sans",
@@ -144,16 +149,36 @@ class _MyPurseListState extends State<MyPurseList> {
                                                   SizedBox(
                                                     height: 0.5.h,
                                                   ),
-                                                  const AutoSizeText(
-                                                    '#500,000.00 ',
-                                                    style: TextStyle(
-                                                      fontFamily: "Work Sans",
-                                                      fontSize: 22,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: stepsColor,
-                                                    ),
-                                                  ),
+                                                  _pursecontroller.userPurse
+                                                              .value?.amount !=
+                                                          null
+                                                      ? AutoSizeText(
+                                                          _pursecontroller
+                                                                  .userPurse
+                                                                  .value
+                                                                  ?.amount ??
+                                                              "",
+                                                          style:
+                                                              const TextStyle(
+                                                            fontFamily:
+                                                                "Work Sans",
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color: stepsColor,
+                                                          ),
+                                                        )
+                                                      : const AutoSizeText(
+                                                          "No Budget Amount",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Work Sans",
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: welcomeText,
+                                                          ),
+                                                        ),
                                                 ],
                                               ),
                                               Container(
@@ -165,9 +190,12 @@ class _MyPurseListState extends State<MyPurseList> {
                                                         BorderRadius.circular(
                                                             25)),
                                                 alignment: Alignment.center,
-                                                child: const AutoSizeText(
-                                                  'Monthly',
-                                                  style: TextStyle(
+                                                child: AutoSizeText(
+                                                  _pursecontroller.userPurse
+                                                          .value?.duration
+                                                          .toUpperCase() ??
+                                                      "",
+                                                  style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 10,
                                                     fontWeight: FontWeight.w500,
@@ -254,19 +282,34 @@ class _MyPurseListState extends State<MyPurseList> {
                             SizedBox(
                               height: 3.h,
                             ),
-                            const Row(
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                AutoSizeText(
-                                  'Monthly Budget',
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: stepsColor,
-                                  ),
+                                Row(
+                                  children: [
+                                    AutoSizeText(
+                                      _pursecontroller.userPurse.value?.duration
+                                              .toUpperCase() ??
+                                          '',
+                                      style: const TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: stepsColor,
+                                      ),
+                                    ),
+                                    const AutoSizeText(
+                                      ' Budget',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                        color: stepsColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                AutoSizeText(
+                                const AutoSizeText(
                                   'Spent',
                                   style: TextStyle(
                                     fontFamily: "Work Sans",
@@ -280,58 +323,105 @@ class _MyPurseListState extends State<MyPurseList> {
                             SizedBox(
                               height: 3.h,
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 1.h),
-                              height: 6.h,
-                              width: Get.width,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/reffered_list_icon.svg',
-                                    ),
-                                    SizedBox(
-                                      width: 2.h,
-                                    ),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AutoSizeText(
-                                          'Food and Drinks',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                            color: stepsColor,
-                                          ),
-                                        ),
-                                        AutoSizeText(
-                                          'NGN 38,000.00 budgeted',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            color: stepsColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    const AutoSizeText(
-                                      'NGN 20,000.00',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: fagoSecondaryColor,
-                                      ),
-                                    ),
-                                  ]),
-                            ),
+                            Obx(() {
+                              return _pursecontroller.showPurseStatus ==
+                                      ShowPurseEnum.loading
+                                  ? const LoadingWidget(
+                                      color: fagoSecondaryColor,
+                                    )
+                                  : _pursecontroller
+                                          .purseDurationList.isNotEmpty
+                                      ? SizedBox(
+                                          height: 60,
+                                          child: ListView.separated(
+                                              padding: EdgeInsets.zero,
+                                              scrollDirection: Axis.vertical,
+                                              physics: const ScrollPhysics(),
+                                              shrinkWrap: false,
+                                              itemCount: _pursecontroller
+                                                  .purseDurationList.length,
+                                              separatorBuilder:
+                                                  (context, index) => SizedBox(
+                                                        height: 1.2.h,
+                                                      ),
+                                              itemBuilder: (context, index) {
+                                                var item = _pursecontroller
+                                                    .purseDurationList[index];
+                                                return Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 1.h),
+                                                  height: 6.h,
+                                                  width: Get.width,
+                                                  child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          'assets/icons/reffered_list_icon.svg',
+                                                        ),
+                                                        SizedBox(
+                                                          width: 2.h,
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            AutoSizeText(
+                                                              item.amount,
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    "Work Sans",
+                                                                fontSize: 10,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400,
+                                                                color:
+                                                                    stepsColor,
+                                                              ),
+                                                            ),
+                                                            const AutoSizeText(
+                                                              'NGN 38,000.00 budgeted',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    "Work Sans",
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                color:
+                                                                    stepsColor,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const Spacer(),
+                                                        const AutoSizeText(
+                                                          'NGN 20,000.00',
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "Work Sans",
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            color:
+                                                                fagoSecondaryColor,
+                                                          ),
+                                                        ),
+                                                      ]),
+                                                );
+                                              }),
+                                        )
+                                      : Container();
+                            }),
                             SizedBox(
                               height: 1.h,
                             ),
@@ -341,66 +431,60 @@ class _MyPurseListState extends State<MyPurseList> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 1.h),
-                              height: 6.h,
-                              width: Get.width,
-                              child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/reffered_list_icon.svg',
-                                    ),
-                                    SizedBox(
-                                      width: 2.h,
-                                    ),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        AutoSizeText(
-                                          'Food and Drinks',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                            color: stepsColor,
-                                          ),
-                                        ),
-                                        AutoSizeText(
-                                          'NGN 38,000.00 budgeted',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                            color: stepsColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    const AutoSizeText(
-                                      'NGN 20,000.00',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700,
-                                        color: fagoSecondaryColor,
-                                      ),
-                                    ),
-                                  ]),
-                            ),
+                            // Container(
+                            //   padding: EdgeInsets.symmetric(horizontal: 1.h),
+                            //   height: 6.h,
+                            //   width: Get.width,
+                            //   child: Row(
+                            //       crossAxisAlignment: CrossAxisAlignment.center,
+                            //       mainAxisAlignment: MainAxisAlignment.center,
+                            //       children: [
+                            //         SvgPicture.asset(
+                            //           'assets/icons/reffered_list_icon.svg',
+                            //         ),
+                            //         SizedBox(
+                            //           width: 2.h,
+                            //         ),
+                            //         Column(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceEvenly,
+                            //           crossAxisAlignment:
+                            //               CrossAxisAlignment.start,
+                            //           children: const [
+                            //             AutoSizeText(
+                            //               'Food and Drinks',
+                            //               style: TextStyle(
+                            //                 fontFamily: "Work Sans",
+                            //                 fontSize: 10,
+                            //                 fontWeight: FontWeight.w400,
+                            //                 color: stepsColor,
+                            //               ),
+                            //             ),
+                            //             AutoSizeText(
+                            //               'NGN 38,000.00 budgeted',
+                            //               style: TextStyle(
+                            //                 fontFamily: "Work Sans",
+                            //                 fontSize: 12,
+                            //                 fontWeight: FontWeight.w600,
+                            //                 color: stepsColor,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //         const Spacer(),
+                            //         const AutoSizeText(
+                            //           'NGN 20,000.00',
+                            //           style: TextStyle(
+                            //             fontFamily: "Work Sans",
+                            //             fontSize: 12,
+                            //             fontWeight: FontWeight.w700,
+                            //             color: fagoSecondaryColor,
+                            //           ),
+                            //         ),
+                            //       ]),
+                            // ),
                             SizedBox(
                               height: 1.h,
-                            ),
-                            const Divider(
-                              color: stepsColor,
-                            ),
-                            SizedBox(
-                              height: 8.h,
                             ),
                           ],
                         )),

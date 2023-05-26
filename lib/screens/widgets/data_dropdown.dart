@@ -6,6 +6,7 @@ import '../../models/data_model.dart';
 import '../constants/colors.dart';
 import '../individual/bills/models/bill_post_model.dart';
 
+// ignore: must_be_immutable
 class DataDropDown extends StatefulWidget {
   bool? isLoading;
   List<DropdownMenuItem<String>> dropDownItemsList;

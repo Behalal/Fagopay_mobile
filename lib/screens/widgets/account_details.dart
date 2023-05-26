@@ -109,67 +109,61 @@ class _AccountDetailsState extends State<AccountDetails> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  width: 42.w,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const AutoSizeText(
-                        "Balance",
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: verificationCodeText,
-                        ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AutoSizeText(
+                      "Balance",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: verificationCodeText,
                       ),
-                      SizedBox(height: 2.h),
-                      AutoSizeText(
-                        (widget.accountDetails.accountNumber != "")
-                            ? "$currencySymbol ${widget.accountDetails.balance}"
-                            : "${currencySymbol}0.00",
-                        style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: fagoSecondaryColor,
-                        ),
+                    ),
+                    SizedBox(height: 2.h),
+                    AutoSizeText(
+                      (widget.accountDetails.accountNumber != "")
+                          ? "$currencySymbol ${widget.accountDetails.balance}"
+                          : "${currencySymbol}0.00",
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: fagoSecondaryColor,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 42.w,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      AutoSizeText(
-                        widget.accountDetails.accountName != ""
-                            ? widget.accountDetails.accountName!
-                            : "",
-                        style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: verificationCodeText,
-                        ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AutoSizeText(
+                      widget.accountDetails.accountName != ""
+                          ? widget.accountDetails.accountName!
+                          : "",
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: verificationCodeText,
                       ),
-                      SizedBox(height: 3.h),
-                      AutoSizeText(
-                        widget.accountDetails.accountNumber != ""
-                            ? widget.accountDetails.accountNumber!
-                            : "",
-                        style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: verificationCodeText,
-                        ),
+                    ),
+                    SizedBox(height: 3.h),
+                    AutoSizeText(
+                      widget.accountDetails.accountNumber != ""
+                          ? widget.accountDetails.accountNumber!
+                          : "",
+                      style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: verificationCodeText,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),

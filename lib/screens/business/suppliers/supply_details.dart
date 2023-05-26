@@ -1,10 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../controllers/suppliers_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
+import '../../functions.dart';
 import '../../widgets/head_style_extra_pages.dart';
 import '../widgets/boxes.dart';
 
@@ -41,7 +43,7 @@ class _SupplyDetailsState extends State<SupplyDetails> {
             children: [
               ProgressStyle(
                 stage: 0,
-                pageName: supplier.name!,
+                pageName: capitalize(supplier.name!),
                 // backRoute: AllSupplies(),
                 icon: "assets/images/profile-delete.png",
               ),
@@ -71,18 +73,21 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                 height: 2.h,
               ),
               Container(
-                width: 35.w,
-                padding: EdgeInsets.symmetric(horizontal: 2.5.w, vertical: 1.h),
+                width: 30.w,
+                padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
                 decoration: const BoxDecoration(
                     color: fagoGreenColor,
                     borderRadius: BorderRadius.all(Radius.circular(25))),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/images/biz_call.png",
+                    SvgPicture.asset(
+                      "assets/images/biz_call.svg",
                       color: white,
+                    ),
+                    SizedBox(
+                      width: 0.5.w,
                     ),
                     AutoSizeText(
                       supplier.phone!,
@@ -261,16 +266,20 @@ class _SupplyDetailsState extends State<SupplyDetails> {
                             width: 50.w,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AutoSizeText(
-                                  supplier.accountName!,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 14,
-                                      color: fagoSecondaryColor,
-                                      fontWeight: FontWeight.w500),
+                                SizedBox(
+                                  width: 50.w,
+                                  child: AutoSizeText(
+                                    capitalize(supplier.accountName!),
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: const TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 14,
+                                        color: fagoSecondaryColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 1.5.h,

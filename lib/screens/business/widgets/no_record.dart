@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
@@ -31,12 +32,12 @@ class NoRecordFound extends StatelessWidget {
                 "assets/images/circles.png",
                 width: 30.w,
               ),
-              SizedBox(width: 10.w),
+              SizedBox(width: 4.w),
               Padding(
                 padding: EdgeInsets.only(top: 6.h),
                 child: Center(
-                  child: Image.asset(
-                    "assets/images/archive-book.png",
+                  child: SvgPicture.asset(
+                    "assets/images/archive-book2.svg",
                   ),
                 ),
               ),
@@ -61,7 +62,7 @@ class NoRecordFound extends StatelessWidget {
             height: 2.h,
           ),
           SizedBox(
-            width: 70.w,
+            width: 90.w,
             child: AutoSizeText(
               recordDescription,
               textAlign: TextAlign.center,
@@ -97,8 +98,8 @@ class NoRecordFound extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/images/fluent_receipt-20-filled.png",
+                        SvgPicture.asset(
+                          "assets/images/stickynote.svg",
                           color: white,
                         ),
                         AutoSizeText(

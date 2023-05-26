@@ -18,13 +18,27 @@ enum OtpForgotVerifyStatus {
   success,
 }
 
+enum GetUserStatus {
+  empty,
+  loading,
+  error,
+  success,
+  available,
+}
+
+//owin.abir@findours.com
+//Bigdaddy@123
 class LoginController extends GetxController {
-  TextEditingController emailController =
-      TextEditingController(text: 'adrick.damauri@foundtoo.com');
-  TextEditingController passwordController =
-      TextEditingController(text: 'Bigdaddy@123');
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+  TextEditingController forgotPasswordController =
+      TextEditingController(text: '');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
+  static final isgetKyc = false.obs;
+
+  final _getUserStatus = GetUserStatus.empty.obs;
+  GetUserStatus get getUserStatus => _getUserStatus.value;
 
   OtpForgotVerifyStatus get otpForgotVerifyStatus =>
       _otpForgotVerifyStatus.value;
@@ -48,6 +62,8 @@ class LoginController extends GetxController {
   }
 
   Future<dynamic> getUserDetails() async {
+    _getUserStatus(GetUserStatus.loading);
+    
     final token = await SecureStorage.readUserToken();
     try {
       final responseData = await NetworkHelper.getRequest(
@@ -59,8 +75,11 @@ class LoginController extends GetxController {
       );
       return responseData;
     } catch (e) {
+        _getUserStatus(GetUserStatus.loading);
       log(e.toString());
       throw Exception('Error fetching user details');
+    } finally {
+     
     }
   }
 
@@ -82,15 +101,15 @@ class LoginController extends GetxController {
   }
 
   Future<dynamic> createNewPassword(
-      String otp, String password, String confirmedPassword) async {
+      String id, String password, String confirmedPassword) async {
     var requestBody = jsonEncode({
-      'code': otp,
+      'identifier': id,
       'password': password,
       'password_confirmation': confirmedPassword,
     });
     try {
       final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.userPath}create-new-password",
+        url: "${BaseAPI.userPath}new-user-password",
         headers: BaseAPI.headers,
         body: requestBody,
       );
@@ -100,6 +119,26 @@ class LoginController extends GetxController {
       throw Exception('Failed');
     }
   }
+
+  //   Future<dynamic> createNewPassword(
+  //     String id, String password, String confirmedPassword) async {
+  //   var requestBody = jsonEncode({
+  //     'identifier': id,
+  //     'password': password,
+  //     'password_confirmation': confirmedPassword,
+  //   });
+  //   try {
+  //     final responseData = await NetworkHelper.postRequest(
+  //       url: "${BaseAPI.userPath}create-new-password",
+  //       headers: BaseAPI.headers,
+  //       body: requestBody,
+  //     );
+  //     return responseData;
+  //   } catch (e) {
+  //     log(e.toString());
+  //     throw Exception('Failed');
+  //   }
+  // }
 
 // Future<dynamic> validateForgotResetPassword(
 //       String otp, String password, String confirmedPassword) async {

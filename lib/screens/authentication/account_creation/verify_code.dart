@@ -1,9 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/authentication/account_creation/setup_password.dart';
+import 'package:fagopay/service/secure_storage/secure_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
@@ -11,7 +14,6 @@ import 'package:sizer/sizer.dart';
 import '../../../controllers/registration_controller.dart';
 import '../../constants/colors.dart';
 import '../../widgets.dart';
-import 'individual_details.dart';
 import 'select_verification_type.dart';
 import 'widgets/current_step.dart';
 
@@ -220,28 +222,49 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
       {required String userIdentifier, required String code}) async {
     final response =
         await _registrationController.validateCode(userIdentifier, code);
+
     if (response.statusCode == 200) {
+      
+      if (kDebugMode) {
+        print(response.body);
+      }
+       final jsonBody = jsonDecode(response.body);
+      final validateUserIdentifier = jsonBody['data']['identifier'];
+      SecureStorage.setUserIdentifier(validateUserIdentifier);
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) =>
-              IndividualDetails(verificationType: widget.verificationType),
-        ),
+            builder: (BuildContext context) =>  SetupPassword(id: validateUserIdentifier )),
       );
       return;
     }
+   
     setState(() {
       isLoading = false;
     });
-    Fluttertoast.showToast(
-      msg: "OTP is Invalid",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    Get.snackbar(
+        backgroundColor: Colors.red,
+        'Error',
+        'OTP is Invalid',
+        colorText: white);
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     backgroundColor: Colors.red,
+    //     content: Text(
+    //       'OTP is Invalid',
+    //       style: TextStyle(color: white),
+    //     ),
+    //   ),
+    // );
+    // Fluttertoast.showToast(
+    //   msg: "OTP is Invalid",
+    //   toastLength: Toast.LENGTH_LONG,
+    //   gravity: ToastGravity.TOP,
+    //   timeInSecForIosWeb: 2,
+    //   backgroundColor: Colors.red,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
     // if (!mounted) return;
     // ScaffoldMessenger.of(context).showSnackBar(
     //   const SnackBar(

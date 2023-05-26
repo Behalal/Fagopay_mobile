@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../constants/colors.dart';
@@ -29,8 +30,8 @@ class BusinessCustomerDetails extends StatelessWidget {
                 CircleAvatar(
                   radius: 3.w,
                   backgroundColor: fagoSecondaryColorWithOpacity10,
-                  child: Image.asset(
-                    "assets/images/gallery.png",
+                  child: SvgPicture.asset(
+                    "assets/images/gallery.svg",
                   ),
                 ),
                 SizedBox(

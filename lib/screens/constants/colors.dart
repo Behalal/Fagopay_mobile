@@ -3,6 +3,7 @@ import 'package:flutter/animation.dart';
 const linearGradient1 = Color(0xff6B142B);
 const linearGradient2 = Color(0xffC61F2A);
 const white = Color(0xffffffff);
+const whiteWithOpacity10 = Color.fromRGBO(0, 0, 0, 0.1);
 const black = Color(0xff000000);
 const blackWithOpacity10 = Color.fromRGBO(0, 0, 0, 0.1);
 // Sign in screen
@@ -68,6 +69,7 @@ const fagoBlue = Color(0xff0066F4);
 const keyBoardColor = Color(0xffD4D6DC);
 const blackWithOpacity = Color.fromRGBO(0, 0, 0, 0.1);
 const blackWithOpacity5 = Color.fromRGBO(0, 0, 0, 0.5);
+const blackWithOpacity3 = Color.fromRGBO(0, 0, 0, 0.3);
 
 const fagoGreyColor = Color(0xff98A2B3);
 const fagoGrey800Color = Color(0xff2B313B);

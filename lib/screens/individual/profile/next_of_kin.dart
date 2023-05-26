@@ -422,10 +422,10 @@ class NameTextfield extends StatelessWidget {
   final TextInputType? keyboadType;
   final String? errorText;
   final String? title;
+  final Color? boarderColor;
   final String? validatorText;
   final Function(String)? onChanged;
   final String? Function(String?)? validate;
-  final Color? boarderColor;
 
   const NameTextfield({
     super.key,
@@ -435,7 +435,8 @@ class NameTextfield extends StatelessWidget {
     this.title,
     this.validate,
     this.validatorText,
-    this.keyboadType, this.boarderColor,
+    this.keyboadType,
+    this.boarderColor,
   });
 
   @override
@@ -451,8 +452,6 @@ class NameTextfield extends StatelessWidget {
               } else {
                 return null;
               }
-
-              return null;
             },
         controller: controller,
         onChanged: onChanged,
@@ -468,8 +467,8 @@ class NameTextfield extends StatelessWidget {
           errorText: errorText,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
-            borderSide: const BorderSide(
-              color: textBoxBorderColor,
+            borderSide: BorderSide(
+              color: textBoxBorderColor ?? boarderColor!,
               width: 1.0,
             ),
           ),

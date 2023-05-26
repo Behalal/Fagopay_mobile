@@ -20,14 +20,23 @@ class BaseAPI {
   static String businessInvoicePath = "${api}businessinvoice";
   static String validateResetOtp = "${api}verify/password-reset-code";
   static String nextofKin = "${api}kyc/create-update-nextofkin";
+  static String showReferalEarning = "${api}referal/detail";
 
 // RequestMoney Endpoint
   static String myRequest = "${api}transaction/requestee-request-list";
   static String requestedMoney = "${api}transaction/requester-request-list";
   static String requestMoneyapi = "${api}transaction/request-money";
   static String lookupPhoneNum = "${api}transaction/account-lookup-by-phone/";
-
   static String transactionHistory = "${api}transaction/history";
+
+  //bills
+  static String airtimeSwapCharges = "${api}airtimeswap/get_fee/";
+  static String initiateSwap = "${api}airtimeswap";
+
+  // purse
+  static String pulseCategory = "${api}pulsecategory";
+  static String createPurse = "${api}pulse";
+  static String showPurse = "${api}pulse/";
 
   // String headers = {
   //   "Content-Type": "application/json; charset=UTF-8",

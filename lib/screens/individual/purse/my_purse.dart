@@ -63,7 +63,7 @@ class _MyPurseState extends State<MyPurse> {
                             Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 3.h, vertical: 2.h),
-                              height: 27.h,
+                              //height: 27.h,
                               width: Get.width,
                               color: fagoSecondaryColorWithOpacity10,
                               child: Column(

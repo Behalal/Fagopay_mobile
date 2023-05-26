@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../controllers/company_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -64,17 +65,16 @@ class _CustomerPageState extends State<CustomerPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset("assets/images/add_grp.png"),
-                          SizedBox(
-                            width: 1.w,
-                          ),
-                          const AutoSizeText(
-                            "Add Customer",
-                            style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 10,
-                                color: white,
-                                fontWeight: FontWeight.w600),
+                          Image.asset("assets/images/add_grp.png", scale: 1.5,),
+                          const Expanded(
+                            child:  AutoSizeText(
+                              "Add Customer",
+                              style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 5,
+                                  color: white,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
@@ -84,9 +84,10 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   height: 2.h,
                 ),
+
                 CustomerBox(
-                  firstBoxImage: "assets/images/customers.png",
-                  secondBoxImage: "assets/images/biz_transactions.png",
+                  firstBoxImage: "assets/images/people.svg",
+                  secondBoxImage: "assets/images/archive-book.svg",
                   firstBoxDescription: "No. of Customers",
                   firstBoxMainValue:
                       _customerController.customers.length.toString(),
@@ -109,7 +110,7 @@ class _CustomerPageState extends State<CustomerPage> {
                           color: inactiveTab,
                           fontWeight: FontWeight.w500),
                     ),
-                    Image.asset("assets/images/tranactions.png")
+                    SvgPicture.asset("assets/images/document-filter.svg"),
                   ],
                 ),
                 _customerController.customers.isEmpty
@@ -123,11 +124,15 @@ class _CustomerPageState extends State<CustomerPage> {
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           physics: const AlwaysScrollableScrollPhysics(),
+                          // itemCount: 3,
                           itemCount: _customerController.customers.length,
                           itemBuilder: (context, index) => CustomCustomerCard(
+                            // fullName: "Korede",
                             fullName:
                                 _customerController.customers[index].fullname!,
+                            // email: "akored@gmail.com",
                             email: _customerController.customers[index].email!,
+                            // phoneNumber: "080976543445",
                             phoneNumber: _customerController
                                 .customers[index].phoneNumber!,
                             onPressed: () => Navigator.of(context).push(

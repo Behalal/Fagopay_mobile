@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
+// ignore: must_be_immutable
 class ConfirmTransactions extends StatelessWidget {
   final String? action;
   final Widget? backRoute;

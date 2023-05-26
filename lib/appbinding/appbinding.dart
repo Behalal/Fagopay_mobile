@@ -4,6 +4,7 @@ import '../controllers/invoice_controller.dart';
 
 import '../controllers/admin_controller.dart';
 import '../controllers/company_controller.dart';
+import '../controllers/purse_controller.dart';
 import '../controllers/sales_controller.dart';
 
 import '../controllers/customers_controller.dart';
@@ -29,13 +30,13 @@ class AppBinding extends Bindings {
     Get.put(RequestMoney(), permanent: true);
     Get.put(LocationsController(), permanent: true);
     Get.put(GovernmentIdentityVerificationController(), permanent: true);
+    Get.put(PurseController(), permanent: true);
     Get.lazyPut(() => SupplierController());
     Get.lazyPut(() => CustomerController());
     Get.lazyPut(() => CompanyController());
     Get.lazyPut(() => AdminController());
     Get.lazyPut(() => SalesController());
     Get.lazyPut(() => ExpensesController());
-    Get.lazyPut(() => InvoiceController());
-    //Get.put(RegistrationController(), permanent: true);
+    Get.put(RegistrationController(), permanent: true);
   }
 }

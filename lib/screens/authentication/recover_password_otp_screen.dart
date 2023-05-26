@@ -27,7 +27,7 @@ class RecoverPasswordOTPScreen extends StatefulWidget {
 
 class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
   final authController = Get.put(LoginController());
-  final TextEditingController _pinController = TextEditingController();
+ // final TextEditingController _pinController = TextEditingController();
   TextEditingController controller = TextEditingController(text: "");
   String thisText = "";
   String? otpText;
