@@ -679,10 +679,10 @@ class _ManageAccountState extends State<ManageAccount> {
     return widget.userDetails.kycVerified == 1
         ? Container(
             padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 2.h),
-            height: Get.height * .7,
+            height: Get.height * 0.75,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Center(
                     child: Column(
@@ -843,37 +843,45 @@ class _ManageAccountState extends State<ManageAccount> {
                       ? const Center(
                           child: Text('No Created Company Yet!'),
                         )
-                      : Obx(
-                          () => ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: _companyController.companies.length,
-                            itemBuilder: (context, index) => CustomCompanyCard(
-                              companyName: _companyController
-                                  .companies[index].companyName!,
-                              companyType: _companyController
-                                      .companies[index].companyType ??
-                                  'Manager',
-                              onPressed: () {
-                                _companyController.setCompany =
-                                    _companyController.companies[index];
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Dashboard()),
-                                    (route) => false);
-                                _userUcontroller.switchedAccountType = 2;
-                                setState(() {});
-                              },
-                              isActive: _userUcontroller.switchedAccountType ==
-                                          2 &&
-                                      _companyController.companies[index].id ==
-                                          _companyController.company!.id
-                                  ? Colors.green
-                                  : Colors.transparent,
-                            ),
-                          ),
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Obx(
+                              () => ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: _companyController.companies.length,
+                                itemBuilder: (context, index) =>
+                                    CustomCompanyCard(
+                                  companyName: _companyController
+                                      .companies[index].companyName!,
+                                  companyType: _companyController
+                                          .companies[index].companyType ??
+                                      'Manager',
+                                  onPressed: () {
+                                    _companyController.setCompany =
+                                        _companyController.companies[index];
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const Dashboard()),
+                                        (route) => false);
+                                    _userUcontroller.switchedAccountType = 2;
+                                    setState(() {});
+                                  },
+                                  isActive:
+                                      _userUcontroller.switchedAccountType ==
+                                                  2 &&
+                                              _companyController
+                                                      .companies[index].id ==
+                                                  _companyController.company!.id
+                                          ? Colors.green
+                                          : Colors.transparent,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                   SizedBox(
                     height: 1.5.h,
