@@ -1,11 +1,7 @@
-import 'dart:developer';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 //import 'package:countdown_progress_indicator/countdown_progress_indicator.dart';
 import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +14,7 @@ class CountdownPage extends StatefulWidget {
 
 class _CountdownPageState extends State<CountdownPage> {
   final userUcontroller = Get.find<UserController>();
-  bool _isRunning = true;
+  final bool _isRunning = true;
   // final _controller = CountDownController();
   final _controller2 = CountDownController();
 

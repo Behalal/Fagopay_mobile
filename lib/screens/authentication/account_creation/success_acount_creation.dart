@@ -92,7 +92,7 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
                 height: 45.h,
                 width: Get.width,
                 child:
-                     Stack(alignment: Alignment.bottomCenter, children: const [
+                     const Stack(alignment: Alignment.bottomCenter, children: [
                   Image(
                       image: AssetImage(
                           "assets/images/iPhone 14 Pro Space Black Mockup.png")),

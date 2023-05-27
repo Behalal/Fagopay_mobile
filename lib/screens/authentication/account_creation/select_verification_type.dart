@@ -1,14 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/onboarding/onboarding.dart';
+import '../../onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../controllers/registration_controller.dart';
@@ -17,7 +14,6 @@ import '../../../service/secure_storage/secure_storage.dart';
 import '../../constants/colors.dart';
 import '../widgets/auth_buttons.dart';
 
-import 'select_type.dart';
 import 'verify_code.dart';
 import 'widgets/current_step.dart';
 

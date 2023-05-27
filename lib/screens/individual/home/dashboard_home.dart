@@ -1,15 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/company_model.dart';
-import 'package:fagopay/screens/individual/bills/data.dart';
-import 'package:fagopay/screens/individual/bills/swap_airtime.dart';
-import 'package:fagopay/screens/individual/refer_and_win/refer_page.dart';
-import 'package:fagopay/screens/individual/requests/requests.dart';
-import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_bank.dart';
-import 'package:fagopay/screens/individual/transactions/fago_to_fago.dart';
-import 'package:fagopay/screens/kyc/countdown_page2.dart';
-import 'package:fagopay/screens/kyc/personal_verification_page.dart';
-import '../../../controllers/company_controller.dart';
+import '../../../controllers/government_identity_verification_controller.dart';
+import '../bills/data.dart';
+import '../bills/swap_airtime.dart';
+import '../refer_and_win/refer_page.dart';
+import '../requests/requests.dart';
+import '../transactions/fago_to_bank.dart';
+import '../transactions/fago_to_fago.dart';
+import '../../kyc/countdown_page2.dart';
+import '../../kyc/personal_verification_page.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';
 import '../../authentication/account_creation/select_type.dart';
@@ -51,19 +49,21 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
-  final _companyController = Get.find<CompanyController>();
+  final _governmentIdentityController =
+      Get.find<GovernmentIdentityVerificationController>();
 
   @override
   void initState() {
     getUserDetails();
-    getCompany();
+    getIdentityDetails();
+    // getCompany();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(' user details is ${_loginController.getUserDetails()}');
-    print(' user details is ');
+    // print(' user details is ${_loginController.getUserDetails()}');
+    // print(' user details is ');
     return Scaffold(
       body: (isLoading)
           ? const Loading()
@@ -85,8 +85,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Obx(() {
-                      print(
-                          ' user details Under home Obx ${_loginController.getUserDetails()}');
+                      // print(
+                      //     ' user details Under home Obx ${_loginController.getUserDetails()}');
                       return _loginController.getUserStatus ==
                               GetUserStatus.loading
                           ? Column(
@@ -875,240 +875,252 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 SizedBox(
                                   height: 2.h,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 5.w,
-                                  ),
-                                  child: const AutoSizeText(
-                                    "Business Tools",
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                      color: stepsColor,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 5.w,
-                                  ),
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 2.h, vertical: 2.h),
-                                    // height: 10.h,
-                                    width: Get.width,
-                                    decoration: BoxDecoration(
-                                        color: fagoSecondaryColor
-                                            .withOpacity(0.05),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        InkWell(
-                                          onTap: () {
-                                            if (widget
-                                                    .userDetails.kycVerified ==
-                                                0) {
-                                              Get.defaultDialog(
-                                                  title: "",
-                                                  middleText: "",
-                                                  titlePadding: EdgeInsets.zero,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                  content:
-                                                      unverifiedUserDialogue());
-                                              return;
-                                            }
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const CustomerPage(),
-                                              ),
-                                            );
-                                          },
-                                          child: Column(
+                                if (_userController.switchedAccountType == 2)
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 5.w,
+                                        ),
+                                        child: const AutoSizeText(
+                                          "Business Tools",
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 16,
+                                            color: stepsColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 5.w,
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 2.h, vertical: 2.h),
+                                          // height: 10.h,
+                                          width: Get.width,
+                                          decoration: BoxDecoration(
+                                              color: fagoSecondaryColor
+                                                  .withOpacity(0.05),
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          alignment: Alignment.center,
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              SvgPicture.asset(
-                                                'assets/icons/customer_new_icon.svg',
-                                                height: 2.5.h,
-                                                width: 2.5.w,
+                                              InkWell(
+                                                onTap: () {
+                                                  if (widget.userDetails
+                                                          .kycVerified ==
+                                                      0) {
+                                                    Get.defaultDialog(
+                                                        title: "",
+                                                        middleText: "",
+                                                        titlePadding:
+                                                            EdgeInsets.zero,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        content:
+                                                            unverifiedUserDialogue());
+                                                    return;
+                                                  }
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const CustomerPage(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/icons/customer_new_icon.svg',
+                                                      height: 2.5.h,
+                                                      width: 2.5.w,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.5.h,
+                                                    ),
+                                                    const AutoSizeText(
+                                                      "Customers",
+                                                      style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 5,
+                                                        color: black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              SizedBox(
-                                                height: 1.5.h,
+                                              InkWell(
+                                                onTap: () {
+                                                  if (widget.userDetails
+                                                          .kycVerified ==
+                                                      0) {
+                                                    Get.defaultDialog(
+                                                        title: "",
+                                                        middleText: "",
+                                                        titlePadding:
+                                                            EdgeInsets.zero,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        content:
+                                                            unverifiedUserDialogue());
+                                                    return;
+                                                  }
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const AllSupplies(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/icons/people_icon.svg',
+                                                      height: 2.5.h,
+                                                      width: 2.5.w,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.5.h,
+                                                    ),
+                                                    const AutoSizeText(
+                                                      "Suppliers",
+                                                      style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 10,
+                                                        color: black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                              const AutoSizeText(
-                                                "Customers",
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 5,
-                                                  color: black,
+                                              InkWell(
+                                                onTap: () {
+                                                  if (widget.userDetails
+                                                          .kycVerified ==
+                                                      0) {
+                                                    Get.defaultDialog(
+                                                        title: "",
+                                                        middleText: "",
+                                                        titlePadding:
+                                                            EdgeInsets.zero,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        content:
+                                                            unverifiedUserDialogue());
+                                                    return;
+                                                  }
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const BookKeeping(),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.house,
+                                                      size: 2.5.h,
+                                                      color: fagoSecondaryColor,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.5.h,
+                                                    ),
+                                                    const AutoSizeText(
+                                                      "Bookkeeping",
+                                                      style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 10,
+                                                        color: black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  if (widget.userDetails
+                                                          .kycVerified ==
+                                                      0) {
+                                                    Get.defaultDialog(
+                                                        title: "",
+                                                        middleText: "",
+                                                        titlePadding:
+                                                            EdgeInsets.zero,
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 8,
+                                                                vertical: 8),
+                                                        content:
+                                                            unverifiedUserDialogue());
+                                                    return;
+                                                  }
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const AllInvoice(),
+                                                    ),
+                                                  );
+                                                  // Get.to(() => const RequestHome());
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.file_copy,
+                                                      size: 2.5.h,
+                                                      color: fagoSecondaryColor,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 1.5.h,
+                                                    ),
+                                                    const AutoSizeText(
+                                                      "Invoice",
+                                                      style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 10,
+                                                        color: black,
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        InkWell(
-                                          onTap: () {
-                                            if (widget
-                                                    .userDetails.kycVerified ==
-                                                0) {
-                                              Get.defaultDialog(
-                                                  title: "",
-                                                  middleText: "",
-                                                  titlePadding: EdgeInsets.zero,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                  content:
-                                                      unverifiedUserDialogue());
-                                              return;
-                                            }
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const AllSupplies(),
-                                              ),
-                                            );
-                                          },
-                                          child: Column(
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/icons/people_icon.svg',
-                                                height: 2.5.h,
-                                                width: 2.5.w,
-                                              ),
-                                              SizedBox(
-                                                height: 1.5.h,
-                                              ),
-                                              const AutoSizeText(
-                                                "Suppliers",
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10,
-                                                  color: black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            if (widget
-                                                    .userDetails.kycVerified ==
-                                                0) {
-                                              Get.defaultDialog(
-                                                  title: "",
-                                                  middleText: "",
-                                                  titlePadding: EdgeInsets.zero,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                  content:
-                                                      unverifiedUserDialogue());
-                                              return;
-                                            }
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BookKeeping(),
-                                              ),
-                                            );
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Icon(
-                                                Icons.house,
-                                                size: 2.5.h,
-                                                color: fagoSecondaryColor,
-                                              ),
-                                              SizedBox(
-                                                height: 1.5.h,
-                                              ),
-                                              const AutoSizeText(
-                                                "Bookkeeping",
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10,
-                                                  color: black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            if (widget
-                                                    .userDetails.kycVerified ==
-                                                0) {
-                                              Get.defaultDialog(
-                                                  title: "",
-                                                  middleText: "",
-                                                  titlePadding: EdgeInsets.zero,
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 8,
-                                                          vertical: 8),
-                                                  content:
-                                                      unverifiedUserDialogue());
-                                              return;
-                                            }
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const AllInvoice(),
-                                              ),
-                                            );
-                                            // Get.to(() => const RequestHome());
-                                          },
-                                          child: Column(
-                                            children: [
-                                              Icon(
-                                                Icons.file_copy,
-                                                size: 2.5.h,
-                                                color: fagoSecondaryColor,
-                                              ),
-                                              SizedBox(
-                                                height: 1.5.h,
-                                              ),
-                                              const AutoSizeText(
-                                                "Invoice",
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10,
-                                                  color: black,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-
-                                // SizedBox(
-                                //   height: 1.5.h,
-                                // ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 5.w, vertical: 2.h),
@@ -1509,21 +1521,33 @@ class _DashboardHomeState extends State<DashboardHome> {
     final userAccountjsonBodyData =
         response['data']['userdetail']['accountdetail'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
-    _userController.setUserAccountDetails = userAccountDetails;
-    _userController.setUser = userDetails;
+    setState(() {
+      _userController.setUserAccountDetails = userAccountDetails;
+      _userController.setUser = userDetails;
+    });
     print('User details are kyc number is ${userDetails.kycVerified}');
   }
 
-  Future<void> getCompany() async {
-    final response = await _companyController.getCompany();
-    final companyjsonBodyData = response['data']['company_detail'];
-    final returnedCompanies = companyjsonBodyData
-        .map<Company>((company) => Company.fromJson(company))
-        .toList();
-    final companyDetails = Company.fromJson(companyjsonBodyData[0]);
+  // Future<void> getCompany() async {
+  //   final response = await _companyController.getCompany();
+  //   final companyjsonBodyData = response['data']['company_detail'];
+  //   final returnedCompanies = companyjsonBodyData
+  //       .map<Company>((company) => Company.fromJson(company))
+  //       .toList();
+  //   final companyDetails = Company.fromJson(companyjsonBodyData[0]);
+  //   setState(() {
+  //     _companyController.companies = returnedCompanies;
+  //     _companyController.setCompany = companyDetails;
+  //   });
+  // }
+
+  Future<void> getIdentityDetails() async {
+    final response = await _governmentIdentityController.getIdentityDetails();
+    final identityjsonBodyData = response['data']['identity_detail'];
+    print(identityjsonBodyData['id']);
     setState(() {
-      _companyController.companies = returnedCompanies;
-      _companyController.setCompany = companyDetails;
+      _governmentIdentityController.governmentIdentityDetailId =
+          identityjsonBodyData['id'];
     });
   }
 }

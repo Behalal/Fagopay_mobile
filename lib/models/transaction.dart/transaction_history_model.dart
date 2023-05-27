@@ -113,11 +113,11 @@ class TransactionHistoryModel {
   String? sessionId;
   String? reference;
   Category? category;
-  dynamic? inflow;
-  dynamic? outflow;
-  dynamic? balanceBefore;
-  dynamic? balanceAfter;
-  dynamic? chargesFee;
+  dynamic inflow;
+  dynamic outflow;
+  dynamic balanceBefore;
+  dynamic balanceAfter;
+  dynamic chargesFee;
   TransactionType? transactionType;
   TransactionStatus? transactionStatus;
   String? description;

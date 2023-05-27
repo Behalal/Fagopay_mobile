@@ -32,10 +32,10 @@ class PurseCategory {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['pulse_category_list'] =
+    final data = <String, dynamic>{};
+    data['pulse_category_list'] =
         pulseCategoryList.map((e) => e.toJson()).toList();
-    return _data;
+    return data;
   }
 }
 
@@ -62,12 +62,12 @@ class PulseCategoryList {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['id'] = id;
-    _data['category_name'] = categoryName;
-    _data['description'] = description;
-    _data['created_at'] = createdAt;
-    _data['updated_at'] = updatedAt;
-    return _data;
+    final data = <String, dynamic>{};
+    data['id'] = id;
+    data['category_name'] = categoryName;
+    data['description'] = description;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
   }
 }

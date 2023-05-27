@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/bill_controller.dart';
-import 'package:fagopay/controllers/user_controller.dart';
+import '../../../controllers/bill_controller.dart';
+import '../../../controllers/user_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
@@ -11,11 +11,9 @@ import 'package:sizer/sizer.dart';
 
 import '../../../models/swap_airtime_model.dart/initiateSwap.dart';
 import '../../authentication/recover_password_otp_screen.dart';
-import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../widgets/head_style_extra_pages.dart';
-import '../transactions/confirm_transaction.dart';
 
 class SwapAirtime extends StatefulWidget {
   const SwapAirtime({super.key});

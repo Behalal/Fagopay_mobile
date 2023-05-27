@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fagopay/models/referal_earnings.dart/referal_earning.dart';
+import '../models/referal_earnings.dart/referal_earning.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -44,6 +44,14 @@ class UserController extends GetxController {
   RefaralEarningEnum get referalEarningStatus => _referalEarningStatus.value;
   final Rx<RefaralEarningData?> userReferal = Rx(null);
   RefaralEarningData? get userReferalEarning => userReferal.value;
+
+  final RxInt _switchedAccountType = 1.obs;
+
+  int? get switchedAccountType => _switchedAccountType.value;
+
+  set switchedAccountType(int? switchedAccountType) {
+    _switchedAccountType(switchedAccountType);
+  }
 
   User? get user => _user.value;
 

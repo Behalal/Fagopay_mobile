@@ -4,9 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/purse_controller.dart';
 import 'package:fagopay/models/purse/createPurse_Model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
-import 'package:fagopay/screens/individual/purse/my_purse_list.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -743,7 +741,7 @@ class _CreatePurseState extends State<CreatePurse> {
   // }
 
   addDynamic() {
-    if (Product.length != 0) {
+    if (Product.isNotEmpty) {
       // floatingIcon = Icon(Icons.add);
 
       Product = [];

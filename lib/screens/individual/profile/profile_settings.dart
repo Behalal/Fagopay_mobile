@@ -2,12 +2,14 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/individual/profile/account_limit.dart';
 import 'package:fagopay/screens/individual/profile/change_passcode.dart';
 import 'package:fagopay/screens/individual/profile/change_password.dart';
 import 'package:fagopay/screens/individual/profile/edit_profile.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
+import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
@@ -536,10 +538,11 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ),
                                     ),
                                   ),
-                                 
                                 ],
                               ),
-                               SizedBox(height: 3.h,),
+                              SizedBox(
+                                height: 3.h,
+                              ),
                             ],
                           ),
                         )),
@@ -599,57 +602,69 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  width: 130,
-                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      color: buttonColor,
-                      borderRadius: BorderRadius.all(Radius.circular(25))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 1.w,
-                      ),
-                      const AutoSizeText(
-                        "Confirm",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w600,
-                          color: white,
+                InkWell(
+                  onTap: () {
+                    _userUcontroller.switchedAccountType = 1;
+                    SecureStorage.deleteUserIdentifier();
+                    SecureStorage.deleteUserToken();
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(builder: (context) => const SignIn()),
+                        (route) => false);
+                  },
+                  child: Container(
+                    width: 130,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                    alignment: Alignment.center,
+                    decoration: const BoxDecoration(
+                        color: buttonColor,
+                        borderRadius: BorderRadius.all(Radius.circular(25))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 1.w,
                         ),
-                      ),
-                    ],
+                        const AutoSizeText(
+                          "Confirm",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w600,
+                            color: white,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 1.5.h,
                 ),
-                Container(
-                  width: 130,
-                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: buttonColor),
-                    color: white,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 1.w,
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Container(
+                    width: 130,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: buttonColor),
+                      color: white,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(25),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: const AutoSizeText(
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 1.w,
+                        ),
+                        const AutoSizeText(
                           "Cancel",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -659,8 +674,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                             color: buttonColor,
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

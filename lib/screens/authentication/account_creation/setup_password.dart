@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/login_controller.dart';
+import '../../../controllers/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -576,7 +576,7 @@ class _SetupPasswordState extends State<SetupPassword> {
     print(response.body);
     final jsonBody = jsonDecode(response.body);
 
-    print(' code is ${jsonBody}');
+    print(' code is $jsonBody');
     final userToken = jsonBody['token'];
     if (response.statusCode == 200) {
       // final validateUserIdentifier = jsonBody['data']['identifier'];

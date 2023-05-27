@@ -7,7 +7,7 @@ void goToPage(BuildContext context, Widget route) {
 }
 
 String capitalize(String str) {
-  if (str == null || str.isEmpty) {
+  if (str.isEmpty) {
     return str;
   }
   return str

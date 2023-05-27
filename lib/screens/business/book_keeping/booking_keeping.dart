@@ -35,9 +35,9 @@ class _BookKeepingState extends State<BookKeeping> {
 
   List salesFilter = [
     {'type': 'All', 'value': ""},
-    {'type': 'Paid', 'value': '7'},
-    {'type': 'Part Paid', 'value': '30'},
-    {'type': 'Full Credit', 'value': '3'},
+    {'type': 'Paid', 'value': '2'},
+    {'type': 'Part Paid', 'value': '1'},
+    {'type': 'Not Poad', 'value': '3'},
   ];
 
   List expensesFilter = [
@@ -47,7 +47,7 @@ class _BookKeepingState extends State<BookKeeping> {
     {'type': 'Bank charges', 'value': '3'},
   ];
 
-  String? selectedFilter = '';
+  String selectedFilter = '';
   int currentIndex = 0;
   late final PageController _controller = PageController(viewportFraction: 0.5);
   late bool inflowTab = true;
@@ -298,6 +298,7 @@ class _BookKeepingState extends State<BookKeeping> {
                           setState(() {
                             if (!inflowTab) {
                               inflowTab = !inflowTab;
+                              selectedFilter = "";
                             }
                           });
                         },
@@ -334,6 +335,7 @@ class _BookKeepingState extends State<BookKeeping> {
                           setState(() {
                             if (inflowTab) {
                               inflowTab = !inflowTab;
+                              selectedFilter = "";
                             }
                           });
                         }),
@@ -417,8 +419,13 @@ class _BookKeepingState extends State<BookKeeping> {
                                       setState(() {
                                         if (value != null) {
                                           selectedFilter = value;
+                                          inflowTab
+                                              ? _salesController
+                                                  .filterSales(value)
+                                              : _expenseController
+                                                  .filterExpenses('');
                                         } else {
-                                          selectedFilter = null;
+                                          selectedFilter = "";
                                         }
                                       });
                                     },

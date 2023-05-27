@@ -3,7 +3,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
-import 'package:fagopay/screens/business/home/home.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -36,6 +35,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
   bool balanceVisible = true;
   String notVisibleText = "******";
   final _userController = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
 
   @override
   Widget build(BuildContext context) {
@@ -107,22 +107,22 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                     Row(
                                       children: [
                                         RichText(
-                                          text: const TextSpan(
-                                            style: TextStyle(
+                                          text: TextSpan(
+                                            style: const TextStyle(
                                               fontFamily: "Work Sans",
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
                                               color: white,
                                             ),
                                             children: [
-                                              TextSpan(text: 'Welcome'),
-                                              // TextSpan(
-                                              //   text:
-                                              //       ' ${widget.user.firstName}',
-                                              //   style: const TextStyle(
-                                              //     fontWeight: FontWeight.w700,
-                                              //   ),
-                                              // ),
+                                              const TextSpan(text: 'Welcome'),
+                                              TextSpan(
+                                                text:
+                                                    ' ${_userController.switchedAccountType == 2 ? _companyController.company!.companyName : widget.user.firstName}',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -281,21 +281,15 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    // SecureStorage.deleteUserIdentifier();
-                                    // SecureStorage.deleteUserToken();
-                                    // Navigator.of(context).pushAndRemoveUntil(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => const SignIn()),
-                                    //     (route) => false);
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => BusinessHome(
-                                          userDetails: widget.userDetails,
-                                          accountDetails:
-                                              widget.accountDetails!,
-                                        ),
-                                      ),
-                                    );
+                                    // Navigator.of(context).push(
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => BusinessHome(
+                                    //       userDetails: widget.userDetails,
+                                    //       accountDetails:
+                                    //           widget.accountDetails!,
+                                    //     ),
+                                    //   ),
+                                    // );
                                   },
                                   child: const Icon(
                                     Icons.notifications,
@@ -738,7 +732,13 @@ class _ManageAccountState extends State<ManageAccount> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.to(() => const Dashboard());
+                      _userUcontroller.switchedAccountType = 1;
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const Dashboard()),
+                          (route) => false);
+                      // Navigator.of(context).pop();
+                      setState(() {});
                     },
                     child: Container(
                       padding: const EdgeInsets.all(18),
@@ -839,106 +839,40 @@ class _ManageAccountState extends State<ManageAccount> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: InkWell(
-                      onTap: () {
-                        print('cliked');
-                        Get.to(() => const Dashboard(
-                              accountType: 'Bussiness',
-                            ));
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(18),
-                        width: Get.width,
-                        height: 10.h,
-                        decoration: BoxDecoration(
-                          color: fagoSecondaryColor.withOpacity(0.05),
-                        ),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const CircleAvatar(
-                                radius: 27, // Image radius
-                                backgroundImage:
-                                    AssetImage('assets/images/fago(2).png'),
-                              ),
-                              SizedBox(
-                                width: 1.h,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const AutoSizeText(
-                                    'Obasana Designs',
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: welcomeText,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: .5.h,
-                                  ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 1.h),
-                                    height: 2.5.h,
-                                    // width: 11.5.h,
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
-                                    alignment: Alignment.center,
-                                    child: const AutoSizeText(
-                                      'Owner',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
-                                        color: fagoSecondaryColor,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const Spacer(),
-                              SvgPicture.asset('assets/icons/arrow_front.svg')
-                            ]),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
                   _companyController.companies.isEmpty
                       ? const Center(
                           child: Text('No Created Company Yet!'),
                         )
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: _companyController.companies.length,
-                          itemBuilder: (context, index) => CustomCompanyCard(
-                            companyName: _companyController
-                                .companies[index].companyName!,
-                            companyType: _companyController
-                                    .companies[index].companyType ??
-                                'Manager',
-                            onPressed: () {
-                              setState(() {
+                      : Obx(
+                          () => ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: _companyController.companies.length,
+                            itemBuilder: (context, index) => CustomCompanyCard(
+                              companyName: _companyController
+                                  .companies[index].companyName!,
+                              companyType: _companyController
+                                      .companies[index].companyType ??
+                                  'Manager',
+                              onPressed: () {
                                 _companyController.setCompany =
                                     _companyController.companies[index];
-                              });
-                            },
-                            isActive: _companyController.companies[index].id ==
-                                    _companyController.company!.id
-                                ? Colors.green
-                                : Colors.transparent,
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const Dashboard()),
+                                    (route) => false);
+                                _userUcontroller.switchedAccountType = 2;
+                                setState(() {});
+                              },
+                              isActive: _userUcontroller.switchedAccountType ==
+                                          2 &&
+                                      _companyController.companies[index].id ==
+                                          _companyController.company!.id
+                                  ? Colors.green
+                                  : Colors.transparent,
+                            ),
                           ),
                         ),
                   SizedBox(
@@ -1169,6 +1103,7 @@ class CustomCompanyCard extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
+        margin: EdgeInsets.only(bottom: 1.h),
         padding: const EdgeInsets.all(18),
         width: Get.width,
         height: 10.h,

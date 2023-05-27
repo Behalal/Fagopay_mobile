@@ -1,10 +1,11 @@
 // import 'dart:ui';
 import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/models/company_model.dart';
 import 'package:fagopay/models/user_model/user.dart';
-import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_verification_type.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/authentication/widgets/email_phone_input.dart';
@@ -35,6 +36,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
 
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
 
   void _togglePasswordView() {
     setState(() {
@@ -299,7 +301,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       }
       final userToken = jsonBody['token'];
       SecureStorage.setUserToken(userToken);
-      
+
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text(
@@ -371,30 +373,21 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     _userController.setUserAccountDetails = userAccountDetails;
 
-    // Future.delayed(const Duration(seconds: 1), () {
+    final userBusinessDetailsjsonBodyData =
+        response['data']['business_detail']['profile'];
+    final returnedCompanies = userBusinessDetailsjsonBodyData
+        .map<Company>((company) => Company.fromJson(company))
+        .toList();
+    final companyDetails = Company.fromJson(userBusinessDetailsjsonBodyData[0]);
+    _companyController.companies = returnedCompanies;
+    _companyController.setCompany = companyDetails;
+
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (
-                // BuildContext context) =>  const BookKeeping(),
-                BuildContext context) =>
-            const Dashboard(),
-
-        //  DashboardHome(
-        //   userDetails: userDetails,
-        //   accountDetails: userAccountDetails,
-        // ),
+        builder: (BuildContext context) => const Dashboard(),
       ),
     );
-    // Navigator.of(context).pushReplacement(
-    //   MaterialPageRoute(
-    //     builder: (BuildContext context) => BusinessHome(
-    //       userDetails: userDetails,
-    //       accountDetails: userAccountDetails,
-    //     ),
-    //   ),
-    // );
-    // });
   }
 }
 

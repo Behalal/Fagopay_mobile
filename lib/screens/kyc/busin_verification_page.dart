@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/controllers/government_identity_verification_controller.dart';
 import 'package:fagopay/screens/kyc/business_verification.dart';
 import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/kyc/identity_verification.dart';
@@ -26,8 +26,9 @@ class KycVerfication extends StatefulWidget {
 }
 
 class KycVerficationstate extends State<KycVerfication> {
-  // ignore: unused_field
-  final _userUcontroller = Get.find<UserController>();
+  // final _userUcontroller = Get.find<UserController>();
+  final _governmentIdentityController =
+      Get.find<GovernmentIdentityVerificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -296,18 +297,41 @@ class KycVerficationstate extends State<KycVerfication> {
                         height: 1.5.h,
                       ),
                       Stack(alignment: Alignment.bottomRight, children: [
-                        SvgPicture.asset('assets/icons/Ellipse 278.svg'),
-                        SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                        SvgPicture.asset(
+                          'assets/icons/Ellipse 278.svg',
+                          color: _governmentIdentityController
+                                      .governmentIdentityDetailId !=
+                                  null
+                              ? fagoGreenColor
+                              : fagoSecondaryColorWithOpacity10,
+                        ),
+                        SvgPicture.asset(
+                          'assets/icons/Ellipse 279.svg',
+                          color: _governmentIdentityController
+                                      .governmentIdentityDetailId !=
+                                  null
+                              ? fagoGreenColor
+                              : fagoSecondaryColorWithOpacity10,
+                        ),
                         InkWell(
                           onTap: () {
-                            Get.to(() => const IdentificationVerification());
+                            if (_governmentIdentityController
+                                    .governmentIdentityDetailId ==
+                                null) {
+                              Get.to(() => const IdentificationVerification());
+                              return;
+                            }
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 3.h, vertical: 2.h),
                             // height: 27.h,
                             width: Get.width,
-                            color: fagoSecondaryColorWithOpacity10,
+                            color: _governmentIdentityController
+                                        .governmentIdentityDetailId !=
+                                    null
+                                ? fagoGreenColor.withOpacity(0.2)
+                                : fagoSecondaryColorWithOpacity10,
                             child: Row(
                               children: [
                                 Column(
@@ -334,20 +358,31 @@ class KycVerficationstate extends State<KycVerfication> {
                                       //height: 2.5.h,
                                       width: 24.h,
                                       decoration: BoxDecoration(
-                                          color:
-                                              fagoSecondaryColorWithOpacity10,
+                                          color: _governmentIdentityController
+                                                      .governmentIdentityDetailId !=
+                                                  null
+                                              ? fagoGreenColor.withOpacity(0.1)
+                                              : fagoSecondaryColorWithOpacity10,
                                           borderRadius:
                                               BorderRadius.circular(25),
                                           border: Border.all(
-                                              color: fagoSecondaryColor)),
+                                              color: _governmentIdentityController
+                                                          .governmentIdentityDetailId !=
+                                                      null
+                                                  ? fagoGreenColor
+                                                  : fagoSecondaryColor)),
                                       alignment: Alignment.center,
-                                      child: const AutoSizeText(
+                                      child: AutoSizeText(
                                         'Government ID Verification',
                                         style: TextStyle(
                                           fontFamily: "Work Sans",
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
-                                          color: fagoSecondaryColor,
+                                          color: _governmentIdentityController
+                                                      .governmentIdentityDetailId !=
+                                                  null
+                                              ? fagoGreenColor
+                                              : fagoSecondaryColor,
                                         ),
                                       ),
                                     ),
@@ -356,13 +391,17 @@ class KycVerficationstate extends State<KycVerfication> {
                                 const Spacer(),
                                 Column(
                                   children: [
-                                    const AutoSizeText(
+                                    AutoSizeText(
                                       'STEP 2',
                                       style: TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 10,
                                         fontWeight: FontWeight.w500,
-                                        color: fagoSecondaryColor,
+                                        color: _governmentIdentityController
+                                                    .governmentIdentityDetailId !=
+                                                null
+                                            ? fagoGreenColor
+                                            : fagoSecondaryColor,
                                       ),
                                     ),
                                     SizedBox(
@@ -370,7 +409,11 @@ class KycVerficationstate extends State<KycVerfication> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/icons/verify_suxf.svg',
-                                      color: fagoSecondaryColor,
+                                      color: _governmentIdentityController
+                                                  .governmentIdentityDetailId !=
+                                              null
+                                          ? fagoGreenColor
+                                          : fagoSecondaryColor,
                                     ),
                                   ],
                                 ),

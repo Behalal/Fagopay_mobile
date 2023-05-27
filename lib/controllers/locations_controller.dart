@@ -1,9 +1,10 @@
 import 'dart:developer';
 
+import 'package:get/get.dart';
+
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
-import 'package:get/get.dart';
 
 class LocationsController extends GetxController {
   Future<dynamic> getCountries() async {

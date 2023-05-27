@@ -1,9 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/login_controller.dart';
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/screens/constants/colors.dart';
-import 'package:fagopay/screens/individual/home/dashboard_home.dart';
-import 'package:fagopay/screens/widgets/navigation_bar.dart';
+import '../../controllers/login_controller.dart';
+import '../../controllers/user_controller.dart';
+import '../constants/colors.dart';
+import '../widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:get/get.dart';

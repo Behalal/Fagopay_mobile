@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:fagopay/models/swap_airtime_model.dart/initiateSwap.dart';
+import '../models/swap_airtime_model.dart/initiateSwap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/user_controller.dart';
-import 'package:fagopay/screens/business/invoice/components/invoice_item_details_card.dart';
+import '../../../controllers/user_controller.dart';
+import 'components/invoice_item_details_card.dart';
 import 'package:jiffy/jiffy.dart';
 import '../../../controllers/invoice_controller.dart';
 import 'package:get/get.dart';

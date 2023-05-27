@@ -70,9 +70,9 @@ class Profile {
   String? id;
   String? rcNumber;
   String? companyName;
-  dynamic? companyStatus;
+  dynamic companyStatus;
   String? userId;
-  dynamic? companyType;
+  dynamic companyType;
   int? verificationStatus;
   List<Customer>? customer;
   List<Supplier>? suppliers;
@@ -324,18 +324,18 @@ class Supplier {
 class Userdetail {
   String? id;
   String? firstName;
-  dynamic? middleName;
+  dynamic middleName;
   String? lastName;
   String? email;
-  dynamic? gender;
+  dynamic gender;
   String? phoneNumber;
-  dynamic? dateOfBirth;
-  dynamic? phoneVerifiedAt;
+  dynamic dateOfBirth;
+  dynamic phoneVerifiedAt;
   int? bvnVerified;
   String? identifier;
   String? bvnId;
   int? kycVerified;
-  dynamic? emailVerifiedAt;
+  dynamic emailVerifiedAt;
   String? referalCode;
   String? referalBy;
   int? recoveryMode;
@@ -471,7 +471,7 @@ class NewAccountDetailsModel {
   String? accountType;
   String? status;
   String? currency;
-  dynamic? manager;
+  dynamic manager;
   int? balance;
 
   NewAccountDetailsModel({

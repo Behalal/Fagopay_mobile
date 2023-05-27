@@ -4,8 +4,6 @@ import 'terms_and_cond.dart';
 import '../../widgets/auth_buttons.dart';
 import '../../../kyc/personal_verification_page.dart';
 import '../../../kyc/identity_pass_kyc.dart';
-import '../../../kyc/busin_verification_page.dart';
-import '../../../kyc/kyc2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sizer/sizer.dart';

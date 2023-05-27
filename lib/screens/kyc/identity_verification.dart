@@ -51,7 +51,6 @@ class _IdentificationVerificationState
   @override
   void dispose() {
     _governmentIdentityController.documentNumberController.clear();
-    _governmentIdentityController.ninController.clear();
     super.dispose();
   }
 
@@ -217,9 +216,9 @@ class _IdentificationVerificationState
                               SizedBox(
                                 height: 2.h,
                               ),
-                              AutoSizeText(
-                                "Enter ID Number ${selectedDocumentType != null && selectedDocumentType == 'NIN' ? '(For NIN, this would be Virtual NIN)' : ''}",
-                                style: const TextStyle(
+                              const AutoSizeText(
+                                "Enter ID Number",
+                                style: TextStyle(
                                   fontFamily: "Work Sans",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
@@ -242,42 +241,6 @@ class _IdentificationVerificationState
                                   return null;
                                 },
                               ),
-                              if (selectedDocumentType != null &&
-                                  selectedDocumentType == 'NIN')
-                                Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    SizedBox(
-                                      height: 2.h,
-                                    ),
-                                    const AutoSizeText(
-                                      'Enter NIN',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: stepsColor,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 0.5.h,
-                                    ),
-                                    NumberInput(
-                                      controller: _governmentIdentityController
-                                          .ninController,
-                                      title: 'Enter NIN',
-                                      keyboadType: TextInputType.number,
-                                      boarderColor: stepsColor.withOpacity(0.3),
-                                      validate: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Field must not be empty';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ],
-                                ),
                               SizedBox(
                                 height: 2.h,
                               ),
@@ -462,8 +425,7 @@ class _IdentificationVerificationState
         selectedCountry,
         selectedDocumentType!,
         _governmentIdentityController.documentNumberController.text,
-        _uploadedImageUrl,
-        _governmentIdentityController.ninController.text);
+        _uploadedImageUrl,);
 
     final jsonBody = jsonDecode(response.body);
 

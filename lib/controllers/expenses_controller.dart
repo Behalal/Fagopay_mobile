@@ -20,6 +20,13 @@ class ExpensesController extends GetxController {
     _expenses(expenses);
   }
 
+  void filterExpenses(String value) {
+    expenses
+        .where((expense) => expense.category!.categoryName == value)
+        .toList();
+    update();
+  }
+
   Expenses findExpenseById(String id) {
     return expenses.firstWhere((expense) => expense.id == id);
   }

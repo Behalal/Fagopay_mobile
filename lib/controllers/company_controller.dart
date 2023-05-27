@@ -56,10 +56,10 @@ class CompanyController extends GetxController {
     final token = await SecureStorage.readUserToken();
 
     var requestBody = jsonEncode({
-      "company_name": "Schneider and sons",
-      "type": "RC|BN|IT|LL|LLP",
-      "rc_number": "RC123456",
-      "document_url": "upload_url"
+      "company_name": companyName,
+      "type": companyType,
+      "rc_number": rcNumber,
+      "document_url": docUrl
     });
 
     try {

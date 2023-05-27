@@ -8,12 +8,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GovernmentIdentityVerificationController extends GetxController {
+
+  final RxString _governmentIdentityDetailId = "".obs;
+
+  String? get governmentIdentityDetailId => _governmentIdentityDetailId.value;
+
+  set governmentIdentityDetailId(String? governmentIdentityDetailId) {
+    _governmentIdentityDetailId(governmentIdentityDetailId);
+  }
+
   final documentNumberController = TextEditingController();
-  final ninController = TextEditingController();
   final businessAddressController = TextEditingController();
 
-  Future<dynamic> submitIdentityDetails(String countryId, String docType,
-      String docNumber, String docUrl, String nin) async {
+    Future<dynamic> getIdentityDetails() async {
+    final token = await SecureStorage.readUserToken();
+    try {
+      final responseData = await NetworkHelper.getRequest(
+        url: "${BaseAPI.verificationPath}get-government-identity-detail",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token",
+        },
+      );
+      return responseData;
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<dynamic> submitIdentityDetails(
+      String countryId, String docType, String docNumber, String docUrl) async {
     final token = await SecureStorage.readUserToken();
 
     var requestBody = jsonEncode({
@@ -21,7 +45,6 @@ class GovernmentIdentityVerificationController extends GetxController {
       "document_type": docType,
       "document_number": docNumber,
       "document_url": docUrl,
-      "number_nin": nin
     });
 
     try {

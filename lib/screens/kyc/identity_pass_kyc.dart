@@ -1,10 +1,8 @@
 import 'package:fagopay/screens/kyc/countdown_page2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
 
-import 'kyc_success.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 

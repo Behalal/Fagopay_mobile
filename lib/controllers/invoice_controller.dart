@@ -19,6 +19,23 @@ class InvoiceController extends GetxController {
     _invoices(invoices);
   }
 
+  List<Invoice> get unpaidInvoices {
+    return invoices
+        .where((unpaidInvoice) =>
+            unpaidInvoice.status == 'pending' ||
+            unpaidInvoice.status == 'unpaid')
+        .toList();
+  }
+
+  List<Invoice> get otherInvoices {
+    return invoices
+        .where((unpaidInvoice) =>
+            unpaidInvoice.status != 'unpaid' &&
+            unpaidInvoice.status != 'pending' &&
+            unpaidInvoice.status != 'paid')
+        .toList();
+  }
+
   Invoice findInvoiceById(String id) {
     return invoices.firstWhere((invoice) => invoice.id == id);
   }

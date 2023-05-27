@@ -27,6 +27,7 @@ class User {
   String? referralCode;
   String? referralBy;
   int? bvnVerified;
+  int? accountType;
   String? emailVerifiedAt;
   String? recoveryMode;
   String? ipAddress;
@@ -49,6 +50,7 @@ class User {
     this.referralCode,
     this.referralBy,
     this.bvnVerified,
+    this.accountType,
     this.emailVerifiedAt,
     this.recoveryMode,
     this.ipAddress,
@@ -72,12 +74,18 @@ class User {
         bvnVerified: json['bvn_verified'] as int?,
         bvnId: json['bvn_id'] as String?,
         kycVerified: json['kyc_verified'] as int?,
+        accountType: json['account_type'] as int?,
         referralCode: json['referal_code'] as String?,
         referralBy: json['referal_by'] as String?,
         ipAddress: json['ipaddress'] as String?,
         dailyLimts: json['account_daily_limit'] as String?,
         // nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
       );
+
+  @override
+  String toString() {
+    return 'User(id: $id, email: $email, phone: $phone, firstName: $firstName, middleName: $middleName, lastName: $lastName, gender: $gender, dateOfBirth: $dateOfBirth, identifier: $identifier, referralCode: $referralCode, referralBy: $referralBy, bvnVerified: $bvnVerified, accountType: $accountType, emailVerifiedAt: $emailVerifiedAt, recoveryMode: $recoveryMode, ipAddress: $ipAddress, bvnId: $bvnId, kycVerified: $kycVerified, deviceId: $deviceId, dailyLimts: $dailyLimts, nextofkin: $nextofkin)';
+  }
 }
 
 class AccountDetail {
@@ -126,6 +134,11 @@ class AccountDetail {
         "manager": manager,
         "balance": balance,
       };
+
+  @override
+  String toString() {
+    return 'AccountDetail(id: $id, accountNumber: $accountNumber, accountName: $accountName, bankName: $bankName, accountType: $accountType, status: $status, currency: $currency, manager: $manager, balance: $balance)';
+  }
 }
 
 class Nextofkin {
