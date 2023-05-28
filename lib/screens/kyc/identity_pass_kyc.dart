@@ -32,6 +32,7 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
   final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
+    print('id is ${_userUcontroller.user!.id}');
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -43,9 +44,9 @@ class _IdentityPassPageState extends State<IdentityPassPage> {
               InputParameters(
                 context: context,
                 merchantKey: "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
-                firstName: _userUcontroller.user!.firstName,
-                lastName: _userUcontroller.user!.lastName,
-                email: _userUcontroller.user!.email ?? '',
+                firstName: 'domain',
+                lastName: 'domain',
+                email: 'domain@admin.com',
                 userRef: _userUcontroller.user!.id,
                 onCancel: (response) {
                   if (kDebugMode) {
