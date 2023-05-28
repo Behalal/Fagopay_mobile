@@ -704,30 +704,30 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                   SizedBox(
                     height: 2.h,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    child: InkWell(
-                      onTap: () {
-                        print(
-                            'Network ${_billsController.userchargesAmount!.network!}');
-                        Get.to(() => SwapAirtimeDescPage(
-                              network:
-                                  _billsController.userchargesAmount!.network!,
-                              amount: _billsController.amountController.text,
-                              number: _billsController.phoneController.text,
-                            ));
-                      },
-                      child: const AutoSizeText(
-                        'Test',
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          color: fagoBlackColor,
-                        ),
-                      ),
-                    ),
-                  )
+                  // Padding(
+                  //   padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       print(
+                  //           'Network ${_billsController.userchargesAmount!.network!}');
+                  //       Get.to(() => SwapAirtimeDescPage(
+                  //             network:
+                  //                 _billsController.userchargesAmount!.network!,
+                  //             amount: _billsController.amountController.text,
+                  //             number: _billsController.phoneController.text,
+                  //           ));
+                  //     },
+                  //     child: const AutoSizeText(
+                  //       'Test',
+                  //       style: TextStyle(
+                  //         fontFamily: "Work Sans",
+                  //         fontSize: 20,
+                  //         fontWeight: FontWeight.w400,
+                  //         color: fagoBlackColor,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ]),
           ),
         ),
@@ -751,16 +751,4 @@ class Debouncer {
   }
 }
 
-class NetworkItem {
-  final String title;
-  final String? image;
 
-  NetworkItem({this.image, required this.title});
-}
-
-var networkItem = [
-  NetworkItem(title: 'All products'),
-  NetworkItem(title: 'Fruits'),
-  NetworkItem(title: 'Vegetables'),
-  NetworkItem(title: 'Grains'),
-];
