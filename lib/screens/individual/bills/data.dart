@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/bill_controller.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +89,7 @@ class _BuyDataState extends State<BuyData> {
               tabs: [
                 Tab(
                   child: Text(
-                    'Buy Data',
+                    'Buy Airtime',
                     style: TextStyle(
                       color: fagoSecondaryColor,
                       fontSize: 15,
@@ -100,7 +99,7 @@ class _BuyDataState extends State<BuyData> {
                   ),
                 ),
                 Tab(
-                  child: Text('Buy Airtime'),
+                  child: Text('Buy Data'),
                 ),
               ],
             ),
@@ -108,6 +107,7 @@ class _BuyDataState extends State<BuyData> {
           body: Builder(builder: (context) {
             return TabBarView(
               children: [
+                const BuyAirtime(),
                 SingleChildScrollView(
                   child: Padding(
                     padding:
@@ -508,7 +508,6 @@ class _BuyDataState extends State<BuyData> {
                     ),
                   ),
                 ),
-                const BuyAirtime(),
               ],
             );
           }),

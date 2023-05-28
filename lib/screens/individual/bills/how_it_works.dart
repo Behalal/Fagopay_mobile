@@ -1,30 +1,31 @@
-// ignore_for_file: unrelated_type_equality_checks
-
+// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
-import 'package:fagopay/screens/individual/requests/payme_page.dart';
+import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-class SharePaymentLink extends StatefulWidget {
-  const SharePaymentLink({
+class SwapAirtimeDescPage extends StatefulWidget {
+  String? network;
+  String? amount;
+  String? number;
+  String? image;
+
+  SwapAirtimeDescPage({
     super.key,
+    this.network,
+    this.amount,
+    this.number,
+    this.image,
   });
 
   @override
-  State<SharePaymentLink> createState() => _SharePaymentLinkState();
+  State<SwapAirtimeDescPage> createState() => _SwapAirtimeDescPageState();
 }
 
-class _SharePaymentLinkState extends State<SharePaymentLink> {
-  bool isIndividual = false;
-  int? myRequestType;
-  var number = "";
-  int? transactionType;
-
+class _SwapAirtimeDescPageState extends State<SwapAirtimeDescPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,7 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                 children: [
                   const ProgressStyle(
                     stage: 0,
-                    pageName: "Payment Link",
+                    pageName: "Swap Airtime",
                     // backRoute: MakeRequest(),
                   ),
                   SizedBox(
@@ -47,46 +48,10 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                         padding: EdgeInsets.symmetric(
                             vertical: 2.h, horizontal: 2.w),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: 22.w,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      color: buttonColor),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3.w, vertical: .7.h),
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        AutoSizeText(
-                                          "Edit Link",
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 3.h,
-                            ),
                             const AutoSizeText(
-                              "Get paid from anyone",
+                              "How it works?",
                               style: TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 22,
@@ -95,14 +60,128 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                               ),
                             ),
                             SizedBox(
-                              height: 3.h,
+                              height: 2.h,
+                            ),
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: 'Kindly transfer ',
+                                style: const TextStyle(
+                                  fontFamily: "Work Sans",
+                                  color: inactiveTab,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: widget.network!.toUpperCase(),
+                                    style: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      color: fagoSecondaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' Airtime of ',
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      color: inactiveTab,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '$currencySymbol ${widget.amount}',
+                                    style: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      color: fagoSecondaryColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const TextSpan(
+                                    text: ' to',
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      color: inactiveTab,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 2.h, vertical: 2.h),
+                              // height: 7.h,
+                              width: Get.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: fagoSecondaryColorWithOpacity10,
+                              ),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    (widget.network! == 'mtn')
+                                        ? const Image(
+                                            image: AssetImage(
+                                                "assets/images/mtn.png"),
+                                            height: 50,
+                                            width: 50,
+                                          )
+                                        : (widget.network! == 'glo')
+                                            ? const Image(
+                                                image: AssetImage(
+                                                    "assets/images/glo.png"),
+                                                height: 50,
+                                                width: 50,
+                                              )
+                                            : (widget.network! == 'airtel')
+                                                ? const Image(
+                                                    image: AssetImage(
+                                                        "assets/images/airtel.png"),
+                                                    height: 50,
+                                                    width: 50,
+                                                  )
+                                                : (widget.network! ==
+                                                        'etisalat')
+                                                    ? const Image(
+                                                        image: AssetImage(
+                                                            "assets/images/etisalat.png"),
+                                                        height: 50,
+                                                        width: 50,
+                                                      )
+                                                    : Container(),
+                                    SizedBox(
+                                      width: 2.h,
+                                    ),
+                                    AutoSizeText(
+                                      widget.number!,
+                                      style: const TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w700,
+                                        color: fagoSecondaryColor,
+                                      ),
+                                    ),
+                                  ]),
+                            ),
+                            SizedBox(
+                              height: 2.h,
                             ),
                             const AutoSizeText(
-                              "Copy and share your payment link with anyone and start receiving money.",
+                              "and check your wallet in 5 minutes",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: "Work Sans",
-                                fontSize: 12,
+                                fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 color: inactiveTab,
                               ),
@@ -111,76 +190,129 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                               height: 3.h,
                             ),
                             Container(
-                              height: 25.h,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 2.h, vertical: 3.h),
+                              // height: 25.h,
                               width: Get.width,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    blurRadius: 2,
-                                    offset:
-                                        const Offset(2, 3), // Shadow position
-                                  ),
-                                ],
+                                borderRadius: BorderRadius.circular(5),
+                                color: fagoSecondaryColorWithOpacity10,
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: Colors.grey.withOpacity(0.3),
+                                //     blurRadius: 2,
+                                //     offset:
+                                //         const Offset(2, 3), // Shadow position
+                                //   ),
+                                // ],
                               ),
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset('assets/icons/Group 95.svg'),
                                   const AutoSizeText(
-                                    "Ibrahim Lukman",
+                                    "How to make MTN Transfer",
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
-                                      fontSize: 22,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w700,
-                                      color: stepsColor,
+                                      color: fagoSecondaryColor,
                                     ),
                                   ),
-                                  Container(
-                                    // padding: const EdgeInsets.only(left: 20),
-                                    height: 6.h,
-                                    width: 35.5.h,
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius: BorderRadius.circular(36),
-                                        border: Border.all(
-                                            color: fagoSecondaryColor)),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        const AutoSizeText(
-                                          'https://fagopay.link/ibrahim',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: fagoSecondaryColor,
-                                          ),
+                                  SizedBox(
+                                    height: 2.h,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const AutoSizeText(
+                                        "Format:",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: inactiveTab,
                                         ),
-                                        // const Spacer(),
-                                        SvgPicture.asset(
-                                            'assets/icons/copy-svgrepo-com 1.svg')
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "*600*08102837593*1000*pin#",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: inactiveTab,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 2.h,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const AutoSizeText(
+                                        "Format:",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: inactiveTab,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 1.h,
+                                      ),
+                                      const AutoSizeText(
+                                        "*600*08102837593*1000*pin#",
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                          color: fagoSecondaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 2.h,
+                                  ),
+                                  const Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AutoSizeText(
+                                        "Default PIN: 0000 (Note: default pin must be changed)",
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: inactiveTab,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 8.h,
-                            ),
-                            AuthButtons(
-                                form: false,
-                                text: "Share Payment Link",
-                                route: const PleasePayMePage()),
+                            // SizedBox(
+                            //   height: 8.h,
+                            // ),
+                            // Center(
+                            //   child: AuthButtons(
+                            //       form: false,
+                            //       text: "Share Payment Link",
+                            //       route: const PleasePayMePage()),
+                            // ),
                           ],
                         )),
                   ),

@@ -1,10 +1,13 @@
-// ignore_for_file: unrelated_type_equality_checks
-
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/kyc/countdown_page2.dart';
 import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -23,6 +26,18 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
   var number = "";
   int? transactionType;
 
+  @override
+  void initState() {
+    super.initState();
+    requestPermissions();
+  }
+
+  Future<void> Function() requestPermissions = () async {
+    await Permission.camera.request().isGranted;
+
+    await Permission.microphone.request();
+  };
+  final _userUcontroller = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,7 +136,31 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Get.to((const IdentityPassPage()));
+                                    FlutterIdentityKyc.showWidget(
+                                      InputParameters(
+                                        context: context,
+                                        merchantKey:
+                                            "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
+                                        firstName: 'demo',
+                                        lastName: 'demo',
+                                        email: "demo@domainame.com",
+                                        userRef: _userUcontroller.user!.id,
+                                        onCancel: (response) {
+                                          if (kDebugMode) {
+                                            print(response);
+                                          }
+                                        },
+                                        onVerified: (response) {
+                                          Get.to(() => const CountdownPage2());
+                                          if (kDebugMode) {
+                                            print(response);
+                                          }
+                                        },
+                                        onError: (error) => print(error),
+                                      ),
+                                    );
+
+                                    // Get.to((const IdentityPassPage()));
                                   },
                                   child: Container(
                                     height: 5.h,

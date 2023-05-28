@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import '../../../controllers/bill_controller.dart';
-import '../../../controllers/user_controller.dart';
+import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/individual/bills/how_it_works.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
@@ -67,7 +69,15 @@ class _SwapAirtimeState extends State<SwapAirtime> {
     setState(() => searchOnStoppedTyping = Timer(duration, () {
           _billsController.swapCharge(
               amount: _billsController.amountController.text.toString(),
-              network: 'mtn'
+              network: (mtnActive) == true
+                  ? 'mtn'
+                  : (gloActive) == true
+                      ? 'glo'
+                      : (airtelActive) == true
+                          ? 'airtel'
+                          : (etisatActive) == true
+                              ? 'etisalat'
+                              : 'glo'
               // network: if(mtnActive == true){
               //   mtnActive == 'mtn'
               // }else if(gloActive == true){
@@ -480,7 +490,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                               children: [
                                 const Align(
                                   alignment: Alignment.centerLeft,
-                                  child:  AutoSizeText(
+                                  child: AutoSizeText(
                                     "Transaction Information",
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
@@ -490,9 +500,10 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                     ),
                                   ),
                                 ),
-                                 SizedBox(height: 2.h),
-                                Row( 
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                SizedBox(height: 2.h),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     const AutoSizeText(
                                       "Amount:",
@@ -533,9 +544,9 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                   ],
                                 ),
                                 SizedBox(height: 2.h),
-            
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     const AutoSizeText(
                                       "Network",
@@ -557,8 +568,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                                 null
                                             ? AutoSizeText(
                                                 _billsController
-                                                    .userchargesAmount!
-                                                    .network!
+                                                    .userchargesAmount!.network!
                                                     .toUpperCase(),
                                                 style: const TextStyle(
                                                   fontFamily: "Work Sans",
@@ -580,7 +590,8 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                 ),
                                 SizedBox(height: 2.h),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     const AutoSizeText(
                                       "Transaction Fee",
@@ -660,6 +671,12 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                           print('here i am 3');
                           _billsController.initiateSwap(swapDetails);
                         }
+                        Get.to(() => SwapAirtimeDescPage(
+                              network:
+                                  _billsController.userchargesAmount!.network!,
+                              amount: _billsController.amountController.text,
+                              number: _billsController.phoneController.text,
+                            ));
                         print('here i am 2');
                       },
                       child: Container(
@@ -673,7 +690,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                               ? const LoadingWidget()
                               : const Center(
                                   child: AutoSizeText(
-                                    'Save',
+                                    'Swap Now',
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 14,
@@ -684,16 +701,33 @@ class _SwapAirtimeState extends State<SwapAirtime> {
                                 )),
                     );
                   }),
-                  // Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  //   child: AuthButtons(
-                  //       form: false,
-                  //       text: "Continue",
-                  //       route: ConfirmTransactions(
-                  //         backRoute: const SwapAirtime(),
-                  //         action: 'swap',
-                  //       )),
-                  // )
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: InkWell(
+                      onTap: () {
+                        print(
+                            'Network ${_billsController.userchargesAmount!.network!}');
+                        Get.to(() => SwapAirtimeDescPage(
+                              network:
+                                  _billsController.userchargesAmount!.network!,
+                              amount: _billsController.amountController.text,
+                              number: _billsController.phoneController.text,
+                            ));
+                      },
+                      child: const AutoSizeText(
+                        'Test',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                          color: fagoBlackColor,
+                        ),
+                      ),
+                    ),
+                  )
                 ]),
           ),
         ),
