@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import '../../../controllers/government_identity_verification_controller.dart';
 import '../bills/data.dart';
 import '../bills/swap_airtime.dart';
@@ -826,21 +827,21 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                           unverifiedUserDialogue());
                                                   return;
                                                 }
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const CountdownPage2()),
-                                                );
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //       builder: (context) =>
+                                                //           const CountdownPage2()),
+                                                // );
                                                 // Navigator.of(context).push(
                                                 //   MaterialPageRoute(
                                                 //       builder: (context) =>
                                                 //           const kyc_success()),
                                                 // );
-                                                // Navigator.of(context).push(
-                                                //   MaterialPageRoute(
-                                                //       builder: (context) =>
-                                                //           const SharePaymentLink()),
-                                                // );
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const SharePaymentLink()),
+                                                );
                                               },
                                               child: Column(
                                                 children: [
