@@ -852,8 +852,12 @@ class _ManageAccountState extends State<ManageAccount> {
                     height: 2.h,
                   ),
                   _companyController.companies.isEmpty
-                      ? const Center(
-                          child: Text('No Created Company Yet!'),
+                      ? Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 3.h),
+                            child: const Text(
+                                'No Created Company/Business Account!'),
+                          ),
                         )
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -914,7 +918,7 @@ class _ManageAccountState extends State<ManageAccount> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const AutoSizeText(
-                              'Manage individualn Business \nAccounts in One App',
+                              'Manage Individual and Business \nAccounts in One App',
                               style: TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 16,

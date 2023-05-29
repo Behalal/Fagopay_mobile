@@ -300,24 +300,33 @@ class KycVerficationstate extends State<KycVerfication> {
                         SvgPicture.asset(
                           'assets/icons/Ellipse 278.svg',
                           color: _governmentIdentityController
-                                      .governmentIdentityDetailId !=
-                                  null
+                                          .governmentIdentityDetailId !=
+                                      null &&
+                                  _governmentIdentityController
+                                          .governmentIdentityDetailId !=
+                                      ""
                               ? fagoGreenColor
-                              : fagoSecondaryColorWithOpacity10,
+                              : fagoSecondaryColor,
                         ),
                         SvgPicture.asset(
                           'assets/icons/Ellipse 279.svg',
                           color: _governmentIdentityController
-                                      .governmentIdentityDetailId !=
-                                  null
+                                          .governmentIdentityDetailId !=
+                                      null &&
+                                  _governmentIdentityController
+                                          .governmentIdentityDetailId !=
+                                      ""
                               ? fagoGreenColor
-                              : fagoSecondaryColorWithOpacity10,
+                              : fagoSecondaryColor,
                         ),
                         InkWell(
                           onTap: () {
                             if (_governmentIdentityController
-                                    .governmentIdentityDetailId ==
-                                null) {
+                                        .governmentIdentityDetailId ==
+                                    null ||
+                                _governmentIdentityController
+                                        .governmentIdentityDetailId ==
+                                    "") {
                               Get.to(() => const IdentificationVerification());
                               return;
                             }
@@ -328,8 +337,11 @@ class KycVerficationstate extends State<KycVerfication> {
                             // height: 27.h,
                             width: Get.width,
                             color: _governmentIdentityController
-                                        .governmentIdentityDetailId !=
-                                    null
+                                            .governmentIdentityDetailId !=
+                                        null &&
+                                    _governmentIdentityController
+                                            .governmentIdentityDetailId !=
+                                        ""
                                 ? fagoGreenColor.withOpacity(0.2)
                                 : fagoSecondaryColorWithOpacity10,
                             child: Row(
@@ -359,16 +371,22 @@ class KycVerficationstate extends State<KycVerfication> {
                                       width: 24.h,
                                       decoration: BoxDecoration(
                                           color: _governmentIdentityController
-                                                      .governmentIdentityDetailId !=
-                                                  null
+                                                          .governmentIdentityDetailId !=
+                                                      null &&
+                                                  _governmentIdentityController
+                                                          .governmentIdentityDetailId !=
+                                                      ""
                                               ? fagoGreenColor.withOpacity(0.1)
                                               : fagoSecondaryColorWithOpacity10,
                                           borderRadius:
                                               BorderRadius.circular(25),
                                           border: Border.all(
                                               color: _governmentIdentityController
-                                                          .governmentIdentityDetailId !=
-                                                      null
+                                                              .governmentIdentityDetailId !=
+                                                          null &&
+                                                      _governmentIdentityController
+                                                              .governmentIdentityDetailId !=
+                                                          ""
                                                   ? fagoGreenColor
                                                   : fagoSecondaryColor)),
                                       alignment: Alignment.center,
@@ -379,8 +397,11 @@ class KycVerficationstate extends State<KycVerfication> {
                                           fontSize: 10,
                                           fontWeight: FontWeight.w500,
                                           color: _governmentIdentityController
-                                                      .governmentIdentityDetailId !=
-                                                  null
+                                                          .governmentIdentityDetailId !=
+                                                      null &&
+                                                  _governmentIdentityController
+                                                          .governmentIdentityDetailId !=
+                                                      ""
                                               ? fagoGreenColor
                                               : fagoSecondaryColor,
                                         ),
@@ -398,8 +419,11 @@ class KycVerficationstate extends State<KycVerfication> {
                                         fontSize: 10,
                                         fontWeight: FontWeight.w500,
                                         color: _governmentIdentityController
-                                                    .governmentIdentityDetailId !=
-                                                null
+                                                        .governmentIdentityDetailId !=
+                                                    null &&
+                                                _governmentIdentityController
+                                                        .governmentIdentityDetailId !=
+                                                    ""
                                             ? fagoGreenColor
                                             : fagoSecondaryColor,
                                       ),
@@ -410,8 +434,11 @@ class KycVerficationstate extends State<KycVerfication> {
                                     SvgPicture.asset(
                                       'assets/icons/verify_suxf.svg',
                                       color: _governmentIdentityController
-                                                  .governmentIdentityDetailId !=
-                                              null
+                                                      .governmentIdentityDetailId !=
+                                                  null &&
+                                              _governmentIdentityController
+                                                      .governmentIdentityDetailId !=
+                                                  ""
                                           ? fagoGreenColor
                                           : fagoSecondaryColor,
                                     ),
