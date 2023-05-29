@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -56,6 +57,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
   final _billController = Get.find<BillController>();
   final _transactionController = Get.find<TransactionController>();
   final _userController = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
   String _isLoading = "2";
 
   // @override
@@ -169,6 +171,25 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                   _userController
                                           .userAccountDetails!.balance! ==
                                       0) {
+                                Fluttertoast.showToast(
+                                  msg: "Insufficient Wallet Balance",
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.TOP,
+                                  timeInSecForIosWeb: 2,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                return;
+                              }
+                              if (_userController.switchedAccountType == 2 &&
+                                      _companyController.company!
+                                              .accountDetails!.balance! <
+                                          1 ||
+                                  _userController.switchedAccountType == 2 &&
+                                      _companyController.company!
+                                              .accountDetails!.balance! ==
+                                          0) {
                                 Fluttertoast.showToast(
                                   msg: "Insufficient Wallet Balance",
                                   toastLength: Toast.LENGTH_LONG,
