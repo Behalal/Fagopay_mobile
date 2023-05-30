@@ -75,9 +75,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     value: 0.5,
                   ),
                   const SizedBox(height: 5),
-                  const Row(
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
+                    children: const [
                       Text(
                         'Step 4 of 4',
                         style: TextStyle(
@@ -229,10 +229,10 @@ class _PasswordVerificationChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Wrap(
+    return  Wrap(
       spacing: 1,
       runSpacing: 2,
-      children: [
+      children: const [
         Chip(
           label: Text(
             'At least 8 character strong',

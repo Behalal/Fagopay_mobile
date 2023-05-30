@@ -120,10 +120,10 @@ class _SalesAccountState extends State<SalesAccount> {
                                         SizedBox(
                                           height: 2.h,
                                         ),
-                                        const Row(
+                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: [
+                                          children: const [
                                             AutoSizeText(
                                               'Total Inflow',
                                               style: TextStyle(
@@ -147,10 +147,10 @@ class _SalesAccountState extends State<SalesAccount> {
                                         SizedBox(
                                           height: .5.h,
                                         ),
-                                        const Row(
+                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
-                                          children: [
+                                          children: const [
                                             AutoSizeText(
                                               '# 900,340.00',
                                               style: TextStyle(
@@ -252,12 +252,12 @@ class _SalesAccountState extends State<SalesAccount> {
                                       SizedBox(
                                         width: 2.h,
                                       ),
-                                      const Column(
+                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: [
+                                        children: const [
                                           AutoSizeText(
                                             'Jafar Zubaird',
                                             style: TextStyle(
@@ -308,12 +308,12 @@ class _SalesAccountState extends State<SalesAccount> {
                                       SizedBox(
                                         width: 2.h,
                                       ),
-                                      const Column(
+                                       Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: [
+                                        children: const [
                                           AutoSizeText(
                                             'Jafar Zubaird',
                                             style: TextStyle(

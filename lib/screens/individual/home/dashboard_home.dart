@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import '../../../controllers/government_identity_verification_controller.dart';
 import '../bills/data.dart';
+import '../bills/how_it_works.dart';
 import '../bills/swap_airtime.dart';
 import '../refer_and_win/refer_page.dart';
 import '../requests/requests.dart';
@@ -810,21 +811,15 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                if (widget.userDetails
-                                                        .kycVerified ==
-                                                    0) {
+                                                if (widget.userDetails.kycVerified == 0) {
                                                   Get.defaultDialog(
                                                       title: "",
                                                       middleText: "",
                                                       titlePadding:
                                                           EdgeInsets.zero,
                                                       contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 8),
-                                                      content:
-                                                          unverifiedUserDialogue());
+                                                          const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
                                                   return;
                                                 }
                                                 // Navigator.of(context).push(
@@ -1519,8 +1514,7 @@ class _DashboardHomeState extends State<DashboardHome> {
     final response = await _loginController.getUserDetails();
     final userjsonBodyData = response['data']['userdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
-    final userAccountjsonBodyData =
-        response['data']['userdetail']['accountdetail'];
+    final userAccountjsonBodyData = response['data']['userdetail']['accountdetail'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
     setState(() {
       _userController.setUserAccountDetails = userAccountDetails;

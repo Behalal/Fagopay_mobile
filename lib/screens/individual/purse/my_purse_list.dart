@@ -83,12 +83,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 3.w, vertical: .9.h),
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
+                                      child:  Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: const [
                                           // SvgPicture.asset(
                                           //     'assets/icons/record_spending_wallet.svg'),
                                           AutoSizeText(
@@ -214,10 +212,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                       SizedBox(
                                         height: 1.5.h,
                                       ),
-                                      const Row(
+                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
+                                        children: const[
                                           AutoSizeText(
                                             'Amount Spent',
                                             style: TextStyle(
@@ -241,10 +239,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                       SizedBox(
                                         height: 0.5.h,
                                       ),
-                                      const Row(
+                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
+                                        children: const [
                                           AutoSizeText(
                                             'NGN 380,000.00',
                                             style: TextStyle(

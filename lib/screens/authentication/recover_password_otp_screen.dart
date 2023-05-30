@@ -77,9 +77,9 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
               value: 0.25,
             ),
             const SizedBox(height: 5),
-            const Row(
+             Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              children: [
+              children: const [
                 Text(
                   'Step 2 of 4',
                   style: TextStyle(

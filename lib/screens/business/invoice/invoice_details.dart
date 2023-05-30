@@ -181,10 +181,10 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               height: 1.h,
                             ),
-                            const Row(
+                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
+                              children: const [
                                 AutoSizeText(
                                   "Due Date:",
                                   style: TextStyle(

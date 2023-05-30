@@ -1,4 +1,5 @@
-// import 'package:auto_size_text/auto_size_text.dart';
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
@@ -50,40 +51,6 @@ class _SwapAirtimeDescPageState extends State<SwapAirtimeDescPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: 22.w,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      color: buttonColor),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3.w, vertical: .7.h),
-                                    child:  Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: const [
-                                        AutoSizeText(
-                                          "Edit Link",
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 3.h,
-                            ),
                             const AutoSizeText(
                               "How it works?",
                               style: TextStyle(
@@ -323,7 +290,7 @@ class _SwapAirtimeDescPageState extends State<SwapAirtimeDescPage> {
                                    Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: const[
                                       AutoSizeText(
                                         "Default PIN: 0000 (Note: default pin must be changed)",
                                         style: TextStyle(
