@@ -1,11 +1,14 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/requests/payme_page.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -24,6 +27,14 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
   int? myRequestType;
   var number = "";
   int? transactionType;
+  String paymentUrl = '';
+
+  @override
+  void initState() {
+    checkLink();
+    super.initState();
+  }
+  final _userUcontroller = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +60,7 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+<<<<<<< Updated upstream
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -82,6 +94,41 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                 ),
                               ],
                             ),
+=======
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.end,
+                            //   children: [
+                            //     Container(
+                            //       width: 22.w,
+                            //       decoration: const BoxDecoration(
+                            //           borderRadius:
+                            //               BorderRadius.all(Radius.circular(15)),
+                            //           color: buttonColor),
+                            //       child: Padding(
+                            //         padding: EdgeInsets.symmetric(
+                            //             horizontal: 3.w, vertical: .7.h),
+                            //         child: const Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.center,
+                            //           crossAxisAlignment:
+                            //               CrossAxisAlignment.center,
+                            //           children: [
+                            //             AutoSizeText(
+                            //               "Edit Link",
+                            //               style: TextStyle(
+                            //                 fontFamily: "Work Sans",
+                            //                 fontSize: 14,
+                            //                 fontWeight: FontWeight.w600,
+                            //                 color: white,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+>>>>>>> Stashed changes
                             SizedBox(
                               height: 3.h,
                             ),
@@ -130,46 +177,102 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SvgPicture.asset('assets/icons/Group 95.svg'),
-                                  const AutoSizeText(
-                                    "Ibrahim Lukman",
-                                    style: TextStyle(
-                                      fontFamily: "Work Sans",
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w700,
-                                      color: stepsColor,
+                                  CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: fagoSecondaryColor.withOpacity(0.05),
+                                    child: Text(
+                                        '${_userUcontroller.user?.firstName?.substring(0, 1)}${_userUcontroller.user?.lastName?.substring(0, 1)}',
+                                      style: textStyle(size: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,space: 2),),
+                                  ),
+                                   AutoSizeText(
+                                    "${_userUcontroller.user?.firstName} ${_userUcontroller.user?.lastName}",
+                                    style: textStyle(size: 22,fontWeight:  FontWeight.w700)
+                                  ),
+                                  paymentUrl.isEmpty?Text('No payment link yet',style: textStyle(size: 15,fontWeight:  FontWeight.w500,),):Container(),
+                                  paymentUrl.isEmpty? GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const PleasePayMePage())).then((value){
+                                        setState(() {
+                                          paymentUrl = value ?? paymentUrl;
+                                        });
+                                      });
+                                    },
+                                    child: AuthButtons(
+                                        form: true,
+                                        text: "Create Link",
+                                        route: const PleasePayMePage()),
+                                  ):
+                                  GestureDetector(
+                                    onTap: (){
+                                      FlutterClipboard.copy(paymentUrl).then((value){
+                                        Get.snackbar('Payment link Copied',
+                                            paymentUrl,
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 3.h,
+                                              vertical: 2.h,
+                                            ));
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                                      height: 6.h,
+                                      //width: 35.5.h,
+                                      decoration: BoxDecoration(
+                                          color: white,
+                                          borderRadius: BorderRadius.circular(36),
+                                          border: Border.all(
+                                              color: fagoSecondaryColor)),
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        // crossAxisAlignment: CrossAxisAlignment.center,
+                                        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                           Flexible(
+                                             child: Text(
+                                               maxLines: 1,
+                                              paymentUrl,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w600,
+                                                color: fagoSecondaryColor,
+                                              ),
+                                          ),
+                                           ),
+                                          // const Spacer(),
+                                          SvgPicture.asset('assets/icons/copy-svgrepo-com 1.svg')
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  Container(
-                                    // padding: const EdgeInsets.only(left: 20),
-                                    height: 6.h,
-                                    width: 35.5.h,
-                                    decoration: BoxDecoration(
-                                        color: white,
-                                        borderRadius: BorderRadius.circular(36),
-                                        border: Border.all(
-                                            color: fagoSecondaryColor)),
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const PleasePayMePage())).then((value){
+                                      setState(() {
+                                        paymentUrl = value?? paymentUrl;
+                                      });
+                                      });
+                                    },
+                                    child: RichText(
+                                        text: TextSpan(
                                       children: [
-                                        const AutoSizeText(
-                                          'https://fagopay.link/ibrahim',
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: fagoSecondaryColor,
-                                          ),
+                                        TextSpan(
+                                          text: 'Click',
+                                          style: textStyle(size: 14, fontWeight: FontWeight.w600)
                                         ),
-                                        // const Spacer(),
-                                        SvgPicture.asset(
-                                            'assets/icons/copy-svgrepo-com 1.svg')
-                                      ],
-                                    ),
+                                        TextSpan(
+                                            text: ' here ',
+                                            style: textStyle(size: 14, fontWeight: FontWeight.w700,color: fagoSecondaryColor)
+                                        ),
+                                        TextSpan(
+                                            text: 'to edit link',
+                                            style: textStyle(size: 14, fontWeight: FontWeight.w600)
+                                        ),
+                                      ]
+                                    )),
                                   ),
                                 ],
                               ),
@@ -177,13 +280,29 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                             SizedBox(
                               height: 8.h,
                             ),
-                            AuthButtons(
-                                form: false,
-                                text: "Share Payment Link",
-                                route: const PleasePayMePage()),
+                            ///Code for sharing link
+                            // AuthButtons(
+                            //     form: false,
+                            //     text: "Share Payment Link",
+                            //     route: const PleasePayMePage()),
                           ],
                         )),
                   ),
                 ])));
+  }
+  checkLink()async{
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    setState(() {
+      paymentUrl = localStorage.getString("paymentLink")!;
+    });
+  }
+  TextStyle textStyle({required double size,required FontWeight fontWeight,Color ?color,double? space}){
+    return  TextStyle(
+      fontFamily: "Work Sans",
+      fontSize: size,
+      letterSpacing: space??0,
+      fontWeight: fontWeight,
+      color: color??stepsColor,
+    );
   }
 }

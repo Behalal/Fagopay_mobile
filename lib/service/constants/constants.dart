@@ -38,6 +38,10 @@ class BaseAPI {
   static String createPurse = "${api}pulse";
   static String showPurse = "${api}pulse/";
 
+
+  ///Genrate Payment pin Url
+  static String paymentLink = "${api}transaction/generate-link";
+
   // String headers = {
   //   "Content-Type": "application/json; charset=UTF-8",
   //   "ddjd": 'Bearer ${token}'

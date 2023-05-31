@@ -348,9 +348,7 @@ class _FundWalletState extends State<FundWallet> {
                                     } else {
                                       print(
                                           widget.accountDetails.accountNumber!);
-                                      FlutterClipboard.copy(widget
-                                              .accountDetails.accountNumber!)
-                                          .then((value) => print('copied'));
+                                      FlutterClipboard.copy(widget.accountDetails.accountNumber!).then((value) => print('copied'));
                                       Get.snackbar('Account Number Copied',
                                           widget.accountDetails.accountNumber!,
                                           snackPosition: SnackPosition.BOTTOM,

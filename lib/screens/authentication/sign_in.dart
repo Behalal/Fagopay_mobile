@@ -165,12 +165,8 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                         suffixIcon: InkWell(
                           onTap: _togglePasswordView,
                           child: Icon(
-                            isHiddenPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: isHiddenPassword
-                                ? Colors.grey.withOpacity(0.5)
-                                : Colors.grey,
+                            isHiddenPassword ? Icons.visibility : Icons.visibility_off,
+                            color: isHiddenPassword ? Colors.grey.withOpacity(0.5) : Colors.grey,
                           ),
                         ),
                       ),
@@ -301,7 +297,6 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
       }
       final userToken = jsonBody['token'];
       SecureStorage.setUserToken(userToken);
-
       // ScaffoldMessenger.of(context).showSnackBar(
       //   const SnackBar(
       //     content: Text(

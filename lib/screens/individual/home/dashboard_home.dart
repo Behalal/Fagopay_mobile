@@ -51,8 +51,13 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
+<<<<<<< Updated upstream
   final _governmentIdentityController =
       Get.find<GovernmentIdentityVerificationController>();
+=======
+  final _governmentIdentityController = Get.find<GovernmentIdentityVerificationController>();
+  final _companyController = Get.find<CompanyController>();
+>>>>>>> Stashed changes
 
   @override
   void initState() {
@@ -411,8 +416,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                     // height: 10.h,
                                     width: Get.width,
                                     decoration: BoxDecoration(
-                                        color: fagoSecondaryColor
-                                            .withOpacity(0.05),
+                                        color: fagoSecondaryColor.withOpacity(0.05),
                                         borderRadius: BorderRadius.circular(8)),
                                     alignment: Alignment.center,
                                     child: Column(
@@ -446,11 +450,16 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         FagoToBank(
+<<<<<<< Updated upstream
                                                       userDetails:
                                                           _userController.user!,
                                                       accountDetails:
                                                           _userController
                                                               .userAccountDetails!,
+=======
+                                                      userDetails: _userController.user!,
+                                                      accountDetails: _userController.switchedAccountType == 2 ? _companyController.company!.accountDetails! : _userController.userAccountDetails!,
+>>>>>>> Stashed changes
                                                     ),
                                                   ),
                                                 );

@@ -4,6 +4,7 @@ import '../controllers/invoice_controller.dart';
 
 import '../controllers/admin_controller.dart';
 import '../controllers/company_controller.dart';
+import '../controllers/payment_link.dart';
 import '../controllers/purse_controller.dart';
 import '../controllers/sales_controller.dart';
 
@@ -39,5 +40,6 @@ class AppBinding extends Bindings {
     Get.lazyPut(() => SalesController());
     Get.lazyPut(() => ExpensesController());
     Get.put(RegistrationController(), permanent: true);
+    Get.lazyPut(()=>PaymentLinkController());
   }
 }

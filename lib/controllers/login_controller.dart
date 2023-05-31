@@ -29,10 +29,9 @@ enum GetUserStatus {
 //owin.abir@findours.com
 //Bigdaddy@123
 class LoginController extends GetxController {
-  TextEditingController emailController = TextEditingController(text: '');
-  TextEditingController passwordController = TextEditingController(text: '');
-  TextEditingController forgotPasswordController =
-      TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '09069888763');
+  TextEditingController passwordController = TextEditingController(text: 'A45966860z#');
+  TextEditingController forgotPasswordController = TextEditingController(text: '');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
   static final isgetKyc = false.obs;
