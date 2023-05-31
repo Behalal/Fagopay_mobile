@@ -44,8 +44,7 @@ class RequestMoney extends GetxController {
   MyRequestStatus get myRequestStatus => _myRequestStatus.value;
 
   final _requestedMoneyStatus = MyRequestedMoneyStatus.empty.obs;
-  MyRequestedMoneyStatus get requestedMoneyStatus =>
-      _requestedMoneyStatus.value;
+  MyRequestedMoneyStatus get requestedMoneyStatus => _requestedMoneyStatus.value;
 
   final _looUpPhonStatus = LookUpPhone.empty.obs;
   LookUpPhone get looUpPhonStatus => _looUpPhonStatus.value;

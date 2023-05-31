@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
+import '../../../controllers/company_controller.dart';
 import '../../../controllers/government_identity_verification_controller.dart';
 import '../bills/data.dart';
 import '../bills/how_it_works.dart';
@@ -51,13 +52,8 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
-<<<<<<< Updated upstream
-  final _governmentIdentityController =
-      Get.find<GovernmentIdentityVerificationController>();
-=======
   final _governmentIdentityController = Get.find<GovernmentIdentityVerificationController>();
   final _companyController = Get.find<CompanyController>();
->>>>>>> Stashed changes
 
   @override
   void initState() {
@@ -450,16 +446,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         FagoToBank(
-<<<<<<< Updated upstream
-                                                      userDetails:
-                                                          _userController.user!,
-                                                      accountDetails:
-                                                          _userController
-                                                              .userAccountDetails!,
-=======
                                                       userDetails: _userController.user!,
-                                                      accountDetails: _userController.switchedAccountType == 2 ? _companyController.company!.accountDetails! : _userController.userAccountDetails!,
->>>>>>> Stashed changes
+                                                      accountDetails: _userController.userAccountDetails!,
                                                     ),
                                                   ),
                                                 );

@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/individual/requests/widgets/my_request.dart';
+import 'package:fagopay/screens/individual/requests/widgets/request_list.dart';
 import '../../../controllers/request_money_controller.dart';
 import '../../authentication/recover_password_otp_screen.dart';
 import 'support_request.dart';
@@ -25,19 +27,19 @@ class RequestHome extends StatefulWidget {
 
 class _RequestHomeState extends State<RequestHome> {
   final _moneyRequest = Get.put(RequestMoney());
-  late bool MyRequest;
-  late bool Request;
+  // late bool MyRequest;
+  // late bool Request;
   int? myRequestType;
   final display = createDisplay(
     roundingType: RoundingType.floor,
     length: 15,
     decimal: 5,
   );
-
+  int screenValue = 0;
   @override
   void initState() {
-    MyRequest = true;
-    Request = false;
+    // MyRequest = true;
+    // Request = false;
     super.initState();
   }
 
@@ -45,7 +47,10 @@ class _RequestHomeState extends State<RequestHome> {
   void dispose() {
     super.dispose();
   }
-
+  List<Widget> _widgetOptions =[
+    MyRequestWidget(),
+    RequestListWidget(),
+  ];
   @override
   Widget build(BuildContext context) {
     _moneyRequest.getMyRequest();
@@ -136,8 +141,7 @@ class _RequestHomeState extends State<RequestHome> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                MyRequest = true;
-                                Request = false;
+                                screenValue = 0;
                               });
                             },
                             child: Container(
@@ -146,9 +150,7 @@ class _RequestHomeState extends State<RequestHome> {
                                   border: Border(
                                       bottom: BorderSide(
                                           width: 2.5,
-                                          color: (MyRequest)
-                                              ? fagoSecondaryColor
-                                              : fagoSecondaryColorWithOpacity))),
+                                          color: (screenValue == 0) ? fagoSecondaryColor : fagoSecondaryColorWithOpacity))),
                               child: Padding(
                                 padding: EdgeInsets.only(bottom: 1.h),
                                 child: const AutoSizeText(
@@ -176,8 +178,7 @@ class _RequestHomeState extends State<RequestHome> {
                           GestureDetector(
                             onTap: (() {
                               setState(() {
-                                MyRequest = false;
-                                Request = true;
+                                screenValue = 1;
                               });
                             }),
                             child: Container(
@@ -186,7 +187,7 @@ class _RequestHomeState extends State<RequestHome> {
                                   border: Border(
                                       bottom: BorderSide(
                                           width: 2.5,
-                                          color: (Request)
+                                          color: (screenValue == 1)
                                               ? fagoSecondaryColor
                                               : fagoSecondaryColorWithOpacity))),
                               child: Padding(
@@ -209,423 +210,12 @@ class _RequestHomeState extends State<RequestHome> {
                       SizedBox(
                         height: 2.h,
                       ),
-                      (MyRequest)
-                          ? SizedBox(
-                              height: 75.h,
-                              width: Get.width,
-                              child: Obx(() {
-                                return _moneyRequest.myRequestStatus ==
-                                        MyRequestStatus.loading
-                                    ? const LoadingWidget(
-                                        color: fagoSecondaryColor,
-                                      )
-                                    : _moneyRequest.myRequestList.isNotEmpty
-                                        ? ListView.separated(
-                                            padding: EdgeInsets.zero,
-                                            scrollDirection: Axis.vertical,
-                                            physics: const ScrollPhysics(),
-                                            shrinkWrap: false,
-                                            itemCount: _moneyRequest
-                                                .myRequestList.length,
-                                            separatorBuilder:
-                                                (context, index) => SizedBox(
-                                                      height: 1.6.h,
-                                                    ),
-                                            itemBuilder: (context, index) {
-                                              var item = _moneyRequest
-                                                  .myRequestList[index];
-                                              return InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    myRequestType = index;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  height: 14.h,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: Colors.white,
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors.grey
-                                                            .withOpacity(0.3),
-                                                        blurRadius: 2,
-                                                        offset: const Offset(4,
-                                                            4), // Shadow position
-                                                      ),
-                                                    ],
-                                                    // border: const Border(
-                                                    //     bottom: BorderSide(
-                                                    //         width: 1,
-                                                    //         color: fagoBlackColorWithOpacity)),
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 3.w,
-                                                            vertical: 1.8.h),
-                                                    child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 55.w,
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceEvenly,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  children: [
-                                                                    const AutoSizeText(
-                                                                      "Requested",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontFamily:
-                                                                            "Work Sans",
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                        color:
-                                                                            stepsColor,
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width:
-                                                                          1.w,
-                                                                    ),
-                                                                    AutoSizeText(
-                                                                      "$currencySymbol ${item.requestedAmount}",
-                                                                      style:
-                                                                          const TextStyle(
-                                                                        fontFamily:
-                                                                            "Work Sans",
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                        color:
-                                                                            fagoSecondaryColor,
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width:
-                                                                          1.w,
-                                                                    ),
-                                                                    const AutoSizeText(
-                                                                      "from",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontFamily:
-                                                                            "Work Sans",
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.w700,
-                                                                        color:
-                                                                            stepsColor,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 1.h,
-                                                                ),
-                                                                AutoSizeText(
-                                                                  item.requestedfromname
-                                                                      .toString(),
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontFamily:
-                                                                        "Work Sans",
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        stepsColor,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 1.h,
-                                                                ),
-                                                                AutoSizeText(
-                                                                  "${item.createdAt!.year.toString()}-${item.createdAt!.month.toString().padLeft(2, '0')}-${item.createdAt!.day.toString().padLeft(2, '0')} ${item.createdAt!.hour.toString().padLeft(2, '0')}:${item.createdAt!.minute.toString().padLeft(2, '0')}",
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    fontFamily:
-                                                                        "Work Sans",
-                                                                    fontSize:
-                                                                        12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color:
-                                                                        stepsColorWithOpacity55,
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          InkWell(
-                                                            onTap: () {
-                                                              Get.defaultDialog(
-                                                                  title: "",
-                                                                  middleText:
-                                                                      "",
-                                                                  titlePadding:
-                                                                      EdgeInsets
-                                                                          .zero,
-                                                                  contentPadding: const EdgeInsets
-                                                                          .symmetric(
-                                                                      horizontal:
-                                                                          8,
-                                                                      vertical:
-                                                                          8),
-                                                                  content:
-                                                                      dialogItem());
-                                                            },
-                                                            child: SvgPicture.asset(
-                                                                'assets/icons/delete_request.svg'),
-                                                          ),
-                                                        ]),
-                                                  ),
-                                                ),
-                                              );
-                                            })
-                                        : const Center(
-                                            child: AutoSizeText(
-                                              'No Request found',
-                                              style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: stepsColor,
-                                              ),
-                                            ),
-                                          );
-                              }),
-                            )
-                          : SizedBox(
-                              height: 65.h,
-                              width: Get.width,
-                              child: Obx(() {
-                                return _moneyRequest.requestedMoneyStatus ==
-                                        MyRequestStatus.loading
-                                    ? const LoadingWidget(
-                                        color: fagoSecondaryColor,
-                                      )
-                                    : _moneyRequest
-                                            .requestedMoneyList.isNotEmpty
-                                        ? ListView.separated(
-                                            padding: EdgeInsets.zero,
-                                            scrollDirection: Axis.vertical,
-                                            physics: const ScrollPhysics(),
-                                            shrinkWrap: false,
-                                            itemCount: _moneyRequest
-                                                .requestedMoneyList.length,
-                                            separatorBuilder:
-                                                (context, index) => SizedBox(
-                                                      height: 1.6.h,
-                                                    ),
-                                            itemBuilder: (context, index) {
-                                              var item = _moneyRequest
-                                                  .requestedMoneyList[index];
-                                              return InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    myRequestType = index;
-                                                  });
-                                                },
-                                                child: Container(
-                                                  // width: 90.w,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color:
-                                                        fagoSecondaryColorWithOpacity10,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 3.w,
-                                                            vertical: 1.h),
-                                                    child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              const CircleAvatar(
-                                                                radius:
-                                                                    30, // Image radius
-                                                                backgroundImage:
-                                                                    AssetImage(
-                                                                        'assets/images/fago(2).png'),
-                                                              ),
-                                                              SizedBox(
-                                                                width: 2.w,
-                                                              ),
-                                                              Column(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  AutoSizeText(
-                                                                    item.requestedbyname!,
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontFamily:
-                                                                          "Work Sans",
-                                                                      fontSize:
-                                                                          18,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color:
-                                                                          stepsColor,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 1.h,
-                                                                  ),
-                                                                  AutoSizeText(
-                                                                    "$currencySymbol ${item.requestedAmount}",
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontFamily:
-                                                                          "Work Sans",
-                                                                      fontSize:
-                                                                          20,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                      color:
-                                                                          fagoSecondaryColor,
-                                                                    ),
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 1.h,
-                                                                  ),
-                                                                  AutoSizeText(
-                                                                    " ${item.createdAt!.year.toString()}-${item.createdAt!.month.toString().padLeft(2, '0')}-${item.createdAt!.day.toString().padLeft(2, '0')} ${item.createdAt!.hour.toString().padLeft(2, '0')}:${item.createdAt!.minute.toString().padLeft(2, '0')}",
-                                                                    style:
-                                                                        const TextStyle(
-                                                                      fontFamily:
-                                                                          "Work Sans",
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color:
-                                                                          stepsColor,
-                                                                    ),
-                                                                  ),
-                                                                  // SizedBox(
-                                                                  //   height: 1.h,
-                                                                  // ),
-                                                                ],
-                                                              )
-                                                            ],
-                                                          ),
-                                                          InkWell(
-                                                            onTap: () {
-                                                              Get.to(() =>
-                                                                  SupportRequest(
-                                                                    item: item,
-                                                                  ));
-                                                            },
-                                                            child: Container(
-                                                              width: 17.w,
-                                                              decoration: const BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              15)),
-                                                                  color:
-                                                                      buttonColor),
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                        horizontal:
-                                                                            3.w,
-                                                                        vertical:
-                                                                            0.5.h),
-                                                                child:  Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
-                                                                  children:const  [
-                                                                    AutoSizeText(
-                                                                      "View",
-                                                                      style:
-                                                                          TextStyle(
-                                                                        fontFamily:
-                                                                            "Work Sans",
-                                                                        fontSize:
-                                                                            13,
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        color:
-                                                                            white,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                  ),
-                                                ),
-                                              );
-                                            })
-                                        : const Center(
-                                            child: AutoSizeText(
-                                              'No Request found',
-                                              style: TextStyle(
-                                                fontFamily: "Work Sans",
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: stepsColor,
-                                              ),
-                                            ),
-                                          );
-                              }),
-                            )
-                    ]))));
+                      IndexedStack(index: screenValue, children: _widgetOptions),
+                    ],
+                ),
+            ),
+        ),
+    );
   }
 
   Widget dialogItem() {
@@ -769,5 +359,409 @@ class _RequestHomeState extends State<RequestHome> {
     );
   }
 }
-
+///Old button
 //08030419480,
+
+//                      (MyRequest) ? SizedBox(
+//                               height: 75.h,
+//                               width: Get.width,
+//                               child: Obx(() {
+//                                 return _moneyRequest.myRequestStatus == MyRequestStatus.loading
+//                                     ? const LoadingWidget(color: fagoSecondaryColor,)
+//                                     : _moneyRequest.myRequestList.isNotEmpty
+//                                         ? ListView.separated(
+//                                             padding: EdgeInsets.zero,
+//                                             scrollDirection: Axis.vertical,
+//                                             physics: const ScrollPhysics(),
+//                                             shrinkWrap: false,
+//                                             itemCount: _moneyRequest.myRequestList.length,
+//                                             separatorBuilder:
+//                                                 (context, index) => SizedBox(height: 1.6.h,),
+//                                             itemBuilder: (context, index) {
+//                                               var item = _moneyRequest.myRequestList[index];
+//                                               return InkWell(
+//                                                 onTap: () {
+//                                                   setState(() {
+//                                                     myRequestType = index;
+//                                                   });
+//                                                 },
+//                                                 child: Container(
+//                                                   height: 14.h,
+//                                                   decoration: BoxDecoration(
+//                                                     borderRadius:
+//                                                         BorderRadius.circular(
+//                                                             5),
+//                                                     color: Colors.white,
+//                                                     boxShadow: [
+//                                                       BoxShadow(
+//                                                         color: Colors.grey
+//                                                             .withOpacity(0.3),
+//                                                         blurRadius: 2,
+//                                                         offset: const Offset(4,
+//                                                             4), // Shadow position
+//                                                       ),
+//                                                     ],
+//                                                     // border: const Border(
+//                                                     //     bottom: BorderSide(
+//                                                     //         width: 1,
+//                                                     //         color: fagoBlackColorWithOpacity)),
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding:
+//                                                         EdgeInsets.symmetric(
+//                                                             horizontal: 3.w,
+//                                                             vertical: 1.8.h),
+//                                                     child: Row(
+//                                                         mainAxisAlignment:
+//                                                             MainAxisAlignment
+//                                                                 .spaceBetween,
+//                                                         crossAxisAlignment:
+//                                                             CrossAxisAlignment
+//                                                                 .center,
+//                                                         children: [
+//                                                           SizedBox(
+//                                                             width: 55.w,
+//                                                             child: Column(
+//                                                               mainAxisAlignment:
+//                                                                   MainAxisAlignment
+//                                                                       .spaceEvenly,
+//                                                               crossAxisAlignment:
+//                                                                   CrossAxisAlignment
+//                                                                       .start,
+//                                                               children: [
+//                                                                 Row(
+//                                                                   mainAxisAlignment:
+//                                                                       MainAxisAlignment
+//                                                                           .start,
+//                                                                   children: [
+//                                                                     const AutoSizeText(
+//                                                                       "Requested",
+//                                                                       style:
+//                                                                           TextStyle(
+//                                                                         fontFamily:
+//                                                                             "Work Sans",
+//                                                                         fontSize:
+//                                                                             14,
+//                                                                         fontWeight:
+//                                                                             FontWeight.w700,
+//                                                                         color:
+//                                                                             stepsColor,
+//                                                                       ),
+//                                                                     ),
+//                                                                     SizedBox(
+//                                                                       width:
+//                                                                           1.w,
+//                                                                     ),
+//                                                                     AutoSizeText(
+//                                                                       "$currencySymbol ${item.requestedAmount}",
+//                                                                       style:
+//                                                                           const TextStyle(
+//                                                                         fontFamily:
+//                                                                             "Work Sans",
+//                                                                         fontSize:
+//                                                                             14,
+//                                                                         fontWeight:
+//                                                                             FontWeight.w700,
+//                                                                         color:
+//                                                                             fagoSecondaryColor,
+//                                                                       ),
+//                                                                     ),
+//                                                                     SizedBox(
+//                                                                       width:
+//                                                                           1.w,
+//                                                                     ),
+//                                                                     const AutoSizeText(
+//                                                                       "from",
+//                                                                       style:
+//                                                                           TextStyle(
+//                                                                         fontFamily:
+//                                                                             "Work Sans",
+//                                                                         fontSize:
+//                                                                             14,
+//                                                                         fontWeight:
+//                                                                             FontWeight.w700,
+//                                                                         color:
+//                                                                             stepsColor,
+//                                                                       ),
+//                                                                     ),
+//                                                                   ],
+//                                                                 ),
+//                                                                 SizedBox(
+//                                                                   height: 1.h,
+//                                                                 ),
+//                                                                 AutoSizeText(
+//                                                                   item.requestedfromname
+//                                                                       .toString(),
+//                                                                   style:
+//                                                                       const TextStyle(
+//                                                                     fontFamily:
+//                                                                         "Work Sans",
+//                                                                     fontSize:
+//                                                                         14,
+//                                                                     fontWeight:
+//                                                                         FontWeight
+//                                                                             .w400,
+//                                                                     color:
+//                                                                         stepsColor,
+//                                                                   ),
+//                                                                 ),
+//                                                                 SizedBox(
+//                                                                   height: 1.h,
+//                                                                 ),
+//                                                                 AutoSizeText(
+//                                                                   "${item.createdAt!.year.toString()}-${item.createdAt!.month.toString().padLeft(2, '0')}-${item.createdAt!.day.toString().padLeft(2, '0')} ${item.createdAt!.hour.toString().padLeft(2, '0')}:${item.createdAt!.minute.toString().padLeft(2, '0')}",
+//                                                                   style:
+//                                                                       const TextStyle(
+//                                                                     fontFamily:
+//                                                                         "Work Sans",
+//                                                                     fontSize:
+//                                                                         12,
+//                                                                     fontWeight:
+//                                                                         FontWeight
+//                                                                             .w400,
+//                                                                     color:
+//                                                                         stepsColorWithOpacity55,
+//                                                                   ),
+//                                                                 ),
+//                                                               ],
+//                                                             ),
+//                                                           ),
+//                                                           InkWell(
+//                                                             onTap: () {
+//                                                               Get.defaultDialog(
+//                                                                   title: "",
+//                                                                   middleText:
+//                                                                       "",
+//                                                                   titlePadding:
+//                                                                       EdgeInsets
+//                                                                           .zero,
+//                                                                   contentPadding: const EdgeInsets
+//                                                                           .symmetric(
+//                                                                       horizontal:
+//                                                                           8,
+//                                                                       vertical:
+//                                                                           8),
+//                                                                   content:
+//                                                                       dialogItem());
+//                                                             },
+//                                                             child: SvgPicture.asset(
+//                                                                 'assets/icons/delete_request.svg'),
+//                                                           ),
+//                                                         ]),
+//                                                   ),
+//                                                 ),
+//                                               );
+//                                             })
+//                                         : const Center(
+//                                             child: AutoSizeText(
+//                                               'No Request found',
+//                                               style: TextStyle(
+//                                                 fontFamily: "Work Sans",
+//                                                 fontSize: 14,
+//                                                 fontWeight: FontWeight.w400,
+//                                                 color: stepsColor,
+//                                               ),
+//                                             ),
+//                                           );
+//                               }),
+//                             ) : SizedBox(
+//                               height: 65.h,
+//                               width: Get.width,
+//                               child: Obx(() {
+//                                 return _moneyRequest.requestedMoneyStatus == MyRequestStatus.loading
+//                                     ? const LoadingWidget(
+//                                         color: fagoSecondaryColor,) : _moneyRequest.requestedMoneyList.isNotEmpty
+//                                         ? ListView.separated(
+//                                             padding: EdgeInsets.zero,
+//                                             scrollDirection: Axis.vertical,
+//                                             physics: const ScrollPhysics(),
+//                                             shrinkWrap: false,
+//                                             itemCount: _moneyRequest
+//                                                 .requestedMoneyList.length,
+//                                             separatorBuilder:
+//                                                 (context, index) => SizedBox(
+//                                                       height: 1.6.h,
+//                                                     ),
+//                                             itemBuilder: (context, index) {
+//                                               var item = _moneyRequest
+//                                                   .requestedMoneyList[index];
+//                                               return InkWell(
+//                                                 onTap: () {
+//                                                   setState(() {
+//                                                     myRequestType = index;
+//                                                   });
+//                                                 },
+//                                                 child: Container(
+//                                                   // width: 90.w,
+//                                                   decoration: BoxDecoration(
+//                                                     borderRadius:
+//                                                         BorderRadius.circular(
+//                                                             5),
+//                                                     color:
+//                                                         fagoSecondaryColorWithOpacity10,
+//                                                   ),
+//                                                   child: Padding(
+//                                                     padding:
+//                                                         EdgeInsets.symmetric(
+//                                                             horizontal: 3.w,
+//                                                             vertical: 1.h),
+//                                                     child: Row(
+//                                                         mainAxisAlignment:
+//                                                             MainAxisAlignment
+//                                                                 .spaceBetween,
+//                                                         crossAxisAlignment:
+//                                                             CrossAxisAlignment
+//                                                                 .center,
+//                                                         children: [
+//                                                           Row(
+//                                                             mainAxisAlignment:
+//                                                                 MainAxisAlignment
+//                                                                     .spaceBetween,
+//                                                             crossAxisAlignment:
+//                                                                 CrossAxisAlignment
+//                                                                     .center,
+//                                                             children: [
+//                                                               const CircleAvatar(
+//                                                                 radius:
+//                                                                     30, // Image radius
+//                                                                 backgroundImage:
+//                                                                     AssetImage(
+//                                                                         'assets/images/fago(2).png'),
+//                                                               ),
+//                                                               SizedBox(
+//                                                                 width: 2.w,
+//                                                               ),
+//                                                               Column(
+//                                                                 mainAxisAlignment:
+//                                                                     MainAxisAlignment
+//                                                                         .spaceBetween,
+//                                                                 crossAxisAlignment:
+//                                                                     CrossAxisAlignment
+//                                                                         .start,
+//                                                                 children: [
+//                                                                   AutoSizeText(
+//                                                                     item.requestedbyname!,
+//                                                                     style:
+//                                                                         const TextStyle(
+//                                                                       fontFamily:
+//                                                                           "Work Sans",
+//                                                                       fontSize:
+//                                                                           18,
+//                                                                       fontWeight:
+//                                                                           FontWeight
+//                                                                               .w500,
+//                                                                       color:
+//                                                                           stepsColor,
+//                                                                     ),
+//                                                                   ),
+//                                                                   SizedBox(
+//                                                                     height: 1.h,
+//                                                                   ),
+//                                                                   AutoSizeText(
+//                                                                     "$currencySymbol ${item.requestedAmount}",
+//                                                                     style:
+//                                                                         const TextStyle(
+//                                                                       fontFamily:
+//                                                                           "Work Sans",
+//                                                                       fontSize:
+//                                                                           20,
+//                                                                       fontWeight:
+//                                                                           FontWeight
+//                                                                               .w700,
+//                                                                       color:
+//                                                                           fagoSecondaryColor,
+//                                                                     ),
+//                                                                   ),
+//                                                                   SizedBox(
+//                                                                     height: 1.h,
+//                                                                   ),
+//                                                                   AutoSizeText(
+//                                                                     " ${item.createdAt!.year.toString()}-${item.createdAt!.month.toString().padLeft(2, '0')}-${item.createdAt!.day.toString().padLeft(2, '0')} ${item.createdAt!.hour.toString().padLeft(2, '0')}:${item.createdAt!.minute.toString().padLeft(2, '0')}",
+//                                                                     style:
+//                                                                         const TextStyle(
+//                                                                       fontFamily:
+//                                                                           "Work Sans",
+//                                                                       fontSize:
+//                                                                           12,
+//                                                                       fontWeight:
+//                                                                           FontWeight
+//                                                                               .w400,
+//                                                                       color:
+//                                                                           stepsColor,
+//                                                                     ),
+//                                                                   ),
+//                                                                   // SizedBox(
+//                                                                   //   height: 1.h,
+//                                                                   // ),
+//                                                                 ],
+//                                                               )
+//                                                             ],
+//                                                           ),
+//                                                           InkWell(
+//                                                             onTap: () {
+//                                                               Get.to(() =>
+//                                                                   SupportRequest(
+//                                                                     item: item,
+//                                                                   ));
+//                                                             },
+//                                                             child: Container(
+//                                                               width: 17.w,
+//                                                               decoration: const BoxDecoration(
+//                                                                   borderRadius:
+//                                                                       BorderRadius.all(
+//                                                                           Radius.circular(
+//                                                                               15)),
+//                                                                   color:
+//                                                                       buttonColor),
+//                                                               child: Padding(
+//                                                                 padding: EdgeInsets
+//                                                                     .symmetric(
+//                                                                         horizontal:
+//                                                                             3.w,
+//                                                                         vertical:
+//                                                                             0.5.h),
+//                                                                 child:  Row(
+//                                                                   mainAxisAlignment:
+//                                                                       MainAxisAlignment
+//                                                                           .center,
+//                                                                   crossAxisAlignment:
+//                                                                       CrossAxisAlignment
+//                                                                           .center,
+//                                                                   children:const  [
+//                                                                     AutoSizeText(
+//                                                                       "View",
+//                                                                       style:
+//                                                                           TextStyle(
+//                                                                         fontFamily:
+//                                                                             "Work Sans",
+//                                                                         fontSize:
+//                                                                             13,
+//                                                                         fontWeight:
+//                                                                             FontWeight.w500,
+//                                                                         color:
+//                                                                             white,
+//                                                                       ),
+//                                                                     ),
+//                                                                   ],
+//                                                                 ),
+//                                                               ),
+//                                                             ),
+//                                                           ),
+//                                                         ]),
+//                                                   ),
+//                                                 ),
+//                                               );
+//                                             })
+//                                         : const Center(
+//                                             child: AutoSizeText(
+//                                               'No Request found',
+//                                               style: TextStyle(
+//                                                 fontFamily: "Work Sans",
+//                                                 fontSize: 14,
+//                                                 fontWeight: FontWeight.w400,
+//                                                 color: stepsColor,
+//                                               ),
+//                                             ),
+//                                           );
+//                               }),
+//                             )

@@ -25,7 +25,8 @@ class PaymentLinkController extends GetxController{
       "amount": amount.text.trim(),
       "customer_name": "${_userController.user?.firstName} ${_userController.user?.lastName}",
       "company_id": _companyController.company?.id,
-      "account_id": _companyController.company?.accountDetails?.accountNumber,
+      ///This thing was working before i don't know why its not working again
+      //"account_id": _companyController.company?.accountDetails?.accountNumber,
     }):jsonEncode({
       "amount": amount.text.trim(),
       "customer_name": "${_userController.user?.firstName} ${_userController.user?.lastName}"
