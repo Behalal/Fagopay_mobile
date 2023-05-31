@@ -166,11 +166,10 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                 );
                                 return;
                               }
-                              if (double.parse(_userController
-                                          .userAccountDetails!.balance!) <
+                              if (_userController.userAccountDetails!.balance! <
                                       1 ||
-                                  double.parse(_userController
-                                          .userAccountDetails!.balance!) ==
+                                  _userController
+                                          .userAccountDetails!.balance! ==
                                       0) {
                                 Fluttertoast.showToast(
                                   msg: "Insufficient Wallet Balance",
