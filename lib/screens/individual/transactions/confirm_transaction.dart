@@ -525,9 +525,9 @@ class ConfirmTransactions extends StatelessWidget {
                         Radius.circular(25),
                       ),
                     ),
-                    child: const Row(
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         AutoSizeText(
                           "Cancel",
                           textAlign: TextAlign.center,

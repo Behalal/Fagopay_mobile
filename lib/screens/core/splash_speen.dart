@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 // import 'package:sizer/sizer.dart';
 
+import '../../service/secure_storage/secure_storage.dart';
 import '../constants/colors.dart';
 import '../onboarding/onboarding.dart';
 
@@ -20,12 +21,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(
-      const Duration(seconds: 5),
-      () => Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => const Onboarding(),
-        ),
-      ),
+      const Duration(seconds: 5), () async{
+        final token =  await SecureStorage.readUserToken();
+        print('this is user token $token');
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => const Onboarding(),
+          ),
+        );
+      }
     );
   }
 

@@ -65,13 +65,10 @@ class UserController extends GetxController {
     _userAccountDetails(userAccountDetails);
   }
 
-  Future uploadNextOfKin(
-    NextOfKinModel nextofkin,
-  ) async {
+  Future uploadNextOfKin(NextOfKinModel nextofkin,) async {
     final token = await SecureStorage.readUserToken();
     try {
       _nextOfKinStatus(NextOfKinEnum.loading);
-
       if (kDebugMode) {
         print('updating next of kin...');
         print('Next of kin json: ${nextofkin.toJson()}');

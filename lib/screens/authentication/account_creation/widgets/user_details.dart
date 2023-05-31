@@ -56,9 +56,9 @@ class UserData extends StatelessWidget {
                     fontSize: 14,
                     color: signInPlaceholder,
                   ),
-                  prefixIcon: const Stack(
+                  prefixIcon: Stack(
                     alignment: AlignmentDirectional.center,
-                    children: [
+                    children: const [
                       Image(image: AssetImage("assets/images/shield.png")),
                       Image(image: AssetImage("assets/images/key.png")),
                     ],
@@ -101,9 +101,9 @@ class UserData extends StatelessWidget {
                     fontSize: 14,
                     color: signInPlaceholder,
                   ),
-                  prefixIcon: const Stack(
+                  prefixIcon:  Stack(
                     alignment: AlignmentDirectional.center,
-                    children: [
+                    children: const[
                       Image(image: AssetImage("assets/images/shield.png")),
                       Image(image: AssetImage("assets/images/key.png")),
                     ],
@@ -152,9 +152,9 @@ class UserData extends StatelessWidget {
                     fontSize: 14,
                     color: signInPlaceholder,
                   ),
-                  prefixIcon: const Stack(
+                  prefixIcon:  Stack(
                     alignment: AlignmentDirectional.center,
-                    children: [
+                    children:const [
                       Image(image: AssetImage("assets/images/shield.png")),
                       Image(image: AssetImage("assets/images/key.png")),
                     ],
@@ -197,9 +197,9 @@ class UserData extends StatelessWidget {
                     fontSize: 14,
                     color: signInPlaceholder,
                   ),
-                  prefixIcon: const Stack(
+                  prefixIcon:  Stack(
                     alignment: AlignmentDirectional.center,
-                    children: [
+                    children:const [
                       Image(image: AssetImage("assets/images/shield.png")),
                       Image(image: AssetImage("assets/images/key.png")),
                     ],

@@ -223,11 +223,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 4, vertical: 0.4.h),
-                                          child: const Row(
+                                          child:  Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              AutoSizeText(
+                                            children:  [
+                                              const  AutoSizeText(
                                                 "Switch Account",
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
@@ -239,10 +239,8 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                               ),
                                               Expanded(
                                                 child: Stack(
-                                                  alignment:
-                                                      AlignmentDirectional
-                                                          .center,
-                                                  children: [
+                                                  alignment: AlignmentDirectional.center,
+                                                  children:const [
                                                     Image(
                                                       image: AssetImage(
                                                           "assets/images/box.png"),
@@ -1167,7 +1165,7 @@ class CustomCompanyCard extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 1.h),
-                    height: 2.5.h,
+                    height: 2.h,
                     // width: 11.5.h,
                     decoration: BoxDecoration(
                         color: white, borderRadius: BorderRadius.circular(25)),

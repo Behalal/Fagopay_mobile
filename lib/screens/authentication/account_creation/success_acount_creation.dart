@@ -75,9 +75,9 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
               SizedBox(
                 height: 10.h,
               ),
-              const Stack(
+              Stack(
                 alignment: AlignmentDirectional.center,
-                children: [
+                children: const [
                   Positioned(
                     child:
                         Image(image: AssetImage("assets/images/bg_image.png")),
@@ -92,7 +92,7 @@ class _SuccessAccountCreationState extends State<SuccessAccountCreation> {
                 height: 45.h,
                 width: Get.width,
                 child:
-                     const Stack(alignment: Alignment.bottomCenter, children: [
+                     Stack(alignment: Alignment.bottomCenter, children: const [
                   Image(
                       image: AssetImage(
                           "assets/images/iPhone 14 Pro Space Black Mockup.png")),

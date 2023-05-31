@@ -36,8 +36,7 @@ class IdentificationVerification extends StatefulWidget {
 class _IdentificationVerificationState
     extends State<IdentificationVerification> {
   final _locationsController = Get.find<LocationsController>();
-  final _governmentIdentityController =
-      Get.find<GovernmentIdentityVerificationController>();
+  final _governmentIdentityController = Get.find<GovernmentIdentityVerificationController>();
   List<location.Country> countries = [];
 
   String selectedCountry = "";
@@ -229,8 +228,7 @@ class _IdentificationVerificationState
                                 height: 0.5.h,
                               ),
                               NumberInput(
-                                controller: _governmentIdentityController
-                                    .documentNumberController,
+                                controller: _governmentIdentityController.documentNumberController,
                                 title: "Enter ID Number",
                                 keyboadType: TextInputType.number,
                                 boarderColor: stepsColor.withOpacity(0.3),
@@ -338,8 +336,8 @@ class _IdentificationVerificationState
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    const Row(
-                                      children: [
+                                     Row(
+                                      children: const [
                                         AutoSizeText(
                                           'See Example Image',
                                           style: TextStyle(

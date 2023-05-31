@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import '../../../controllers/government_identity_verification_controller.dart';
 import '../bills/data.dart';
@@ -8,6 +7,7 @@ import '../refer_and_win/refer_page.dart';
 import '../requests/requests.dart';
 import '../transactions/fago_to_bank.dart';
 import '../transactions/fago_to_fago.dart';
+import '../../kyc/countdown_page2.dart';
 import '../../kyc/personal_verification_page.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';
@@ -52,7 +52,6 @@ class _DashboardHomeState extends State<DashboardHome> {
   final _userController = Get.find<UserController>();
   final _governmentIdentityController =
       Get.find<GovernmentIdentityVerificationController>();
-  final _companyController = Get.find<CompanyController>();
 
   @override
   void initState() {
@@ -448,13 +447,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                         FagoToBank(
                                                       userDetails:
                                                           _userController.user!,
-                                                      accountDetails: _userController
-                                                                  .switchedAccountType ==
-                                                              2
-                                                          ? _companyController
-                                                              .company!
-                                                              .accountDetails!
-                                                          : _userController
+                                                      accountDetails:
+                                                          _userController
                                                               .userAccountDetails!,
                                                     ),
                                                   ),
@@ -1551,6 +1545,7 @@ class _DashboardHomeState extends State<DashboardHome> {
   Future<void> getIdentityDetails() async {
     final response = await _governmentIdentityController.getIdentityDetails();
     final identityjsonBodyData = response['data']['identity_detail'];
+    print(identityjsonBodyData['id']);
     setState(() {
       _governmentIdentityController.governmentIdentityDetailId =
           identityjsonBodyData['id'];

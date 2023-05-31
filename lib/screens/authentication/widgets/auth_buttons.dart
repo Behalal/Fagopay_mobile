@@ -30,12 +30,11 @@ class AuthButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ((!form)) {
+    if (!form) {
       return GestureDetector(
         onTap: () {
           if (route != null) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (BuildContext context) => route!));
+            Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => route!));
           }
         },
         child: Container(
@@ -85,7 +84,7 @@ class AuthButtons extends StatelessWidget {
                     ),
                   ]
                ]
-                
+
             ],
           ),
         ),
@@ -110,8 +109,7 @@ class AuthButtons extends StatelessWidget {
                 fit: BoxFit.fitWidth,
               ),
             if (hasImage != null) SizedBox(width: 1.2.w),
-            if (text.isNotEmpty)
-              Text(
+            if (text.isNotEmpty)Text(
                 text,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
