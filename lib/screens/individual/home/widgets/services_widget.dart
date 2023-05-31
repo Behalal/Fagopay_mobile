@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import '../../../../controllers/user_controller.dart';
 import '../../../constants/colors.dart';
 import '../../bills/data.dart';
@@ -25,13 +26,17 @@ class Services {
 }
 
 final _userController = Get.find<UserController>();
+final _companyController = Get.find<CompanyController>();
+
 List<Services> services = [
   Services(
     image: 'assets/icons/new_tansfer_icon.svg',
     itemName: 'Transfer',
     route: FagoToBank(
       userDetails: _userController.user!,
-      accountDetails: _userController.userAccountDetails!,
+      accountDetails: _userController.switchedAccountType == 2
+          ? _companyController.company!.accountDetails!
+          : _userController.userAccountDetails!,
     ),
   ),
   const Services(

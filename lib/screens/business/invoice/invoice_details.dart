@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import '../../../controllers/user_controller.dart';
 import 'components/invoice_item_details_card.dart';
 import 'package:jiffy/jiffy.dart';
@@ -22,6 +23,7 @@ class InvoiceDetails extends StatefulWidget {
 class _InvoiceDetailsState extends State<InvoiceDetails> {
   final _invoiceController = Get.find<InvoiceController>();
   final _userController = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
 
   @override
   Widget build(BuildContext context) {
@@ -586,7 +588,13 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                       SizedBox(
                         width: 50.w,
                         child: AutoSizeText(
-                          _userController.userAccountDetails!.accountName ?? '',
+                          _userController.switchedAccountType == 2
+                              ? _companyController
+                                      .company!.accountDetails!.accountName ??
+                                  ''
+                              : _userController
+                                      .userAccountDetails!.accountName ??
+                                  '',
                           style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 12,
@@ -628,9 +636,13 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                             SizedBox(
                               width: 20.w,
                               child: AutoSizeText(
-                                _userController
-                                        .userAccountDetails!.accountNumber ??
-                                    '',
+                                _userController.switchedAccountType == 2
+                                    ? _companyController.company!
+                                            .accountDetails!.accountNumber ??
+                                        ''
+                                    : _userController.userAccountDetails!
+                                            .accountNumber ??
+                                        '',
                                 style: const TextStyle(
                                   fontFamily: "Work Sans",
                                   fontSize: 12,
@@ -675,7 +687,12 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                       SizedBox(
                         width: 50.w,
                         child: AutoSizeText(
-                          _userController.userAccountDetails!.bankName ?? '',
+                          _userController.switchedAccountType == 2
+                              ? _companyController
+                                      .company!.accountDetails!.bankName ??
+                                  ''
+                              : _userController.userAccountDetails!.bankName ??
+                                  '',
                           style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 12,

@@ -1,3 +1,4 @@
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
 import '../../../controllers/transaction_controller.dart';
@@ -24,6 +25,7 @@ class FagoToFago extends StatefulWidget {
 class _FagoToFagoState extends State<FagoToFago> {
   final _userController = Get.find<UserController>();
   final _transactionController = Get.find<TransactionController>();
+  final _companyController = Get.find<CompanyController>();
   String verifiedReceipientUser = "";
 
   @override
@@ -61,7 +63,9 @@ class _FagoToFagoState extends State<FagoToFago> {
                     ),
                     AccountDetails(
                       action: "spend",
-                      accountDetails: _userController.userAccountDetails!,
+                      accountDetails: _userController.switchedAccountType == 2
+                          ? _companyController.company!.accountDetails!
+                          : _userController.userAccountDetails!,
                     ),
                     SizedBox(
                       height: 2.h,

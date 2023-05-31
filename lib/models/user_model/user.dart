@@ -97,7 +97,7 @@ class AccountDetail {
   String? status;
   String? currency;
   String? manager;
-  int? balance;
+  dynamic balance;
 
   AccountDetail({
     this.id,
@@ -113,14 +113,14 @@ class AccountDetail {
 
   factory AccountDetail.fromJson(Map<String, dynamic> json) => AccountDetail(
         id: json["id"] as String,
-        accountNumber: json["account_number"] as String,
-        accountName: json["account_name"] as String,
-        bankName: json["bank_name"] as String,
-        accountType: json["account_type"] as String,
-        status: json["status"] as String,
-        currency: json["currency"] as String,
-        manager: json["manager"] ?? '',
-        balance: json["balance"] as int,
+        accountNumber: json["account_number"] as String?,
+        accountName: json["account_name"] as String?,
+        bankName: json["bank_name"] as String?,
+        accountType: json["account_type"] as String?,
+        status: json["status"] as String?,
+        currency: json["currency"] as String?,
+        manager: json["manager"] as String?,
+        balance: json["balance"] as dynamic,
       );
 
   Map<String, dynamic> toJson() => {

@@ -1,3 +1,4 @@
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class ServiceModel {
 }
 
 final _userController = Get.find<UserController>();
+final _companyController = Get.find<CompanyController>();
 
 List<ServiceModel> serviceContent = [
   ServiceModel(
@@ -33,7 +35,9 @@ List<ServiceModel> serviceContent = [
     ),
     route: FagoToBank(
       userDetails: _userController.user!,
-      accountDetails: _userController.userAccountDetails!,
+      accountDetails: _userController.switchedAccountType == 2
+          ? _companyController.company!.accountDetails!
+          : _userController.userAccountDetails!,
     ),
   ),
   ServiceModel(

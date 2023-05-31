@@ -347,7 +347,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                                   .toString() ==
                                               "")
                                           ? " 0.00"
-                                          : "$currencySymbol ${_userController.userAccountDetails!.balance}.00")
+                                          : "$currencySymbol ${_userController.switchedAccountType == 2 ? _companyController.company!.accountDetails!.balance : _userController.userAccountDetails!.balance}.00")
                                       : notVisibleText,
                                   style: const TextStyle(
                                       fontFamily: "Work Sans",
@@ -387,7 +387,10 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   AutoSizeText(
-                                    widget.accountDetails!.bankName!,
+                                    _userController.switchedAccountType == 2
+                                        ? _companyController
+                                            .company!.accountDetails!.bankName!
+                                        : widget.accountDetails!.bankName!,
                                     style: const TextStyle(
                                         fontFamily: "Work Sans",
                                         fontSize: 10,
@@ -403,7 +406,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       AutoSizeText(
-                                        widget.accountDetails!.accountNumber!,
+                                        _userController.switchedAccountType == 2
+                                            ? _companyController.company!
+                                                .accountDetails!.accountNumber!
+                                            : widget
+                                                .accountDetails!.accountNumber!,
                                         style: const TextStyle(
                                             fontFamily: "Work Sans",
                                             fontSize: 16,
@@ -457,7 +464,12 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                     MaterialPageRoute(
                                       builder: (BuildContext context) =>
                                           FundWallet(
-                                        accountDetails: widget.accountDetails!,
+                                        accountDetails: _userController
+                                                    .switchedAccountType ==
+                                                2
+                                            ? _companyController
+                                                .company!.accountDetails!
+                                            : widget.accountDetails!,
                                       ),
                                     ),
                                   );
@@ -838,8 +850,12 @@ class _ManageAccountState extends State<ManageAccount> {
                     height: 2.h,
                   ),
                   _companyController.companies.isEmpty
-                      ? const Center(
-                          child: Text('No Created Company Yet!'),
+                      ? Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 3.h),
+                            child: const Text(
+                                'No Created Company/Business Account!'),
+                          ),
                         )
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -900,7 +916,7 @@ class _ManageAccountState extends State<ManageAccount> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const AutoSizeText(
-                              'Manage individualn Business \nAccounts in One App',
+                              'Manage Individual and Business \nAccounts in One App',
                               style: TextStyle(
                                 fontFamily: "Work Sans",
                                 fontSize: 16,

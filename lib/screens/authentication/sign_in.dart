@@ -370,12 +370,16 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
 
     final userBusinessDetailsjsonBodyData =
         response['data']['business_detail']['profile'];
-    final returnedCompanies = userBusinessDetailsjsonBodyData
-        .map<Company>((company) => Company.fromJson(company))
-        .toList();
-    final companyDetails = Company.fromJson(userBusinessDetailsjsonBodyData[0]);
-    _companyController.companies = returnedCompanies;
-    _companyController.setCompany = companyDetails;
+
+    if (userBusinessDetailsjsonBodyData.length != 0) {
+      final returnedCompanies = userBusinessDetailsjsonBodyData
+          .map<Company>((company) => Company.fromJson(company))
+          .toList();
+      final companyDetails =
+          Company.fromJson(userBusinessDetailsjsonBodyData[0]);
+      _companyController.companies = returnedCompanies;
+      _companyController.setCompany = companyDetails;
+    }
 
     if (!mounted) return;
     Navigator.of(context).pushReplacement(

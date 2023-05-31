@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/kyc/countdown_page2.dart';
-import 'package:fagopay/screens/kyc/identity_pass_kyc.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
