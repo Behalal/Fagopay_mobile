@@ -1,4 +1,4 @@
-package com.example.fagopay
+package net.fagopay.fagopay
 
 import io.flutter.embedding.android.FlutterActivity
 
