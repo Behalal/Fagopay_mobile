@@ -5,7 +5,7 @@ description: Simple way to manage finances in one app.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.1+15
+version: 1.0.1+18
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
