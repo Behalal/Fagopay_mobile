@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import '../../../controllers/request_money_controller.dart';
 import '../../../models/request_money/request_money_model.dart';
 import 'create_payment_link.dart';
 
@@ -27,7 +28,7 @@ class _SupportRequestState extends State<SupportRequest> {
                 padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const ProgressStyle(
                         stage: 50,
@@ -147,66 +148,17 @@ class _SupportRequestState extends State<SupportRequest> {
                         ),
                       ),
                       SizedBox(
-                        height: 5.h,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset('assets/icons/markIcon.svg'),
-                          // SizedBox(
-                          //   width: 1.h,
-                          // ),
-                          const AutoSizeText(
-                            "By clicking on I support or using the custom box, I consent \nthat Fagopay shall debit my wallet to credit the requestee.",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 10,
-                              fontWeight: FontWeight.w300,
-                              color: stepsColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 10.w, vertical: 2.h),
-                        child: AuthButtons(
-                            form: false,
-                            text: "I Support",
-                            route: const CreatePaymentLink()),
-                      ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 42.w),
-                        child: const AutoSizeText(
-                          "OR",
-                          style: TextStyle(
-                              color: fagoSecondaryColor,
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 3.h,
+                        height: 2.5.h,
                       ),
                       const AutoSizeText(
-                        "How much can you afford?",
+                        "You may enter a custom amount ?",
                         style: TextStyle(
                             color: stepsColor,
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w400,
                             fontSize: 14),
                       ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
+                      SizedBox(height: 1.h,),
                       SizedBox(
                         width: 90.w,
                         child: TextFormField(
@@ -227,74 +179,240 @@ class _SupportRequestState extends State<SupportRequest> {
                             ),
                             border: const OutlineInputBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
+                                BorderRadius.all(Radius.circular(5)),
                                 borderSide: BorderSide(
                                     color: textBoxBorderColor,
                                     width: 1.0,
                                     style: BorderStyle.solid)),
-                            hintText: "Amount to request",
+                            hintText: "Enter an amount",
                             hintStyle: const TextStyle(
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w400,
                               fontSize: 14,
                               color: signInPlaceholder,
                             ),
-                            suffixIcon: const Icon(Icons.send_outlined,
-                                color: fagoSecondaryColor, size: 25),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      Container(
-                        width: 70.w,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 1.8.h, horizontal: 3.w),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: buttonColor),
-                            color: white,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(25))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 1.w,
-                            ),
-                            const AutoSizeText(
-                              "I don’t approve",
-                              textAlign: TextAlign.center,
+                      SizedBox(height: 3.h,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('assets/icons/markIcon.svg'),
+                          SizedBox(
+                            width: 0.4.h,
+                          ),
+                          const  Flexible(
+                            child:  AutoSizeText(
+                              "By clicking on I support or using the custom box, I consent \nthat Fagopay shall debit my wallet to credit the requestee.",
                               style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: "Work Sans",
-                                  fontWeight: FontWeight.w600,
-                                  color: buttonColor),
+                                fontFamily: "Work Sans",
+                                fontSize: 11,
+                                fontWeight: FontWeight.w300,
+                                color: stepsColor,
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      RichText(
-                        text: const TextSpan(
-                            style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                                color: stepsColor),
-                            children: [
-                              TextSpan(
-                                  text:
-                                      '“Helping someone else doesn’t decrease your\nwealth”.'),
-                              TextSpan(
-                                  text: 'Thomas Fries',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w600)),
-                            ]),
+                      GestureDetector(
+                        onTap: (){
+                          showPopUp(true);
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 2.h),
+                          child: AuthButtons(
+                              form: true,
+                              text: "Pay Now",
+                              //route: const CreatePaymentLink()
+                          ),
+                        ),
                       ),
-                    ]))));
+                      SizedBox(height: 1.h,),
+                      Center(
+                        child: GestureDetector(
+                          onTap:(){
+                            showPopUp(false);
+                          },
+                          child: Container(
+                            width: 70.w,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 1.8.h, horizontal: 3.w),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: buttonColor),
+                                color: white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(25))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 1.w,
+                                ),
+                                 AutoSizeText(
+                                  "Reject Request",
+                                  textAlign: TextAlign.center,
+                                  style:textStyle(size: 16,weight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                ),
+            ),
+        ),
+    );
+  }
+  cancelRequest()async{
+    RequestMoney().cancelRequestMoney(widget.item.id.toString()).then((value) {
+     // print(value.body);
+    });
+  }
+  showPopUp(bool status){
+    Widget approveRequest(){
+      return  Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(child: Text('Pay Request',style: textStyle(size: 18, weight: FontWeight.w700))),
+          SizedBox(height: 2.5.h,),
+          Padding(
+            padding:  EdgeInsets.symmetric(horizontal: 2.h),
+            child: Text('You will be debited from your account if you confirm to pay this request.',
+              textAlign: TextAlign.center,
+              style: textStyle(size: 14, weight: FontWeight.w400,color: stepsColor),
+            ),
+          ),
+          SizedBox(height: 2.h,),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 1.8.h),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: buttonColor),
+                      color: white,
+                      borderRadius:
+                      const BorderRadius.all(Radius.circular(25))),
+                  child: AutoSizeText(
+                    "Cancel",
+                    textAlign: TextAlign.center,
+                    style:textStyle(size: 16,weight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 5,),
+              Expanded(
+                child: AuthButtons(
+                  form: true,
+                  text: "Confirm",
+                  //route: const CreatePaymentLink()
+                ),
+              ),
+            ],
+          )
+        ],
+      );
+    }
+    Widget disapproveRequest(){
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(child: Text('Reject Request',style: textStyle(size: 18, weight: FontWeight.w700))),
+          SizedBox(height: 2.5.h,),
+          Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 2.h),
+              child: RichText(text: TextSpan(
+                  children: [
+                    TextSpan(
+                        text: 'Are you sure to reject this',
+                        style: textStyle(size: 18, weight: FontWeight.w700,color: stepsColor)
+                    ),
+                    TextSpan(
+                        text: ' Request?',
+                        style: textStyle(size: 18, weight: FontWeight.w700)
+                    ),
+                  ]
+              ),
+              )
+          ),
+          SizedBox(height: 2.h,),
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                    cancelRequest();
+                  },
+                  child: AuthButtons(
+                    form: true,
+                    text: "Confirm",
+                    //route: const CreatePaymentLink()
+                  ),
+                ),
+              ),
+              const SizedBox(width: 5,),
+              Expanded(
+                child: GestureDetector(
+                 onTap: (){
+                   Navigator.pop(context);
+                 },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 1.8.h),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: buttonColor),
+                        color: white,
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(25))),
+                    child: AutoSizeText(
+                      "Cancel",
+                      textAlign: TextAlign.center,
+                      style:textStyle(size: 16,weight: FontWeight.w600,),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      );
+    }
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) {
+        return Container(
+         padding:   EdgeInsets.symmetric(horizontal: 3.w,vertical: 6.h),
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius:  BorderRadius.only(topRight: Radius.circular(16),topLeft: Radius.circular(16))
+          ),
+          child:  status ? approveRequest():disapproveRequest()
+        );
+      },
+      isScrollControlled: true,
+    );
+
+  }
+
+  textStyle({required double size,required FontWeight weight, Color?color}){
+    return TextStyle(
+        fontSize: size,
+        fontFamily: "Work Sans",
+        fontWeight:weight,
+        color: color??buttonColor,
+    );
   }
 }

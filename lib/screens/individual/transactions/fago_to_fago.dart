@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 
@@ -27,6 +29,7 @@ class _FagoToFagoState extends State<FagoToFago> {
   final _transactionController = Get.find<TransactionController>();
   final _companyController = Get.find<CompanyController>();
   String verifiedReceipientUser = "";
+  String userNotFound = "";
 
   @override
   void dispose() {
@@ -127,32 +130,54 @@ class _FagoToFagoState extends State<FagoToFago> {
     );
   }
 
-  Future<void> getAccountDetailsByPhoneNumber(
-      BuildContext context, String phoneNumber) async {
+  Future<void> getAccountDetailsByPhoneNumber(BuildContext context, String phoneNumber) async {
     final progress = ProgressHUD.of(context);
     progress!.show();
-    final response =
-        await _transactionController.getAccountDetailsByPhone(phoneNumber);
-    final customerDetail = response['data']['account_detail'];
-    if (customerDetail != "") {
-      progress.dismiss();
-      setState(() {
-        verifiedReceipientUser = customerDetail['account_name'];
-      });
-      return;
-    }
-    progress.dismiss();
-    setState(() {
-      verifiedReceipientUser = "";
-    });
-    Fluttertoast.showToast(
-      msg: "${response['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    final response = await _transactionController.getAccountDetailsByPhone(phoneNumber);
+     if(response == null ){
+       _transactionController.userNameId(FagoAccUserStatus.notFound);
+       progress.dismiss();
+       verifiedReceipientUser = 'user not found';
+     }else{
+       _transactionController.userNameId(FagoAccUserStatus.found);
+       final customerDetail = response['data']['account_detail'];
+       if (customerDetail != "") {
+         progress.dismiss();
+         setState(() {
+           verifiedReceipientUser = customerDetail['account_name'];
+         });
+         return;
+       }
+       progress.dismiss();
+     }
+   // _transactionController.userNameId(1);
+    print(response);
+
+        //.then((value) {
+      // var res = jsonDecode(value.body);
+      //
+      // print('this value $value');
+      // print('this response $res');
+      // progress.dismiss();
+      // if(value  == null){
+      //   progress.dismiss();
+      // }
+
+
+      // progress.dismiss();
+      // setState(() {
+      //   verifiedReceipientUser = "";
+      // });
+   // });
+///Toast
+    // Fluttertoast.showToast(
+    //   msg: "${response['data']['error']}",
+    //   toastLength: Toast.LENGTH_LONG,
+    //   gravity: ToastGravity.TOP,
+    //   timeInSecForIosWeb: 2,
+    //   backgroundColor: Colors.red,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
   }
 }

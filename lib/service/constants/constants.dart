@@ -1,6 +1,5 @@
 class BaseAPI {
-  static String baseUrl =
-      "https://fagopay-coreapi-development.herokuapp.com/api/";
+  static String baseUrl = "https://fagopay-coreapi-development.herokuapp.com/api/";
   static String api = "${baseUrl}v1/";
   static String userPath = "${api}user/";
   static String verificationPath = "${api}verify/";

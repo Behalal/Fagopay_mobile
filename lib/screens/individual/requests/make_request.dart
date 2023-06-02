@@ -95,6 +95,7 @@ class _MakeRequestState extends State<MakeRequest> {
                     SizedBox(
                       width: 90.w,
                       child: TextFormField(
+                        readOnly: _moneyRequest.looUpPhonStatus == LookUpPhone.loading ? true: false,
                         onChanged: (value) {
                           setState(() {
                             if (value.length == 11) {
@@ -106,7 +107,6 @@ class _MakeRequestState extends State<MakeRequest> {
                           });
                         },
                         controller: _transactionController.phoneController,
-                       
                         keyboardType: TextInputType.phone,
                         style: const TextStyle(
                             fontFamily: "Work Sans",
@@ -143,7 +143,6 @@ class _MakeRequestState extends State<MakeRequest> {
                     SizedBox(
                       height: 0.2.h,
                     ),
-
                     Container(
                       width: 90.w,
                       decoration: const BoxDecoration(
@@ -162,8 +161,7 @@ class _MakeRequestState extends State<MakeRequest> {
                               width: 2.w,
                             ),
                             Obx(() {
-                              return _moneyRequest.looUpPhonStatus ==
-                                      LookUpPhone.loading
+                              return _moneyRequest.looUpPhonStatus == LookUpPhone.loading
                                   ? const LoadingWidget(
                                       color: welcomeText,
                                       size: 12,

@@ -54,6 +54,7 @@ class RequestMoney extends GetxController {
 
   Future getMyRequest() async {
     final token = await SecureStorage.readUserToken();
+
     try {
       _myRequestStatus(MyRequestStatus.loading);
       if (kDebugMode) {
@@ -105,6 +106,42 @@ class RequestMoney extends GetxController {
         print('my request Error ${error.toString()}');
       }
     }
+  }
+
+
+  Future cancelRequestMoney(String id) async {
+    //print('yp');
+    _myRequestStatus(MyRequestStatus.loading);
+    final token = await SecureStorage.readUserToken();
+    http.Response? response;
+    try{
+      print('Start');
+    //  _myRequestStatus(MyRequestStatus.loading);
+      response = await http.get(
+        Uri.parse("${BaseAPI.transactionsPath}cancel-money-request/$id"),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      );
+      if(response.statusCode == 200){
+        _myRequestStatus(MyRequestStatus.success);
+      }else{
+        _myRequestStatus(MyRequestStatus.error);
+      }
+      print(response.body);
+    }catch (error) {
+      Get.snackbar(
+          'Error',
+          error.toString() ==
+              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+              ? 'No internet connection!'
+              : error.toString());
+      if (kDebugMode) {
+        print('requested money Error ${error.toString()}');
+      }
+    }
+   return response!;
   }
 
   Future requestedMoney() async {
@@ -259,10 +296,7 @@ class RequestMoney extends GetxController {
       _looUpPhonStatus(LookUpPhone.error);
       Get.snackbar(
           'Error',
-          error.toString() ==
-                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
-              ? 'No internet connection!'
-              : error.toString());
+          error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
       if (kDebugMode) {
         print('look up phone Error ${error.toString()}');
       }

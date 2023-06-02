@@ -90,14 +90,11 @@ class _DashboardHomeState extends State<DashboardHome> {
                     child: Obx(() {
                       // print(
                       //     ' user details Under home Obx ${_loginController.getUserDetails()}');
-                      return _loginController.getUserStatus ==
-                              GetUserStatus.loading
+                      return _loginController.getUserStatus == GetUserStatus.loading
                           ? Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                widget.userDetails.kycVerified == 1 &&
-                                        widget.accountType == "Bussiness"
-                                    ?
+                                widget.userDetails.kycVerified == 1 && widget.accountType == "Bussiness" ?
                                     //
                                     Padding(
                                         padding: EdgeInsets.symmetric(
@@ -434,12 +431,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                       titlePadding:
                                                           EdgeInsets.zero,
                                                       contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 8),
-                                                      content:
-                                                          unverifiedUserDialogue());
+                                                          const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
                                                   return;
                                                 }
                                                 Navigator.of(context).push(
@@ -527,21 +520,13 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                if (widget.userDetails
-                                                        .kycVerified ==
-                                                    0) {
+                                                if (widget.userDetails.kycVerified == 0) {
                                                   Get.defaultDialog(
                                                       title: "",
                                                       middleText: "",
-                                                      titlePadding:
-                                                          EdgeInsets.zero,
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 8),
-                                                      content:
-                                                          unverifiedUserDialogue());
+                                                      titlePadding: EdgeInsets.zero,
+                                                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
                                                   return;
                                                 }
                                                 // Navigator.of(context).push(
@@ -579,7 +564,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 ],
                                               ),
                                             ),
-                                            InkWell(
+                                            _userController.switchedAccountType == 2 ?Container():InkWell(
                                               onTap: () {
                                                 if (widget.userDetails
                                                         .kycVerified ==
@@ -640,10 +625,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                                           height: 1.h,
                                         ),
                                         Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             InkWell(
                                               onTap: () {

@@ -61,15 +61,11 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                           padding: EdgeInsets.symmetric(
                               vertical: 0.h, horizontal: 2.5.w),
                           child: Obx(() {
-                            return _transactionController
-                                        .transactionHistoryStatus ==
-                                    TransactionHistoryStatus.loading
+                            return _transactionController.transactionHistoryStatus == TransactionHistoryStatus.loading
                                 ? const LoadingWidget(
                                     size: 50,
                                     color: fagoSecondaryColor,
-                                  )
-                                : _transactionController
-                                        .transactionHistoryList.isNotEmpty
+                                  ) : _transactionController.transactionHistoryList.isNotEmpty
                                     ? ListView.separated(
                                         padding: EdgeInsets.zero,
                                         scrollDirection: Axis.vertical,

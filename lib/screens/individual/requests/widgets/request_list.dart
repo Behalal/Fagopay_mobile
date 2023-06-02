@@ -11,7 +11,7 @@ import '../support_request.dart';
 class RequestListWidget extends StatelessWidget {
    RequestListWidget({Key? key}) : super(key: key);
   final _moneyRequest = Get.put(RequestMoney());
-   int? myRequestType;
+  // int? myRequestType;
 
    @override
   Widget build(BuildContext context) {
@@ -26,20 +26,18 @@ class RequestListWidget extends StatelessWidget {
             scrollDirection: Axis.vertical,
             physics: const ScrollPhysics(),
             shrinkWrap: false,
-            itemCount: _moneyRequest
-                .requestedMoneyList.length,
+            itemCount: _moneyRequest.requestedMoneyList.length,
             separatorBuilder:
                 (context, index) => SizedBox(
               height: 1.6.h,
             ),
             itemBuilder: (context, index) {
-              var item = _moneyRequest
-                  .requestedMoneyList[index];
+              var item = _moneyRequest.requestedMoneyList[index];
               return InkWell(
                 onTap: () {
                   // setState(() {
                   // });
-                  myRequestType = index;
+                //  myRequestType = index;
                 },
                 child: Container(
                   // width: 90.w,

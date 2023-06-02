@@ -37,6 +37,7 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    print(_transactionsController.userName.obs);
     String formDescription;
     if (widget.page == 'bank') {
       formDescription = "Account";
@@ -47,24 +48,24 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoSizeText(
-          "Enter Receipient $formDescription",
-          style: const TextStyle(
-            fontFamily: "Work Sans",
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: welcomeText,
+     //   GetBuilder<TransactionController>(builder: (controller){return
+            AutoSizeText(
+            "Enter Receipient ${FagoAccUserStatus.free}",
+            style: const TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: welcomeText,
+            ),
           ),
-        ),
+       // }),
         SizedBox(
           height: 0.5.h,
         ),
         SizedBox(
           width: 90.w,
           child: TextFormField(
-            controller: widget.page == 'bank'
-                ? _transactionsController.accountNumberController
-                : _transactionsController.phoneController,
+            controller: widget.page == 'bank' ? _transactionsController.accountNumberController : _transactionsController.phoneController,
             onChanged: widget.onChangedOfAccountNumberController,
             keyboardType: TextInputType.number,
             style: const TextStyle(

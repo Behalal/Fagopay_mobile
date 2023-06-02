@@ -40,6 +40,8 @@ class _RequestHomeState extends State<RequestHome> {
   void initState() {
     // MyRequest = true;
     // Request = false;
+    _moneyRequest.getMyRequest();
+    _moneyRequest.requestedMoney();
     super.initState();
   }
 
@@ -53,8 +55,6 @@ class _RequestHomeState extends State<RequestHome> {
   ];
   @override
   Widget build(BuildContext context) {
-    _moneyRequest.getMyRequest();
-    _moneyRequest.requestedMoney();
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -217,147 +217,147 @@ class _RequestHomeState extends State<RequestHome> {
         ),
     );
   }
-
-  Widget dialogItem() {
-    return SizedBox(
-      height: 200,
-      width: Get.width,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const AutoSizeText(
-            "Reject Request",
-            style: TextStyle(
-              fontFamily: "Work Sans",
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: fagoSecondaryColor,
-            ),
-          ),
-          SizedBox(
-            height: 1.5.h,
-          ),
-           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              AutoSizeText(
-                "Are you sure to reject this",
-                style: TextStyle(
-                  fontFamily: "Work Sans",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: stepsColor,
-                ),
-              ),
-              AutoSizeText(
-                " Request",
-                style: TextStyle(
-                  fontFamily: "Work Sans",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: fagoSecondaryColor,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 1.5.h,
-          ),
-          const AutoSizeText(
-            '"Helping someone else doesn’t decrease \nyour wealth”',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: "Work Sans",
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: stepsColorWithOpacity55,
-            ),
-          ),
-          SizedBox(
-            height: 1.h,
-          ),
-          const AutoSizeText(
-            "Thomas Fries",
-            style: TextStyle(
-              fontFamily: "Work Sans",
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              color: stepsColor,
-            ),
-          ),
-          SizedBox(
-            height: 2.h,
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 130,
-                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                      color: buttonColor,
-                      borderRadius: BorderRadius.all(Radius.circular(25))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 1.w,
-                      ),
-                      const AutoSizeText(
-                        "Confirm",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w600,
-                          color: white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Container(
-                  width: 130,
-                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: buttonColor),
-                    color: white,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(25),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 1.w,
-                      ),
-                      const AutoSizeText(
-                        "Cancel",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w600,
-                          color: buttonColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+/// I don't know what this is feel free to delete it
+  // Widget dialogItem() {
+  //   return SizedBox(
+  //     height: 200,
+  //     width: Get.width,
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //       children: [
+  //         const AutoSizeText(
+  //           "Reject Request",
+  //           style: TextStyle(
+  //             fontFamily: "Work Sans",
+  //             fontSize: 16,
+  //             fontWeight: FontWeight.w700,
+  //             color: fagoSecondaryColor,
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 1.5.h,
+  //         ),
+  //          Row(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: const [
+  //             AutoSizeText(
+  //               "Are you sure to reject this",
+  //               style: TextStyle(
+  //                 fontFamily: "Work Sans",
+  //                 fontSize: 14,
+  //                 fontWeight: FontWeight.w700,
+  //                 color: stepsColor,
+  //               ),
+  //             ),
+  //             AutoSizeText(
+  //               " Request",
+  //               style: TextStyle(
+  //                 fontFamily: "Work Sans",
+  //                 fontSize: 14,
+  //                 fontWeight: FontWeight.w700,
+  //                 color: fagoSecondaryColor,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         SizedBox(
+  //           height: 1.5.h,
+  //         ),
+  //         const AutoSizeText(
+  //           '"Helping someone else doesn’t decrease \nyour wealth”',
+  //           textAlign: TextAlign.center,
+  //           style: TextStyle(
+  //             fontFamily: "Work Sans",
+  //             fontSize: 12,
+  //             fontWeight: FontWeight.w400,
+  //             color: stepsColorWithOpacity55,
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 1.h,
+  //         ),
+  //         const AutoSizeText(
+  //           "Thomas Fries",
+  //           style: TextStyle(
+  //             fontFamily: "Work Sans",
+  //             fontSize: 12,
+  //             fontWeight: FontWeight.w700,
+  //             color: stepsColor,
+  //           ),
+  //         ),
+  //         SizedBox(
+  //           height: 2.h,
+  //         ),
+  //         Center(
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //             children: [
+  //               Container(
+  //                 width: 130,
+  //                 padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+  //                 alignment: Alignment.center,
+  //                 decoration: const BoxDecoration(
+  //                     color: buttonColor,
+  //                     borderRadius: BorderRadius.all(Radius.circular(25))),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     SizedBox(
+  //                       width: 1.w,
+  //                     ),
+  //                     const AutoSizeText(
+  //                       "Confirm",
+  //                       textAlign: TextAlign.center,
+  //                       style: TextStyle(
+  //                         fontSize: 16,
+  //                         fontFamily: "Work Sans",
+  //                         fontWeight: FontWeight.w600,
+  //                         color: white,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //               SizedBox(
+  //                 height: 2.h,
+  //               ),
+  //               Container(
+  //                 width: 130,
+  //                 padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
+  //                 alignment: Alignment.center,
+  //                 decoration: BoxDecoration(
+  //                   border: Border.all(color: buttonColor),
+  //                   color: white,
+  //                   borderRadius: const BorderRadius.all(
+  //                     Radius.circular(25),
+  //                   ),
+  //                 ),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.center,
+  //                   children: [
+  //                     SizedBox(
+  //                       width: 1.w,
+  //                     ),
+  //                     const AutoSizeText(
+  //                       "Cancel",
+  //                       textAlign: TextAlign.center,
+  //                       style: TextStyle(
+  //                         fontSize: 16,
+  //                         fontFamily: "Work Sans",
+  //                         fontWeight: FontWeight.w600,
+  //                         color: buttonColor,
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 ///Old button
 //08030419480,

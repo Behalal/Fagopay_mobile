@@ -19,15 +19,19 @@ enum TransactionHistoryStatus {
   success,
   available,
 }
-
+enum FagoAccUserStatus{
+  free,
+  notFound,
+  found
+}
 class TransactionController extends GetxController {
-  final Rx<List<TransactionHistoryModel>> _transactionHistoryList = Rx([]);
-  List<TransactionHistoryModel> get transactionHistoryList =>
-      _transactionHistoryList.value;
 
+  final Rx<List<TransactionHistoryModel>> _transactionHistoryList = Rx([]);
+  List<TransactionHistoryModel> get transactionHistoryList => _transactionHistoryList.value;
+  final userNameId = FagoAccUserStatus.free.obs;
+  FagoAccUserStatus get userName => userNameId.value;
   final _transactionHistoryStatus = TransactionHistoryStatus.empty.obs;
-  TransactionHistoryStatus get transactionHistoryStatus =>
-      _transactionHistoryStatus.value;
+  TransactionHistoryStatus get transactionHistoryStatus => _transactionHistoryStatus.value;
 
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
