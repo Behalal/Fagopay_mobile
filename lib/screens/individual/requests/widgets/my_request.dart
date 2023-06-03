@@ -226,6 +226,7 @@ class _MyRequestWidgetState extends State<MyRequestWidget> {
                       setState(() {
                         isLoading = false;
                       });
+                      _moneyRequest.getMyRequest();
                     });
                   },
                   child: AuthButtons(

@@ -278,10 +278,10 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                               height: 8.h,
                             ),
                             ///Code for sharing link
-                            // AuthButtons(
-                            //     form: false,
-                            //     text: "Share Payment Link",
-                            //     route: const PleasePayMePage()),
+                            AuthButtons(
+                                form: true,
+                                text: "Share Payment Link",
+                                route: const PleasePayMePage()),
                           ],
                         )),
                   ),

@@ -227,8 +227,8 @@ class TransactionController extends GetxController {
       print('here 2');
       if (response.statusCode == 200) {
         var list = List.from(json['data']['transactions']);
-        var transactionList =
-            list.map((e) => TransactionHistoryModel.fromJson(e)).toList();
+        print('this list $list');
+        var transactionList = list.map((e) => TransactionHistoryModel.fromJson(e)).toList();
         if (kDebugMode) {
           print("${transactionList.length} request");
           print(" Req ${transactionList.first} request");

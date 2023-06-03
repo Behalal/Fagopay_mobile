@@ -138,12 +138,11 @@ class TransactionHistoryModel {
         balanceAfter: json["balance_after"] ?? '',
         chargesFee: json["charges_fee"] ?? '',
         transactionType: transactionTypeValues.map[json["transaction_type"]],
-        transactionStatus:
-            transactionStatusValues.map[json["transaction_status"]],
+        transactionStatus: transactionStatusValues.map[json["transaction_status"]],
         description: json["description"] ?? '',
         tag: tagValues.map[json["tag"]],
         toFrom: json["to_from"] ?? '',
-        createdAt: DateTime.parse(json["created_at"] ?? ''),
+        createdAt: DateTime.parse(json["created_date"]),
       );
 
   Map<String, dynamic> toJson() => {

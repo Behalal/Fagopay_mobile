@@ -320,10 +320,9 @@ class _SwapAirtimeDescPageState extends State<SwapAirtimeDescPage> {
                                   SizedBox(
                                     height: 2.h,
                                   ),
-                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
+                                   const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children:  [
                                       AutoSizeText(
                                         "Default PIN: 0000 (Note: default pin must be changed)",
                                         style: TextStyle(

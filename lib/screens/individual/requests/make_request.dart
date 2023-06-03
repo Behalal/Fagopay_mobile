@@ -143,6 +143,7 @@ class _MakeRequestState extends State<MakeRequest> {
                     SizedBox(
                       height: 0.2.h,
                     ),
+                    _moneyRequest.looUpPhonStatus == LookUpPhone.success || _moneyRequest.looUpPhonStatus == LookUpPhone.error?
                     Container(
                       width: 90.w,
                       decoration: const BoxDecoration(
@@ -166,12 +167,9 @@ class _MakeRequestState extends State<MakeRequest> {
                                       color: welcomeText,
                                       size: 12,
                                     )
-                                  : _moneyRequest.mUser.value?.accountName !=
-                                          null
+                                  : _moneyRequest.mUser.value?.accountName != null
                                       ? AutoSizeText(
-                                          _moneyRequest
-                                                  .mUser.value!.accountName ??
-                                              '',
+                                          _moneyRequest.mUser.value!.accountName ?? '',
                                           style: const TextStyle(
                                             fontFamily: "Work Sans",
                                             fontSize: 14,
@@ -192,8 +190,7 @@ class _MakeRequestState extends State<MakeRequest> {
                           ],
                         ),
                       ),
-                    ),
-
+                    ):Container(),
                     SizedBox(
                       height: 4.h,
                     ),

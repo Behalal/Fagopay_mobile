@@ -22,6 +22,7 @@ class SupportRequest extends StatefulWidget {
 class _SupportRequestState extends State<SupportRequest> {
   @override
   Widget build(BuildContext context) {
+    print(widget.item.id);
     return Scaffold(
         body: SingleChildScrollView(
             child: Padding(
