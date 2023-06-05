@@ -35,6 +35,7 @@ class User {
   int? kycVerified;
   String? deviceId;
   String? dailyLimts;
+  int? hasGovernmentIdentity;
   Nextofkin? nextofkin;
 
   User({
@@ -58,6 +59,7 @@ class User {
     this.kycVerified,
     this.deviceId,
     this.dailyLimts,
+    this.hasGovernmentIdentity,
     this.nextofkin,
   });
 
@@ -79,6 +81,7 @@ class User {
         referralBy: json['referal_by'] as String?,
         ipAddress: json['ipaddress'] as String?,
         dailyLimts: json['account_daily_limit'] as String?,
+        hasGovernmentIdentity: json['has_government_identity'] as int?,
         // nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
       );
 

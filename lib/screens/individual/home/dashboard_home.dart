@@ -133,12 +133,9 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               onTap: () {
                                                 showModalBottomSheet(
                                                     isScrollControlled: true,
-                                                    shape:
-                                                        const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.vertical(
-                                                        top:
-                                                            Radius.circular(20),
+                                                    shape: const RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.vertical(
+                                                        top: Radius.circular(20),
                                                       ),
                                                     ),
                                                     context: context,
@@ -150,17 +147,11 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 width: 20.5.h,
                                                 decoration: BoxDecoration(
                                                     color: fagoSecondaryColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    border: Border.all(
-                                                        color:
-                                                            fagoSecondaryColor)),
+                                                    borderRadius: BorderRadius.circular(25),
+                                                    border: Border.all(color: fagoSecondaryColor)),
                                                 alignment: Alignment.center,
                                                 child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                   children: [
                                                     const AutoSizeText(
                                                       'View Accounts',
@@ -277,8 +268,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                       ],
                                                     ),
                                                   ),
-                                                  SvgPicture.asset(
-                                                      'assets/icons/arrow-right.svg'),
+                                                  SvgPicture.asset('assets/icons/arrow-right.svg'),
                                                 ],
                                               ),
                                             ),

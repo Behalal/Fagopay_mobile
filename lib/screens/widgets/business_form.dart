@@ -212,93 +212,96 @@ class _BusinessFormState extends State<BusinessForm> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 35.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AutoSizeText(
-                    "Country",
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: welcomeText,
+            Expanded(
+              
+              child: SizedBox(
+              //  width: 35.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AutoSizeText(
+                      "Country",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 0.5.h,
-                  ),
-                  CustomDropdownButton(
-                    hint: 'Select Country',
-                    items: countries
-                        .map(
-                          (country) => DropdownMenuItem(
-                            value: country.id,
-                            child: Text(
-                              '${country.name}',
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (p0) async {
-                      if (p0 != null) {
-                        setState(() {
-                          _customerController.countryController.text = p0;
-                          states = [];
-                        });
-                        await getStates(p0);
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 50.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AutoSizeText(
-                    "State",
-                    style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: welcomeText,
+                    SizedBox(
+                      height: 0.5.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 0.5.h,
-                  ),
-                  CustomDropdownButton(
-                    hint: 'Select State',
-                    items: states
-                        .map(
-                          (state) => DropdownMenuItem(
-                            value: state.id,
-                            child: FittedBox(
-                              child: AutoSizeText(
-                                '${state.name}',
-                                overflow: TextOverflow.clip,
+                    CustomDropdownButton(
+                      hint: 'Select Country',
+                      items: countries.map(
+                            (country) => DropdownMenuItem(
+                              value: country.id,
+                              child: Text(
+                                '${country.name}',
                               ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (p0) async {
-                      if (p0 != null) {
-                        setState(() {
-                          _customerController.stateController.text = p0;
-                          cities = [];
-                        });
-                        await getCities(p0);
-                      }
-                    },
-                  ),
-                ],
+                          ).toList(),
+                      onChanged: (p0) async {
+                        if (p0 != null) {
+                          setState(() {
+                            _customerController.countryController.text = p0;
+                            states = [];
+                          });
+                          await getStates(p0);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: SizedBox(
+             //   width: 50.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AutoSizeText(
+                      "State",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 0.5.h,
+                    ),
+                    CustomDropdownButton(
+                      hint: 'Select State',
+                      items: states
+                          .map(
+                            (state) => DropdownMenuItem(
+                              value: state.id,
+                              child: FittedBox(
+                                child: AutoSizeText(
+                                  '${state.name}',
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (p0) async {
+                        if (p0 != null) {
+                          setState(() {
+                            _customerController.stateController.text = p0;
+                            cities = [];
+                          });
+                          await getCities(p0);
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

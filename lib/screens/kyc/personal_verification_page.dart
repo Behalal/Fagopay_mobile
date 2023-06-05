@@ -36,7 +36,7 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
 
     await Permission.microphone.request();
   };
-  final _userUcontroller = Get.find<UserController>();
+  final _userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +143,7 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                         firstName: 'demo',
                                         lastName: 'demo',
                                         email: "demo@domainame.com",
-                                        userRef: _userUcontroller.user!.id,
+                                        userRef: _userController.user!.id,
                                         onCancel: (response) {
                                           if (kDebugMode) {
                                             print(response);
@@ -198,7 +198,9 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                         SizedBox(
                           height: 3.h,
                         ),
-                        Stack(alignment: Alignment.bottomRight, children: [
+                      //  _userController.user?.hasGovernmentIdentity == 1 ? Container():
+                        Stack(alignment: Alignment.bottomRight,
+                            children: [
                           SvgPicture.asset('assets/icons/Ellipse 278.svg'),
                           SvgPicture.asset('assets/icons/Ellipse 279.svg'),
                           Container(

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
@@ -422,18 +423,11 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                       ),
                                       GestureDetector(
                                         onTap: () {
-                                          if (widget.accountDetails!
-                                                  .accountNumber! ==
-                                              "") {
+                                          if (widget.accountDetails!.accountNumber! == "") {
                                             print('enter text');
                                           } else {
-                                            print(widget.accountDetails!
-                                                .accountNumber!);
-                                            // FlutterClipboard.copy(widget
-                                            //         .accountDetails!
-                                            //         .accountNumber!)
-                                            //     .then(
-                                            //         (value) => print('copied'));
+                                            print(widget.accountDetails!.accountNumber!);
+                                            FlutterClipboard.copy(widget.accountDetails!.accountNumber!).then((value) => print('copied'));
                                             Get.snackbar(
                                                 'Account Number Copied',
                                                 widget.accountDetails!

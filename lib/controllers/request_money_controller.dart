@@ -143,7 +143,36 @@ class RequestMoney extends GetxController {
     }
    return response!;
   }
-
+  Future processRequestMoney({ required Map data}) async {
+    final token = await SecureStorage.readUserToken();
+    http.Response? response;
+    try{
+      response = await http.post(
+        Uri.parse("${BaseAPI.transactionsPath}process-money-request"),
+        headers: {
+     //     "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+        body: data,
+      );
+     //  if(response.statusCode == 200){
+     //    //_myRequestStatus(MyRequestStatus.success);
+     //  }else{
+     // //   _myRequestStatus(MyRequestStatus.error);
+     //  }
+    }catch (error) {
+      Get.snackbar(
+          'Error',
+          error.toString() ==
+              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+              ? 'No internet connection!'
+              : error.toString());
+      if (kDebugMode) {
+        print('requested money Error ${error.toString()}');
+      }
+    }
+    return response!;
+  }
   Future requestedMoney() async {
     final token = await SecureStorage.readUserToken();
     try {

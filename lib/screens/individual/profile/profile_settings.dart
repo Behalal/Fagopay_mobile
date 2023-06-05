@@ -320,7 +320,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 width: Get.width,
-                                height: 30.h,
+                             //   height: 30.h,
                                 decoration: const BoxDecoration(
                                   color: fagoPrimaryColorWithOpacity10,
                                 ),
@@ -328,118 +328,122 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Get.to(() => const NextOfKinPage());
-                                      },
-                                      child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                                'assets/icons/Group 90.svg'),
-                                            SizedBox(
-                                              width: 2.h,
-                                            ),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const AutoSizeText(
-                                                  'Next of Kin',
-                                                  style: TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: welcomeText,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 0.5.h,
-                                                ),
-                                                AutoSizeText(
-                                                  _userUcontroller
-                                                          .user!
-                                                          .nextofkin
-                                                          ?.fullName ??
-                                                      '',
-                                                  style: const TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: welcomeText,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            SvgPicture.asset(
-                                                'assets/icons/arrow_front.svg')
-                                          ]),
-                                    ),
-                                    const Divider(),
-                                    InkWell(
-                                      onTap: () {
-                                        Get.to(() => const ProfileKycPage());
-                                      },
-                                      child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SvgPicture.asset(
-                                                'assets/icons/Group 90.svg'),
-                                            SizedBox(
-                                              width: 2.h,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const AutoSizeText(
-                                                  'KYC',
-                                                  style: TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.w600,
-                                                    color: welcomeText,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 0.5.h,
-                                                ),
-                                                Container(
-                                                  height: 2.5.h,
-                                                  width: 14.5.h,
-                                                  decoration: BoxDecoration(
-                                                      color: white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25)),
-                                                  alignment: Alignment.center,
-                                                  child: const AutoSizeText(
-                                                    'completed',
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(() => const NextOfKinPage());
+                                        },
+                                        child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset('assets/icons/Group 90.svg'),
+                                              SizedBox(
+                                                width: 2.h,
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const AutoSizeText(
+                                                    'Next of Kin',
                                                     style: TextStyle(
                                                       fontFamily: "Work Sans",
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color: fagoSecondaryColor,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: welcomeText,
                                                     ),
                                                   ),
-                                                )
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            SvgPicture.asset(
-                                                'assets/icons/arrow_front.svg')
-                                          ]),
+                                                  SizedBox(
+                                                    height: 0.5.h,
+                                                  ),
+                                                  AutoSizeText(
+                                                    _userUcontroller
+                                                            .user!
+                                                            .nextofkin
+                                                            ?.fullName ??
+                                                        '',
+                                                    style: const TextStyle(
+                                                      fontFamily: "Work Sans",
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.w400,
+                                                      color: welcomeText,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              SvgPicture.asset(
+                                                  'assets/icons/arrow_front.svg')
+                                            ]),
+                                      ),
+                                    ),
+                                    const Divider(),
+                                  //  _userUcontroller.user?.kycVerified ==1 && _userUcontroller.user?.hasGovernmentIdentity == 1?Container():
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                      child: InkWell(
+                                        onTap: () {
+                                          Get.to(() => const ProfileKycPage());
+                                        },
+                                        child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/icons/Group 90.svg'),
+                                              SizedBox(
+                                                width: 2.h,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const AutoSizeText(
+                                                    'KYC',
+                                                    style: TextStyle(
+                                                      fontFamily: "Work Sans",
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: welcomeText,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 0.5.h,
+                                                  ),
+                                                  Container(
+                                                    height: 2.5.h,
+                                                    width: 14.5.h,
+                                                    decoration: BoxDecoration(
+                                                        color: white,
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                25)),
+                                                    alignment: Alignment.center,
+                                                    child: const AutoSizeText(
+                                                      'completed',
+                                                      style: TextStyle(
+                                                        fontFamily: "Work Sans",
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: fagoSecondaryColor,
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              SvgPicture.asset(
+                                                  'assets/icons/arrow_front.svg')
+                                            ]),
+                                      ),
                                     ),
                                     const Divider(),
                                     InkWell(

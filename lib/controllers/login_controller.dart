@@ -17,6 +17,10 @@ enum OtpForgotVerifyStatus {
   error,
   success,
 }
+enum ChangePasswordPassword {
+  yes,
+  no,
+}
 
 enum GetUserStatus {
   empty,
@@ -36,11 +40,13 @@ class LoginController extends GetxController {
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
   static final isgetKyc = false.obs;
 
+   final _showChangePassword = ChangePasswordPassword.no.obs;
+  ChangePasswordPassword get getShowPass => _showChangePassword.value;
+
   final _getUserStatus = GetUserStatus.empty.obs;
   GetUserStatus get getUserStatus => _getUserStatus.value;
 
-  OtpForgotVerifyStatus get otpForgotVerifyStatus =>
-      _otpForgotVerifyStatus.value;
+  OtpForgotVerifyStatus get otpForgotVerifyStatus => _otpForgotVerifyStatus.value;
 
   Future<dynamic> loginUser() async {
     var requestBody = jsonEncode({

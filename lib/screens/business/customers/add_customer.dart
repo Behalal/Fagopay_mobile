@@ -8,6 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../controllers/company_controller.dart';
+import '../../../controllers/user_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../widgets/business_form.dart';
 import '../../widgets/business_warning.dart';
@@ -22,6 +24,9 @@ class AddCustomer extends StatefulWidget {
 
 class _AddCustomerState extends State<AddCustomer> {
   final _customerController = Get.find<CustomerController>();
+  final _companyController = Get.find<CompanyController>();
+  final _userController = Get.find<UserController>();
+
 
   @override
   void dispose() {
@@ -37,6 +42,9 @@ class _AddCustomerState extends State<AddCustomer> {
 
   @override
   Widget build(BuildContext context) {
+    // final progress = ProgressHUD.of(context);
+    // progress?.dismiss();
+    //print(_companyController.company!.id!);
     return ProgressHUD(
       child: Builder(
         builder: (context) => GestureDetector(
@@ -104,9 +112,12 @@ class _AddCustomerState extends State<AddCustomer> {
   }
 
   Future<void> registerCustomer(BuildContext context) async {
+    print(_companyController.company!.id!);
+    print(_userController.user!.id!);
     final progress = ProgressHUD.of(context);
     progress!.show();
     final response = await _customerController.registerNewCustomer(
+      companyId: _companyController.company!.id!,
       name: _customerController.nameController.text,
       phoneNumber: _customerController.phoneController.text,
       email: _customerController.emailController.text,

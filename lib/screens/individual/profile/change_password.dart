@@ -17,10 +17,7 @@ import 'package:sizer/sizer.dart';
 class ForgotPassword extends StatefulWidget {
   final String pinCode;
 
-  const ForgotPassword({
-    Key? key,
-    required this.pinCode,
-  }) : super(key: key);
+  const ForgotPassword({Key? key, required this.pinCode,}) : super(key: key);
 
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
@@ -28,8 +25,8 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _newConfirmPasswordController = TextEditingController();
   final _loginController = Get.find<LoginController>();
 
   @override
@@ -38,7 +35,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     _confirmPasswordController.dispose();
     super.dispose();
   }
-
+  bool showPassword = false ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,15 +119,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           color: welcomeText,
                         ),
                       ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
+                      SizedBox(height: 1.h),
                       _PasswordInput(
-                        controller: _passwordController,
+                        controller: _confirmPasswordController,
                       ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
+                      SizedBox(height: 1.h),
                       const AutoSizeText(
                         'Enter New Password',
                         style: TextStyle(
@@ -144,7 +137,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 1.h,
                       ),
                       _ConfirmPasswordInput(
-                        controller: _confirmPasswordController,
+                        controller: _newConfirmPasswordController,
                       ),
                       SizedBox(
                         height: 1.h,
@@ -374,45 +367,52 @@ class _PasswordInput extends StatelessWidget {
 
 class _ConfirmPasswordInput extends StatelessWidget {
   final TextEditingController controller;
-
   const _ConfirmPasswordInput({required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: true,
-      decoration: InputDecoration(
-        enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: fagoSecondaryColor)),
-        focusColor: const Color(0XFFe8a5aa),
-        hintText: 'Confirm Password',
-        hintStyle: const TextStyle(
-          fontSize: 14,
-        ),
-        prefixIconColor: const Color(0XFFe8a5aa),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0XFFe8a5aa),
-            width: 1.0,
+    final _loginController = Get.find<LoginController>();
+    return Obx(() {
+      return TextField(
+        controller: controller,
+        obscureText: true,
+        decoration: InputDecoration(
+          enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: fagoSecondaryColor)),
+          focusColor: const Color(0XFFe8a5aa),
+          hintText: 'Confirm Password',
+          hintStyle: const TextStyle(
+            fontSize: 14,
           ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
+          prefixIconColor: const Color(0XFFe8a5aa),
+          border: const OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Color(0XFFe8a5aa),
+              width: 1.0,
+            ),
+            borderRadius: BorderRadius.all(
+              Radius.circular(5.0),
+            ),
+          ),
+          prefixIcon: SvgPicture.asset(
+            'assets/icons/lock-icon.svg',
+            fit: BoxFit.scaleDown,
+            height: 20,
+            width: 20,
+          ),
+          suffixIcon: GestureDetector(
+            onTap: (){
+              // _loginController.getShowPass.
+            },
+            child: SvgPicture.asset(
+              'assets/icons/show-password-icon.svg',
+              fit: BoxFit.scaleDown,
+              height: 20,
+              width: 20,
+            ),
           ),
         ),
-        prefixIcon: SvgPicture.asset(
-          'assets/icons/lock-icon.svg',
-          fit: BoxFit.scaleDown,
-          height: 20,
-          width: 20,
-        ),
-        suffixIcon: SvgPicture.asset(
-          'assets/icons/show-password-icon.svg',
-          fit: BoxFit.scaleDown,
-          height: 20,
-          width: 20,
-        ),
-      ),
-    );
+      );
+    });
   }
 }

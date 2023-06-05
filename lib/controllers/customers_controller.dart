@@ -55,6 +55,7 @@ class CustomerController extends GetxController {
       required String address,
       required String countryId,
       required String stateId,
+      required String companyId,
       required String cityId}) async {
     final token = await SecureStorage.readUserToken();
 
@@ -66,6 +67,7 @@ class CustomerController extends GetxController {
       "country_id": countryId,
       "state_id": stateId,
       "city_id": cityId,
+      "company_id": companyId
     });
 
     try {
