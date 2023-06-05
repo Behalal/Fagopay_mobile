@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/login_controller.dart';
+import 'package:fagopay/functions/constant.dart';
 import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/constants/colors.dart';
@@ -13,6 +14,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+
+import '../../../controllers/registration_controller.dart';
+import '../../../functions/functions.dart';
 
 class ForgotPassword extends StatefulWidget {
   final String pinCode;
@@ -28,16 +32,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _newConfirmPasswordController = TextEditingController();
   final _loginController = Get.find<LoginController>();
-
+  Functions function = Functions();
   @override
   void dispose() {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
     super.dispose();
   }
-  bool showPassword = false ;
+  bool _passRequirementMet = false;
+  bool showPassword = false;
+  bool _upto8Characters = false;
+  bool _numbers = false;
+  bool _lowerCase = false;
+  bool _upperCase = false;
+  bool _symbolSpecial = false;
   @override
   Widget build(BuildContext context) {
+    print(_confirmPasswordController.text);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -83,30 +94,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           color: stepsColorWithOpacity55,
                         ),
                       ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      const AutoSizeText(
-                        'Old Password',
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: welcomeText,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      _PasswordInput(
-                        controller: _passwordController,
-                      ),
-                      SizedBox(
-                        height: 3.h,
-                      ),
-                      const Divider(
-                        color: stepsColor,
-                      ),
+                      ///Code to input old passcode
+                      // SizedBox(
+                      //   height: 3.h,
+                      // ),
+                      // const AutoSizeText(
+                      //   'Old Password',
+                      //   style: TextStyle(
+                      //     fontFamily: "Work Sans",
+                      //     fontSize: 14,
+                      //     fontWeight: FontWeight.w400,
+                      //     color: welcomeText,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 1.h,
+                      // ),
+                      // _PasswordInput(
+                      //   onTap: (s){},
+                      //   controller: _passwordController,
+                      // ),
+                      // SizedBox(
+                      //   height: 1.h,
+                      // ),
+                      // const Divider(
+                      //   color: stepsColor,
+                      // ),
                       SizedBox(
                         height: 2.h,
                       ),
@@ -121,11 +134,67 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       SizedBox(height: 1.h),
                       _PasswordInput(
+                        onTap: (value){
+                          if (value.length >= 8) {
+                            setState(() {
+                              _upto8Characters = true;
+                            });
+                          }else {
+                            setState(() {
+                              _upto8Characters = false;
+                            });
+                          }
+                          if (function.checkLoweCase(value)) {
+                            setState(() {
+                              _lowerCase = true;
+                            });
+                          } else {
+                            setState(() {
+                              _lowerCase = false;
+                            });
+                          } if (function.checknumbers(value)) {
+                            setState(() {
+                              _numbers = true;
+                            });
+                          } else {
+                            setState(() {
+                              _numbers = false;
+                            });
+                          }
+                          if (function.checkUpperCase(value)) {
+                            setState(() {
+                              _upperCase = true;
+                            });
+                          } else {
+                            setState(() {
+                              _upperCase = false;
+                            });
+                          }
+                          if (function.specialCharacters(value)) {
+                            setState(() {
+                              _symbolSpecial = true;
+                            });
+                          } else {
+                            setState(() {
+                              _symbolSpecial = false;
+                            });
+                          }
+                          if (checkRequirement(value) && value == _newConfirmPasswordController.text) {
+                            setState(() {
+                              _passRequirementMet = true;
+                            });
+                          } else {
+                            setState(() {
+                              _passRequirementMet = false;
+                            });
+                          }
+                     //     print(_upto8Characters);
+                        },
                         controller: _confirmPasswordController,
                       ),
                       SizedBox(height: 1.h),
                       const AutoSizeText(
-                        'Enter New Password',
+                        'Confirm New Password',
                         style: TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 14,
@@ -142,14 +211,154 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       SizedBox(
                         height: 1.h,
                       ),
-                      const _PasswordVerificationChips(),
+                      Wrap(
+                    spacing: 1,
+                    runSpacing: 2,
+                    children:  [
+                      Chip(
+                        // backgroundColor: Colors.red,
+                        label: const Text(
+                          'At least 8 character strong',
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        avatar: Icon(
+                          Icons.check_circle_outline,
+                          size: 12,
+                          color: _upto8Characters? requirementMet: requirementNotMet,
+                        ),
+                      ),
+                      Chip(
+                        label: const Text(
+                          'One lower case character',
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        avatar: Icon(
+                          Icons.check_circle_outline,
+                          size: 12,
+                          color: _lowerCase  ? requirementMet:requirementNotMet,
+                        ),
+                      ),
+                      Chip(
+                        label: const Text(
+                          'One upper case',
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        avatar: Icon(
+                          Icons.check_circle_outline,
+                          size: 12,
+                          color:   _upperCase? requirementMet:requirementNotMet,
+                        ),
+                      ),
+                      Chip(
+                        label: const Text(
+                          'A symbol or special character',
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                        avatar: Icon(
+                          Icons.check_circle_outline,
+                          size: 12,
+                          color: _symbolSpecial ? requirementMet:requirementNotMet,
+                        ),
+                      ),
+                    ],
+                  ),
                       SizedBox(
                         height: 2.h,
                       ),
-                      Center(
-                        child: AuthButtons(
-                          form: false,
-                          text: "Update",
+                      GestureDetector(
+                        onTap: (){
+                          var data = {
+                            "code": _passwordController.text.trim(),
+                            "password": _confirmPasswordController.text.trim(),
+                            "password_confirmation": _newConfirmPasswordController.text.trim()
+                          };
+                          var data2 = {
+                            "username": "09056193199"
+                          };
+                          RegistrationController().sendOtp(data2).then((value) {
+                            Functions().popUp(context: context,
+                                widget: Container(
+                                  padding:  EdgeInsets.symmetric(horizontal: 8.w),
+                                  decoration: const BoxDecoration(
+                                    color: white,
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(height: 2.h,),
+                                      Text('OTP Code',style: Constant().textStyle(size: 18 , weight: FontWeight.w600)),
+                                      SizedBox(height: 2.h,),
+                                      Text('Enter the OTP sent to your phone number  "09087877676"',style: Constant().textStyle(size: 15, weight: FontWeight.w400,color: successDescription),textAlign: TextAlign.center),
+                                      SizedBox(height: 2.h,),
+                                      TextField(
+                                        //controller: controller,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                          enabledBorder: const OutlineInputBorder(
+                                              borderSide: BorderSide(color: fagoSecondaryColor)),
+                                          focusColor: fagoSecondaryColor,
+                                          hintText: 'Enter OTP',
+                                          hintStyle: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                          prefixIconColor: const Color(0XFFe8a5aa),
+                                          border: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: fagoSecondaryColor,
+                                              width: 5.0,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0),
+                                            ),
+                                          ),
+                                          prefixIcon: SvgPicture.asset(
+                                            'assets/icons/lock-icon.svg',
+                                            fit: BoxFit.scaleDown,
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 3.h,),
+                                      AuthButtons(
+                                        form: true,
+                                        color: inactiveTab ,
+                                        text: "Proceed",
+                                      ),
+                                      SizedBox(height: 20.h,),
+
+                                    ],
+                                  ),
+                                ));
+                          });
+                          // if(_passwordController.text.isEmpty){
+                          //   Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor, colorText: white);
+                          // }
+                          // else if(!_passRequirementMet){
+                          //   Get.snackbar('Error', 'validation requirement not reached');
+                          // }
+
+                            // RegistrationController().changePassword(data).then((value) {
+                            //   print(value);
+                            // });
+                        },
+                        child: Center(
+                          child: AuthButtons(
+                            form: true,
+                            text: "Update",
+                          ),
                         ),
                       ),
                       // _ContinueButton(
@@ -193,7 +402,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       ),
     );
   }
+  bool checkRequirement(String value) {
+    bool met = (function.checkLoweCase(value) && function.checkUpperCase(value) && function.checknumbers(value) && function.specialCharacters(value) && value.length >= 8);
 
+    return met;
+  }
   Future<void> createNewPassword(BuildContext context) async {
     final progress = ProgressHUD.of(context);
     progress!.show();
@@ -261,81 +474,31 @@ class _ContinueButton extends StatelessWidget {
   }
 }
 
-class _PasswordVerificationChips extends StatelessWidget {
-  const _PasswordVerificationChips();
-
-  @override
-  Widget build(BuildContext context) {
-    return  Wrap(
-      spacing: 1,
-      runSpacing: 2,
-      children: const [
-        Chip(
-          label: Text(
-            'At least 8 character strong',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-        Chip(
-          label: Text(
-            'One lower case character',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-        Chip(
-          label: Text(
-            'One upper case',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-        Chip(
-          label: Text(
-            'A symbol or special character',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-      ],
-    );
-  }
-}
+// class _PasswordVerificationChips extends StatelessWidget {
+//   const _PasswordVerificationChips();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return
+//   }
+// }
 
 class _PasswordInput extends StatelessWidget {
   final TextEditingController controller;
-
+  final  ValueChanged  onTap;
   const _PasswordInput({
+    required this.onTap,
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return TextField(
       controller: controller,
       obscureText: true,
+      onChanged: onTap,
       decoration: InputDecoration(
         enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: fagoSecondaryColor)),
@@ -365,54 +528,58 @@ class _PasswordInput extends StatelessWidget {
   }
 }
 
-class _ConfirmPasswordInput extends StatelessWidget {
+class _ConfirmPasswordInput extends StatefulWidget {
   final TextEditingController controller;
   const _ConfirmPasswordInput({required this.controller});
 
   @override
+  State<_ConfirmPasswordInput> createState() => _ConfirmPasswordInputState();
+}
+
+class _ConfirmPasswordInputState extends State<_ConfirmPasswordInput> {
+  @override
   Widget build(BuildContext context) {
-    final _loginController = Get.find<LoginController>();
-    return Obx(() {
-      return TextField(
-        controller: controller,
-        obscureText: true,
-        decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: fagoSecondaryColor)),
-          focusColor: const Color(0XFFe8a5aa),
-          hintText: 'Confirm Password',
-          hintStyle: const TextStyle(
-            fontSize: 14,
+    final authController = Get.put(LoginController());
+    //final _loginController = Get.find<LoginController>();
+    return TextField(
+      controller: widget.controller,
+      obscureText: true,
+      decoration: InputDecoration(
+        enabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: fagoSecondaryColor)),
+        focusColor: const Color(0XFFe8a5aa),
+        hintText: 'Confirm Password',
+        hintStyle: const TextStyle(
+          fontSize: 14,
+        ),
+        prefixIconColor: const Color(0XFFe8a5aa),
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0XFFe8a5aa),
+            width: 1.0,
           ),
-          prefixIconColor: const Color(0XFFe8a5aa),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0XFFe8a5aa),
-              width: 1.0,
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(5.0),
-            ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
           ),
-          prefixIcon: SvgPicture.asset(
-            'assets/icons/lock-icon.svg',
+        ),
+        prefixIcon: SvgPicture.asset(
+          'assets/icons/lock-icon.svg',
+          fit: BoxFit.scaleDown,
+          height: 20,
+          width: 20,
+        ),
+        suffixIcon: GestureDetector(
+          onTap: (){
+            // _loginController.getShowPass.
+          },
+          child: SvgPicture.asset(
+            'assets/icons/show-password-icon.svg',
             fit: BoxFit.scaleDown,
             height: 20,
             width: 20,
           ),
-          suffixIcon: GestureDetector(
-            onTap: (){
-              // _loginController.getShowPass.
-            },
-            child: SvgPicture.asset(
-              'assets/icons/show-password-icon.svg',
-              fit: BoxFit.scaleDown,
-              height: 20,
-              width: 20,
-            ),
-          ),
         ),
-      );
-    });
+      ),
+    );
   }
 }

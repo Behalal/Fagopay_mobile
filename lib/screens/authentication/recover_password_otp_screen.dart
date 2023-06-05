@@ -231,8 +231,7 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
                     borderRadius: BorderRadius.circular(36),
                     color: fagoSecondaryColor,
                   ),
-                  child: (authController.otpForgotVerifyStatus ==
-                          OtpForgotVerifyStatus.loading)
+                  child: (authController.otpForgotVerifyStatus == OtpForgotVerifyStatus.loading)
                       ? const LoadingWidget()
                       : const Center(
                           child: AutoSizeText(

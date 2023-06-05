@@ -153,10 +153,7 @@ class _SetupPasswordState extends State<SetupPassword> {
                           _symbolSpecial = false;
                         });
                       }
-
-                      if (checkRequirement(value) &&
-                          value ==
-                              _registrationController.confirmPassword.text) {
+                      if (checkRequirement(value) && value == _registrationController.confirmPassword.text) {
                         setState(() {
                           _passRequirementMet = true;
                         });
@@ -555,11 +552,7 @@ class _SetupPasswordState extends State<SetupPassword> {
   }
 
   bool checkRequirement(String value) {
-    bool met = (function.checkLoweCase(value) &&
-        function.checkUpperCase(value) &&
-        function.checknumbers(value) &&
-        function.specialCharacters(value) &&
-        value.length >= 8);
+    bool met = (function.checkLoweCase(value) && function.checkUpperCase(value) && function.checknumbers(value) && function.specialCharacters(value) && value.length >= 8);
 
     return met;
   }

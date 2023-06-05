@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -103,6 +104,40 @@ class RegistrationController extends GetxController {
       );
       return responseData;
     } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+  Future changePassword(Map data)async{
+    final token = await SecureStorage.readUserToken();
+    try{
+      final res = await http.post(
+        Uri.parse( "${BaseAPI.userPath}create-new-password"),
+        headers: {
+         // "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: data,
+      );
+      print(res.body);
+      return res;
+    }catch (e){
+      throw Exception('Error: $e');
+    }
+  }
+  Future sendOtp(Map data)async{
+    final token = await SecureStorage.readUserToken();
+    try{
+      final res = await http.post(
+        Uri.parse( "${BaseAPI.userPath}forgot-password"),
+        headers: {
+          // "Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: data,
+      );
+      print(res.body);
+      return res;
+    }catch (e){
       throw Exception('Error: $e');
     }
   }

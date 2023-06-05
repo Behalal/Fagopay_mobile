@@ -36,6 +36,7 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
 
     await Permission.microphone.request();
   };
+
   final _userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
@@ -74,15 +75,16 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                         SizedBox(
                           height: 3.h,
                         ),
-                        Stack(alignment: Alignment.bottomRight, children: [
-                          SvgPicture.asset('assets/icons/Ellipse 278.svg'),
-                          SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                        Stack(
+                          alignment: Alignment.bottomRight, children: [
+                          SvgPicture.asset('assets/icons/Ellipse 278.svg',color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoPrimaryColor,),
+                          SvgPicture.asset('assets/icons/Ellipse 279.svg',color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoPrimaryColor,),
                           Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 3.h, vertical: 3.h),
                             // height: 27.h,
                             width: Get.width,
-                            color: fagoSecondaryColorWithOpacity10,
+                            color: _userController.user?.kycVerified == 1?fagoGreenColor.withOpacity(0.2): fagoSecondaryColorWithOpacity10,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -102,18 +104,20 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                   height: 2.5.h,
                                   width: 12.5.h,
                                   decoration: BoxDecoration(
-                                      color: fagoSecondaryColorWithOpacity10,
+                                      color: _userController.user?.kycVerified == 1?fagoGreenColorWithOpacity10: fagoSecondaryColorWithOpacity10,
+                                    //  color: fagoSecondaryColorWithOpacity10,
                                       borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(
-                                          color: fagoSecondaryColor)),
+                                      border: Border.all(color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor)
+                                    ),
                                   alignment: Alignment.center,
-                                  child: const AutoSizeText(
+                                  child:  AutoSizeText(
                                     'BVN Verification',
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 10,
                                       fontWeight: FontWeight.w400,
-                                      color: fagoSecondaryColor,
+                                      color: _userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor,
+                                     // color: fagoSecondaryColor,
                                     ),
                                   ),
                                 ),
@@ -133,13 +137,12 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                 SizedBox(
                                   height: 2.h,
                                 ),
-                                InkWell(
+                                _userController.user?.kycVerified == 1?Container() :InkWell(
                                   onTap: () {
                                     FlutterIdentityKyc.showWidget(
                                       InputParameters(
                                         context: context,
-                                        merchantKey:
-                                            "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
+                                        merchantKey: "tcusaxtpg2fscbixhdsz:IJd6cBRH3RCubl4iXGQZ0-bH-zI",
                                         firstName: 'demo',
                                         lastName: 'demo',
                                         email: "demo@domainame.com",
@@ -201,14 +204,14 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                       //  _userController.user?.hasGovernmentIdentity == 1 ? Container():
                         Stack(alignment: Alignment.bottomRight,
                             children: [
-                          SvgPicture.asset('assets/icons/Ellipse 278.svg'),
-                          SvgPicture.asset('assets/icons/Ellipse 279.svg'),
+                          SvgPicture.asset('assets/icons/Ellipse 278.svg',color:_userController.user?.hasGovernmentIdentity == 1?fagoGreenColor: fagoPrimaryColor,),
+                          SvgPicture.asset('assets/icons/Ellipse 279.svg',color:_userController.user?.hasGovernmentIdentity == 1?fagoGreenColor: fagoPrimaryColor,),
                           Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 3.h, vertical: 3.h),
                             // height: 27.h,
                             width: Get.width,
-                            color: fagoSecondaryColorWithOpacity10,
+                            color: _userController.user?.hasGovernmentIdentity == 1?fagoGreenColor.withOpacity(0.2): fagoSecondaryColorWithOpacity10,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -228,18 +231,19 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                   height: 3.h,
                                   width: 20.5.h,
                                   decoration: BoxDecoration(
-                                      color: fagoSecondaryColorWithOpacity10,
+                                      color: _userController.user?.kycVerified == 1?fagoGreenColorWithOpacity10: fagoSecondaryColorWithOpacity10,
                                       borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(
-                                          color: fagoSecondaryColor)),
+                                      border: Border.all(color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor)
+                                ),
                                   alignment: Alignment.center,
-                                  child: const AutoSizeText(
+                                  child:  AutoSizeText(
                                     'Government ID Verification',
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 10,
                                       fontWeight: FontWeight.w400,
-                                      color: fagoSecondaryColor,
+                                      color: _userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor,
+
                                     ),
                                   ),
                                 ),
@@ -259,7 +263,7 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                 SizedBox(
                                   height: 2.h,
                                 ),
-                                Container(
+                                _userController.user?.hasGovernmentIdentity == 1?Container():Container(
                                   height: 5.h,
                                   width: 20.5.h,
                                   decoration: BoxDecoration(

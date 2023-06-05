@@ -21,6 +21,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import '../constants/colors.dart';
+import '../individual/home/dashboard_home.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -224,7 +225,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                             imageheight: (_isLoading) ? 50 : null,
                             form: true,
                             text: "Login",
-                            // route: const DashboardHome(),
+                             route: const DashboardHome(),
                           ),
                         ),
                       ),

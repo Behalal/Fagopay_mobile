@@ -213,7 +213,6 @@ class _BusinessFormState extends State<BusinessForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              
               child: SizedBox(
               //  width: 35.w,
                 child: Column(
@@ -256,9 +255,9 @@ class _BusinessFormState extends State<BusinessForm> {
                 ),
               ),
             ),
+            SizedBox(width: 3.w,),
             Expanded(
               child: SizedBox(
-             //   width: 50.w,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -277,19 +276,15 @@ class _BusinessFormState extends State<BusinessForm> {
                     ),
                     CustomDropdownButton(
                       hint: 'Select State',
-                      items: states
-                          .map(
+                      items: states.map(
                             (state) => DropdownMenuItem(
                               value: state.id,
-                              child: FittedBox(
-                                child: AutoSizeText(
-                                  '${state.name}',
-                                  overflow: TextOverflow.clip,
-                                ),
+                              child: Text(
+                                '${state.name}',
+                              //  overflow: TextOverflow.clip,
                               ),
                             ),
-                          )
-                          .toList(),
+                          ).toList(),
                       onChanged: (p0) async {
                         if (p0 != null) {
                           setState(() {

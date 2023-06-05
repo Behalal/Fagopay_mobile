@@ -266,5 +266,15 @@ class Functions {
         }
     );
   }
-
+  popUp({required BuildContext context, required Widget widget}){
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        enableDrag: true,
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        context: context, builder: (BuildContext context) {
+          return widget;
+      },
+    );
+  }
 }
