@@ -29,8 +29,8 @@ enum GetUserStatus {
 //owin.abir@findours.com
 //Bigdaddy@123
 class LoginController extends GetxController {
-  TextEditingController emailController = TextEditingController(text: '09069888763');
-  TextEditingController passwordController = TextEditingController(text: 'A45966860z#');
+  TextEditingController emailController = TextEditingController(text: '09056193199');
+  TextEditingController passwordController = TextEditingController(text: 'Lukman@12345');
   TextEditingController forgotPasswordController = TextEditingController(text: '');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;

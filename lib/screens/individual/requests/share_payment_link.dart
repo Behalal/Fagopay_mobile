@@ -60,7 +60,6 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-<<<<<<< Updated upstream
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -94,7 +93,6 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                 ),
                               ],
                             ),
-=======
                             // Row(
                             //   mainAxisAlignment: MainAxisAlignment.end,
                             //   children: [
@@ -128,7 +126,6 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                             //     ),
                             //   ],
                             // ),
->>>>>>> Stashed changes
                             SizedBox(
                               height: 3.h,
                             ),
