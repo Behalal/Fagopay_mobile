@@ -82,7 +82,7 @@ class User {
         ipAddress: json['ipaddress'] as String?,
         dailyLimts: json['account_daily_limit'] as String?,
         hasGovernmentIdentity: json['has_government_identity'] as int?,
-        // nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
+        nextofkin: Nextofkin.fromJson(json["nextofkin"] ?? ''),
       );
 
   @override

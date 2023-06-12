@@ -120,9 +120,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       // const Divider(
                       //   color: stepsColor,
                       // ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
+                      SizedBox(height: 2.h),
                       const AutoSizeText(
                         'Enter New Password',
                         style: TextStyle(

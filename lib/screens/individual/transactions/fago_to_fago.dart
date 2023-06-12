@@ -134,11 +134,15 @@ class _FagoToFagoState extends State<FagoToFago> {
     final progress = ProgressHUD.of(context);
     progress!.show();
     final response = await _transactionController.getAccountDetailsByPhone(phoneNumber);
+
      if(response == null ){
        _transactionController.userNameId(FagoAccUserStatus.notFound);
        progress.dismiss();
-       verifiedReceipientUser = 'user not found';
-     }else{
+       setState(() {
+         verifiedReceipientUser = 'user not found';
+       });
+     }
+     else{
        _transactionController.userNameId(FagoAccUserStatus.found);
        final customerDetail = response['data']['account_detail'];
        if (customerDetail != "") {

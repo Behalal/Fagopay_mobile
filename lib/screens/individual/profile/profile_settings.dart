@@ -49,6 +49,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
 
   @override
   Widget build(BuildContext context) {
+    //print(_userUcontroller.user!.nextofkin);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 0.h, horizontal: 4.w),
@@ -362,11 +363,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                     height: 0.5.h,
                                                   ),
                                                   AutoSizeText(
-                                                    _userUcontroller
-                                                            .user!
-                                                            .nextofkin
-                                                            ?.fullName ??
-                                                        '',
+                                                    _userUcontroller.user!.nextofkin?.fullName ?? '',
                                                     style: const TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontSize: 12,

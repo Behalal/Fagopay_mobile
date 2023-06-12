@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 import '../screens/constants/colors.dart';
 
@@ -22,6 +23,21 @@ class Constant{
         child: Text(text,
           style: textStyle??Constant().textStyle(color: Colors.white,weight: FontWeight.w500,size: 22),),
       ),
+    );
+  }
+  chip({required String text,required Color borderColor,required Color textColor,bool color = false}){
+    return Container(
+      alignment: Alignment.center,
+      padding:  EdgeInsets.symmetric(vertical: 1.2.h,horizontal: 3.h),
+      margin: EdgeInsets.only(right: 0.5.h),
+      decoration: BoxDecoration(
+        color: color? fagoGreenColorWithOpacity17:white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+              color: borderColor
+          )
+      ),
+      child: Text(text,style: Constant().textStyle(size: 14, weight: FontWeight.w500,color: textColor),),
     );
   }
 }

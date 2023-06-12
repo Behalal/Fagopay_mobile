@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import '../../controllers/customers_controller.dart';
 import '../../controllers/locations_controller.dart';
 import 'custom_dropdown_field.dart';
@@ -24,6 +25,8 @@ class _BusinessFormState extends State<BusinessForm> {
   List<location.Country> countries = [];
   List<location.State> states = [];
   List<location.City> cities = [];
+  bool isStateLoading = false;
+  bool isCityLoading = false;
 
   @override
   void initState() {
@@ -274,26 +277,34 @@ class _BusinessFormState extends State<BusinessForm> {
                     SizedBox(
                       height: 0.5.h,
                     ),
-                    CustomDropdownButton(
-                      hint: 'Select State',
-                      items: states.map(
-                            (state) => DropdownMenuItem(
-                              value: state.id,
-                              child: Text(
-                                '${state.name}',
-                              //  overflow: TextOverflow.clip,
-                              ),
-                            ),
-                          ).toList(),
-                      onChanged: (p0) async {
-                        if (p0 != null) {
-                          setState(() {
-                            _customerController.stateController.text = p0;
-                            cities = [];
-                          });
-                          await getCities(p0);
+                    isStateLoading?const Center(child: LoadingWidget(color: fagoSecondaryColor,)):
+                    GestureDetector(
+                      onTap: (){
+                        if(countries.isEmpty){
+                          Get.snackbar('Error', 'Select Country to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
                         }
                       },
+                      child: CustomDropdownButton(
+                        hint: 'Select State',
+                        items: states.map(
+                              (state) => DropdownMenuItem(
+                                value: state.id,
+                                child: Text(
+                                  '${state.name}',
+                                //  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                            ).toList(),
+                        onChanged: (p0) async {
+                          if (p0 != null) {
+                            setState(() {
+                              _customerController.stateController.text = p0;
+                              cities = [];
+                            });
+                            await getCities(p0);
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -322,28 +333,35 @@ class _BusinessFormState extends State<BusinessForm> {
               SizedBox(
                 height: 0.5.h,
               ),
-              CustomDropdownButton(
-                hint: 'Select City',
-                items: cities
-                    .map(
-                      (city) => DropdownMenuItem(
-                        value: city.id,
-                        child: FittedBox(
-                          child: AutoSizeText(
-                            '${city.name}',
-                            overflow: TextOverflow.clip,
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (p0) {
-                  if (p0 != null) {
-                    setState(() {
-                      _customerController.cityController.text = p0;
-                    });
+              isCityLoading?const Center(child: LoadingWidget(color: fagoSecondaryColor,)): GestureDetector(
+                onTap: (){
+                  if(states.isEmpty){
+                    Get.snackbar('Error', 'Select State to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
                   }
                 },
+                child: CustomDropdownButton(
+                  hint: 'Select City',
+                  items: cities
+                      .map(
+                        (city) => DropdownMenuItem(
+                          value: city.id,
+                          child: FittedBox(
+                            child: AutoSizeText(
+                              '${city.name}',
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (p0) {
+                    if (p0 != null) {
+                      setState(() {
+                        _customerController.cityController.text = p0;
+                      });
+                    }
+                  },
+                ),
               ),
             ],
           ),
@@ -420,21 +438,29 @@ class _BusinessFormState extends State<BusinessForm> {
   }
 
   Future<void> getStates(String countryId) async {
+    setState(() {
+      isStateLoading = true;
+    });
     final response = await _locationsController.getStates(countryId);
     List<location.State> returnedStates = response['data']
         .map<location.State>((state) => location.State.fromJson(state))
         .toList();
     setState(() {
       states.addAll(returnedStates);
+      isStateLoading = false;
     });
   }
 
   Future<void> getCities(String stateId) async {
+    setState(() {
+      isCityLoading = true;
+    });
     final response = await _locationsController.getCities(stateId);
     List<location.City> returnedCities = response['data']
         .map<location.City>((city) => location.City.fromJson(city))
         .toList();
     setState(() {
+      isCityLoading = false;
       cities.addAll(returnedCities);
     });
   }

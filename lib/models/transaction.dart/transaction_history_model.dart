@@ -41,13 +41,12 @@ class Data {
   AccountDetails accountDetails;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        transactions: List<TransactionHistoryModel>.from(json["transactions"]
-            .map((x) => TransactionHistoryModel.fromJson(x))),
+        transactions: List<TransactionHistoryModel>.from(json["transaction_filter"].map((x) => TransactionHistoryModel.fromJson(x))),
         accountDetails: AccountDetails.fromJson(json["account_details"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
+        "transaction_filter": List<dynamic>.from(transactions.map((x) => x.toJson())),
         "account_details": accountDetails.toJson(),
       };
 }

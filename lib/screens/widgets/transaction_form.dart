@@ -48,9 +48,8 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-     //   GetBuilder<TransactionController>(builder: (controller){return
             AutoSizeText(
-            "Enter Receipient ${FagoAccUserStatus.free}",
+            "Enter Receipient",
             style: const TextStyle(
               fontFamily: "Work Sans",
               fontSize: 14,
@@ -65,6 +64,8 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
         SizedBox(
           width: 90.w,
           child: TextFormField(
+
+            maxLength: 11,
             controller: widget.page == 'bank' ? _transactionsController.accountNumberController : _transactionsController.phoneController,
             onChanged: widget.onChangedOfAccountNumberController,
             keyboardType: TextInputType.number,
@@ -72,10 +73,11 @@ class _FagoTransactionFormState extends State<FagoTransactionForm> {
                 fontFamily: "Work Sans",
                 fontWeight: FontWeight.w400,
                 fontSize: 14,
-                color: signInPlaceholder),
+                color: signInPlaceholder,
+            ),
             decoration: InputDecoration(
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+              counterText: '',
+              contentPadding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5.0),
                 borderSide: const BorderSide(

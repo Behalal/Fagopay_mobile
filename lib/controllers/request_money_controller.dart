@@ -42,7 +42,8 @@ class RequestMoney extends GetxController {
 
   final _myRequestStatus = MyRequestStatus.empty.obs;
   MyRequestStatus get myRequestStatus => _myRequestStatus.value;
-
+  final Rx<String> editPayment = ''.obs;
+  String get  paymentPin  => editPayment.value;
   final _requestedMoneyStatus = MyRequestedMoneyStatus.empty.obs;
   MyRequestedMoneyStatus get requestedMoneyStatus => _requestedMoneyStatus.value;
 
@@ -76,23 +77,17 @@ class RequestMoney extends GetxController {
       // if (response.statusCode == 200) {
       //   throw (json['message']);
       // }
-      print('here 2');
       if (response.statusCode == 200) {
         var list = List.from(json['data']['my_request']);
         var products = list.map((e) => MyRequest.fromJson(e)).toList();
-        if (kDebugMode) {
-          print("${products.length} request");
-          print(" Req ${products.first} request");
-        }
         _myRequestList(products);
-        products.isNotEmpty
-            ? _myRequestStatus(MyRequestStatus.available)
-            : _myRequestStatus(MyRequestStatus.empty);
+        products.isNotEmpty ? _myRequestStatus(MyRequestStatus.available) : _myRequestStatus(MyRequestStatus.empty);
         _myRequestStatus(MyRequestStatus.success);
       } else if (response.statusCode == 409) {
         Get.snackbar('Error', 'Go and verify your KYC');
         _myRequestStatus(MyRequestStatus.error);
       }
+      print('response body = ${response.body}');
       return response.body;
     } catch (error) {
       _myRequestStatus(MyRequestStatus.error);
@@ -206,9 +201,7 @@ class RequestMoney extends GetxController {
         }
 
         _requestedMoneyList(requestedMon);
-        requestedMon.isNotEmpty
-            ? _requestedMoneyStatus(MyRequestedMoneyStatus.available)
-            : _requestedMoneyStatus(MyRequestedMoneyStatus.empty);
+        requestedMon.isNotEmpty ? _requestedMoneyStatus(MyRequestedMoneyStatus.available) : _requestedMoneyStatus(MyRequestedMoneyStatus.empty);
         _requestedMoneyStatus(MyRequestedMoneyStatus.success);
       } else if (response.statusCode == 409) {
         Get.snackbar('Error', 'Go and verify your KYC');

@@ -118,18 +118,19 @@ class PurseController extends GetxController {
     }
   }
 
-  Future createPurse(CreatePurseModel createPurseModel) async {
+  Future createPurse(Map data) async {
+    print('i m here');
     final token = await SecureStorage.readUserToken();
     try {
       _createPurseStatus(CreatePurseEnum.loading);
 
       if (kDebugMode) {
         print('creating product...');
-        print('product json: ${createPurseModel.toJson()}');
+       // print('product json: ${createPurseModel.toJson()}');
       }
       var response = await http.post(
         Uri.parse(BaseAPI.createPurse),
-        body: jsonEncode(createPurseModel.toJson()),
+        body: jsonEncode(data),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"

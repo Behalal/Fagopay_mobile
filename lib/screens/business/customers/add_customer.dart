@@ -131,7 +131,7 @@ class _AddCustomerState extends State<AddCustomer> {
     if (response.statusCode == 200) {
       progress.dismiss();
       if (!mounted) return;
-      Navigator.of(context).pop();
+      Navigator.pop(context,false);
       Fluttertoast.showToast(
         msg: "Customer Detail Created Successfully",
         toastLength: Toast.LENGTH_LONG,

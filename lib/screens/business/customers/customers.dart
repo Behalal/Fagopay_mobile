@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import '../../../controllers/company_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,7 @@ class CustomerPage extends StatefulWidget {
 class _CustomerPageState extends State<CustomerPage> {
   final _customerController = Get.find<CustomerController>();
   final _companyController = Get.find<CompanyController>();
-
+  bool isLoading = false;
   @override
   void initState() {
     getCustomers();
@@ -52,7 +53,13 @@ class _CustomerPageState extends State<CustomerPage> {
                   height: 3.h,
                 ),
                 GestureDetector(
-                  onTap: () => goToPage(context, const AddCustomer()),
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const AddCustomer())).then((value) {
+                      if(value != null){
+                        getCustomers();
+                      }
+                    });
+                  },
                   child: Padding(
                     padding: EdgeInsets.only(left: 53.w, right: 2.w),
                     child: Container(
@@ -84,7 +91,6 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   height: 2.h,
                 ),
-
                 CustomerBox(
                   firstBoxImage: "assets/images/people.svg",
                   secondBoxImage: "assets/images/archive-book.svg",
@@ -113,13 +119,13 @@ class _CustomerPageState extends State<CustomerPage> {
                     SvgPicture.asset("assets/images/document-filter.svg"),
                   ],
                 ),
-                _customerController.customers.isEmpty
-                    ? SizedBox(
+                SizedBox(height: 1.h),
+                _customerController.customers.isEmpty ? SizedBox(
                         height: 20.h,
                         child: const Center(
                             child: AutoSizeText('No customers yet')),
                       )
-                    : Expanded(
+                    : isLoading ? const Center(child: LoadingWidget(color: fagoSecondaryColor,)):Expanded(
                         child: ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -157,14 +163,20 @@ class _CustomerPageState extends State<CustomerPage> {
   }
 
   Future<void> getCustomers() async {
-    final companyId = _companyController.company!.id!;
-    final response = await _customerController.getCustomers(companyId);
-    final resBody = response['data']['customers'];
-    final returnedCustomers = resBody
-        .map<Customer>((customer) => Customer.fromJson(customer))
-        .toList();
     setState(() {
-      _customerController.customers = returnedCustomers;
+      isLoading = true;
     });
+    final companyId = _companyController.company!.id!;
+    final response = await _customerController.getCustomers(companyId).then((value) {
+      print('this value ${value['data']['customers']}');
+      final resBody = value['data']['customers'];
+      print('yooo $resBody');
+      final returnedCustomers = resBody.map<Customer>((customer) => Customer.fromJson(customer)).toList();
+      setState(() {
+        isLoading = false;
+        _customerController.customers = returnedCustomers;
+      });
+    });
+
   }
 }

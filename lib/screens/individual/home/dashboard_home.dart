@@ -65,8 +65,8 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   @override
   Widget build(BuildContext context) {
+    getUserDetails();
     // print(' user details is ${_loginController.getUserDetails()}');
-    // print(' user details is ');
     return Scaffold(
       body: (isLoading)
           ? const Loading()
@@ -163,8 +163,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                         color: white,
                                                       ),
                                                     ),
-                                                    SvgPicture.asset(
-                                                        'assets/icons/arrow-right.svg')
+                                                    SvgPicture.asset('assets/icons/arrow-right.svg')
                                                   ],
                                                 ),
                                               ),
@@ -233,16 +232,14 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                   ),
                                                   Expanded(
                                                     child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .stretch,
+                                                      crossAxisAlignment: CrossAxisAlignment.stretch,
                                                       children: [
                                                         const Text(
                                                           'Attention',
                                                           style: TextStyle(
                                                             fontSize: 12,
                                                             fontWeight:
-                                                                FontWeight.w700,
+                                                            FontWeight.w700,
                                                             color: Colors.white,
                                                           ),
                                                         ),
@@ -277,11 +274,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                         // SizedBox(
                                         //   height: 0.h,
                                         // ),
-                                      )
-                                    : SizedBox(
-                                        height: 0.h,
-                                      ),
-
+                                      ) :
                                 Padding(
                                   padding: EdgeInsets.only(
                                     left: 5.w,
@@ -1482,6 +1475,7 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> getUserDetails() async {
     final response = await _loginController.getUserDetails();
+   // print(' response is = ${response['data']['userdetail']['nextofkin']}');
     final userjsonBodyData = response['data']['userdetail'];
     final userDetails = User.fromJson(userjsonBodyData);
     final userAccountjsonBodyData = response['data']['userdetail']['accountdetail'];
@@ -1511,8 +1505,7 @@ class _DashboardHomeState extends State<DashboardHome> {
     final identityjsonBodyData = response['data']['identity_detail'];
     print(identityjsonBodyData['id']);
     setState(() {
-      _governmentIdentityController.governmentIdentityDetailId =
-          identityjsonBodyData['id'];
+      _governmentIdentityController.governmentIdentityDetailId = identityjsonBodyData['id'];
     });
   }
 }

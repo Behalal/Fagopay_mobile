@@ -27,6 +27,7 @@ class SupportRequest extends StatefulWidget {
 
 class _SupportRequestState extends State<SupportRequest> {
   bool isLoading = false;
+  final _pinController = Get.find<RequestMoney>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +59,7 @@ class _SupportRequestState extends State<SupportRequest> {
                              children: [
                                const TextSpan(text: 'Support '),
                                TextSpan(
-                                   text: widget.item.requestedfromname,
+                                   text: widget.item.requestedbyname,
                                    style: const TextStyle(
                                        fontWeight: FontWeight.w600)),
                                const TextSpan(text: ' request of '),
@@ -101,7 +102,7 @@ class _SupportRequestState extends State<SupportRequest> {
                                            CrossAxisAlignment.center,
                                        children: [
                                          AutoSizeText(
-                                           widget.item.requestedfromname!,
+                                           widget.item.requestedbyname!,
                                            style: const TextStyle(
                                              fontFamily: "Work Sans",
                                              fontSize: 16,
@@ -291,18 +292,15 @@ class _SupportRequestState extends State<SupportRequest> {
     setState(() {
       isLoading = true;
     });
-  //===  print(widget.item.id.toString());
     var data = {
       "amount": widget.item.requestedAmount.toString(),
       "request_id": widget.item.id.toString(),
-     // "transaction_pin": "1234 (Required if action equals approve)",
       "action": "decline",
-    // "comment": "Unable to approve such amount due to stringent cash inflow"
     };
     var data2 = {
       "amount": widget.item.requestedAmount.toString(),
       "request_id": widget.item.id.toString(),
-       "transaction_pin": "1234",
+       "transaction_pin": _pinController.paymentPin,
       "action": "approve",
       // "comment": "Unable to approve such amount due to stringent cash inflow"
     };
@@ -313,10 +311,14 @@ class _SupportRequestState extends State<SupportRequest> {
        setState(() {
          isLoading = false;
        });
+       Get.snackbar('Success', res['data']['message'],colorText: white,backgroundColor: fagoGreenColor);
+       Navigator.pop(context,true);
      }else{
        Get.snackbar(
            'Error',
-           res['data']['error']
+           res['data']['error'],
+         backgroundColor: fagoSecondaryColor,
+         colorText: white,
        );
        setState(() {
          isLoading = false;
@@ -368,7 +370,11 @@ class _SupportRequestState extends State<SupportRequest> {
                 child: GestureDetector(
                   onTap: (){
                     Navigator.pop(context);
-                    Functions().paymentDialPopUp(onTap: (){},context: context);
+                    Functions().paymentDialPopUp(onTap: (){
+
+                      Navigator.pop(context);
+                      cancelRequest(true);
+                    },context: context);
                  //   cancelRequest(true);
                   },
                   child: AuthButtons(

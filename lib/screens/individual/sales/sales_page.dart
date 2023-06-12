@@ -101,8 +101,7 @@ class _SalesAccountState extends State<SalesAccount> {
                                             SizedBox(
                                               width: .3.h,
                                             ),
-                                            SvgPicture.asset(
-                                                'assets/icons/copy-svgrepo-com 1.svg')
+                                            SvgPicture.asset('assets/icons/copy-svgrepo-com 1.svg')
                                           ],
                                         ),
                                         SizedBox(

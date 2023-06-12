@@ -50,9 +50,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   ),
                   SizedBox(height: 1.h),
                   AutoSizeText(
-                    (widget.accountDetails.accountNumber != "")
-                        ? "$currencySymbol 1,000,000.00"
-                        : "${currencySymbol}0.00",
+                    (widget.accountDetails.accountNumber != "") ? "$currencySymbol 1,000,000.00" : "${currencySymbol}0.00",
                     style: const TextStyle(
                       fontFamily: "Work Sans",
                       fontSize: 16,

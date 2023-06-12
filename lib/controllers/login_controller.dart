@@ -33,8 +33,11 @@ enum GetUserStatus {
 //owin.abir@findours.com
 //Bigdaddy@123
 class LoginController extends GetxController {
-  TextEditingController emailController = TextEditingController(text: '09056193199');
-  TextEditingController passwordController = TextEditingController(text: 'Lukman@12345');
+
+  //09056193199
+  //Lukman@123456
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   TextEditingController forgotPasswordController = TextEditingController(text: '');
 
   final _otpForgotVerifyStatus = OtpForgotVerifyStatus.empty.obs;
@@ -124,7 +127,26 @@ class LoginController extends GetxController {
       throw Exception('Failed');
     }
   }
+  Future<http.Response> changePassCode(Map body) async {
+    http.Response? responseData;
+    final token = await SecureStorage.readUserToken();
+    try {
+      responseData  = await http.post(
+          Uri.parse("${BaseAPI.userPath}reset-passcode"),
+        headers: {
+          //"Content-Type": "application/json; charset=UTF-8",
+          "Authorization": "Bearer $token"
+        },
+        body: body,
+      );
+      //print(responseData.body);
+    } catch (e) {
+      log(e.toString());
+    //  throw Exception('Failed');
+    }
+    return responseData!;
 
+  }
   //   Future<dynamic> createNewPassword(
   //     String id, String password, String confirmedPassword) async {
   //   var requestBody = jsonEncode({

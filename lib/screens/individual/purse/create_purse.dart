@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/purse_controller.dart';
+import 'package:fagopay/functions/constant.dart';
 import 'package:fagopay/models/purse/createPurse_Model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
@@ -9,11 +10,14 @@ import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import '../../../models/purse/purse_category.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'dart:convert';
 
 class CreatePurse extends StatefulWidget {
   const CreatePurse({
@@ -29,14 +33,15 @@ class _CreatePurseState extends State<CreatePurse> {
   final _pursecontroller = Get.find<PurseController>();
   final SfRangeValues _values = const SfRangeValues(2, 3.5);
   List<CategoryList> categoryList = [];
+  TextEditingController amountController = TextEditingController();
   List<CategoriesWidget> dynamicList = [];
 
   List<String> Price = [];
-
+  PulseCategoryList ?cat;
   List<String> Product = [];
   double _value = 10000;
   String? selectedDuration;
-  String? selectedCategories1;
+  String? selectedCategories1 ;
   String? selectedCategories2;
   String? selectedCategories3;
   final List<String> items = [
@@ -62,15 +67,32 @@ class _CreatePurseState extends State<CreatePurse> {
     'Cloths',
     'Data',
   ];
+  List<String> itemString = [];
   int? myRequestType;
   var number = "";
   int? transactionType;
 
   get index => 1;
-
+  int listIndex =1;
+  @override
+  void initState() {
+    _pursecontroller.getCategorylist();
+    super.initState();
+  }
+  int amount = 0;
+  @override
+  void dispose() {
+    _pursecontroller.budgetController.clear();
+    super.dispose();
+  }
+  List<int> num =[];
+  List<CatTesting> itemList =[];
   @override
   Widget build(BuildContext context) {
-    _pursecontroller.getCategorylist();
+  //  print(_pursecontroller.purseCategoryList[0].id);
+    int nairaSymbolCodePoint = 0x20A6;
+    String nairaSymbol = String.fromCharCode(nairaSymbolCodePoint);
+    final formatCurrency =  NumberFormat.currency(locale: 'en_US', symbol: nairaSymbol);
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
@@ -83,9 +105,7 @@ class _CreatePurseState extends State<CreatePurse> {
                     pageName: "Create a Purse",
                     // backRoute: MakeRequest(),
                   ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
+                  SizedBox(height: 2.h),
                   Expanded(
                     child: Padding(
                         padding: EdgeInsets.symmetric(
@@ -134,8 +154,15 @@ class _CreatePurseState extends State<CreatePurse> {
                                   enableTooltip: true,
                                   minorTicksPerInterval: 1,
                                   onChanged: (dynamic value) {
+                                    final formattedValue = formatCurrency.format(value);
+
                                     setState(() {
-                                      _value = value;
+                                      // _pursecontroller.budgetController.text = value.toString().split('.')[0];
+                                       _value = value;
+                                      _pursecontroller.budgetController.value = _pursecontroller.budgetController.value.copyWith(
+                                        text: formattedValue.split('.')[0],
+                                        selection: TextSelection.collapsed(offset: formattedValue.length),
+                                      );
                                     });
                                   },
                                 ),
@@ -169,8 +196,7 @@ class _CreatePurseState extends State<CreatePurse> {
                                           color: Theme.of(context).hintColor,
                                         ),
                                       ),
-                                      items: items
-                                          .map((item) =>
+                                      items: items.map((item) =>
                                               DropdownMenuItem<String>(
                                                 value: item,
                                                 child: Text(
@@ -209,424 +235,89 @@ class _CreatePurseState extends State<CreatePurse> {
                                       fontWeight: FontWeight.w600,
                                       color: stepsColor,
                                     )),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-                                const Divider(
-                                  thickness: 1,
-                                ),
-                                SizedBox(
-                                  height: 1.h,
-                                ),
-
-                                // Obx(() {
-                                //   return _pursecontroller.purseCategoryStatus ==
-                                //           PurseCategory.loading
-                                //       ? const Center(
-                                //           child: LoadingWidget(
-                                //             color: fagoSecondaryColor,
-                                //           ),
-                                //         )
-                                //       : _pursecontroller
-                                //               .purseCategoryList.isNotEmpty
-                                //           ? SizedBox(
-                                //               height: 300,
-                                //               child: ListView.separated(
-                                //                   padding: EdgeInsets.zero,
-                                //                   scrollDirection:
-                                //                       Axis.vertical,
-                                //                   physics:
-                                //                       const ScrollPhysics(),
-                                //                   shrinkWrap: false,
-                                //                   itemCount: _pursecontroller
-                                //                       .purseCategoryList.length,
-                                //                   separatorBuilder:
-                                //                       (context, index) =>
-                                //                           SizedBox(
-                                //                             height: 1.2.h,
-                                //                           ),
-                                //                   itemBuilder:
-                                //                       (context, index) {
-                                //                     var item = _pursecontroller
-                                //                             .purseCategoryList[
-                                //                         index];
-                                //                     return InkWell(
-                                //                         onTap: () {
-                                //                           print('adding...');
-                                //                           categoryList.add(CategoryList(
-                                //                               amount: '500',
-                                //                               categoryId:
-                                //                                   _pursecontroller
-                                //                                       .purseCategoryList[
-                                //                                           index]
-                                //                                       .id));
-
-                                //                           // categoryList.add(value);
-                                //                           CreatePurseModel
-                                //                               createPurseModel =
-                                //                               CreatePurseModel(
-                                //                             name: "Purse",
-                                //                             amount: _pursecontroller
-                                //                                 .budgetController
-                                //                                 .text
-                                //                                 .trim(),
-                                //                             duration:
-                                //                                 selectedDuration
-                                //                                     .toString(),
-                                //                             // categories:
-                                //                             //     categoryList,
-                                //                           );
-                                //                           print(
-                                //                               'Purse creation is: ${createPurseModel.toJson()}');
-                                //                           setState(() {
-                                //                             transactionType =
-                                //                                 index;
-                                //                           });
-                                //                           setState(() {
-                                //                             transactionType =
-                                //                                 index;
-                                //                           });
-                                //                         },
-                                //                         child: Row(
-                                //                           children: [
-                                //                             Expanded(
-                                //                               child: Column(
-                                //                                 children: [
-                                //                                   AutoSizeText(
-                                //                                       item
-                                //                                           .categoryName,
-                                //                                       textAlign:
-                                //                                           TextAlign
-                                //                                               .start,
-                                //                                       style:
-                                //                                           const TextStyle(
-                                //                                         fontFamily:
-                                //                                             "Work Sans",
-                                //                                         fontSize:
-                                //                                             16,
-                                //                                         fontWeight:
-                                //                                             FontWeight.w500,
-                                //                                         color:
-                                //                                             stepsColor,
-                                //                                       )),
-                                //                                   AutoSizeText(
-                                //                                       item.id,
-                                //                                       textAlign:
-                                //                                           TextAlign
-                                //                                               .start,
-                                //                                       style:
-                                //                                           const TextStyle(
-                                //                                         fontFamily:
-                                //                                             "Work Sans",
-                                //                                         fontSize:
-                                //                                             16,
-                                //                                         fontWeight:
-                                //                                             FontWeight.w500,
-                                //                                         color:
-                                //                                             stepsColor,
-                                //                                       )),
-                                //                                 ],
-                                //                               ),
-                                //                             ),
-                                //                             Expanded(
-                                //                               child:
-                                //                                   NameTextfield(
-                                //                                 controller:
-                                //                                     _pursecontroller
-                                //                                         .amountController,
-                                //                                 title: 'Amount',
-                                //                                 keyboadType:
-                                //                                     TextInputType
-                                //                                         .number,
-                                //                                 validate:
-                                //                                     (value) {
-                                //                                   if (value!
-                                //                                       .isEmpty) {
-                                //                                     return 'Amount must not be empty';
-                                //                                   }
-                                //                                   return null;
-                                //                                 },
-                                //                               ),
-                                //                             )
-                                //                           ],
-                                //                         ));
-                                //                   }))
-                                //           : Container();
-                                // }),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        width: 3.h,
-                                        height: 58,
-                                        padding: const EdgeInsets.all(12),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: Border.all(
-                                                color:
-                                                    fagoSecondaryColorWithOpacity)),
-                                        child: DropdownButtonHideUnderline(
-                                          child: DropdownButton2(
-                                            hint: Text(
-                                              'Categories',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color:
-                                                    Theme.of(context).hintColor,
-                                              ),
-                                            ),
-                                            items: _pursecontroller
-                                                .purseCategoryList
-                                                .map((category) =>
-                                                    DropdownMenuItem(
-                                                      value: category.id,
-                                                      child: Text(
-                                                        category.categoryName,
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                        ),
-                                                      ),
-                                                    ))
-                                                .toList(),
-                                            value: selectedCategories1,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                selectedCategories1 =
-                                                    value as String;
-                                              });
-                                            },
-                                            buttonStyleData:
-                                                const ButtonStyleData(
-                                              height: 40,
-                                              width: 140,
-                                            ),
-                                            menuItemStyleData:
-                                                const MenuItemStyleData(
-                                              height: 40,
-                                            ),
+                                SizedBox(height: 2.h),
+                                const Divider(thickness: 1),
+                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Container(
+                                      width: 3.h,
+                                      height: 58,
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5),
+                                          border: Border.all(color: fagoSecondaryColorWithOpacity)),
+                                      child: DropdownButton<PulseCategoryList>(
+                                        hint: Text(
+                                          'Categories',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                            Theme.of(context).hintColor,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 1.h,
-                                    ),
-                                    Expanded(
-                                      child: NameTextfield(
-                                        // controller: _userController.nameController,
-                                        title: 'Amount',
-                                        keyboadType: TextInputType.number,
-                                        validate: (value) {
-                                          if (value!.isEmpty) {
-                                            return 'Amount must not be empty';
-                                          }
-                                          return null;
+                                        items: _pursecontroller.purseCategoryList.map((category) => DropdownMenuItem<PulseCategoryList>(
+                                          value: category,
+                                          child: Text(
+                                            category.categoryName,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        )).toList(),
+                                        value: cat,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            selectedCategories1 = value?.categoryName;
+                                          });
+                                          print(value);
                                         },
                                       ),
-                                    )
-                                  ],
-                                ),
-
-                                // SizedBox(
-                                //   height: 250,
-                                //   child: ListView.builder(
-                                //     // physics: ,
-                                //     itemExtent: 70.0,
-                                //     padding: EdgeInsets.zero,
-                                //     itemCount: dynamicList.length,
-                                //     itemBuilder: (_, index) =>
-                                //         dynamicList[index],
-                                //   ),
-                                // ),
-
-                                // Row(
-                                //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //   mainAxisAlignment: MainAxisAlignment.center,
-                                //   children: [
-                                //     Expanded(
-                                //       child: Container(
-                                //         width: 3.h,
-                                //         height: 58,
-                                //         padding: const EdgeInsets.all(12),
-                                //         decoration: BoxDecoration(
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             border: Border.all(
-                                //                 color:
-                                //                     fagoSecondaryColorWithOpacity)),
-                                //         child: DropdownButtonHideUnderline(
-                                //           child: DropdownButton2(
-                                //             hint: Text(
-                                //               'Categories',
-                                //               style: TextStyle(
-                                //                 fontSize: 14,
-                                //                 color:
-                                //                     Theme.of(context).hintColor,
-                                //               ),
-                                //             ),
-                                //             items: _pursecontroller
-                                //                 .purseCategoryList
-                                //                 .map((category) =>
-                                //                     DropdownMenuItem<String>(
-                                //                       value: category.id,
-                                //                       child: Text(
-                                //                         category.categoryName,
-                                //                         style: const TextStyle(
-                                //                           fontSize: 14,
-                                //                         ),
-                                //                       ),
-                                //                     ))
-                                //                 .toList(),
-                                //             value: selectedCategories2,
-                                //             onChanged: (value) {
-                                //               setState(() {
-                                //                 selectedCategories2 =
-                                //                     value as String;
-                                //               });
-                                //             },
-                                //             buttonStyleData:
-                                //                 const ButtonStyleData(
-                                //               height: 40,
-                                //               width: 140,
-                                //             ),
-                                //             menuItemStyleData:
-                                //                 const MenuItemStyleData(
-                                //               height: 40,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 1.h,
-                                //     ),
-                                //     Expanded(
-                                //       child: NameTextfield(
-                                //         // controller: _userController.nameController,
-                                //         title: 'Amount',
-                                //         keyboadType: TextInputType.number,
-                                //         validate: (value) {
-                                //           if (value!.isEmpty) {
-                                //             return 'Amount must not be empty';
-                                //           }
-                                //           return null;
-                                //         },
-                                //       ),
-                                //     )
-                                //   ],
-                                // ),
-                                // SizedBox(
-                                //   height: 1.h,
-                                // ),
-                                // Row(
-                                //   crossAxisAlignment: CrossAxisAlignment.center,
-                                //   mainAxisAlignment: MainAxisAlignment.center,
-                                //   children: [
-                                //     Expanded(
-                                //       child: Container(
-                                //         width: 3.h,
-                                //         height: 58,
-                                //         padding: const EdgeInsets.all(12),
-                                //         decoration: BoxDecoration(
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             border: Border.all(
-                                //                 color:
-                                //                     fagoSecondaryColorWithOpacity)),
-                                //         child: DropdownButtonHideUnderline(
-                                //           child: DropdownButton2(
-                                //             hint: Text(
-                                //               'Categories',
-                                //               style: TextStyle(
-                                //                 fontSize: 14,
-                                //                 color:
-                                //                     Theme.of(context).hintColor,
-                                //               ),
-                                //             ),
-                                //             items: _pursecontroller
-                                //                 .purseCategoryList
-                                //                 .map((category) =>
-                                //                     DropdownMenuItem<String>(
-                                //                       value: category.id,
-                                //                       child: Text(
-                                //                         category.categoryName,
-                                //                         style: const TextStyle(
-                                //                           fontSize: 14,
-                                //                         ),
-                                //                       ),
-                                //                     ))
-                                //                 .toList(),
-                                //             value: selectedCategories3,
-                                //             onChanged: (value) {
-                                //               setState(() {
-                                //                 selectedCategories3 =
-                                //                     value as String;
-                                //               });
-                                //             },
-                                //             buttonStyleData:
-                                //                 const ButtonStyleData(
-                                //               height: 40,
-                                //               width: 140,
-                                //             ),
-                                //             menuItemStyleData:
-                                //                 const MenuItemStyleData(
-                                //               height: 40,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     SizedBox(
-                                //       width: 1.h,
-                                //     ),
-                                //     Expanded(
-                                //       child: NameTextfield(
-                                //         controller:
-                                //             _pursecontroller.amountController,
-                                //         title: 'Amount',
-                                //         keyboadType: TextInputType.number,
-                                //         validate: (value) {
-                                //           if (value!.isEmpty) {
-                                //             return 'Amount must not be empty';
-                                //           }
-                                //           return null;
-                                //         },
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                SizedBox(
-                                  width: 2.h,
-                                ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 1.h,
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: NameTextfield(
+                                      controller: amountController,
+                                      title: 'Amount',
+                                      keyboadType: TextInputType.number,
+                                      validate: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Amount must not be empty';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                                SizedBox(height: 2.h),
                                 Center(
                                   child: InkWell(
                                     onTap: () {
-                                      add();
-                                      print(
-                                          'List categorires ${categoryList.length}');
-                                      print(
-                                          'last categorires ${categoryList.first}');
+                                      setState(() {
+                                        itemString.add(selectedCategories1!);
+                                        itemList.add(CatTesting(amount: int.parse(amountController.text),categoryId: '5g512b58-47f9-4df1-02a8-506820f97605'));
+                                        amountController.clear();
+                                      });
+                                      print('catlist = ${itemList.length}');
                                     },
                                     child: Container(
                                       width: 30.w,
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                          color: buttonColor),
+                                      decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15)), color: buttonColor),
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 3.w, vertical: .8.h),
+                                        padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: .8.h),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
                                           children: [
-                                            SvgPicture.asset(
-                                                'assets/icons/fundAccount_icon.svg'),
+                                            SvgPicture.asset('assets/icons/fundAccount_icon.svg'),
                                             const AutoSizeText(
                                               "Add Category",
                                               style: TextStyle(
@@ -642,49 +333,38 @@ class _CreatePurseState extends State<CreatePurse> {
                                     ),
                                   ),
                                 ),
-                                // Center(
-                                //   child: InkWell(
-                                //     onTap: () {
-                                //       add();
-                                //       print("yesh");
-                                //     },
-                                //     child: AuthButtons(
-                                //       form: true,
-                                //       text: "Submit",
-                                //       // route: const MyPurseList(),
-                                //     ),
-                                //   ),
-                                // ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
+                                ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                    itemCount: itemList.length,
+                                    itemBuilder: (context,i){
+                                  return ListTile(
+                                    title: Text(itemString[i]),
+                                    subtitle: Text(itemList[i].amount.toString()),
+                                    trailing: GestureDetector(
+                                        onTap: (){
+                                        //  itemList[i].r
+                                        },
+                                        child: const Icon(Icons.delete)),
+                                  );
+                                }),
+                                SizedBox(height: 2.h),
                                 Obx(() {
                                   return InkWell(
                                     onTap: () {
-                                      // Get.to(() => const MyPurseList());
-                                      //  add();
-                                      CreatePurseModel createPurseModel =
-                                          CreatePurseModel(
-                                        name: "Purse",
-                                        amount: _pursecontroller
-                                            .budgetController.text
-                                            .trim(),
-                                        duration: selectedDuration.toString(),
-                                        categories: categoryList,
-                                      );
-
+                                      var data = {
+                                        "categories": itemList,
+                                        "name": "Testing from app",
+                                        "amount": "2000",
+                                        "duration": "weekly"
+                                      };
                                       if (kDebugMode) {
-                                        print(
-                                            'Purse creation is: ${createPurseModel.toJson()}');
+                                        print('Purse creation is: $data');
                                       }
                                       print('here i am');
-                                      if (_pursecontroller
-                                                  .purseCategoryStatus !=
-                                              CreatePurseEnum.loading &&
-                                          formKey.currentState!.validate()) {
+                                      if (_pursecontroller.purseCategoryStatus != CreatePurseEnum.loading && formKey.currentState!.validate()) {
                                         print('here i am 3');
-                                        _pursecontroller
-                                            .createPurse(createPurseModel);
+                                        _pursecontroller.createPurse(data);
                                       }
                                       print('here i am 2');
                                     },
@@ -692,12 +372,9 @@ class _CreatePurseState extends State<CreatePurse> {
                                         height: 50,
                                         width: Get.width,
                                         decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(36),
+                                            borderRadius: BorderRadius.circular(36),
                                             color: fagoSecondaryColor),
-                                        child: (_pursecontroller
-                                                    .purseCategoryStatus ==
-                                                CreatePurseEnum.loading)
+                                        child: (_pursecontroller.purseCategoryStatus == CreatePurseEnum.loading)
                                             ? const LoadingWidget()
                                             : const Center(
                                                 child: AutoSizeText(
@@ -717,9 +394,26 @@ class _CreatePurseState extends State<CreatePurse> {
                           ),
                         )),
                   ),
-                ])));
+                ],
+            ),
+        ),
+    );
   }
 
+  contanier({required IconData icon,required Color iconColor, required Color borderColor,required bool isActive,required VoidCallback onTap}){
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(7),
+            border: Border.all(
+                color: isActive?  fagoSecondaryColor: borderColor
+            )
+        ),
+        child: Icon(icon,color: isActive?  fagoSecondaryColor: iconColor,),
+      ),
+    );
+  }
   void add() {
     print("you");
     setState(() {
@@ -728,7 +422,92 @@ class _CreatePurseState extends State<CreatePurse> {
           categoryId: _pursecontroller.purseCategoryList[index].id));
     });
   }
+  ///Old drop down code
+  // row({required String categoryString,required int index, VoidCallback? iconTap}){
+  //   return Row(
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       Expanded(
+  //         child: Container(
+  //           width: 3.h,
+  //           height: 58,
+  //           padding: const EdgeInsets.all(12),
+  //           decoration: BoxDecoration(
+  //               borderRadius: BorderRadius.circular(5),
+  //               border: Border.all(color: fagoSecondaryColorWithOpacity)),
+  //           child: DropdownButton<String>(
+  //             items: <String>['A', 'B', 'C', 'D'].map((String value) {
+  //               return DropdownMenuItem<String>(
+  //                 value: value,
+  //                 child: Text(value),
+  //               );
+  //             }).toList(),
+  //             onChanged: (_) {},
+  //           ),
+  //           // DropdownButtonHideUnderline(
+  //           //   child: DropdownButton(
+  //           //     hint: Text(
+  //           //       'Categories',
+  //           //       style: TextStyle(
+  //           //         fontSize: 14,
+  //           //         color:
+  //           //         Theme.of(context).hintColor,
+  //           //       ),
+  //           //     ),
+  //           //     items: _pursecontroller.purseCategoryList.map((category) => DropdownMenuItem(
+  //           //           value: category.id,
+  //           //           child: Text(
+  //           //             category.categoryName,
+  //           //             style: const TextStyle(
+  //           //               fontSize: 14,
+  //           //             ),
+  //           //           ),
+  //           //         )).toList(),
+  //           //      value: categoryString,
+  //           //     onChanged: (value) {
+  //           //       setState(() {
+  //           //         categoryString = value as String;
+  //           //       });
+  //           //     },
+  //           //     // buttonStyleData:
+  //           //     // const ButtonStyleData(
+  //           //     //   height: 40,
+  //           //     //   width: 140,
+  //           //     // ),
+  //           //     // menuItemStyleData: const MenuItemStyleData(
+  //           //     //   height: 40,
+  //           //     // ),
+  //           //   ),
+  //           // ),
+  //         ),
+  //       ),
+  //       SizedBox(
+  //         width: 1.h,
+  //       ),
+  //       Expanded(
+  //         child: NameTextfield(
+  //           // controller: _userController.nameController,
+  //           title: 'Amount',
+  //           keyboadType: TextInputType.number,
+  //           validate: (value) {
+  //             if (value!.isEmpty) {
+  //               return 'Amount must not be empty';
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //      // index == 1?Container(): Expanded(
+  //      //      child: GestureDetector(
+  //      //          onTap: iconTap,
+  //      //          child: Icon(Icons.remove)),
+  //      //  ),
+  //     ],
+  //   );
+  // }
 
+///
   // submitData() {
   //   categoryList = [];
   //   Price = [];
@@ -848,4 +627,28 @@ class _CategoriesState extends State<CategoriesWidget> {
   //   print(Product.length);
   //   //sendData();
   // }
+}
+
+CatTesting catTestingFromJson(String str) => CatTesting.fromJson(json.decode(str));
+
+String catTestingToJson(CatTesting data) => json.encode(data.toJson());
+
+class CatTesting {
+  String categoryId;
+  int amount;
+
+  CatTesting({
+    required this.categoryId,
+    required this.amount,
+  });
+
+  factory CatTesting.fromJson(Map<String, dynamic> json) => CatTesting(
+    categoryId: json["category_id"],
+    amount: json["amount"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "category_id": categoryId,
+    "amount": amount,
+  };
 }

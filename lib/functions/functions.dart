@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../controllers/request_money_controller.dart';
 import 'constant.dart';
 
 class Functions {
@@ -86,6 +87,7 @@ class Functions {
         builder: (s){
           return  StatefulBuilder(
               builder: (BuildContext context, setState) {
+                final _pinController = Get.find<RequestMoney>();
                 return  SingleChildScrollView(
                   child: SizedBox(
                     child: BottomSheet(
@@ -115,7 +117,8 @@ class Functions {
                                       setState(() {
                                         pin4 = text;
                                       });
-                                      print('$pin1 $pin2 $pin3 $pin4');
+                                      _pinController.editPayment('$pin1$pin2$pin3$pin4');
+                                      onTap();
                                     }
                                   },
                                   child: Container(

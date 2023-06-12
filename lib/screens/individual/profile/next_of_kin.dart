@@ -373,8 +373,7 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                               NextOfKinEnum.loading &&
                                           formKey.currentState!.validate()) {
                                         print('here i am 3');
-                                        _userController
-                                            .uploadNextOfKin(nextOfKin);
+                                        _userController.uploadNextOfKin(nextOfKin);
                                       }
                                       print('here i am 2');
                                     },
@@ -445,6 +444,7 @@ class NameTextfield extends StatelessWidget {
       // height: 55,
       width: Get.width,
       child: TextFormField(
+
         validator: validate ??
             (value) {
               if (value == null || value.isEmpty) {

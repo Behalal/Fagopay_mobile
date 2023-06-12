@@ -19,13 +19,18 @@ enum TransactionHistoryStatus {
   success,
   available,
 }
+enum TxFlters{
+  active,
+  unActive,
+}
 enum FagoAccUserStatus{
   free,
   notFound,
   found
 }
 class TransactionController extends GetxController {
-
+  final Rx<TxFlters> txFilter = TxFlters.unActive.obs;
+  TxFlters get  txFilterData => txFilter.value;
   final Rx<List<TransactionHistoryModel>> _transactionHistoryList = Rx([]);
   List<TransactionHistoryModel> get transactionHistoryList => _transactionHistoryList.value;
   final userNameId = FagoAccUserStatus.free.obs;
@@ -201,15 +206,19 @@ class TransactionController extends GetxController {
     }
   }
 
-  Future getTransactionHistory() async {
+  Future getTransactionHistory({required int type,String? startDate, String ? endDate, String? filter}) async {
+    type ==2 ?txFilter(TxFlters.active):txFilter(TxFlters.unActive);
+    print('txFilter $txFilterData');
     final token = await SecureStorage.readUserToken();
+    _transactionHistoryList([]);
     try {
       _transactionHistoryStatus(TransactionHistoryStatus.loading);
       if (kDebugMode) {
         print('getting my request...');
       }
+
       var response = await http.get(
-        Uri.parse(BaseAPI.transactionHistory),
+        Uri.parse(type ==1?BaseAPI.transactionHistory: 'http://fagopay-coreapi-development.herokuapp.com/api/v1/transaction/transaction-filter/$startDate/$endDate/$filter'),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"
@@ -226,7 +235,8 @@ class TransactionController extends GetxController {
       // }
       print('here 2');
       if (response.statusCode == 200) {
-        var list = List.from(json['data']['transactions']);
+        var list =  List.from(json['data']['transactions']);
+      //  type ==1? List.from(json['data']['transactions']): List.from(json['data']['transaction_filter']);
         print('this list $list');
         var transactionList = list.map((e) => TransactionHistoryModel.fromJson(e)).toList();
         if (kDebugMode) {
@@ -239,15 +249,14 @@ class TransactionController extends GetxController {
             : _transactionHistoryStatus(TransactionHistoryStatus.empty);
         _transactionHistoryStatus(TransactionHistoryStatus.success);
       } else if (response.statusCode == 409) {
-        Get.snackbar('Error',
-            'Go and verify your KYC in other to be able to perform transactions');
+        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
         _transactionHistoryStatus(TransactionHistoryStatus.error);
       }
       return response.body;
     } catch (error) {
       _transactionHistoryStatus(TransactionHistoryStatus.error);
       Get.snackbar(
-          'Error',
+          'eee',
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'

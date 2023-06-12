@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/functions/constant.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,9 @@ import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/individual/home/wallets/fund_wallet.dart';
+
+import '../../../../controllers/login_controller.dart';
+import '../../../authentication/recover_password_otp_screen.dart';
 
 class DashBoardDetails extends StatefulWidget {
   final User user;
@@ -34,12 +40,16 @@ class DashBoardDetails extends StatefulWidget {
 
 class _DashBoardDetailsState extends State<DashBoardDetails> {
   bool balanceVisible = true;
+  bool isLoading = true;
   String notVisibleText = "******";
+  final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
+
   final _companyController = Get.find<CompanyController>();
 
   @override
   Widget build(BuildContext context) {
+ //  isLoading = false;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -84,15 +94,8 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                   SvgPicture.asset("assets/images/Frame.svg"),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: SizedBox(
-                                    width: 7.w,
-                                  ),
-                                ),
+
                                 const CircleAvatar(
                                   radius: 25, // Image radius
                                   backgroundImage:
@@ -105,99 +108,29 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            style: const TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: white,
-                                            ),
-                                            children: [
-                                              const TextSpan(text: 'Welcome'),
-                                              TextSpan(
-                                                text:
-                                                    ' ${_userController.switchedAccountType == 2 ? _companyController.company!.companyName : widget.user.firstName}',
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                    RichText(
+                                      text: TextSpan(
+                                        style: const TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: white,
                                         ),
-
-                                        SizedBox(height: 3.h),
-                                        // PopupMenuButton<String>(
-                                        //   offset: const Offset(0, 50),
-                                        //   initialValue: widget.accountType ==
-                                        //           "Individual"
-                                        //       ? AccountType.individual.toString()
-                                        //       : AccountType.business.toString(),
-                                        //   onSelected: (selectedItem) {
-                                        //     if (selectedItem ==
-                                        //         AccountType.business.toString()) {
-                                        //       Navigator.of(context)
-                                        //           .pushReplacement(
-                                        //         MaterialPageRoute(
-                                        //             builder: (context) =>
-                                        //                 const BusinessDashboard()
-
-                                        //             //     BusinessHome(
-                                        //             //   userDetails: widget.user,
-                                        //             //   accountDetails:
-                                        //             //       widget.accountDetails,
-                                        //             // ),
-                                        //             ),
-                                        //       );
-                                        //       return;
-                                        //     }
-                                        //     Navigator.of(context).pushReplacement(
-                                        //       MaterialPageRoute(
-                                        //           builder: (context) =>
-                                        //               const Dashboard()
-                                        //           //     DashboardHome(
-                                        //           //   userDetails: widget.user,
-                                        //           //   accountDetails:
-                                        //           //       widget.accountDetails,
-                                        //           // ),
-                                        //           ),
-                                        //     );
-                                        //   },
-                                        //   itemBuilder: (BuildContext context) =>
-                                        //       <PopupMenuEntry<String>>[
-                                        //     PopupMenuItem<String>(
-                                        //       value: AccountType.individual
-                                        //           .toString(),
-                                        //       child: const Text('Individual'),
-                                        //     ),
-                                        //     PopupMenuItem<String>(
-                                        //       value:
-                                        //           AccountType.business.toString(),
-                                        //       child: const Text('Business'),
-                                        //     ),
-                                        //   ],
-                                        //   child: Stack(
-                                        //     alignment:
-                                        //         AlignmentDirectional.center,
-                                        //     children: const [
-                                        //       Image(
-                                        //         image: AssetImage(
-                                        //             "assets/images/box.png"),
-                                        //         height: 20,
-                                        //         width: 20,
-                                        //       ),
-                                        //       Icon(
-                                        //         Icons.keyboard_arrow_down_rounded,
-                                        //         color: white,
-                                        //         size: 15,
-                                        //       )
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                      ],
+                                        children: [
+                                          const TextSpan(text: 'Welcome'),
+                                          TextSpan(
+                                            text: ' ${_userController.switchedAccountType == 2 ? _companyController.company!.companyName : widget.user.firstName}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
                                     ),
+
+                                    SizedBox(height: 0.6.h),
                                     InkWell(
                                       onTap: () {
                                         showModalBottomSheet(
@@ -344,12 +277,8 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                           children: [
                             Obx(() => AutoSizeText(
                                   (balanceVisible)
-                                      ? ((widget.accountDetails!.balance
-                                                  .toString() ==
-                                              "")
-                                          ? " 0.00"
-                                          : "$currencySymbol ${_userController.switchedAccountType == 2 ? _companyController.company!.accountDetails!.balance : _userController.userAccountDetails!.balance}.00")
-                                      : notVisibleText,
+                                      ? ((widget.accountDetails!.balance.toString() == "") ? " 0.00"
+                                          : "$currencySymbol ${_userController.switchedAccountType == 2 ? _companyController.company!.accountDetails!.balance : _userController.userAccountDetails!.balance}.00") : notVisibleText,
                                   style: const TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 30,
@@ -366,13 +295,31 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 });
                               },
                               child: Icon(
-                                (balanceVisible)
-                                    ? Icons.visibility_off_rounded
-                                    : Icons.visibility_rounded,
+                                (balanceVisible) ? Icons.visibility_off_rounded : Icons.visibility_rounded,
                                 color: white,
                                 size: 20,
                               ),
-                            )
+                            ),
+                            const Spacer(),
+                            isLoading? const Center(child: LoadingWidget(color: fagoSecondaryColor)):GestureDetector(
+                              onTap: ()async{
+                                getUserDetails();
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 12),
+                                decoration: const BoxDecoration(
+                                  color: fagoPrimaryColorWithOpacity10
+                                ),
+                                 child: Row(
+                                   children: [
+                                     const Icon(Icons.refresh,color: white),
+                                     SizedBox(width: 1.w,),
+                                     Text('Refresh',style: Constant().textStyle(size: 15, weight: FontWeight.w600,color: white),)
+                                   ],
+                                 ),
+                              ),
+                            ),
+                             SizedBox(width: 4.w,)
                           ],
                         ),
                         SizedBox(
@@ -662,6 +609,33 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
       ),
     );
   }
+  Future<void> getUserDetails() async {
+    setState(() {
+      isLoading = true;
+    });
+   await _loginController.getUserDetails().then((value) {
+  //    var res = jsonDecode(value);
+     if(value != null){
+       final userjsonBodyData = value['data']['userdetail'];
+       final userDetails = User.fromJson(userjsonBodyData);
+       final userAccountjsonBodyData = value['data']['userdetail']['accountdetail'];
+       final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
+       setState(() {
+         isLoading = false;
+         _userController.setUserAccountDetails = userAccountDetails;
+         _userController.setUser = userDetails;
+       });
+       print(userjsonBodyData);
+       Get.snackbar('Success', 'Account refreshed successfully',backgroundColor: fagoGreenColor,colorText: white);
+     }else{
+       Get.snackbar('Error', 'Something went wrong, cant refresh balance',backgroundColor: fagoSecondaryColor,colorText: white);
+     }
+    });
+    // print(' response is = ${response['data']['userdetail']['nextofkin']}');
+
+    // print('User details are kyc number is ${userDetails.kycVerified}');
+  }
+
 }
 
 enum AccountType { individual, business }
@@ -1182,4 +1156,5 @@ class CustomCompanyCard extends StatelessWidget {
       ),
     );
   }
+
 }

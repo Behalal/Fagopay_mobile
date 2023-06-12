@@ -25,8 +25,7 @@ class CreatePurseModel {
 
   factory CreatePurseModel.fromJson(Map<String, dynamic> json) =>
       CreatePurseModel(
-        categories: List<CategoryList>.from(
-            json["categories"].map((x) => CategoryList.fromJson(x))),
+        categories: List<CategoryList>.from(json["categories"].map((x) => CategoryList.fromJson(x))),
         name: json["name"],
         amount: json["amount"],
         duration: json["duration"],

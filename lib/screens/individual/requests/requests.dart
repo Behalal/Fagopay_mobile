@@ -40,8 +40,8 @@ class _RequestHomeState extends State<RequestHome> {
   void initState() {
     // MyRequest = true;
     // Request = false;
-    _moneyRequest.getMyRequest();
-    _moneyRequest.requestedMoney();
+   _moneyRequest.getMyRequest();
+   _moneyRequest.requestedMoney();
     super.initState();
   }
 

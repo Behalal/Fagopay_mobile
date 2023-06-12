@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fagopay/models/company_model.dart';
 import 'package:fagopay/models/sales_model.dart';
 
 class Customer {
@@ -34,6 +33,7 @@ class Customer {
         email: json['email'] as String?,
         country: json['country'] as String?,
         state: json['state'] as String?,
+        transactions: List<Sales>.from(json['transactions']!.map((x) => x)),
         city: json['city'] as String?,
         address: json['address'] as String?,
         company: Company.fromJson(json['company']),
@@ -43,4 +43,24 @@ class Customer {
   String toString() {
     return 'Customer(id: $id, fullname: $fullname, phoneNumber: $phoneNumber, email: $email, country: $country, state: $state, city: $city, address: $address, company: $company, transactions: $transactions)';
   }
+}
+
+class Company {
+  String id;
+  String companyName;
+
+  Company({
+    required this.id,
+    required this.companyName,
+  });
+
+  factory Company.fromJson(Map<String, dynamic> json) => Company(
+    id: json["id"],
+    companyName: json["company_name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "company_name": companyName,
+  };
 }

@@ -5,6 +5,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/controllers/transaction_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/individual/home/wallets/web_view.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
@@ -40,7 +41,6 @@ class _FundWalletState extends State<FundWallet> {
     _transactioncontroller.amountController.clear();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     // print(
@@ -463,8 +463,7 @@ class _FundWalletState extends State<FundWallet> {
                             horizontal: 10.w, vertical: 1.h),
                         child: GestureDetector(
                           onTap: () async {
-                            if (_transactioncontroller.amountController.text !=
-                                "") {
+                            if (_transactioncontroller.amountController.text != "") {
                               await fundWallet(context);
                               return;
                             }
@@ -563,9 +562,11 @@ class _FundWalletState extends State<FundWallet> {
     final jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
+      print(jsonData);
       progress.dismiss();
       final hostedLink = jsonData['data']['link'];
-      await _launchURL('$hostedLink');
+       Navigator.push(context, MaterialPageRoute(builder: (context)=> FundWalletWebView(url: hostedLink,)));
+     //  await _launchURL('$hostedLink');
       //       if (!mounted) return;
       // Navigator.of(context).push(
       //   MaterialPageRoute(
@@ -594,7 +595,7 @@ class _FundWalletState extends State<FundWallet> {
     //   ),
     // );
   }
-
+  // &tx_ref=GysabJoy
   _launchURL(String url) async {
     if (!await launchUrl(
       Uri.parse(url),
@@ -602,3 +603,6 @@ class _FundWalletState extends State<FundWallet> {
     )) throw 'Could not launch $url';
   }
 }
+
+//http://fagopay-coreapi-development.herokuapp.com/api/v1/transaction/flutterwave-callback/13036849177539058365940857492822?status=cancelled
+//http://fagopay-coreapi-development.herokuapp.com/api/v1/transaction/flutterwave-callback/12767497395428605230153359889408?status=completed&tx_ref=ZSvEKe0I&transaction_id=943609855

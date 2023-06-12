@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
+import '../models/company_model.dart';
 import '../models/referal_earnings.dart/referal_earning.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -9,8 +12,11 @@ import 'package:http/http.dart' as http;
 
 import '../models/nextofkin_model.dart';
 import '../models/user_model/user.dart';
+import '../screens/widgets/navigation_bar.dart';
 import '../service/constants/constants.dart';
 import '../service/secure_storage/secure_storage.dart';
+import 'company_controller.dart';
+import 'login_controller.dart';
 
 enum NextOfKinEnum {
   empty,
@@ -162,7 +168,57 @@ class UserController extends GetxController {
       }
     }
   }
-
+  ///Get user deatils old code;
+  // Future<void> getUserDetails(BuildContext context) async {
+  //   final _companyController = Get.find<CompanyController>();
+  //   final _userController = Get.find<UserController>();
+  //   final _loginController = Get.find<LoginController>();
+  //
+  //  // final progress = ProgressHUD.of(context);
+  //   final response = await _loginController.getUserDetails();
+  //   // setState(() {
+  //   //   _isLoading = false;
+  //   // });
+  //  // progress?.dismiss();
+  //   final userNextOfKinBodyData = response['data']['userdetail']['nextofkin'];
+  //   if (kDebugMode) {
+  //     print('User NoK details response is $userNextOfKinBodyData');
+  //   }
+  //   final userjsonBodyData = response['data']['userdetail'];
+  //   if (kDebugMode) {
+  //     print('User details response is $userjsonBodyData');
+  //   }
+  //   final userAccountjsonBodyData =
+  //   response['data']['userdetail']['accountdetail'];
+  //   final userDetails = User.fromJson(userjsonBodyData);
+  //   if (kDebugMode) {
+  //     print(
+  //         '-----------User userAccountDetails response is $userAccountjsonBodyData');
+  //   }
+  //   _userController.setUser = userDetails;
+  //   final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
+  //   _userController.setUserAccountDetails = userAccountDetails;
+  //
+  //   final userBusinessDetailsjsonBodyData =
+  //   response['data']['business_detail']['profile'];
+  //
+  //   if (userBusinessDetailsjsonBodyData.length != 0) {
+  //     final returnedCompanies = userBusinessDetailsjsonBodyData
+  //         .map<Company>((company) => Company.fromJson(company))
+  //         .toList();
+  //     final companyDetails =
+  //     Company.fromJson(userBusinessDetailsjsonBodyData[0]);
+  //     _companyController.companies = returnedCompanies;
+  //     _companyController.setCompany = companyDetails;
+  //   }
+  //
+  //   //if (!mounted) return;
+  //   Navigator.of(context).pushReplacement(
+  //     MaterialPageRoute(
+  //       builder: (BuildContext context) => const Dashboard(),
+  //     ),
+  //   );
+  // }
   void clear() {
     emailController.clear();
     phoneNumController.clear();

@@ -7,6 +7,7 @@ import 'package:fagopay/screens/individual/requests/payme_page.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
@@ -60,72 +61,6 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: 22.w,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      color: buttonColor),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3.w, vertical: .7.h),
-                                    child:  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: const [
-                                        AutoSizeText(
-                                          "Edit Link",
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: [
-                            //     Container(
-                            //       width: 22.w,
-                            //       decoration: const BoxDecoration(
-                            //           borderRadius:
-                            //               BorderRadius.all(Radius.circular(15)),
-                            //           color: buttonColor),
-                            //       child: Padding(
-                            //         padding: EdgeInsets.symmetric(
-                            //             horizontal: 3.w, vertical: .7.h),
-                            //         child: const Row(
-                            //           mainAxisAlignment:
-                            //               MainAxisAlignment.center,
-                            //           crossAxisAlignment:
-                            //               CrossAxisAlignment.center,
-                            //           children: [
-                            //             AutoSizeText(
-                            //               "Edit Link",
-                            //               style: TextStyle(
-                            //                 fontFamily: "Work Sans",
-                            //                 fontSize: 14,
-                            //                 fontWeight: FontWeight.w600,
-                            //                 color: white,
-                            //               ),
-                            //             ),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                             SizedBox(
                               height: 3.h,
                             ),
@@ -245,7 +180,7 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                       ),
                                     ),
                                   ),
-                                  GestureDetector(
+                                  paymentUrl.isEmpty?Container():GestureDetector(
                                     onTap: (){
                                       Navigator.push(context, MaterialPageRoute(builder: (context)=>const PleasePayMePage())).then((value){
                                       setState(() {
@@ -275,13 +210,18 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                               ),
                             ),
                             SizedBox(
-                              height: 8.h,
+                              height: 4.h,
                             ),
                             ///Code for sharing link
-                            AuthButtons(
-                                form: true,
-                                text: "Share Payment Link",
-                                route: const PleasePayMePage()),
+                            paymentUrl.isEmpty?Container():GestureDetector(
+                              onTap: (){
+                                Share.share('${_userUcontroller.user?.firstName} request you make a payment using this link $paymentUrl');
+                              },
+                              child: AuthButtons(
+                                  form: true,
+                                  text: "Share Payment Link",
+                                  route: const PleasePayMePage()),
+                            ),
                           ],
                         )),
                   ),

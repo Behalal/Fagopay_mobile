@@ -17,6 +17,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../controllers/company_controller.dart';
+import '../../../controllers/user_controller.dart';
+
 class FagoToBank extends StatefulWidget {
   final User userDetails;
   final AccountDetail accountDetails;
@@ -34,6 +37,8 @@ class FagoToBank extends StatefulWidget {
 class _FagoToBankState extends State<FagoToBank> {
   List<BankDetails> allBanks = [];
   String selectedBankValue = "";
+  final _companyController = Get.find<CompanyController>();
+  final _userController = Get.find<UserController>();
   final _transactionController = Get.find<TransactionController>();
   String verifiedReceipientUser = "";
 
@@ -81,7 +86,9 @@ class _FagoToBankState extends State<FagoToBank> {
                     ),
                     AccountDetails(
                       action: "spend",
-                      accountDetails: widget.accountDetails,
+                      accountDetails:  _userController.switchedAccountType == 2
+                          ? _companyController.company!.accountDetails!
+                          : _userController.userAccountDetails!,
                     ),
                     SizedBox(
                       height: 2.h,

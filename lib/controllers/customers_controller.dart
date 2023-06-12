@@ -42,6 +42,7 @@ class CustomerController extends GetxController {
           "Authorization": "Bearer $token",
         },
       );
+      print('this response data = $responseData');
       return responseData;
     } catch (e) {
       log(e.toString());

@@ -28,6 +28,9 @@ class BaseAPI {
   static String lookupPhoneNum = "${api}transaction/account-lookup-by-phone/";
   static String transactionHistory = "${api}transaction/history";
 
+  ///OG Dev
+  static String transactionHistoryFilter = "http://fagopay-coreapi-development.herokuapp.com/api/v1/transaction/transaction-filter/2023-05-05/2023-06-06/fundwallet";
+
   //bills
   static String airtimeSwapCharges = "${api}airtimeswap/get_fee/";
   static String initiateSwap = "${api}airtimeswap";
