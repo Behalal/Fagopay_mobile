@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:fagopay/models/categoryItems.dart';
+
 import '../models/purse/createPurse_Model.dart';
 import '../models/purse/purse_category.dart';
 import '../models/purse/showPurse_Model.dart';
@@ -37,6 +39,8 @@ enum ShowPurseEnum {
 class PurseController extends GetxController {
   late final budgetController = TextEditingController();
   late final amountController = TextEditingController();
+  final Rx<List<CategoryItems>> _categoryItemsList = Rx([]);
+  Rx<List<CategoryItems>> get categoryItemsList => _categoryItemsList;
   // late final emailController = TextEditingController();
   // late final phoneNumController = TextEditingController();
   // late final houseAdressController = TextEditingController();
@@ -98,6 +102,8 @@ class PurseController extends GetxController {
             ? _purseCategoryStatus(PurseCategory.available)
             : _purseCategoryStatus(PurseCategory.empty);
         _purseCategoryStatus(PurseCategory.success);
+
+        addDefaultItems(); //Add id per zero amounts
       } else if (response.statusCode == 409) {
         Get.snackbar('Error',
             'Go and verify your KYC in other to be able to perform transactions');
@@ -115,6 +121,12 @@ class PurseController extends GetxController {
       if (kDebugMode) {
         print('Purse Category listt Error ${error.toString()}');
       }
+    }
+  }
+
+  addDefaultItems(){
+    for (var element in _purseCategoryList.value) {
+      _categoryItemsList.value.add(CategoryItems(categoryId: element.id, amount: 0));
     }
   }
 

@@ -24,6 +24,7 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../models/transaction.dart/tx_filter.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
 
@@ -40,15 +41,24 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
   final _transactionController = Get.find<TransactionController>();
   int? transactionType;
   bool isFilter = false;
+  bool isFilterLoading = false;
+  TxFilterModel? _txFilterModel;
+
   @override
   void initState() {
     _transactionController.getTransactionHistory(type: 1);
+    TransactionController().txFilterApi().then((value) {
+      if(value.data.transactionFilter.isNotEmpty){
+        setState(() {
+          _txFilterModel =value;
+          isFilterLoading = true;
+        });
+      }
+    });
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    print(isFilter);
-    //_transactionController.getTransactionHistory();
     return Scaffold(
         body: SingleChildScrollView(
           child: Padding(
@@ -76,7 +86,7 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
                     SizedBox(
                       height: 2.h
                     ),
-                    GestureDetector(
+                    !isFilterLoading?Container(): GestureDetector(
                       onTap:(){
                         showFilter(context,isFilter);
                       } ,
@@ -334,183 +344,179 @@ class _TransactionHistoryState extends State<TransactionHistoryPage> {
         ),
     );
   }
-}
-showFilter(BuildContext context,bool isFilter){
-  String startDateString = '';
-  int index = 1;
-  String endDateDateString = '';
-  date({required VoidCallback onTap,required String text,required String text2}){
-    return  Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(text2,style: Constant().textStyle(size: 15, weight: FontWeight.w500,color: black)),
-          SizedBox(height: 0.5.h,),
-          GestureDetector(
-            onTap: onTap,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 1.4.h,horizontal: 1.9.h),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                      color: fagoSecondaryColorWithOpacity
-                  )
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(text),
-                  SizedBox(width: 1.w,),
-                  const Icon(Icons.calendar_month,size: 20,)
-                ],
+  showFilter(BuildContext context,bool isFilter){
+    String filter = _txFilterModel!.data.transactionFilter[0].name;
+    String startDateString = '';
+    int index = 1;
+    String endDateDateString = '';
+    date({required VoidCallback onTap,required String text,required String text2}){
+      return  Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(text2,style: Constant().textStyle(size: 15, weight: FontWeight.w500,color: black)),
+            SizedBox(height: 0.5.h,),
+            GestureDetector(
+              onTap: onTap,
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 1.4.h,horizontal: 1.9.h),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                        color: fagoSecondaryColorWithOpacity
+                    )
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(text),
+                    SizedBox(width: 1.w,),
+                    const Icon(Icons.calendar_month,size: 20,)
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-  DateTime startDate = DateTime.now();
-  DateTime ?endDate;
-  List<String> items =[
-    "All",
-    "Airtime & Data",
-    "Bill Payment",
-    "QR Payment",
-    "Swap Airtime",
-    "Payment Link",
-  ];
-  final _transactionController = Get.find<TransactionController>();
-  return  showModalBottomSheet(
-    isScrollControlled: true,
-    backgroundColor: white,
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
-    context: context,
-    builder: (context) {
-      return  StatefulBuilder(
-      builder: (BuildContext context, setState) {
-        Future<void> choseDate({required DateTime dateTime, DateTime ?date,bool isStartDate = false}) async {
-          final  DateTime? picked   = await showDatePicker(
-            ///Tell usman that we need to optimised this code to the day user register to the app anyway he is not giving me enough time to work on this.
-            context: context,
-            initialDate:DateTime(dateTime.year, dateTime.month, dateTime.day ),
-            firstDate: DateTime(dateTime.year , dateTime.month , isStartDate? dateTime.day -20: dateTime.day ),
-            lastDate: DateTime(dateTime.year , dateTime.month, isStartDate? dateTime.day:DateTime.now().day ),
-            builder: (context, child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                  colorScheme: const  ColorScheme.light(
-                    primary: fagoSecondaryColorWithOpacity10, // header background color
-                    onPrimary: fagoSecondaryColor, // header text color
-                    onSurface: black, // body text color
-                  ),
-                  textButtonTheme: TextButtonThemeData(
-                    style: TextButton.styleFrom(
-                      primary: fagoSecondaryColor, // button text color
-                    ),
-                  ),
-                ),
-                child: child!,
-              );
-            },
-          );
-          if(isStartDate){
-            if (picked != null && picked != date) {
-              setState((){
-                startDate = picked;
-                startDateString =  formatDate(picked , [yyyy, '-', mm, '-', dd]).toString();
-              });
-            }
-          }
-          else{
-            if (picked != null && picked != date) {
-              setState((){
-              //  2023-06-06
-                endDate = picked;
-                endDateDateString =  formatDate(picked , [yyyy, '-', mm, '-', dd]).toString();
-              });
-            }
-          }
+          ],
+        ),
+      );
+    }
 
-        }
-        return   Container(
-          color: white,
-          padding: EdgeInsets.symmetric(horizontal: 2.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 2.h,),
-              Center(
-                child: Container(
-                  color: fagoSecondaryColor,
-                  width: 38.w,
-                  height: 3,
-                ),
-              ),
-              SizedBox(height: 1.h,),
-              Text('Select Transaction Type',style: Constant().textStyle(size: 18, weight: FontWeight.w600,color: stepsColor)),
-              SizedBox(height: 2.h,),
-              SizedBox(
-                height: 4.3.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: items.length,
-                    itemBuilder: (context, i){
-                      return GestureDetector(
-                        onTap: (){
-                          setState((){
-                            index = i+1;
-                          });
-                        },
-                        child: Constant().chip(text: items[i], borderColor: index == i+1?fagoGreenColor:fagoSecondaryColor, textColor: index == i+1? fagoGreenColor: black,color: index == i+1? true:false),
+    DateTime startDate = DateTime.now();
+    DateTime ?endDate;
+    return  showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: white,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
+        context: context,
+        builder: (context) {
+          return  StatefulBuilder(
+              builder: (BuildContext context, setState) {
+                Future<void> choseDate({required DateTime dateTime, DateTime ?date,bool isStartDate = false}) async {
+                  final  DateTime? picked   = await showDatePicker(
+                    ///Tell usman that we need to optimised this code to the day user register to the app anyway he is not giving me enough time to work on this.
+                    context: context,
+                    initialDate:DateTime(dateTime.year, dateTime.month, dateTime.day ),
+                    firstDate: DateTime(dateTime.year , dateTime.month , isStartDate? dateTime.day -20: dateTime.day ),
+                    lastDate: DateTime(dateTime.year , dateTime.month, isStartDate? dateTime.day:DateTime.now().day ),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: const  ColorScheme.light(
+                            primary: fagoSecondaryColorWithOpacity10, // header background color
+                            onPrimary: fagoSecondaryColor, // header text color
+                            onSurface: black, // body text color
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              primary: fagoSecondaryColor, // button text color
+                            ),
+                          ),
+                        ),
+                        child: child!,
                       );
-                    }),
-              ),
-              SizedBox(height: 3.h,),
-              Row(
-                children: [
-                  date(text2: 'From',onTap: (){
-                    choseDate(dateTime: DateTime.now(),date: startDate,isStartDate: true);
-                  }, text: startDateString.isEmpty?'DD/MM/YYY':startDateString),
-                  SizedBox(width: 2.7.w,),
-                  date(text2: 'To',onTap: (){
-                    if(startDateString.isEmpty){
-                      Get.snackbar('Error', 'Chose Start Date to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
-                    }else{
-                      choseDate(dateTime: startDate,date: endDate,isStartDate: false);
+                    },
+                  );
+                  if(isStartDate){
+                    if (picked != null && picked != date) {
+                      setState((){
+                        startDate = picked;
+                        startDateString =  formatDate(picked , [yyyy, '-', mm, '-', dd]).toString();
+                      });
                     }
-                  }, text: endDateDateString.isEmpty?'DD/MM/YYY':endDateDateString),
-                ],
-              ),
-              SizedBox(height: 3.h,),
-              GestureDetector(
-                onTap: (){
-                  if(startDateString.isEmpty){
-                    Get.snackbar('Error', 'Chose Start Date to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
-                  }else if(endDateDateString.isEmpty){
-                    Get.snackbar('Error', 'Chose End Date to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
-                  }else{
-                    Navigator.of(context).pop();
-                   _transactionController.getTransactionHistory(type: 2,endDate: endDateDateString ,filter: 'fundwallet',startDate:  startDateString);
                   }
-                },
-                child: Center(
-                  child: AuthButtons(
-                    form: true,
-                    text: "Apply",
-                    //route: const DashboardHome(),
-                  ),
-                ),
-              ),
-              SizedBox(height: 5.h,),
+                  else{
+                    if (picked != null && picked != date) {
+                      setState((){
+                        //  2023-06-06
+                        endDate = picked;
+                        endDateDateString =  formatDate(picked , [yyyy, '-', mm, '-', dd]).toString();
+                      });
+                    }
+                  }
 
-            ],
-          ),
-        );
-      });
+                }
+                return   Container(
+                  color: white,
+                  padding: EdgeInsets.symmetric(horizontal: 2.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 2.h,),
+                      Center(
+                        child: Container(
+                          color: fagoSecondaryColor,
+                          width: 38.w,
+                          height: 3,
+                        ),
+                      ),
+                      SizedBox(height: 1.h,),
+                      Text('Select Transaction Type',style: Constant().textStyle(size: 18, weight: FontWeight.w600,color: stepsColor)),
+                      SizedBox(height: 2.h,),
+                      //isFilterLoading?LoadingWidget():
+                      SizedBox(
+                        height: 4.3.h,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _txFilterModel?.data.transactionFilter.length,
+                            itemBuilder: (context, i){
+                              return GestureDetector(
+                                onTap: (){
+                                  setState((){
+                                    filter = _txFilterModel!.data.transactionFilter[i].name;
+                                    index = i+1;
+                                  });
+                                },
+                                child: Constant().chip(text: _txFilterModel!.data.transactionFilter[i].name, borderColor: index == i+1?fagoGreenColor:fagoSecondaryColor, textColor: index == i+1? fagoGreenColor: black,color: index == i+1? true:false),
+                              );
+                            }),
+                      ),
+                      SizedBox(height: 3.h,),
+                      Row(
+                        children: [
+                          date(text2: 'From',onTap: (){
+                            choseDate(dateTime: DateTime.now(),date: startDate,isStartDate: true);
+                          }, text: startDateString.isEmpty?'DD/MM/YYY':startDateString),
+                          SizedBox(width: 2.7.w,),
+                          date(text2: 'To',onTap: (){
+                            if(startDateString.isEmpty){
+                              Get.snackbar('Error', 'Chose Start Date to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
+                            }else{
+                              choseDate(dateTime: startDate,date: endDate,isStartDate: false);
+                            }
+                          }, text: endDateDateString.isEmpty?'DD/MM/YYY':endDateDateString),
+                        ],
+                      ),
+                      SizedBox(height: 3.h,),
+                      GestureDetector(
+                        onTap: (){
+                          if(startDateString.isEmpty){
+                            Get.snackbar('Error', 'Chose Start Date to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
+                          }else if(endDateDateString.isEmpty){
+                            Get.snackbar('Error', 'Chose End Date to proceed',colorText: white,backgroundColor: fagoSecondaryColor);
+                          }else{
+                            Navigator.of(context).pop();
+                            _transactionController.getTransactionHistory(type: 2,endDate: endDateDateString ,filter: filter,startDate:  startDateString);
+                          }
+                        },
+                        child: Center(
+                          child: AuthButtons(
+                            form: true,
+                            text: "Apply",
+                            //route: const DashboardHome(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5.h,),
+
+                    ],
+                  ),
+                );
+              });
+        }
+    );
+
   }
-  );
 
 }
 
@@ -770,11 +776,11 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                 ),
               ),
             ),
-            btn(color: buttonColor,text: 'Share Payment Receipt',img: 'assets/icons/share.png',onTap: (){
+            Constant().btn(color: buttonColor,text: 'Share Payment Receipt',img: 'assets/icons/share.png',onTap: (){
               shareImage();
             }),
             const SizedBox(height: 10),
-            btn(color: fagoPrimaryColor,text: 'Download Receipt',img: 'assets/icons/download.png',onTap: (){
+            Constant().btn(color: fagoPrimaryColor,text: 'Download Receipt',img: 'assets/icons/download.png',onTap: (){
               _saveImage();
             }),
           ],
@@ -807,31 +813,6 @@ class _TransactionDetailsState extends State<TransactionDetails> {
         }
       }
     });
-  }
-  Widget btn({required String text, required String img,required Color color,required VoidCallback onTap}){
-    return  GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
-        decoration:   BoxDecoration(
-          color: color,
-          borderRadius: const BorderRadius.all(Radius.circular(25)),
-        ),
-        width: 30.h,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              textAlign: TextAlign.center,
-              style: textStyle(),
-            ),
-            SizedBox(width: 1.5.w,),
-            Image.asset(img,height: 20,)
-          ],
-        ),
-      ),
-    );
   }
   TextStyle textStyle(){
     return const TextStyle(

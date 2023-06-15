@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/individual/bills/qr_code/my_qr_code.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/government_identity_verification_controller.dart';
 import '../bills/data.dart';
 import '../bills/how_it_works.dart';
+import '../bills/qr_code/create_qr_code.dart';
 import '../bills/swap_airtime.dart';
 import '../refer_and_win/refer_page.dart';
 import '../requests/requests.dart';
@@ -65,7 +67,8 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   @override
   Widget build(BuildContext context) {
-    getUserDetails();
+    ///Update this shitty code back
+    ///getUserDetails();
     // print(' user details is ${_loginController.getUserDetails()}');
     return Scaffold(
       body: (isLoading)
@@ -90,8 +93,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                     child: Obx(() {
                       // print(
                       //     ' user details Under home Obx ${_loginController.getUserDetails()}');
-                      return _loginController.getUserStatus == GetUserStatus.loading
-                          ? Column(
+                      if (_loginController.getUserStatus == GetUserStatus.loading) {
+                        return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 widget.userDetails.kycVerified == 1 && widget.accountType == "Bussiness" ?
@@ -511,6 +514,8 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                       contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                                                       content: unverifiedUserDialogue());
                                                   return;
+                                                }else{
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const MyQrCode()));
                                                 }
                                                 // Navigator.of(context).push(
                                                 //   MaterialPageRoute(
@@ -1373,8 +1378,10 @@ class _DashboardHomeState extends State<DashboardHome> {
                                 //   ),
                                 // ),
                               ],
-                            )
-                          : Container();
+                            );
+                      } else {
+                        return Container();
+                      }
                     }),
                   ),
                 ),
@@ -1484,7 +1491,7 @@ class _DashboardHomeState extends State<DashboardHome> {
       _userController.setUserAccountDetails = userAccountDetails;
       _userController.setUser = userDetails;
     });
-    print('User details are kyc number is ${userDetails.kycVerified}');
+    //print('User details are kyc number is ${userDetails.kycVerified}');
   }
 
   // Future<void> getCompany() async {

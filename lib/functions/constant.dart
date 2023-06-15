@@ -25,6 +25,32 @@ class Constant{
       ),
     );
   }
+  Widget btn({required String text, required String img,required Color color,required VoidCallback onTap}){
+    return  GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
+        decoration:   BoxDecoration(
+          color: color,
+          borderRadius: const BorderRadius.all(Radius.circular(25)),
+        ),
+        width: 30.h,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: textStyle(size: 16,weight: FontWeight.w600,color: white),
+            ),
+            SizedBox(width: 1.5.w,),
+            Image.asset(img,height: 20,)
+          ],
+        ),
+      ),
+    );
+  }
+
   chip({required String text,required Color borderColor,required Color textColor,bool color = false}){
     return Container(
       alignment: Alignment.center,

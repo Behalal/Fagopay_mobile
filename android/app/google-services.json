@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "721141391745",
-    "project_id": "fagopay-9f623",
-    "storage_bucket": "fagopay-9f623.appspot.com"
+    "project_number": "249518189218",
+    "project_id": "fagopay-ff792",
+    "storage_bucket": "fagopay-ff792.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:721141391745:android:1fcdf25b06886301c4c880",
+        "mobilesdk_app_id": "1:249518189218:android:515934e782c95c636145fb",
         "android_client_info": {
-          "package_name": "com.tanxe.fagopay"
+          "package_name": "net.fagopay.fagopay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "721141391745-j9usrion04mq95l500402jkpcn6tqfo9.apps.googleusercontent.com",
+          "client_id": "249518189218-stneea84trvlmfns68sd49lbo0q0ojdb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBckxEoFMA4--ONRJVZu4o_Ldc42b-6CKw"
+          "current_key": "AIzaSyDL2Hon8T9_e7ySpv2kVy5iQEd4WCfySj4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "721141391745-j9usrion04mq95l500402jkpcn6tqfo9.apps.googleusercontent.com",
+              "client_id": "249518189218-stneea84trvlmfns68sd49lbo0q0ojdb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

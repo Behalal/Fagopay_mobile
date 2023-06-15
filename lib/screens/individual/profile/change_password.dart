@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/functions/constant.dart';
+import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/constants/colors.dart';
@@ -28,15 +29,15 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  final TextEditingController _newConfirmPasswordController = TextEditingController();
   final _loginController = Get.find<LoginController>();
   Functions function = Functions();
   @override
   void dispose() {
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
+    _otpController.dispose();
+    _newPasswordController.dispose();
     super.dispose();
   }
   bool _passRequirementMet = false;
@@ -46,9 +47,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   bool _lowerCase = false;
   bool _upperCase = false;
   bool _symbolSpecial = false;
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    print(_confirmPasswordController.text);
+    print(_newPasswordController.text);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -177,7 +179,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               _symbolSpecial = false;
                             });
                           }
-                          if (checkRequirement(value) && value == _newConfirmPasswordController.text) {
+                          if (checkRequirement(value) && value == _confirmPasswordController.text) {
                             setState(() {
                               _passRequirementMet = true;
                             });
@@ -188,7 +190,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           }
                      //     print(_upto8Characters);
                         },
-                        controller: _confirmPasswordController,
+                        controller: _newPasswordController,
                       ),
                       SizedBox(height: 1.h),
                       const AutoSizeText(
@@ -204,12 +206,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 1.h,
                       ),
                       _ConfirmPasswordInput(
-                        controller: _newConfirmPasswordController,
+                        controller: _confirmPasswordController,
                       ),
                       SizedBox(
                         height: 1.h,
                       ),
-                      Wrap(
+                  Wrap(
                     spacing: 1,
                     runSpacing: 2,
                     children:  [
@@ -271,86 +273,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       SizedBox(
                         height: 2.h,
                       ),
-                      GestureDetector(
+                      isLoading ?const LoadingWidget(color: fagoSecondaryColor,):GestureDetector(
                         onTap: (){
-                          var data = {
-                            "code": _passwordController.text.trim(),
-                            "password": _confirmPasswordController.text.trim(),
-                            "password_confirmation": _newConfirmPasswordController.text.trim()
-                          };
-                          var data2 = {
-                            "username": "09056193199"
-                          };
-                          RegistrationController().sendOtp(data2).then((value) {
-                            Functions().popUp(context: context,
-                                widget: Container(
-                                  padding:  EdgeInsets.symmetric(horizontal: 8.w),
-                                  decoration: const BoxDecoration(
-                                    color: white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(height: 2.h,),
-                                      Text('OTP Code',style: Constant().textStyle(size: 18 , weight: FontWeight.w600)),
-                                      SizedBox(height: 2.h,),
-                                      Text('Enter the OTP sent to your phone number  "09087877676"',style: Constant().textStyle(size: 15, weight: FontWeight.w400,color: successDescription),textAlign: TextAlign.center),
-                                      SizedBox(height: 2.h,),
-                                      TextField(
-                                        //controller: controller,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                          enabledBorder: const OutlineInputBorder(
-                                              borderSide: BorderSide(color: fagoSecondaryColor)),
-                                          focusColor: fagoSecondaryColor,
-                                          hintText: 'Enter OTP',
-                                          hintStyle: const TextStyle(
-                                            fontSize: 14,
-                                          ),
-                                          prefixIconColor: const Color(0XFFe8a5aa),
-                                          border: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: fagoSecondaryColor,
-                                              width: 5.0,
-                                            ),
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0),
-                                            ),
-                                          ),
-                                          prefixIcon: SvgPicture.asset(
-                                            'assets/icons/lock-icon.svg',
-                                            fit: BoxFit.scaleDown,
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 3.h,),
-                                      AuthButtons(
-                                        form: true,
-                                        color: inactiveTab ,
-                                        text: "Proceed",
-                                      ),
-                                      SizedBox(height: 20.h,),
-
-                                    ],
-                                  ),
-                                ));
-                          });
-                          // if(_passwordController.text.isEmpty){
+                          // if(_otpController.text.isEmpty){
                           //   Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor, colorText: white);
                           // }
-                          // else if(!_passRequirementMet){
-                          //   Get.snackbar('Error', 'validation requirement not reached');
-                          // }
-
-                            // RegistrationController().changePassword(data).then((value) {
-                            //   print(value);
-                            // });
+                           if(!_passRequirementMet){
+                            Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor,colorText: white);
+                          }else{
+                             setState(() {
+                               isLoading = true;
+                             });
+                             sendOtP();
+                           }
                         },
                         child: Center(
                           child: AuthButtons(
@@ -400,6 +335,87 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       ),
     );
   }
+  sendOtP(){
+    var data = {
+      "code": _otpController.text.trim(),
+      "password": _newPasswordController.text.trim(),
+      "password_confirmation": _confirmPasswordController.text.trim()
+    };
+    var data2 = {
+      "username": "09056193199"
+    };
+    RegistrationController().sendOtp(data2).then((value) {
+      setState(() {
+        isLoading = false;
+      });
+      Functions().popUp(context: context,
+          widget: Container(
+            padding:  EdgeInsets.symmetric(horizontal: 8.w),
+            decoration: const BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 2.h,),
+                Text('OTP Code',style: Constant().textStyle(size: 18 , weight: FontWeight.w600)),
+                SizedBox(height: 2.h,),
+                Text('Enter the OTP sent to your phone number  "09087877676"',style: Constant().textStyle(size: 15, weight: FontWeight.w400,color: successDescription),textAlign: TextAlign.center),
+                SizedBox(height: 2.h,),
+                TextField(
+                  controller: _otpController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: fagoSecondaryColor)),
+                    focusColor: fagoSecondaryColor,
+                    hintText: 'Enter OTP',
+                    hintStyle: const TextStyle(
+                      fontSize: 14,
+                    ),
+                    prefixIconColor: const Color(0XFFe8a5aa),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: fagoSecondaryColor,
+                        width: 5.0,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
+                    ),
+                    prefixIcon: SvgPicture.asset(
+                      'assets/icons/lock-icon.svg',
+                      fit: BoxFit.scaleDown,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 3.h,),
+                GestureDetector(
+                  onTap: (){
+                    RegistrationController().changePassword(data).then((value) {
+                      print(value);
+                    });
+                  },
+                  child: AuthButtons(
+                    form: true,
+                    color: inactiveTab ,
+                    text: "Proceed",
+                  ),
+                ),
+                SizedBox(height: 20.h,),
+
+              ],
+            ),
+          ));
+    });
+  }
+
   bool checkRequirement(String value) {
     bool met = (function.checkLoweCase(value) && function.checkUpperCase(value) && function.checknumbers(value) && function.specialCharacters(value) && value.length >= 8);
 
@@ -408,8 +424,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Future<void> createNewPassword(BuildContext context) async {
     final progress = ProgressHUD.of(context);
     progress!.show();
-    final response = await _loginController.createNewPassword(widget.pinCode,
-        _passwordController.text, _confirmPasswordController.text);
+    final response = await _loginController.createNewPassword(widget.pinCode, _otpController.text, _newPasswordController.text);
     final jsonBody = jsonDecode(response.body);
     if (response.statusCode == 200) {
       progress.dismiss();
@@ -444,6 +459,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 }
+
 
 class _ContinueButton extends StatelessWidget {
   final VoidCallback onPressed;

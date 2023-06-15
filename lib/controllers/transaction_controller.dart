@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/transaction.dart/transaction_history_model.dart';
+import '../models/transaction.dart/tx_filter.dart';
 import '../screens/individual/bills/models/transaction_post_model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
@@ -28,6 +29,10 @@ enum FagoAccUserStatus{
   notFound,
   found
 }
+enum TxFilterEnum{
+  active,
+  unActive,
+}
 class TransactionController extends GetxController {
   final Rx<TxFlters> txFilter = TxFlters.unActive.obs;
   TxFlters get  txFilterData => txFilter.value;
@@ -37,11 +42,49 @@ class TransactionController extends GetxController {
   FagoAccUserStatus get userName => userNameId.value;
   final _transactionHistoryStatus = TransactionHistoryStatus.empty.obs;
   TransactionHistoryStatus get transactionHistoryStatus => _transactionHistoryStatus.value;
+  final Rx<TxFilterEnum> _isFilter = TxFilterEnum.unActive.obs;
 
+  final Rx<List<TransactionFilter>> _txFilter = Rx([]);
+  List<TransactionFilter> get txFilterList => _txFilter.value;
+
+  TxFilterEnum get isFilterLoading => _isFilter.value;
   TextEditingController accountNumberController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController dexcriptionController = TextEditingController();
+
+
+  Future<TxFilterModel> txFilterApi()async {
+    final token = await SecureStorage.readUserToken();
+    TxFilterModel ?txFilterModel;
+    try{
+      final res  = await http.get(
+        Uri.parse('${BaseAPI.api}transactionfilter/transactionfiltertype'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      );
+      txFilterModel = TxFilterModel.fromJson(jsonDecode(res.body));
+      // var json = jsonDecode(res.body);
+      // if (res.statusCode == 200) {
+      //   var list =  List.from(json['data']['transaction_filter']);
+      //   var transactionList = list.map((e) => TransactionFilter.fromJson(e)).toList();
+      //   _txFilter(transactionList);
+      //   print('this list $txFilterList');
+        // transactionList.isNotEmpty
+        //     ? _isFilter(TxFilterEnum.active)
+        //     : _isFilter(TxFilterEnum.unActive);
+        // _transactionHistoryStatus(TransactionHistoryStatus.success);
+        // isFilter(TxFilterEnum.active);
+   //   return res.body;
+    }catch(e){
+      if(kDebugMode){
+        print('cant fetch filter mdel resoan - $e');
+      }
+    }
+    return txFilterModel!;
+  }
 
   Future<dynamic> getAllBanks() async {
     final token = await SecureStorage.readUserToken();
@@ -208,7 +251,6 @@ class TransactionController extends GetxController {
 
   Future getTransactionHistory({required int type,String? startDate, String ? endDate, String? filter}) async {
     type ==2 ?txFilter(TxFlters.active):txFilter(TxFlters.unActive);
-    print('txFilter $txFilterData');
     final token = await SecureStorage.readUserToken();
     _transactionHistoryList([]);
     try {
@@ -216,9 +258,8 @@ class TransactionController extends GetxController {
       if (kDebugMode) {
         print('getting my request...');
       }
-
       var response = await http.get(
-        Uri.parse(type ==1?BaseAPI.transactionHistory: 'http://fagopay-coreapi-development.herokuapp.com/api/v1/transaction/transaction-filter/$startDate/$endDate/$filter'),
+        Uri.parse(type ==1?BaseAPI.transactionHistory: '${BaseAPI.transactionHistoryFilter}$startDate/$endDate/$filter'),
         headers: {
           "Content-Type": "application/json",
           "Authorization": "Bearer $token"
@@ -236,13 +277,11 @@ class TransactionController extends GetxController {
       print('here 2');
       if (response.statusCode == 200) {
         var list =  List.from(json['data']['transactions']);
-      //  type ==1? List.from(json['data']['transactions']): List.from(json['data']['transaction_filter']);
-        print('this list $list');
         var transactionList = list.map((e) => TransactionHistoryModel.fromJson(e)).toList();
-        if (kDebugMode) {
-          print("${transactionList.length} request");
-          print(" Req ${transactionList.first} request");
-        }
+        // if (kDebugMode) {
+        //   print("${transactionList.length} request");
+        //   print(" Req ${transactionList.first} request");
+        // }
         _transactionHistoryList(transactionList);
         transactionList.isNotEmpty
             ? _transactionHistoryStatus(TransactionHistoryStatus.available)

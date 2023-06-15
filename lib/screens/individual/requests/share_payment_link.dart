@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../controllers/company_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
@@ -29,16 +30,18 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
   var number = "";
   int? transactionType;
   String paymentUrl = '';
-
+  bool isUser = true;
   @override
   void initState() {
     checkLink();
     super.initState();
   }
   final _userUcontroller = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
 
   @override
   Widget build(BuildContext context) {
+    _userUcontroller.switchedAccountType == 2 ? isUser = false: isUser = true;
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
@@ -113,11 +116,12 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                     radius: 30,
                                     backgroundColor: fagoSecondaryColor.withOpacity(0.05),
                                     child: Text(
-                                        '${_userUcontroller.user?.firstName?.substring(0, 1)}${_userUcontroller.user?.lastName?.substring(0, 1)}',
+                                        isUser? '${_userUcontroller.user?.firstName?.substring(0, 1)}${_userUcontroller.user?.lastName?.substring(0, 1)}':
+                                        '${_companyController.company?.accountDetails?.accountName?.substring(0, 1)}'??'',
                                       style: textStyle(size: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,space: 2),),
                                   ),
                                    AutoSizeText(
-                                    "${_userUcontroller.user?.firstName} ${_userUcontroller.user?.lastName}",
+                                    isUser?"${_userUcontroller.user?.firstName} ${_userUcontroller.user?.lastName}":'${_companyController.company?.accountDetails?.accountName}',
                                     style: textStyle(size: 22,fontWeight:  FontWeight.w700)
                                   ),
                                   paymentUrl.isEmpty?Text('No payment link yet',style: textStyle(size: 15,fontWeight:  FontWeight.w500,),):Container(),

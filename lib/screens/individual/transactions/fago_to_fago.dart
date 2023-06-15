@@ -86,7 +86,7 @@ class _FagoToFagoState extends State<FagoToFago> {
                         //   );
                         //   return;
                         // }
-                        if (value.length >= 10) {
+                        if (value.length == 11) {
                           await getAccountDetailsByPhoneNumber(context, value);
                         }
                       },

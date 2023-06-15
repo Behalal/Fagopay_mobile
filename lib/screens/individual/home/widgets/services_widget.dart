@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/screens/individual/bills/qr_code/create_qr_code.dart';
 import '../../../../controllers/user_controller.dart';
 import '../../../constants/colors.dart';
 import '../../bills/data.dart';
@@ -47,7 +48,7 @@ List<Services> services = [
   const Services(
     image: 'assets/icons/new_scanToPay_icon.svg',
     itemName: 'Scan to Pay',
-    route: null,
+    route: CreateQrCode(),
   ),
   const Services(
     image: 'assets/icons/new_requestMoney_icon.svg',
