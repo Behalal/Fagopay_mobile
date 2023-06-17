@@ -278,14 +278,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           // if(_otpController.text.isEmpty){
                           //   Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor, colorText: white);
                           // }
-                           if(!_passRequirementMet){
-                            Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor,colorText: white);
-                          }else{
+                          ///
+                          //  if(checkRequirement){
+                          //   Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor,colorText: white);
+                          // }
                              setState(() {
                                isLoading = true;
                              });
                              sendOtP();
-                           }
                         },
                         child: Center(
                           child: AuthButtons(
@@ -399,7 +399,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 GestureDetector(
                   onTap: (){
                     RegistrationController().changePassword(data).then((value) {
-                      print(value);
+                      Navigator.pop(context);
+                    var res =  jsonDecode(value);
+                      if(res['']['code']== 200){
+
+                      }else{
+
+                      }
                     });
                   },
                   child: AuthButtons(
@@ -421,6 +427,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
     return met;
   }
+
   Future<void> createNewPassword(BuildContext context) async {
     final progress = ProgressHUD.of(context);
     progress!.show();
@@ -459,43 +466,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     );
   }
 }
-
-
-class _ContinueButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _ContinueButton({
-    Key? key,
-    required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          backgroundColor: fagoSecondaryColor,
-          fixedSize: const Size(200, 50),
-        ),
-        child: const Text('Continue'),
-      ),
-    );
-  }
-}
-
-// class _PasswordVerificationChips extends StatelessWidget {
-//   const _PasswordVerificationChips();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//   }
-// }
 
 class _PasswordInput extends StatelessWidget {
   final TextEditingController controller;

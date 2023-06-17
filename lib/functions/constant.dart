@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
 import '../screens/constants/colors.dart';
@@ -12,16 +13,21 @@ class Constant{
       color: color??buttonColor,
     );
   }
-  SizedBox longBtn({required String text,VoidCallback? tap,Color?color,TextStyle? textStyle}){
+  SizedBox longBtn({required String text,VoidCallback? tap,Color?color,TextStyle? textStyle,double? radius}){
     return    SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
+          elevation:  MaterialStateProperty.all(0),
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius??0))),
             backgroundColor: MaterialStateProperty.all(color??fagoPrimaryColor)
         ),
         onPressed: tap??(){},
-        child: Text(text,
-          style: textStyle??Constant().textStyle(color: Colors.white,weight: FontWeight.w500,size: 22),),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 1.5.h),
+          child: Text(text,
+            style: textStyle??Constant().textStyle(color: Colors.white,weight: FontWeight.w600,size: 18),),
+        ),
       ),
     );
   }
@@ -50,7 +56,7 @@ class Constant{
       ),
     );
   }
-
+  final formatCurrency =  NumberFormat.currency(locale: 'en_US', symbol: String.fromCharCode(0x20A6));
   chip({required String text,required Color borderColor,required Color textColor,bool color = false}){
     return Container(
       alignment: Alignment.center,

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:fagopay/models/categoryItems.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 
 import '../models/purse/createPurse_Model.dart';
 import '../models/purse/purse_category.dart';
+import '../models/purse/purse_list_model.dart';
 import '../models/purse/showPurse_Model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -12,7 +14,7 @@ import '../service/constants/constants.dart';
 import '../service/secure_storage/secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-enum PurseCategory {
+enum PurseCategoryEnum {
   empty,
   loading,
   error,
@@ -56,8 +58,8 @@ class PurseController extends GetxController {
   final Rx<List<PulseDurationModel>> _purseDurationList = Rx([]);
   List<PulseDurationModel> get purseDurationList => _purseDurationList.value;
 
-  final _purseCategoryStatus = PurseCategory.empty.obs;
-  PurseCategory get purseCategoryStatus => _purseCategoryStatus.value;
+  final _purseCategoryStatus = PurseCategoryEnum.empty.obs;
+  PurseCategoryEnum get purseCategoryStatus => _purseCategoryStatus.value;
 
   final _showPurseStatus = ShowPurseEnum.empty.obs;
   ShowPurseEnum get showPurseStatus => _showPurseStatus.value;
@@ -66,9 +68,9 @@ class PurseController extends GetxController {
   PulseDetail? get userPurseDetails => userPurse.value;
 
   Future getCategorylist() async {
+    _purseCategoryStatus(PurseCategoryEnum.loading);
     final token = await SecureStorage.readUserToken();
     try {
-      _purseCategoryStatus(PurseCategory.loading);
       if (kDebugMode) {
         print('getting my request...');
       }
@@ -91,27 +93,23 @@ class PurseController extends GetxController {
 
       if (response.statusCode == 200) {
         var list = List.from(json['data']['pulse_category_list']);
-        var pursecategorylist =
-            list.map((e) => PulseCategoryList.fromJson(e)).toList();
+        var pursecategorylist = list.map((e) => PulseCategoryList.fromJson(e)).toList();
         if (kDebugMode) {
           print("${pursecategorylist.length} request");
           print(" Req ${pursecategorylist.first} request");
         }
         _purseCategoryList(pursecategorylist);
         pursecategorylist.isNotEmpty
-            ? _purseCategoryStatus(PurseCategory.available)
-            : _purseCategoryStatus(PurseCategory.empty);
-        _purseCategoryStatus(PurseCategory.success);
-
-        addDefaultItems(); //Add id per zero amounts
+            ? _purseCategoryStatus(PurseCategoryEnum.available)
+            : _purseCategoryStatus(PurseCategoryEnum.empty);
+        _purseCategoryStatus(PurseCategoryEnum.success);
       } else if (response.statusCode == 409) {
-        Get.snackbar('Error',
-            'Go and verify your KYC in other to be able to perform transactions');
-        _purseCategoryStatus(PurseCategory.error);
+        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
+        _purseCategoryStatus(PurseCategoryEnum.error);
       }
       return response.body;
     } catch (error) {
-      _purseCategoryStatus(PurseCategory.error);
+      _purseCategoryStatus(PurseCategoryEnum.error);
       Get.snackbar(
           'Error',
           error.toString() ==
@@ -123,23 +121,45 @@ class PurseController extends GetxController {
       }
     }
   }
+  ///OG Dev
+  Future<PurseListModel> purseList()async{
+    final token = await SecureStorage.readUserToken();
 
-  addDefaultItems(){
+    PurseListModel ?purseListModel;
+    try{
+      var response = await http.get(
+        Uri.parse('http://fagopay-coreapi-development.herokuapp.com/api/v1/pulse'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      );
+      purseListModel = PurseListModel.fromJson(jsonDecode(response.body));
+      print('purselist model = $purseListModel');
+    }catch (error) {
+      Get.snackbar(
+          'Error',
+          error.toString() ==
+              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+              ? 'No internet connection!'
+              : error.toString());
+      if (kDebugMode) {
+        print('Purse Category listt Error ${error.toString()}');
+      }
+
+    }
+    return purseListModel!;
+  }
+  addDefaultItems(int amount){
     for (var element in _purseCategoryList.value) {
-      _categoryItemsList.value.add(CategoryItems(categoryId: element.id, amount: 0));
+      _categoryItemsList.value.add(CategoryItems(categoryId: element.id, amount: amount));
     }
   }
 
   Future createPurse(Map data) async {
-    print('i m here');
     final token = await SecureStorage.readUserToken();
     try {
       _createPurseStatus(CreatePurseEnum.loading);
-
-      if (kDebugMode) {
-        print('creating product...');
-       // print('product json: ${createPurseModel.toJson()}');
-      }
       var response = await http.post(
         Uri.parse(BaseAPI.createPurse),
         body: jsonEncode(data),
@@ -148,16 +168,16 @@ class PurseController extends GetxController {
           "Authorization": "Bearer $token"
         },
       );
-      var json = jsonDecode(response.body);
+      var res = jsonDecode(response.body);
       print(response.body);
-
       if ((response.statusCode == 200)) {
         _createPurseStatus(CreatePurseEnum.success);
-
-        Get.snackbar('Success', 'Next of kin created successfully!');
+       // Get.snackbar('Success', 'Next of kin created successfully!');
+      }else if((response.statusCode == 409)){
+      Get.snackbar('Error', '${res['data']['error']}',colorText: white,backgroundColor: fagoSecondaryColor);
       }
-      print('here');
-      return createPurseModelFromJson(response.body);
+    //  print('here');
+      return response.body;
     } catch (error) {
       _createPurseStatus(CreatePurseEnum.error);
       Get.snackbar(
@@ -233,7 +253,7 @@ class PurseController extends GetxController {
   Future purseDurationlist(String id) async {
     final token = await SecureStorage.readUserToken();
     try {
-      _purseCategoryStatus(PurseCategory.loading);
+      _purseCategoryStatus(PurseCategoryEnum.loading);
       if (kDebugMode) {
         print('getting purse duration...');
       }
@@ -266,17 +286,17 @@ class PurseController extends GetxController {
         }
         _purseDurationList(purseDurationlist);
         purseDurationlist.isNotEmpty
-            ? _purseCategoryStatus(PurseCategory.available)
-            : _purseCategoryStatus(PurseCategory.empty);
-        _purseCategoryStatus(PurseCategory.success);
+            ? _purseCategoryStatus(PurseCategoryEnum.available)
+            : _purseCategoryStatus(PurseCategoryEnum.empty);
+        _purseCategoryStatus(PurseCategoryEnum.success);
       } else if (response.statusCode == 409) {
         Get.snackbar('Error',
             'Go and verify your KYC in other to be able to perform transactions');
-        _purseCategoryStatus(PurseCategory.error);
+        _purseCategoryStatus(PurseCategoryEnum.error);
       }
       return response.body;
     } catch (error) {
-      _purseCategoryStatus(PurseCategory.error);
+      _purseCategoryStatus(PurseCategoryEnum.error);
       Get.snackbar(
           'Error',
           error.toString() ==

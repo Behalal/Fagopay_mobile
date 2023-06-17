@@ -322,8 +322,7 @@ class _MyPurseListState extends State<MyPurseList> {
                               height: 3.h,
                             ),
                             Obx(() {
-                              return _pursecontroller.showPurseStatus ==
-                                      ShowPurseEnum.loading
+                              return _pursecontroller.showPurseStatus == ShowPurseEnum.loading
                                   ? const LoadingWidget(
                                       color: fagoSecondaryColor,
                                     )
