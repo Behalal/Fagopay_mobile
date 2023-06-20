@@ -50,39 +50,39 @@ class _SwapAirtimeDescPageState extends State<SwapAirtimeDescPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  width: 22.w,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                      color: buttonColor),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 3.w, vertical: .7.h),
-                                    child:  Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: const [
-                                        AutoSizeText(
-                                          "Edit Link",
-                                          style: TextStyle(
-                                            fontFamily: "Work Sans",
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            color: white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.end,
+                            //   children: [
+                            //     Container(
+                            //       width: 22.w,
+                            //       decoration: const BoxDecoration(
+                            //           borderRadius:
+                            //               BorderRadius.all(Radius.circular(15)),
+                            //           color: buttonColor),
+                            //       child: Padding(
+                            //         padding: EdgeInsets.symmetric(
+                            //             horizontal: 3.w, vertical: .7.h),
+                            //         child:  Row(
+                            //           mainAxisAlignment: MainAxisAlignment.center,
+                            //           crossAxisAlignment: CrossAxisAlignment.center,
+                            //           children: const [
+                            //             AutoSizeText(
+                            //               "Edit Link",
+                            //               style: TextStyle(
+                            //                 fontFamily: "Work Sans",
+                            //                 fontSize: 14,
+                            //                 fontWeight: FontWeight.w600,
+                            //                 color: white,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                             SizedBox(
-                              height: 3.h,
+                              height: 1.h,
                             ),
                             const AutoSizeText(
                               "How it works?",

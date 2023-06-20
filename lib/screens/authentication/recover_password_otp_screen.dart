@@ -1,13 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/login_controller.dart';
+import 'package:fagopay/screens/widgets/showDialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
 
 import '../constants/colors.dart';
@@ -27,7 +28,7 @@ class RecoverPasswordOTPScreen extends StatefulWidget {
 
 class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
   final authController = Get.put(LoginController());
- // final TextEditingController _pinController = TextEditingController();
+  final _loginController = Get.find<LoginController>();
   TextEditingController controller = TextEditingController(text: "");
   String thisText = "";
   String? otpText;
@@ -77,7 +78,7 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
               value: 0.25,
             ),
             const SizedBox(height: 5),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: const [
                 Text(
@@ -118,47 +119,32 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            Center(
-              child: PinCodeTextField(
-                pinBoxOuterPadding: const EdgeInsets.symmetric(horizontal: 4),
-                pinBoxRadius: 0,
-                autofocus: true,
-                controller: controller,
-                hideCharacter: false,
-                highlight: true,
-                highlightColor: fagoBlue,
-                defaultBorderColor: fagoSecondaryColor,
-                hasTextBorderColor: fagoSecondaryColor,
-                highlightPinBoxColor: Colors.white,
-                maxLength: 6,
-                hasError: hasError,
-                maskCharacter: thisText,
-                onTextChanged: (text) {
-                  setState(() {
-                    hasError = false;
-                  });
-                },
-                onDone: (text) {
-                  otpText = text;
-                  print("DONE $otpText");
-                },
-                pinBoxWidth: 56,
-                pinBoxHeight: 56,
-                hasUnderline: false,
-                pinBoxDecoration:
-                    ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                pinTextStyle: const TextStyle(fontSize: 15.0),
-                pinTextAnimatedSwitcherTransition:
-                    ProvidedPinBoxTextAnimation.scalingTransition,
-                //                    pinBoxColor: Colors.green[100],
-                pinTextAnimatedSwitcherDuration:
-                    const Duration(milliseconds: 300),
-                //                    highlightAnimation: true,
-                highlightAnimationBeginColor: Colors.black,
-                highlightAnimationEndColor: Colors.white12,
-                keyboardType: TextInputType.number,
-              ),
-            ),
+            Padding(
+                padding: EdgeInsets.only(left: 2.5.w, right: 2.5.w),
+                child: PinCodeTextField(
+                  length: 6, controller: controller,
+                  appContext: context,
+                  pastedTextStyle: const TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 36,
+                    color: inactiveTab,
+                  ),
+                  keyboardType: TextInputType.number,
+                  pinTheme: PinTheme(
+                    activeColor: signInText,
+                    shape: PinCodeFieldShape.box,
+                    borderRadius: BorderRadius.circular(5),
+                    fieldHeight: 50,
+                    fieldWidth: 50,
+                    activeFillColor: Colors.white,
+                  ),
+                  onChanged: (String value) async {
+                    if (value.length == 6) {
+                      otpText = controller.text;
+                      print(otpText);
+                    }
+                  },
+                )),
             // PinCodeTextField(
             //   controller: _pinController,
             //   appContext: context,
@@ -201,7 +187,12 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
                   color: fagoSecondaryColor,
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showExpiredsessionDialog(context, "Do you want to request that you receive another OTP", "Resend OTP", () async {
+                      Get.back();
+                      await _loginController.forgotPassword(emailOrPassword: _loginController.forgotPasswordController.text, context: context);
+                    });
+                  },
                   child: const Text(
                     'Resend',
                     style: TextStyle(
@@ -214,39 +205,36 @@ class _RecoverPasswordOTPScreenState extends State<RecoverPasswordOTPScreen> {
               ],
             ),
             const Spacer(),
-            Obx(() {
-              return InkWell(
-                onTap: () {
-                  if (otpText == null || otpText == '') {
-                    Get.snackbar("Alert",
-                        "Enter the otp sent to ${authController.emailController.text} to continue!");
-                  } else {
-                    authController.validateForgotResetPassword(otp: otpText);
-                  }
-                },
-                child: Container(
+            InkWell(
+              onTap: () {
+                log(otpText.toString());
+                if (otpText == null || otpText == '' || otpText?.length != 6) {
+                  Get.snackbar("Alert",
+                      "Enter the otp sent to ${authController.emailController.text} to continue!");
+                } else {
+                  authController.validateForgotResetPassword(otp: otpText! , context: context);
+                }
+              },
+              child: Container(
                   height: 50,
                   width: Get.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(36),
                     color: fagoSecondaryColor,
                   ),
-                  child: (authController.otpForgotVerifyStatus == OtpForgotVerifyStatus.loading)
-                      ? const LoadingWidget()
-                      : const Center(
-                          child: AutoSizeText(
-                            "Continue",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: "Work Sans",
-                                fontWeight: FontWeight.w600,
-                                color: white),
-                          ),
-                        ),
-                ),
-              );
-            }),
+                  child: const Center(
+                    child: AutoSizeText(
+                      "Continue",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w600,
+                          color: white),
+                    ),
+                  )
+              ),
+            ),
             // Container(
             //   padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 3.w),
             //   alignment: Alignment.center,
@@ -291,13 +279,15 @@ class LoadingWidget extends StatelessWidget {
       child: Center(
           heightFactor: 1,
           widthFactor: 1,
-          child: Platform.isIOS
-              ? CupertinoActivityIndicator(
+          child:
+          //Platform.isIOS ?
+        CupertinoActivityIndicator(
                   color: color,
                 )
-              : CircularProgressIndicator(
-                  color: color,
-                )),
+              // : CircularProgressIndicator(
+              //     color: color,
+              //   )
+      ),
     );
   }
 }

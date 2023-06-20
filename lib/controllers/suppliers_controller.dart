@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import '../models/supplier_model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
@@ -24,26 +26,60 @@ class SupplierController extends GetxController {
     return suppliers.firstWhere((supplier) => supplier.id == id);
   }
 
+  bool? isLoadingSuppliers;
+  bool? isLoadingSuppliersHasError;
+
+  Future<dio.Response<dynamic>?> getSuppliers({required String companyId})async{
+    isLoadingSuppliers = true;
+    isLoadingSuppliersHasError = false;
+    update();
+    try{
+      final response = await NetworkProvider().call(path: "/v1/supplier/list/$companyId", method: RequestMethod.get);
+      final resBody = response?.data['data']['suppliers_list'];
+      final returnedSuppliers = resBody.map<Supplier>((supplier) => Supplier.fromJson(supplier)).toList();
+      suppliers = returnedSuppliers;
+      isLoadingSuppliers = false;
+      isLoadingSuppliersHasError = false;
+      update();
+      return response;
+    }on dio.DioError catch (err) {
+      isLoadingSuppliers = false;
+      isLoadingSuppliersHasError = true;
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      isLoadingSuppliers = false;
+      isLoadingSuppliersHasError = true;
+      update();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
+    }
+  }
+
   final accountNumberController = TextEditingController();
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final addressController = TextEditingController();
 
-  Future<dynamic> getSuppliers(String companyId) async {
-    final token = await SecureStorage.readUserToken();
-    try {
-      final responseData = await NetworkHelper.getRequest(
-        url: "${BaseAPI.suppliersPath}/list/$companyId",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token",
-        },
-      );
-      return responseData;
-    } catch (e) {
-      log(e.toString());
-    }
-  }
+
+
+  // Future<dynamic> getSuppliers(String companyId) async {
+  //   final token = await SecureStorage.readUserToken();
+  //   try {
+  //     final responseData = await NetworkHelper.getRequest(
+  //       url: "${BaseAPI.suppliersPath}/list/$companyId",
+  //       headers: {
+  //         "Content-Type": "application/json; charset=UTF-8",
+  //         "Authorization": "Bearer $token",
+  //       },
+  //     );
+  //     return responseData;
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
 
   Future<dynamic> createNewSupplier(
       {required String bankCode,

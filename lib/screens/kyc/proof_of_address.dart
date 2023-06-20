@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fagopay/controllers/government_identity_verification_controller.dart';
@@ -11,9 +10,8 @@ import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/widgets/custom_dropdown_field.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/cloudinary/cloudinary.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import '../../../models/locations_model.dart' as location;
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -72,427 +70,411 @@ class _ProofOfAddressState extends State<ProofOfAddress> {
 
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
-      child: Builder(
-        builder: (context) => GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            body: Padding(
-              padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
-              child: Column(
-                children: [
-                  const ProgressStyle(
-                    stage: 0,
-                    pageName: "Proof of Address",
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const AutoSizeText(
-                              'Upload Utility Bill',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: fagoSecondaryColor,
-                              ),
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
+        child: Column(
+          children: [
+            const ProgressStyle(
+              stage: 0,
+              pageName: "Proof of Address",
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            Expanded(
+              child: Padding(
+                padding:
+                EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AutoSizeText(
+                        'Upload Utility Bill',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      const AutoSizeText(
+                        'Please upload a document that shows your current business address. We accept bank statement, rent receipt, waste bill, water bill, electricity bill, or Cable Bill.',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Divider(
+                        color: stepsColor.withOpacity(0.3),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      const AutoSizeText(
+                        'Tell us your current Business Address',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      ),
+                      NameTextfield(
+                        controller: _identityVerificationController
+                            .businessAddressController,
+                        title: '12, adjascent KFC, Ikoyi estate, island',
+                        keyboadType: TextInputType.text,
+                        boarderColor: stepsColor.withOpacity(0.3),
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return 'Field must not be empty';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      const AutoSizeText(
+                        "Country",
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: welcomeText,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 0.5.h,
+                      ),
+                      CustomDropdownButton(
+                        hint: 'Select Country',
+                        items: countries
+                            .map(
+                              (country) => DropdownMenuItem(
+                            value: country.id,
+                            child: Text(
+                              '${country.name}',
                             ),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            const AutoSizeText(
-                              'Please upload a document that shows your current business address. We accept bank statement, rent receipt, waste bill, water bill, electricity bill, or Cable Bill.',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: stepsColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Divider(
-                              color: stepsColor.withOpacity(0.3),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              'Tell us your current Business Address',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: stepsColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 0.5.h,
-                            ),
-                            NameTextfield(
-                              controller: _identityVerificationController
-                                  .businessAddressController,
-                              title: '12, adjascent KFC, Ikoyi estate, island',
-                              keyboadType: TextInputType.text,
-                              boarderColor: stepsColor.withOpacity(0.3),
-                              validate: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Field must not be empty';
-                                }
-                                return null;
-                              },
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              "Country",
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: welcomeText,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 0.5.h,
-                            ),
-                            CustomDropdownButton(
-                              hint: 'Select Country',
-                              items: countries
-                                  .map(
-                                    (country) => DropdownMenuItem(
-                                      value: country.id,
-                                      child: Text(
-                                        '${country.name}',
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (p0) async {
-                                if (p0 != null) {
-                                  setState(() {
-                                    selectedCountry = p0;
-                                    states = [];
-                                  });
-                                  await getStates(p0);
-                                }
-                              },
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Row(
+                          ),
+                        )
+                            .toList(),
+                        onChanged: (p0) async {
+                          if (p0 != null) {
+                            setState(() {
+                              selectedCountry = p0;
+                              states = [];
+                            });
+                            await getStates(p0);
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const AutoSizeText(
-                                        'State',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: stepsColor,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 0.5.h,
-                                      ),
-                                      CustomDropdownButton(
-                                        hint: 'Select State',
-                                        items: states
-                                            .map(
-                                              (state) => DropdownMenuItem(
-                                                value: state.id,
-                                                child: FittedBox(
-                                                  child: AutoSizeText(
-                                                    '${state.name}',
-                                                    overflow: TextOverflow.clip,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (p0) async {
-                                          if (p0 != null) {
-                                            setState(() {
-                                              selectedState = p0;
-                                              cities = [];
-                                            });
-                                            await getCities(p0);
-                                          }
-                                        },
-                                      ),
-                                    ],
+                                const AutoSizeText(
+                                  'State',
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: stepsColor,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 2.h,
+                                  height: 0.5.h,
                                 ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const AutoSizeText(
-                                        'City',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: stepsColor,
+                                CustomDropdownButton(
+                                  hint: 'Select State',
+                                  items: states
+                                      .map(
+                                        (state) => DropdownMenuItem(
+                                      value: state.id,
+                                      child: FittedBox(
+                                        child: AutoSizeText(
+                                          '${state.name}',
+                                          overflow: TextOverflow.clip,
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 0.5.h,
-                                      ),
-                                      CustomDropdownButton(
-                                        hint: 'Select City',
-                                        items: cities
-                                            .map(
-                                              (city) => DropdownMenuItem(
-                                                value: city.id,
-                                                child: FittedBox(
-                                                  child: AutoSizeText(
-                                                    '${city.name}',
-                                                    overflow: TextOverflow.clip,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (p0) {
-                                          if (p0 != null) {
-                                            setState(() {
-                                              selectedCity = p0;
-                                            });
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  )
+                                      .toList(),
+                                  onChanged: (p0) async {
+                                    if (p0 != null) {
+                                      setState(() {
+                                        selectedState = p0;
+                                        cities = [];
+                                      });
+                                      await getCities(p0);
+                                    }
+                                  },
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Divider(
-                              color: stepsColor.withOpacity(0.3),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              'Utility Bill Type',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: stepsColor,
-                              ),
-                            ),
-                            Container(
-                              width: Get.width,
-                              height: 5.h,
-                              margin: const EdgeInsets.only(top: 8),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                  color: white,
-                                  borderRadius: BorderRadius.circular(8),
-                                  border:
-                                      Border.all(color: textBoxBorderColor)),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  hint: Text(
-                                    'Bank Statement',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context).hintColor,
-                                    ),
-                                  ),
-                                  items: items
-                                      .map((item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ))
-                                      .toList(),
-                                  value: selectedBillType,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedBillType = value as String;
-                                    });
-                                  },
-                                  buttonStyleData: const ButtonStyleData(
-                                    height: 40,
-                                    width: 140,
-                                  ),
-                                  menuItemStyleData: const MenuItemStyleData(
-                                    height: 40,
+                          ),
+                          SizedBox(
+                            width: 2.h,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                const AutoSizeText(
+                                  'City',
+                                  style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: stepsColor,
                                   ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            const AutoSizeText(
-                              'Upload Document',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                                color: stepsColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            const AutoSizeText(
-                              'Bank statement must show your name and address clearly',
-                              style: TextStyle(
-                                fontFamily: "Work Sans",
-                                fontSize: 8,
-                                fontWeight: FontWeight.w400,
-                                color: stepsColor,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Container(
-                              width: Get.width,
-                              height: 101,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  border: Border.all(
-                                      color: stepsColor.withOpacity(0.3))),
-                              child: _selectedImage != null
-                                  ? InkWell(
-                                      onTap: () {
-                                        _selectImageToUpload(context);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: Get.height * 0.05,
-                                            horizontal: Get.height * 0.05),
-                                        height: Get.height * 0.4,
-                                        width: Get.height * 0.4,
-                                        decoration: BoxDecoration(
-                                            color: fagoSecondaryColor,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(8.0)),
-                                            image: DecorationImage(
-                                              image: FileImage(
-                                                _selectedImage!,
-                                              ),
-                                              fit: BoxFit.cover,
-                                            )),
+                                SizedBox(
+                                  height: 0.5.h,
+                                ),
+                                CustomDropdownButton(
+                                  hint: 'Select City',
+                                  items: cities
+                                      .map(
+                                        (city) => DropdownMenuItem(
+                                      value: city.id,
+                                      child: FittedBox(
+                                        child: AutoSizeText(
+                                          '${city.name}',
+                                          overflow: TextOverflow.clip,
+                                        ),
                                       ),
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                          InkWell(
-                                            onTap: () {
-                                              _selectImageToUpload(context);
-                                            },
-                                            child: _toSelectImage
-                                                ? const CircularProgressIndicator
-                                                    .adaptive()
-                                                : SvgPicture.asset(
-                                                    'assets/icons/upload_icon.svg',
-                                                    color: fagoSecondaryColor,
-                                                  ),
-                                          ),
-                                          const AutoSizeText(
-                                            'Tap to upload. PNG, JPG, PDF is accepted',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                              color: stepsColor,
-                                            ),
-                                          ),
-                                          const AutoSizeText(
-                                            'File size should not exceed 1mb.',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w500,
-                                              color: stepsColor,
-                                            ),
-                                          ),
-                                        ]),
-                            ),
-                            SizedBox(
-                              height: 3.h,
-                            ),
-                            InkWell(
-                              onTap: () async {
-                                if (selectedCountry != "" &&
-                                    selectedState != "" &&
-                                    selectedCity != "" &&
-                                    _identityVerificationController
-                                            .businessAddressController.text !=
-                                        "" &&
-                                    _uploadedImageUrl != "") {
-                                  await submitProofOfAddress(context);
-                                  return;
-                                }
-                                Fluttertoast.showToast(
-                                  msg: "Fill the form properly!",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                              },
-                              child: Center(
-                                child: AuthButtons(
-                                  text: "Submit",
-                                  form: true,
+                                    ),
+                                  )
+                                      .toList(),
+                                  onChanged: (p0) {
+                                    if (p0 != null) {
+                                      setState(() {
+                                        selectedCity = p0;
+                                      });
+                                    }
+                                  },
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Divider(
+                        color: stepsColor.withOpacity(0.3),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      const AutoSizeText(
+                        'Utility Bill Type',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
                         ),
                       ),
-                    ),
+                      Container(
+                        width: Get.width,
+                        height: 5.h,
+                        margin: const EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            color: white,
+                            borderRadius: BorderRadius.circular(8),
+                            border:
+                            Border.all(color: textBoxBorderColor)),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            hint: Text(
+                              'Bank Statement',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).hintColor,
+                              ),
+                            ),
+                            items: items
+                                .map((item) => DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ))
+                                .toList(),
+                            value: selectedBillType,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedBillType = value as String;
+                              });
+                            },
+                            buttonStyleData: const ButtonStyleData(
+                              height: 40,
+                              width: 140,
+                            ),
+                            menuItemStyleData: const MenuItemStyleData(
+                              height: 40,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      const AutoSizeText(
+                        'Upload Document',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      const AutoSizeText(
+                        'Bank statement must show your name and address clearly',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 8,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 1.h,
+                      ),
+                      Container(
+                        width: Get.width,
+                        height: 101,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                                color: stepsColor.withOpacity(0.3))),
+                        child: _selectedImage != null
+                            ? InkWell(
+                          onTap: () {
+                            _selectImageToUpload(context);
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: Get.height * 0.05,
+                                horizontal: Get.height * 0.05),
+                            height: Get.height * 0.4,
+                            width: Get.height * 0.4,
+                            decoration: BoxDecoration(
+                                color: fagoSecondaryColor,
+                                borderRadius:
+                                const BorderRadius.all(
+                                    Radius.circular(8.0)),
+                                image: DecorationImage(
+                                  image: FileImage(
+                                    _selectedImage!,
+                                  ),
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                        )
+                            : Column(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  _selectImageToUpload(context);
+                                },
+                                child: _toSelectImage
+                                    ? const CircularProgressIndicator
+                                    .adaptive()
+                                    : SvgPicture.asset(
+                                  'assets/icons/upload_icon.svg',
+                                  color: fagoSecondaryColor,
+                                ),
+                              ),
+                              const AutoSizeText(
+                                'Tap to upload. PNG, JPG, PDF is accepted',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: stepsColor,
+                                ),
+                              ),
+                              const AutoSizeText(
+                                'File size should not exceed 1mb.',
+                                style: TextStyle(
+                                  fontFamily: "Work Sans",
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500,
+                                  color: stepsColor,
+                                ),
+                              ),
+                            ]),
+                      ),
+                      SizedBox(
+                        height: 3.h,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          if (selectedCountry != "" &&
+                              selectedState != "" &&
+                              selectedCity != "" &&
+                              _identityVerificationController
+                                  .businessAddressController.text !=
+                                  "" &&
+                              _uploadedImageUrl != "") {
+                            await submitProofOfAddress(context);
+                            return;
+                          }
+                          Get.snackbar("Error","Fill the form properly!");
+                        },
+                        child: Center(
+                          child: AuthButtons(
+                            text: "Submit",
+                            form: true,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 
   Future<void> submitProofOfAddress(BuildContext context) async {
-    final progress = ProgressHUD.of(context);
-    progress!.show();
+  progressIndicator(context);
     final response = await _identityVerificationController.submitProofOfAddress(
       selectedBillType!,
       _uploadedImageUrl,
@@ -504,30 +486,14 @@ class _ProofOfAddressState extends State<ProofOfAddress> {
     final jsonBody = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      progress.dismiss();
+      Get.back();
       if (!mounted) return;
       Navigator.of(context).pop();
-      Fluttertoast.showToast(
-        msg: "Supplier Created Successfully",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Supplier Created Successfully");
       return;
     }
-    progress.dismiss();
-    Fluttertoast.showToast(
-      msg: "${jsonBody['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    Get.back();
+    Get.snackbar("Error","${jsonBody['data']['error']}");
   }
 
   Future<void> getCountries() async {
@@ -578,26 +544,10 @@ class _ProofOfAddressState extends State<ProofOfAddress> {
           _selectedImage = imageTemp;
         });
       } else {
-        Fluttertoast.showToast(
-          msg: "Failed to select Image!, Try Again..",
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 2,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        Get.snackbar("Error","Failed to select Image!, Try Again..");
       }
     } on PlatformException {
-      Fluttertoast.showToast(
-        msg: "Failed to select Image!, Try Again..",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Error","Failed to select Image!, Try Again..");
     }
   }
 }

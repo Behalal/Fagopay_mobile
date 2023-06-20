@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/individual/profile/account_limit.dart';
@@ -27,6 +28,7 @@ class ProfileSettings extends StatefulWidget {
 
 class _ProfileSettingsState extends State<ProfileSettings> {
   final _userUcontroller = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
   int? transactionType;
   bool isSwitched = false;
   var textValue = 'Switch is OFF';
@@ -82,6 +84,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                         padding: EdgeInsets.symmetric(
                             vertical: 0.h, horizontal: 2.5.w),
                         child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -101,10 +104,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        const CircleAvatar(
-                                          radius: 27, // Image radius
-                                          backgroundImage: AssetImage(
-                                              'assets/images/fago(2).png'),
+                                        CircleAvatar(
+                                          radius: 30,
+                                          backgroundColor: Colors.white,
+                                          child: Text(
+                                            // _userUcontroller.switchedAccountType == 2 ? '${_companyController.company?.companyName?.substring(0, 1)}'??'' :
+                                            '${_userUcontroller.user?.firstName?.substring(0, 1) ?? ""}${_userUcontroller.user?.lastName?.substring(0, 1) ?? ""}',
+                                            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,wordSpacing: 2),),
                                         ),
                                         SizedBox(
                                           width: 1.h,
@@ -118,9 +124,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                             Row(
                                               children: [
                                                 AutoSizeText(
-                                                  _userUcontroller
-                                                          .user!.firstName ??
-                                                      '',
+                                                  _userUcontroller.user!.firstName ?? '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 14,
@@ -131,10 +135,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 SizedBox(
                                                   width: 0.5.h,
                                                 ),
-                                                AutoSizeText(
-                                                  _userUcontroller
-                                                          .user!.lastName ??
-                                                      '',
+                                                AutoSizeText(_userUcontroller.user!.lastName ?? '',
                                                   style: const TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 14,
@@ -145,8 +146,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                               ],
                                             ),
                                             AutoSizeText(
-                                              _userUcontroller.user!.email ??
-                                                  '',
+                                              _userUcontroller.user!.email ?? '',
                                               style: const TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 10,
@@ -258,49 +258,42 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ]),
                                 ),
                               ),
-                              SizedBox(
-                                height: 2.h,
-                              ),
+                              SizedBox(height: 2.h),
                               InkWell(
                                 onTap: () {
-                                  // Get.to(() => const ChangePassCode());
+                                  Get.to(() => const ChangePassCode());
                                 },
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.to(() => const ChangePassCode());
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(15),
-                                    width: Get.width,
-                                    height: 6.h,
-                                    decoration: BoxDecoration(
-                                        color: fagoPrimaryColorWithOpacity10,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                              'assets/icons/change_passcode.svg'),
-                                          SizedBox(
-                                            width: 1.h,
+                                child: Container(
+                                  padding: const EdgeInsets.all(15),
+                                  width: Get.width,
+                                  height: 6.h,
+                                  decoration: BoxDecoration(
+                                      color: fagoPrimaryColorWithOpacity10,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Row(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/change_passcode.svg'),
+                                        SizedBox(
+                                          width: 1.h,
+                                        ),
+                                        const AutoSizeText(
+                                          'Change Passcode',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: welcomeText,
                                           ),
-                                          const AutoSizeText(
-                                            'Change Passcode',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400,
-                                              color: welcomeText,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          SvgPicture.asset(
-                                              'assets/icons/arrow_front.svg')
-                                        ]),
-                                  ),
+                                        ),
+                                        const Spacer(),
+                                        SvgPicture.asset(
+                                            'assets/icons/arrow_front.svg')
+                                      ]),
                                 ),
                               ),
                               SizedBox(
@@ -333,7 +326,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       padding: const EdgeInsets.symmetric(vertical: 7.0),
                                       child: InkWell(
                                         onTap: () {
-                                          Get.to(() => const NextOfKinPage());
+                                          Get.to(() =>  const NextOfKinPage());
                                         },
                                         child: Row(
                                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -380,21 +373,16 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       ),
                                     ),
                                     const Divider(),
-                                  //  _userUcontroller.user?.kycVerified ==1 && _userUcontroller.user?.hasGovernmentIdentity == 1?Container():
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 7.0),
                                       child: InkWell(
                                         onTap: () {
+                                          // _userUcontroller.user?.kycVerified ==1 && _userUcontroller.user?.hasGovernmentIdentity == 1? null :
                                           Get.to(() => const ProfileKycPage());
                                         },
-                                        child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                        child: Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              SvgPicture.asset(
-                                                  'assets/icons/Group 90.svg'),
+                                              SvgPicture.asset('assets/icons/Group 90.svg'),
                                               SizedBox(
                                                 width: 2.h,
                                               ),
@@ -411,21 +399,14 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                       color: welcomeText,
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                    height: 0.5.h,
-                                                  ),
-                                                  Container(
-                                                    height: 2.5.h,
-                                                    width: 14.5.h,
-                                                    decoration: BoxDecoration(
-                                                        color: white,
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                25)),
+                                                  SizedBox(height: 0.5.h,),
+                                                  Container(height: 2.5.h, width: 14.5.h,
+                                                    decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(25)),
                                                     alignment: Alignment.center,
-                                                    child: const AutoSizeText(
-                                                      'completed',
-                                                      style: TextStyle(
+                                                    child: AutoSizeText(
+                                                      _userUcontroller.user?.kycVerified ==1 && _userUcontroller.user?.hasGovernmentIdentity == 1? "Completed" :
+                                                      'Not completed',
+                                                      style: const TextStyle(
                                                         fontFamily: "Work Sans",
                                                         fontSize: 10,
                                                         fontWeight:
@@ -437,8 +418,7 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 ],
                                               ),
                                               const Spacer(),
-                                              SvgPicture.asset(
-                                                  'assets/icons/arrow_front.svg')
+                                              SvgPicture.asset('assets/icons/arrow_front.svg')
                                             ]),
                                       ),
                                     ),

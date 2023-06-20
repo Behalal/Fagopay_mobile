@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fagopay/models/user_model/user.dart';
 import 'package:flutter/material.dart';
 
 import '../models/company_model.dart';
@@ -13,25 +14,25 @@ class CompanyController extends GetxController {
   final companyNameController = TextEditingController();
   final rcNumberController = TextEditingController();
 
-  final Rx<List<Company>> _companies = Rx([]);
+  final Rx<List<Profile>> _companies = Rx([]);
 
-  List<Company> get companies {
+  List<Profile> get companies {
     return [..._companies.value];
   }
 
-  set companies(List<Company> companies) {
+  set companies(List<Profile> companies) {
     _companies(companies);
   }
 
-  Company findCompanyById(String id) {
+  Profile findCompanyById(String id) {
     return companies.firstWhere((company) => company.id == id);
   }
 
-  final Rx<Company?> _company = Rx(null);
+  final Rx<Profile?> _company = Rx(null);
 
-  Company? get company => _company.value;
+  Profile? get company => _company.value;
 
-  set setCompany(Company company) {
+  set setCompany(Profile company) {
     _company(company);
   }
 

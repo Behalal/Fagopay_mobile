@@ -36,7 +36,7 @@ List<Services> services = [
     route: FagoToBank(
       userDetails: _userController.user!,
       accountDetails: _userController.switchedAccountType == 2
-          ? _companyController.company!.accountDetails!
+          ? _companyController.company!.account!
           : _userController.userAccountDetails!,
     ),
   ),
@@ -141,12 +141,10 @@ class BillsPayment extends StatelessWidget {
               onTap: () {
                 Get.to(() => const Electricity());
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SvgPicture.asset("assets/icons/Group 12793.svg"),
-                  const AutoSizeText(
-                    "Pay Electricity",
+                  const AutoSizeText("Pay Electricity",
                     style: TextStyle(
                       fontFamily: "Work Sans",
                       fontWeight: FontWeight.w500,
@@ -154,9 +152,7 @@ class BillsPayment extends StatelessWidget {
                       color: stepsColor,
                     ),
                   ),
-                  SizedBox(
-                    width: 9.h,
-                  ),
+                  SizedBox(width: 9.h,),
                   SvgPicture.asset("assets/icons/arrow_front.svg"),
                 ],
               ),
@@ -172,8 +168,7 @@ class BillsPayment extends StatelessWidget {
               onTap: () {
                 Get.to(() => const TVSubscription());
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SvgPicture.asset("assets/icons/Group 12794.svg"),
                   const AutoSizeText(

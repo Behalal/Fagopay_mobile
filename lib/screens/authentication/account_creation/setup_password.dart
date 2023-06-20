@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../../controllers/login_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -15,10 +14,10 @@ import 'setup_passcode.dart';
 import 'widgets/current_step.dart';
 
 class SetupPassword extends StatefulWidget {
-  final String id;
+  final String identifier;
   const SetupPassword({
     super.key,
-    required this.id,
+    required this.identifier,
   });
 
   @override
@@ -28,7 +27,6 @@ class SetupPassword extends StatefulWidget {
 class _SetupPasswordState extends State<SetupPassword> {
   bool _passvisibility = false;
   bool _confirmpassvisibility = false;
-  bool _isLoading = false;
   bool _passRequirementMet = false;
   bool _upto8Characters = false;
   bool _numbers = false;
@@ -486,62 +484,31 @@ class _SetupPasswordState extends State<SetupPassword> {
                       if (_registrationController.password.text.isEmpty ||
                           _registrationController
                               .confirmPassword.text.isEmpty) {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(
-                        //     content: Text('Kindly enter your password'),
-                        //   ),
-                        // );
-
-                        Fluttertoast.showToast(
-                          msg: "Kindly enter your password",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.TOP,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
+                        Get.snackbar("Error","Kindly enter your password");
                       } else if (_registrationController.password.text !=
                           _registrationController.confirmPassword.text) {
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(
-                        //     content: Text('Password does not match'),
-                        //   ),
-                        // );
-                        Fluttertoast.showToast(
-                          msg: "Password does not match",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.TOP,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
+                        Get.snackbar("Error","Password does not match");
                       } else {
-                        print(
-                            ' code is ${_registrationController.password.text.trim()}');
-                        print(widget.id);
-
-                        await registerUserDetails(context,
-                            confirmedPassword:
-                                _registrationController.confirmPassword.text,
-                            id: widget.id,
-                            password:
-                                _registrationController.confirmPassword.text);
+                        print('code is ${_registrationController.password.text.trim()}');
+                        print(widget.identifier);
+                        await _loginController.setUpPassword(identifier: widget.identifier,
+                          password: _registrationController.confirmPassword.text,
+                          confirmedPassword: _registrationController.confirmPassword.text, context: context
+                        );
                       }
                     },
                     child: AuthButtons(
                         hasImage:
-                            (_isLoading) ? "assets/images/loader.gif" : null,
-                        color: (_isLoading || !_passRequirementMet)
+                            (_loginController.isSetUpPasswordLoading) ? "assets/images/loader.gif" : null,
+                        color: (_loginController.isSetUpPasswordLoading || !_passRequirementMet)
                             ? signInPlaceholder
                             : null,
-                        imageWidth: (_isLoading) ? 50 : null,
-                        imageheight: (_isLoading) ? 30 : null,
+                        imageWidth: (_loginController.isSetUpPasswordLoading) ? 50 : null,
+                        imageheight: (_loginController.isSetUpPasswordLoading) ? 30 : null,
                         form: true,
-                        text: (_isLoading) ? "" : "Continue",
+                        text: (_loginController.isSetUpPasswordLoading) ? "" : "Continue",
                         route: SetupPassCode(
-                          id: widget.id,
+                          id: widget.identifier,
                         )),
                   ),
                 )
@@ -555,72 +522,5 @@ class _SetupPasswordState extends State<SetupPassword> {
     bool met = (function.checkLoweCase(value) && function.checkUpperCase(value) && function.checknumbers(value) && function.specialCharacters(value) && value.length >= 8);
 
     return met;
-  }
-
-  Future<void> registerUserDetails(BuildContext context,
-      {required String id,
-      required String password,
-      required String confirmedPassword}) async {
-    setState(() {
-      _isLoading = true;
-    });
-    final response = await _loginController.createNewPassword(
-        id, password, confirmedPassword);
-    print(response.body);
-    final jsonBody = jsonDecode(response.body);
-
-    print(' code is $jsonBody');
-    final userToken = jsonBody['token'];
-    if (response.statusCode == 200) {
-      // final validateUserIdentifier = jsonBody['data']['identifier'];
-      // SecureStorage.setUserIdentifier(validateUserIdentifier);
-      setState(() {
-        _isLoading = false;
-      });
-
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (BuildContext context) => SetupPassCode(
-              id: widget.id,
-            ),
-          ),
-        );
-      });
-      // SecureStorage.setUserToken(userToken);
-      // if ((!mounted)) return;
-      Fluttertoast.showToast(
-        msg: "Registration successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-
-      // if (!mounted) return;
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('${jsonBody['data']['error']}'),
-      //   ),
-      // );
-      return;
-    }
-
-    Fluttertoast.showToast(
-      msg: "${jsonBody['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-    // ScaffoldMessenger.of(context).showSnackBar(
-    //   const SnackBar(
-    //     content: Text('Registration successful'),
-    //   ),
-    // );
   }
 }

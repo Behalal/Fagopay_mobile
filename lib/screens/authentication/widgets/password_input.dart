@@ -33,7 +33,7 @@ class PasswordInput extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
             borderSide: const BorderSide(
-              color: textBoxBorderColor,
+              color: signInText,
               width: 1.0,
             ),
           ),
@@ -41,13 +41,13 @@ class PasswordInput extends StatelessWidget {
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               borderSide: BorderSide(
-                  color: textBoxBorderColor,
+                  color: signInText,
                   width: 1.0,
                   style: BorderStyle.solid)),
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               borderSide: BorderSide(
-                  color: linearGradient1,
+                  color: signInText,
                   width: 1.0,
                   style: BorderStyle.solid)),
           hintText: "Password",

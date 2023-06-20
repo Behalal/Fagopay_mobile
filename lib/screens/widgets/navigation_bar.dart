@@ -1,4 +1,10 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/local_notification_services.dart';
+import 'package:fagopay/screens/authentication/session_signout_pincode_page.dart';
+import 'package:fagopay/service/local/local_storage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -121,6 +127,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+
+
   static final _userUcontroller = Get.find<UserController>();
   int selectedIndex = 0;
 
@@ -154,6 +162,12 @@ class _DashboardState extends State<Dashboard> {
     'Purse',
     'Profile',
   ];
+  @override
+  void initState() {
+    pushNotificationOnInitConfiguration();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -250,11 +264,13 @@ class _DashboardState extends State<Dashboard> {
           accountDetails: _userUcontroller.userAccountDetails,
           // accountType: widget.accountType == 'Bussiness' ? 'Bussiness' : ''
         );
-
       case 1:
         return const TransactionHistoryPage();
       case 2:
-        return const FagoMainPage();
+        return FagoMainPage(
+          userDetail: _userUcontroller.user!,
+          accountDetail: _userUcontroller.userAccountDetails!,
+        );
       case 3:
         return const MyPurse();
       case 4:
@@ -263,7 +279,26 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  // Widget buildButton({VoidCallback? onPress, String? image, String? title}) {
+  pushNotificationOnInitConfiguration() {
+    // LocalNotificationService.initialize();
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        Get.to(() => const Dashboard());
+      }
+    });
+    //Is called when the app is in foreground
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {}
+      LocalNotificationService.displayNotification(message);
+    });
+    //Only works When the app is in background but opened
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print(message.data);
+      Get.to(() => const Dashboard());
+    });
+  }
+
+// Widget buildButton({VoidCallback? onPress, String? image, String? title}) {
   //   return InkWell(
   //     onTap: onPress,
   //     child: SizedBox(

@@ -54,9 +54,9 @@ android {
         applicationId "net.fagopay.fagopay"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 19
+        minSdkVersion 28
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 8
+        versionCode 27
         versionName flutterVersionName
         multiDexEnabled true
     }
@@ -72,8 +72,10 @@ android {
 
     buildTypes {
         release {
+            crunchPngs false
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+//            signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
         }
     }
@@ -85,6 +87,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation platform('com.google.firebase:firebase-bom:31.3.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'androidx.multidex:multidex:2.0.1'
 }

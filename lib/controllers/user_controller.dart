@@ -1,22 +1,21 @@
 import 'dart:convert';
-
+import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/controllers/login_controller.dart';
+import 'package:fagopay/models/next_of_kin_response.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/material.dart';
-
-import '../models/company_model.dart';
 import '../models/referal_earnings.dart/referal_earning.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../models/nextofkin_model.dart';
 import '../models/user_model/user.dart';
-import '../screens/widgets/navigation_bar.dart';
 import '../service/constants/constants.dart';
+import '../service/network_services/dio_service_config/dio_client.dart';
 import '../service/secure_storage/secure_storage.dart';
-import 'company_controller.dart';
-import 'login_controller.dart';
 
 enum NextOfKinEnum {
   empty,
@@ -34,16 +33,14 @@ enum RefaralEarningEnum {
 }
 
 class UserController extends GetxController {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneNumController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController relationshipController = TextEditingController();
+
+  int emailPromptCount = 0;
+  int phonePromptCount = 0;
 
   final _nextOfKinStatus = NextOfKinEnum.empty.obs;
 
   NextOfKinEnum get nextOfKinStatus => _nextOfKinStatus.value;
-  final Rx<User?> _user = Rx(null);
+  final Rx<UserDetail?> _user = Rx(null);
   final Rx<AccountDetail?> _userAccountDetails = Rx(null);
 
   final _referalEarningStatus = RefaralEarningEnum.empty.obs;
@@ -59,9 +56,9 @@ class UserController extends GetxController {
     _switchedAccountType(switchedAccountType);
   }
 
-  User? get user => _user.value;
+  UserDetail? get user => _user.value;
 
-  set setUser(User? user) {
+  set setUser(UserDetail? user) {
     _user(user);
   }
 
@@ -70,46 +67,51 @@ class UserController extends GetxController {
   set setUserAccountDetails(AccountDetail? userAccountDetails) {
     _userAccountDetails(userAccountDetails);
   }
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController relationshipController = TextEditingController();
 
-  Future uploadNextOfKin(NextOfKinModel nextofkin,) async {
-    final token = await SecureStorage.readUserToken();
-    try {
-      _nextOfKinStatus(NextOfKinEnum.loading);
-      if (kDebugMode) {
-        print('updating next of kin...');
-        print('Next of kin json: ${nextofkin.toJson()}');
-      }
-      var response = await http.post(
-        Uri.parse(BaseAPI.nextofKin),
-        body: jsonEncode(nextofkin.toJson()),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token"
-        },
-      );
-      var json = jsonDecode(response.body);
-      print('The date supplied is ${response.body}');
-
-      if ((response.statusCode == 200)) {
-        _nextOfKinStatus(NextOfKinEnum.success);
-
-        Get.snackbar('Success', 'Next of kin updated successfully!');
-        clear();
-      }
-      print('here');
-      // return nextOfKinFromJson(response.body);
-    } catch (error) {
-      _nextOfKinStatus(NextOfKinEnum.error);
-      Get.snackbar(
-          'Error',
-          error.toString() ==
-                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
-              ? 'No internet connection!'
-              : error.toString());
-      if (kDebugMode) {
-        print('creating product Error ${error.toString()}');
-      }
+  Future uploadNextOfKin({required BuildContext context}) async {
+    progressIndicator(context);
+    try{
+      var postBody = jsonEncode({
+        "phone_number": phoneNumController.text,
+        "full_name": nameController.text,
+        "email": emailController.text,
+        "house_address": addressController.text,
+        "relationship": relationshipController.text
+      });
+      final response = await NetworkProvider().call(path: "/v1/kyc/create-update-nextofkin", method: RequestMethod.post, body: postBody);
+      final responseMessage = NextOfKinResponse.fromJson(response!.data);
+      await getUserDetails();
+      Get.back();
+      Get.back();
+      Get.snackbar('Successful', responseMessage.message ?? "Next of kin detail added successfully");
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
+  }
+  final login = Get.put(LoginController());
+  Future<void> getUserDetails() async {
+    final response = await login.getUserDetails();
+    // print(' response is = ${response['data']['userdetail']['nextofkin']}');
+    final userjsonBodyData = response?.data['data']['userdetail'];
+    final userDetails = UserDetail.fromJson(userjsonBodyData);
+    final userAccountjsonBodyData = response?.data['data']['userdetail']['accountdetail'];
+    final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
+      setUserAccountDetails = userAccountDetails;
+      setUser = userDetails;
+      update();
+    //print('User details are kyc number is ${userDetails.kycVerified}');
   }
 
   Future showReferalEarning() async {

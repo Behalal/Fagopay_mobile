@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/kyc/countdown_page2.dart';
+import 'package:fagopay/screens/kyc/identity_verification.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_identity_kyc/flutter_identity_kyc.dart';
@@ -101,22 +102,20 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                                   height: 1.5.h,
                                 ),
                                 Container(
-                                  height: 2.5.h,
-                                  width: 12.5.h,
+                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                                   decoration: BoxDecoration(
                                       color: _userController.user?.kycVerified == 1?fagoGreenColorWithOpacity10: fagoSecondaryColorWithOpacity10,
                                     //  color: fagoSecondaryColorWithOpacity10,
                                       borderRadius: BorderRadius.circular(25),
                                       border: Border.all(color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor)
                                     ),
-                                  alignment: Alignment.center,
-                                  child:  AutoSizeText(
+                                  child:  Text(
                                     'BVN Verification',
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
-                                      fontSize: 10,
+                                      fontSize: 13,
                                       fontWeight: FontWeight.w400,
-                                      color: _userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor,
+                                      color: _userController.user?.kycVerified == 1 ? fagoGreenColor: fagoSecondaryColor,
                                      // color: fagoSecondaryColor,
                                     ),
                                   ),
@@ -202,100 +201,105 @@ class _ProfileKycPageState extends State<ProfileKycPage> {
                           height: 3.h,
                         ),
                       //  _userController.user?.hasGovernmentIdentity == 1 ? Container():
-                        Stack(alignment: Alignment.bottomRight,
-                            children: [
-                          SvgPicture.asset('assets/icons/Ellipse 278.svg',color:_userController.user?.hasGovernmentIdentity == 1?fagoGreenColor: fagoPrimaryColor,),
-                          SvgPicture.asset('assets/icons/Ellipse 279.svg',color:_userController.user?.hasGovernmentIdentity == 1?fagoGreenColor: fagoPrimaryColor,),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 3.h, vertical: 3.h),
-                            // height: 27.h,
-                            width: Get.width,
-                            color: _userController.user?.hasGovernmentIdentity == 1?fagoGreenColor.withOpacity(0.2): fagoSecondaryColorWithOpacity10,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        GestureDetector(
+                          onTap: (){
+                            if (_userController.user?.hasGovernmentIdentity != 1) {
+                              Get.to(() => const IdentificationVerification());
+                              return;
+                            }
+                          },
+                          child: Stack(alignment: Alignment.bottomRight,
                               children: [
-                                const AutoSizeText(
-                                  'Upgrade your Limit',
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                    color: stepsColor,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 1.5.h,
-                                ),
-                                Container(
-                                  height: 3.h,
-                                  width: 20.5.h,
-                                  decoration: BoxDecoration(
-                                      color: _userController.user?.kycVerified == 1?fagoGreenColorWithOpacity10: fagoSecondaryColorWithOpacity10,
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor)
-                                ),
-                                  alignment: Alignment.center,
-                                  child:  AutoSizeText(
-                                    'Government ID Verification',
+                            SvgPicture.asset('assets/icons/Ellipse 278.svg',color:_userController.user?.hasGovernmentIdentity == 1?fagoGreenColor: fagoPrimaryColor,),
+                            SvgPicture.asset('assets/icons/Ellipse 279.svg',color:_userController.user?.hasGovernmentIdentity == 1?fagoGreenColor: fagoPrimaryColor,),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 3.h, vertical: 3.h),
+                              // height: 27.h,
+                              width: Get.width,
+                              color: _userController.user?.hasGovernmentIdentity == 1?fagoGreenColor.withOpacity(0.2): fagoSecondaryColorWithOpacity10,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const AutoSizeText(
+                                    'Upgrade your Limit',
                                     style: TextStyle(
                                       fontFamily: "Work Sans",
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: _userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor,
-
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: stepsColor,
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 1.5.h,
-                                ),
-                                const AutoSizeText(
-                                  'Enjoy more of our services when you verify your ID to upgrade your account.',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontFamily: "Work Sans",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: signInPlaceholder,
+                                  SizedBox(
+                                    height: 1.5.h,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                _userController.user?.hasGovernmentIdentity == 1?Container():Container(
-                                  height: 5.h,
-                                  width: 20.5.h,
-                                  decoration: BoxDecoration(
-                                      color: fagoSecondaryColor,
-                                      borderRadius: BorderRadius.circular(25),
-                                      border: Border.all(
-                                          color: fagoSecondaryColor)),
-                                  alignment: Alignment.center,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/icons/verify_pre.svg'),
-                                      const AutoSizeText(
-                                        'Continue',
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: white,
-                                        ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                                    decoration: BoxDecoration(
+                                        color: _userController.user?.kycVerified == 1?fagoGreenColorWithOpacity10: fagoSecondaryColorWithOpacity10,
+                                        borderRadius: BorderRadius.circular(25),
+                                        border: Border.all(color:_userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor)
+                                  ),
+                                    child:  Text(
+                                      'Government ID Verification',
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400,
+                                        color: _userController.user?.kycVerified == 1?fagoGreenColor: fagoSecondaryColor,
+
                                       ),
-                                      SvgPicture.asset(
-                                          'assets/icons/verify_suxf.svg')
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                  SizedBox(
+                                    height: 1.5.h,
+                                  ),
+                                  const AutoSizeText(
+                                    'Enjoy more of our services when you verify your ID to upgrade your account.',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      color: signInPlaceholder,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 2.h,
+                                  ),
+                                  _userController.user?.hasGovernmentIdentity == 1?Container():Container(
+                                    height: 5.h,
+                                    width: 20.5.h,
+                                    decoration: BoxDecoration(
+                                        color: fagoSecondaryColor,
+                                        borderRadius: BorderRadius.circular(25),
+                                        border: Border.all(
+                                            color: fagoSecondaryColor)),
+                                    alignment: Alignment.center,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/verify_pre.svg'),
+                                        const AutoSizeText(
+                                          'Continue',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: white,
+                                          ),
+                                        ),
+                                        SvgPicture.asset('assets/icons/verify_suxf.svg')
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ]),
+                          ]),
+                        ),
                       ],
                     ),
                   )),

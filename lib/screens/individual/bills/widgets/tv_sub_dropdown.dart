@@ -55,7 +55,7 @@ class _TVProvidersState extends State<TVProviders> {
               border: Border.all(color: fagoSecondaryColor),
               borderRadius: const BorderRadius.all(Radius.circular(5))),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+            padding: EdgeInsets.symmetric(horizontal: 4.w,),
             child: DropdownButtonFormField(
               decoration: const InputDecoration(
                 border: InputBorder.none,

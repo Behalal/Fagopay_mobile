@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/models/customer_details.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import '../models/customer_model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
@@ -32,20 +35,36 @@ class CustomerController extends GetxController {
   TextEditingController cityController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
-  Future<dynamic> getCustomers(String companyId) async {
-    final token = await SecureStorage.readUserToken();
-    try {
-      final responseData = await NetworkHelper.getRequest(
-        url: "${BaseAPI.customersPath}/company/$companyId",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token",
-        },
-      );
-      print('this response data = $responseData');
-      return responseData;
-    } catch (e) {
-      log(e.toString());
+  bool? isLoadingCustomers;
+  bool? isLoadingCustomersHasError;
+  Future<dio.Response<dynamic>?> getCustomers({required String companyId})async{
+    isLoadingCustomers = true;
+    isLoadingCustomersHasError = false;
+    log(isLoadingCustomers.toString());
+    update();
+    try{
+      final response = await NetworkProvider().call(path: "/v1/customer/company/$companyId", method: RequestMethod.get);
+      final customerResponse = response?.data['data']['customers'];
+      final returnedCustomers = customerResponse.map<Customer>((customer) => Customer.fromJson(customer)).toList();
+      customers = returnedCustomers;
+      isLoadingCustomers = false;
+      log(isLoadingCustomers.toString());
+      isLoadingCustomersHasError = false;
+      update();
+      return response;
+    }on dio.DioError catch (err) {
+      isLoadingCustomers = false;
+      isLoadingCustomersHasError = true;
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      isLoadingCustomers = false;
+      isLoadingCustomersHasError = true;
+      update();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
@@ -80,8 +99,22 @@ class CustomerController extends GetxController {
         },
         body: requestBody,
       );
+      nameController.clear();
+      phoneController.clear();
+      emailController.clear();
+      addressController.clear();
+      countryController.clear();
+      stateController.clear();
+      cityController.clear();
       return response;
     } catch (e) {
+      nameController.clear();
+      phoneController.clear();
+      emailController.clear();
+      addressController.clear();
+      countryController.clear();
+      stateController.clear();
+      cityController.clear();
       log(e.toString());
     }
   }

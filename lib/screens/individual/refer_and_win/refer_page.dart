@@ -7,6 +7,7 @@ import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:clipboard/clipboard.dart';
 
@@ -144,18 +145,18 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                       child: InkWell(
                                          onTap: () {
                                               if (_userUcontroller
-                                                      .user!.referralCode ==
+                                                      .user!.referalCode ==
                                                   "") {
                                                 print('enter text');
                                               } else {
                                                 print(_userUcontroller
-                                                    .user!.referralCode);
+                                                    .user!.referalCode);
                                                 FlutterClipboard.copy(
                                                     _userUcontroller
-                                                        .user!.referralCode!);
+                                                        .user!.referalCode!);
                                                 Get.snackbar(
                                                     'Referral Code Copied',
-                                                    '${_userUcontroller.user!.referralCode}',
+                                                    '${_userUcontroller.user!.referalCode}',
                                                     snackPosition:
                                                         SnackPosition.BOTTOM,
                                                     padding:
@@ -165,7 +166,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                                     ));
                                                 FlutterClipboard.copy(
                                                         _userUcontroller
-                                                            .user!.referralCode
+                                                            .user!.referalCode
                                                             .toString())
                                                     .then((value) =>
                                                         print('copied'));
@@ -177,7 +178,7 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                                           children: [
                                             AutoSizeText(
                                               _userUcontroller
-                                                      .user!.referralCode ??
+                                                      .user!.referalCode ??
                                                   'No referral Code',
                                               style: const TextStyle(
                                                 fontFamily: "Work Sans",
@@ -210,33 +211,31 @@ class _ReferAndEarnState extends State<ReferAndEarn> {
                               SizedBox(
                                 height: 5.h,
                               ),
-                              Container(
-                                height: 6.5.h,
-                                width: 35.5.h,
-                                decoration: BoxDecoration(
-                                    color: fagoSecondaryColor,
-                                    borderRadius: BorderRadius.circular(36),
-                                    border:
-                                        Border.all(color: fagoSecondaryColor)),
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const AutoSizeText(
-                                      'Invite your friends',
-                                      style: TextStyle(
-                                        fontFamily: "Work Sans",
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: white,
+                              GestureDetector(
+                                onTap: (){
+                                  Share.share('${_userUcontroller.user?.firstName} invites you to FagoPay with this referral code ${_userUcontroller.user?.referalCode}');
+                                },
+                                child: Container(
+                                  height: 6.5.h,
+                                  width: 35.5.h,
+                                  decoration: BoxDecoration(color: fagoSecondaryColor, borderRadius: BorderRadius.circular(36), border: Border.all(color: fagoSecondaryColor)),
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const AutoSizeText(
+                                        'Invite your friends',
+                                        style: TextStyle(
+                                          fontFamily: "Work Sans",
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: white,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 2.h,
-                                    ),
-                                    SvgPicture.asset(
-                                        'assets/icons/invite_friends.svg'),
-                                  ],
+                                      SizedBox(width: 2.h,),
+                                      SvgPicture.asset('assets/icons/invite_friends.svg'),
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(

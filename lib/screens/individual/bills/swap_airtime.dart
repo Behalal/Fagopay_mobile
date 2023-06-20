@@ -106,6 +106,7 @@ class _SwapAirtimeState extends State<SwapAirtime> {
     // );
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
           child: Form(

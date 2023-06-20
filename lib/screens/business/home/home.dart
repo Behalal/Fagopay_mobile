@@ -17,7 +17,7 @@ import 'models/actions.model.dart';
 import 'models/sales.model.dart';
 
 class BusinessHome extends StatefulWidget {
-  final User userDetails;
+  final UserDetail userDetails;
   final AccountDetail accountDetails;
 
   const BusinessHome({

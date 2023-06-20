@@ -1,16 +1,17 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/controllers/notification_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/functions/constant.dart';
 import 'package:fagopay/screens/authentication/account_creation/select_type.dart';
+import 'package:fagopay/screens/individual/notification/notification_screen.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/constants/colors.dart';
@@ -21,8 +22,8 @@ import '../../../../controllers/login_controller.dart';
 import '../../../authentication/recover_password_otp_screen.dart';
 
 class DashBoardDetails extends StatefulWidget {
-  final User user;
-  final User userDetails;
+  final UserDetail user;
+  final UserDetail userDetails;
   final String? accountType;
   final AccountDetail? accountDetails;
 
@@ -44,12 +45,19 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
   String notVisibleText = "******";
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
-
   final _companyController = Get.find<CompanyController>();
+  final _notificationController = Get.find<NotificationController>();
+
+
+  @override
+  void initState() {
+    getUserDetails();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
- //  isLoading = false;
+    // _userUcontroller.switchedAccountType == 2 ? isUser = false: isUser = true;
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -70,13 +78,10 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                 Row(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                        left: 1.w,
-                      ),
+                      padding: EdgeInsets.only(left: 4.w,),
                       child: Container(
                         padding: const EdgeInsets.only(top: 40, bottom: 0),
-                        width: 95.w,
-                        height: 18.h,
+                        width: 95.w, height: 18.h,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage("assets/images/image1.png"),
@@ -86,151 +91,161 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                           alignment: AlignmentDirectional.center,
                           children: [
                             Positioned(
-                              top: 6.2.h,
-                              width: 13.w,
-                              height: 60.09,
-                              left: 4.w,
-                              child:
-                                  SvgPicture.asset("assets/images/Frame.svg"),
+                              top: 6.2.h, width: 13.w,
+                              height: 60.09, left: 4.w,
+                              child: SvgPicture.asset("assets/images/Frame.svg"),
                             ),
                             Row(
                               children: [
-
-                                const CircleAvatar(
-                                  radius: 25, // Image radius
-                                  backgroundImage:
-                                      AssetImage('assets/images/fago(2).png'),
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.white,
+                                  child: Text(
+                                    _userController.switchedAccountType == 2 ? '${_companyController.company?.companyName?.substring(0, 1)}'??'' :
+                                    '${widget.user.firstName?.substring(0, 1) ?? ""}${widget.user.lastName?.substring(0, 1) ?? ""}',
+                                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,wordSpacing: 2),),
                                 ),
                                 SizedBox(
                                   width: 3.w,
                                 ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        style: const TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: white,
-                                        ),
-                                        children: [
-                                          const TextSpan(text: 'Welcome'),
-                                          TextSpan(
-                                            text: ' ${_userController.switchedAccountType == 2 ? _companyController.company!.companyName : widget.user.firstName}',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                            ),
+                                Expanded(flex: 5,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      RichText(
+                                        text: TextSpan(
+                                          style: const TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: white,
                                           ),
-                                        ],
+                                          children: [
+                                            const TextSpan(text: 'Welcome'),
+                                            TextSpan(
+                                              text: ' ${_userController.switchedAccountType == 2 ? _companyController.company?.companyName ?? "" : widget.user.firstName ?? ""}',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                    ),
 
-                                    SizedBox(height: 0.6.h),
-                                    InkWell(
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(20),
+                                      SizedBox(height: 0.6.h),
+                                      InkWell(
+                                        onTap: () {
+                                          showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(20),
+                                              ),
                                             ),
+                                            context: context,
+                                            builder: (context) => ManageAccount(
+                                              userDetails: _userController.user!,
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          width: 33.w,
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(20),
+                                            ),
+                                            color: white,
                                           ),
-                                          context: context,
-                                          builder: (context) => ManageAccount(
-                                            userDetails: _userController.user!,
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 33.w,
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(20),
-                                          ),
-                                          color: white,
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 4, vertical: 0.4.h),
-                                          child:  Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children:  [
-                                              const  AutoSizeText(
-                                                "Switch Account",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontFamily: "Work Sans",
-                                                  fontSize: 7,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: black,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 4, vertical: 0.4.h),
+                                            child:  const Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children:  [
+                                                AutoSizeText(
+                                                  "Switch Account",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 7,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: black,
+                                                  ),
                                                 ),
-                                              ),
-                                              Expanded(
-                                                child: Stack(
-                                                  alignment: AlignmentDirectional.center,
-                                                  children:const [
-                                                    Image(
-                                                      image: AssetImage(
-                                                          "assets/images/box.png"),
-                                                      height: 20,
-                                                      width: 20,
-                                                      color: stepsColor,
-                                                    ),
-                                                    Icon(
-                                                      Icons
-                                                          .keyboard_arrow_down_rounded,
-                                                      color: stepsColor,
-                                                      size: 15,
-                                                    )
-                                                  ],
+                                                Expanded(
+                                                  child: Stack(
+                                                    alignment: AlignmentDirectional.center,
+                                                    children:[
+                                                      Image(
+                                                        image: AssetImage("assets/images/box.png"),
+                                                        height: 20,
+                                                        width: 20,
+                                                        color: stepsColor,
+                                                      ),
+                                                      Icon(
+                                                        Icons
+                                                            .keyboard_arrow_down_rounded,
+                                                        color: stepsColor,
+                                                        size: 15,
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 const Spacer(),
                                 SizedBox(
                                   width: 5.w,
                                 ),
                                 // Expanded(child: Container()),
-                                const Icon(
-                                  Icons.qr_code_scanner,
-                                  size: 20,
-                                  color: white,
-                                ),
-                                SizedBox(
-                                  width: 2.w,
-                                ),
+                                // const Icon(
+                                //   Icons.qr_code_scanner,
+                                //   size: 20,
+                                //   color: white,
+                                // ),
+                                // SizedBox(
+                                //   width: 2.w,
+                                // ),
                                 GestureDetector(
                                   onTap: () {
+                                    Get.to(()=>const NotificationScreen());
                                     // Navigator.of(context).push(
                                     //   MaterialPageRoute(
                                     //     builder: (context) => BusinessHome(
                                     //       userDetails: widget.userDetails,
-                                    //       accountDetails:
-                                    //           widget.accountDetails!,
+                                    //       accountDetails: widget.accountDetails!,
                                     //     ),
                                     //   ),
                                     // );
                                   },
-                                  child: const Icon(
-                                    Icons.notifications,
-                                    size: 20,
-                                    color: white,
+                                  child: Stack(
+                                    children: [
+                                      const Icon(
+                                        Icons.notifications,
+                                        size: 30,
+                                        color: white,
+                                      ),
+                                      Container(height: 18, width: 18,
+                                        decoration: BoxDecoration(shape: BoxShape.circle,
+                                            border: Border.all(color: Colors.blue), color: Colors.blue),
+                                        child: Center(child: Text(_notificationController.notificationLength.toString(),
+                                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.white),)),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 2.w,
+                                  width: 3.w,
                                 ),
                                 // GestureDetector(
                                 //   onTap: () {
@@ -257,7 +272,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                 ),
                 if (widget.userDetails.kycVerified == 1)
                   Padding(
-                    padding: EdgeInsets.only(left: 9.w, bottom: 20),
+                    padding: EdgeInsets.only(left: 4.w, bottom: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,7 +293,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                             Obx(() => AutoSizeText(
                                   (balanceVisible)
                                       ? ((widget.accountDetails!.balance.toString() == "") ? " 0.00"
-                                          : "$currencySymbol ${_userController.switchedAccountType == 2 ? _companyController.company!.accountDetails!.balance : _userController.userAccountDetails!.balance}.00") : notVisibleText,
+                                          : "$currencySymbol ${_userController.switchedAccountType == 2 ? _companyController.company!.account!.balance : _userController.userAccountDetails!.balance}.00") : notVisibleText,
                                   style: const TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 30,
@@ -301,25 +316,29 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                               ),
                             ),
                             const Spacer(),
-                            isLoading? const Center(child: LoadingWidget(color: fagoSecondaryColor)):GestureDetector(
+                            isLoading? Padding(
+                              padding: EdgeInsets.only(right: 12.w),
+                              child: const Center(child: SizedBox(height: 15, width: 15,
+                                  child: CircularProgressIndicator(color: fagoSecondaryColor, strokeWidth: 2,))),
+                            ):GestureDetector(
                               onTap: ()async{
                                 getUserDetails();
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(vertical: 6,horizontal: 12),
                                 decoration: const BoxDecoration(
-                                  color: fagoPrimaryColorWithOpacity10
+                                  color: Colors.transparent
                                 ),
                                  child: Row(
                                    children: [
                                      const Icon(Icons.refresh,color: white),
                                      SizedBox(width: 1.w,),
-                                     Text('Refresh',style: Constant().textStyle(size: 15, weight: FontWeight.w600,color: white),)
+                                     Text('Refresh',style: Constant().textStyle(size: 14, weight: FontWeight.w600,color: white),)
                                    ],
                                  ),
                               ),
                             ),
-                             SizedBox(width: 4.w,)
+                             SizedBox(width: 2.w,)
                           ],
                         ),
                         SizedBox(
@@ -337,7 +356,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                   AutoSizeText(
                                     _userController.switchedAccountType == 2
                                         ? _companyController
-                                            .company!.accountDetails!.bankName!
+                                            .company!.account!.bankName!
                                         : widget.accountDetails!.bankName!,
                                     style: const TextStyle(
                                         fontFamily: "Work Sans",
@@ -356,7 +375,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                       AutoSizeText(
                                         _userController.switchedAccountType == 2
                                             ? _companyController.company!
-                                                .accountDetails!.accountNumber!
+                                                .account!.accountNumber!
                                             : widget
                                                 .accountDetails!.accountNumber!,
                                         style: const TextStyle(
@@ -398,7 +417,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                 ],
                               ),
                             Padding(
-                              padding: EdgeInsets.only(right: 10.w),
+                              padding: EdgeInsets.only(right: 5.w),
                               child: GestureDetector(
                                 onTap: (() {
                                   Navigator.of(context).push(
@@ -409,14 +428,14 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
                                                     .switchedAccountType ==
                                                 2
                                             ? _companyController
-                                                .company!.accountDetails!
+                                                .company!.account!
                                             : widget.accountDetails!,
                                       ),
                                     ),
                                   );
                                 }),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SvgPicture.asset(
@@ -614,21 +633,21 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
       isLoading = true;
     });
    await _loginController.getUserDetails().then((value) {
-  //    var res = jsonDecode(value);
      if(value != null){
-       final userjsonBodyData = value['data']['userdetail'];
-       final userDetails = User.fromJson(userjsonBodyData);
-       final userAccountjsonBodyData = value['data']['userdetail']['accountdetail'];
+       final userjsonBodyData = value.data['data']['userdetail'];
+       final userDetails = UserDetail.fromJson(userjsonBodyData);
+       final userAccountjsonBodyData = value.data['data']['userdetail']['accountdetail'];
        final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
-       setState(() {
          isLoading = false;
          _userController.setUserAccountDetails = userAccountDetails;
          _userController.setUser = userDetails;
-       });
-       print(userjsonBodyData);
-       Get.snackbar('Success', 'Account refreshed successfully',backgroundColor: fagoGreenColor,colorText: white);
+       if (kDebugMode) {
+         print("Account refreshed successfully");
+       }
      }else{
-       Get.snackbar('Error', 'Something went wrong, cant refresh balance',backgroundColor: fagoSecondaryColor,colorText: white);
+       if (kDebugMode) {
+         print('Something went wrong, cant refresh balance');
+       }
      }
     });
     // print(' response is = ${response['data']['userdetail']['nextofkin']}');
@@ -641,7 +660,7 @@ class _DashBoardDetailsState extends State<DashBoardDetails> {
 enum AccountType { individual, business }
 
 class ManageAccount extends StatefulWidget {
-  final User userDetails;
+  final UserDetail userDetails;
   const ManageAccount({super.key, required this.userDetails});
 
   @override
@@ -651,7 +670,18 @@ class ManageAccount extends StatefulWidget {
 class _ManageAccountState extends State<ManageAccount> {
   final _userUcontroller = Get.find<UserController>();
   final _companyController = Get.find<CompanyController>();
+  final scrollController = ScrollController();
 
+  ///Cache account Number
+  Future<void> saveAccountId({required String accountId}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("accountId", accountId);
+  }
+  ///Cache Company ID
+  Future<void> saveCompanyId({required String companyId}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("companyId", companyId);
+  }
   @override
   Widget build(BuildContext context) {
     return widget.userDetails.kycVerified == 1
@@ -659,6 +689,8 @@ class _ManageAccountState extends State<ManageAccount> {
             padding: EdgeInsets.symmetric(vertical: 3.h, horizontal: 2.h),
             height: Get.height * 0.75,
             child: SingleChildScrollView(
+              physics:  const BouncingScrollPhysics(),
+              controller: scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -683,16 +715,9 @@ class _ManageAccountState extends State<ManageAccount> {
                             color: fagoSecondaryColor,
                           ),
                         ),
-                        SizedBox(
-                          height: 1.5.h,
-                        ),
-                        const Divider(
-                          color: stepsColor,
-                        ),
-                        // ),
-                        SizedBox(
-                          height: 1.h,
-                        ),
+                        SizedBox(height: 1.5.h,),
+                        const Divider(color: stepsColor,),
+                        SizedBox(height: 1.h,),
                       ],
                     ),
                   ),
@@ -729,10 +754,12 @@ class _ManageAccountState extends State<ManageAccount> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const CircleAvatar(
-                              radius: 27, // Image radius
-                              backgroundImage:
-                                  AssetImage('assets/images/fago(2).png'),
+                            //_userUcontroller.switchedAccountType == 2 ? '${_companyController.company?.companyName?.substring(0, 1)}'??'' :
+                            CircleAvatar(
+                              radius: 30,
+                              backgroundColor: fagoSecondaryColor.withOpacity(0.05),
+                              child: Text('${_userUcontroller.user?.firstName?.substring(0, 1)}${_userUcontroller.user?.lastName?.substring(0, 1)}',
+                                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,wordSpacing: 2),),
                             ),
                             SizedBox(
                               width: 1.h,
@@ -814,9 +841,7 @@ class _ManageAccountState extends State<ManageAccount> {
                       color: stepsColor,
                     ),
                   ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
+                  SizedBox(height: 2.h,),
                   _companyController.companies.isEmpty
                       ? Center(
                           child: Padding(
@@ -830,6 +855,7 @@ class _ManageAccountState extends State<ManageAccount> {
                           children: [
                             Obx(
                               () => ListView.builder(
+                                controller: scrollController,
                                 padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 physics: const AlwaysScrollableScrollPhysics(),
@@ -841,23 +867,16 @@ class _ManageAccountState extends State<ManageAccount> {
                                   companyType: _companyController
                                           .companies[index].companyType ??
                                       'Manager',
-                                  onPressed: () {
-                                    _companyController.setCompany =
-                                        _companyController.companies[index];
+                                  onPressed: () async {
+                                    _companyController.setCompany = _companyController.companies[index];
                                     Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Dashboard()),
-                                        (route) => false);
+                                        MaterialPageRoute(builder: (context) => const Dashboard()), (route) => false);
                                     _userUcontroller.switchedAccountType = 2;
+                                    saveAccountId(accountId: _companyController.companies[index].account?.accountNumber ?? "");
+                                    saveCompanyId(companyId: _companyController.companies[index].id ?? "");
                                     setState(() {});
                                   },
-                                  isActive:
-                                      _userUcontroller.switchedAccountType ==
-                                                  2 &&
-                                              _companyController
-                                                      .companies[index].id ==
-                                                  _companyController.company!.id
+                                  isActive: _userUcontroller.switchedAccountType == 2 && _companyController.companies[index].id == _companyController.company!.id
                                           ? Colors.green
                                           : Colors.transparent,
                                 ),
@@ -874,9 +893,7 @@ class _ManageAccountState extends State<ManageAccount> {
                       SvgPicture.asset('assets/icons/Ellipse 278.svg'),
                       SvgPicture.asset('assets/icons/Ellipse 279.svg'),
                       Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 3.h, vertical: 2.h),
-                        height: 17.h,
+                        padding: EdgeInsets.symmetric(horizontal: 2.h, vertical: 2.h),
                         width: Get.width,
                         color: fagoSecondaryColor.withOpacity(0.05),
                         child: Column(
@@ -892,6 +909,7 @@ class _ManageAccountState extends State<ManageAccount> {
                                 color: fagoSecondaryColor,
                               ),
                             ),
+                            const SizedBox(height: 10,),
                             const AutoSizeText(
                               'Do you own a business with corporate registration? Manage them within this App or manage for others',
                               textAlign: TextAlign.start,
@@ -902,38 +920,31 @@ class _ManageAccountState extends State<ManageAccount> {
                                 color: stepsColor,
                               ),
                             ),
+                            const SizedBox(height: 10,),
                             InkWell(
                               onTap: () {
                                 Get.to(() => const SelectType());
                               },
                               child: Container(
-                                width: 55.w,
-                                decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15)),
-                                    color: buttonColor),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 3.w, vertical: .8.h),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/icons/fundAccount_icon.svg'),
-                                      const AutoSizeText(
-                                        "Create New Business Account",
-                                        style: TextStyle(
-                                          fontFamily: "Work Sans",
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.w600,
-                                          color: white,
-                                        ),
+                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                decoration: const BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(15)), color: buttonColor),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/icons/fundAccount_icon.svg'),
+                                    const SizedBox(width: 10,),
+                                    const Text(
+                                      "Create New Business Account",
+                                      style: TextStyle(
+                                        fontFamily: "Work Sans",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600,
+                                        color: white,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
@@ -1096,7 +1107,6 @@ class CustomCompanyCard extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 1.h),
         padding: const EdgeInsets.all(18),
         width: Get.width,
-        height: 10.h,
         decoration: BoxDecoration(
           color: fagoSecondaryColor.withOpacity(0.05),
           border: Border.all(
@@ -1108,49 +1118,43 @@ class CustomCompanyCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircleAvatar(
-                radius: 27, // Image radius
-                backgroundImage: AssetImage('assets/images/fago(2).png'),
+              CircleAvatar(
+                radius: 30, backgroundColor: fagoSecondaryColor.withOpacity(0.05),
+                child: Text(companyName.substring(0, 1) ?? "",
+                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,wordSpacing: 2),),
               ),
-              SizedBox(
-                width: 1.h,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AutoSizeText(
-                    companyName,
-                    style: const TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: welcomeText,
-                    ),
-                  ),
-                  SizedBox(
-                    height: .5.h,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 1.h),
-                    height: 2.h,
-                    // width: 11.5.h,
-                    decoration: BoxDecoration(
-                        color: white, borderRadius: BorderRadius.circular(25)),
-                    alignment: Alignment.center,
-                    child: AutoSizeText(
-                      companyType,
+              SizedBox(width: 1.h,),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AutoSizeText(
+                      companyName,
                       style: const TextStyle(
                         fontFamily: "Work Sans",
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        color: fagoSecondaryColor,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: welcomeText,
                       ),
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: .5.h,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(25)),
+                      child: AutoSizeText(
+                        companyType,
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
               SvgPicture.asset('assets/icons/arrow_front.svg')
             ]),
       ),

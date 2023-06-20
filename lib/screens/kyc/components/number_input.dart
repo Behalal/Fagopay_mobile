@@ -43,32 +43,29 @@ class NumberInput extends StatelessWidget {
         keyboardType: keyboadType,
         style: const TextStyle(
             fontFamily: "Work Sans",
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
             fontSize: 14,
             color: stepsColor),
         decoration: InputDecoration(
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           errorText: errorText,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5.0),
-            borderSide: BorderSide(
-              color: stepsColor.withOpacity(0.3),
-              width: 1.0,
-            ),
-          ),
-          border: const OutlineInputBorder(
+          isDense: true,
+          enabledBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              borderSide: BorderSide(
-                  color: textBoxBorderColor,
-                  width: 1.0,
-                  style: BorderStyle.solid)),
+              borderSide: BorderSide(color: fagoSecondaryColor, width: 0.7)),
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
-              borderSide: BorderSide(
-                  color: linearGradient1,
-                  width: 1.0,
-                  style: BorderStyle.solid)),
+              borderSide: BorderSide(color: fagoSecondaryColor, width: 0.7)),
+          focusedErrorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide: BorderSide(color:fagoSecondaryColor, width: 0.7)),
+          border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide: BorderSide(color: fagoSecondaryColor, width: 0.7)),
+          errorBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+              borderSide: BorderSide(color: fagoSecondaryColor, width: 0.7)),
           hintText: title,
           hintStyle: const TextStyle(
             fontFamily: "Work Sans",

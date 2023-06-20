@@ -1,26 +1,23 @@
 import 'dart:convert';
-
-import 'package:fagopay/models/categoryItems.dart';
+import 'package:fagopay/models/purse/create_purse_response.dart';
+import 'package:fagopay/models/purse/edit_purse_response_model.dart';
+import 'package:fagopay/models/purse/purse_category_list_response_model.dart';
+import 'package:fagopay/models/purse/purse_expenses_response_model.dart';
+import 'package:fagopay/models/purse/record_purse_expenses.dart';
 import 'package:fagopay/screens/constants/colors.dart';
-
-import '../models/purse/createPurse_Model.dart';
-import '../models/purse/purse_category.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import '../models/purse/purse_list_model.dart';
 import '../models/purse/showPurse_Model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import '../screens/widgets/navigation_bar.dart';
 import '../service/constants/constants.dart';
 import '../service/secure_storage/secure_storage.dart';
 import 'package:http/http.dart' as http;
-
-enum PurseCategoryEnum {
-  empty,
-  loading,
-  error,
-  success,
-  available,
-}
 
 enum CreatePurseEnum {
   empty,
@@ -41,25 +38,14 @@ enum ShowPurseEnum {
 class PurseController extends GetxController {
   late final budgetController = TextEditingController();
   late final amountController = TextEditingController();
-  final Rx<List<CategoryItems>> _categoryItemsList = Rx([]);
-  Rx<List<CategoryItems>> get categoryItemsList => _categoryItemsList;
-  // late final emailController = TextEditingController();
-  // late final phoneNumController = TextEditingController();
-  // late final houseAdressController = TextEditingController();
-  // late final relationshipController = TextEditingController();
 
   final _createPurseStatus = CreatePurseEnum.empty.obs;
 
   CreatePurseEnum get nextOfKinStatus => _createPurseStatus.value;
 
-  final Rx<List<PulseCategoryList>> _purseCategoryList = Rx([]);
-  List<PulseCategoryList> get purseCategoryList => _purseCategoryList.value;
-
   final Rx<List<PulseDurationModel>> _purseDurationList = Rx([]);
   List<PulseDurationModel> get purseDurationList => _purseDurationList.value;
 
-  final _purseCategoryStatus = PurseCategoryEnum.empty.obs;
-  PurseCategoryEnum get purseCategoryStatus => _purseCategoryStatus.value;
 
   final _showPurseStatus = ShowPurseEnum.empty.obs;
   ShowPurseEnum get showPurseStatus => _showPurseStatus.value;
@@ -67,128 +53,205 @@ class PurseController extends GetxController {
   final Rx<PulseDetail?> userPurse = Rx(null);
   PulseDetail? get userPurseDetails => userPurse.value;
 
-  Future getCategorylist() async {
-    _purseCategoryStatus(PurseCategoryEnum.loading);
-    final token = await SecureStorage.readUserToken();
-    try {
-      if (kDebugMode) {
-        print('getting my request...');
-      }
-      var response = await http.get(
-        Uri.parse(BaseAPI.pulseCategory),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token"
-        },
-      );
+  bool? onPurseCategoryListLoadingState;
+  bool? onPurseCategoryListErrorState;
+  List<PulseCategoryList>? pulseCategoryList = <PulseCategoryList>[].obs;
 
-      var json = jsonDecode(response.body);
-      if (kDebugMode) {
-        print(response.body);
-      }
-
-      // if (response.statusCode == 200) {
-      //   throw (json['message']);
-      // }
-
-      if (response.statusCode == 200) {
-        var list = List.from(json['data']['pulse_category_list']);
-        var pursecategorylist = list.map((e) => PulseCategoryList.fromJson(e)).toList();
-        if (kDebugMode) {
-          print("${pursecategorylist.length} request");
-          print(" Req ${pursecategorylist.first} request");
-        }
-        _purseCategoryList(pursecategorylist);
-        pursecategorylist.isNotEmpty
-            ? _purseCategoryStatus(PurseCategoryEnum.available)
-            : _purseCategoryStatus(PurseCategoryEnum.empty);
-        _purseCategoryStatus(PurseCategoryEnum.success);
-      } else if (response.statusCode == 409) {
-        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
-        _purseCategoryStatus(PurseCategoryEnum.error);
-      }
-      return response.body;
-    } catch (error) {
-      _purseCategoryStatus(PurseCategoryEnum.error);
-      Get.snackbar(
-          'Error',
-          error.toString() ==
-                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
-              ? 'No internet connection!'
-              : error.toString());
-      if (kDebugMode) {
-        print('Purse Category listt Error ${error.toString()}');
-      }
-    }
-  }
+  PurseListModel ?purseListModel;
+  // PurseExpensesResponse? purseExpensesResponse;
+  bool? onLoadingPurseListLoadingState;
+  bool? onLoadPurseListErrorState;
   ///OG Dev
-  Future<PurseListModel> purseList()async{
+  Future<void> purseList()async{
     final token = await SecureStorage.readUserToken();
-
-    PurseListModel ?purseListModel;
+    onLoadingPurseListLoadingState = true;
+    onLoadPurseListErrorState = false;
+    update();
     try{
       var response = await http.get(
         Uri.parse('http://fagopay-coreapi-development.herokuapp.com/api/v1/pulse'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token"
-        },
+        headers: {"Content-Type": "application/json", "Authorization": "Bearer $token"},
       );
       purseListModel = PurseListModel.fromJson(jsonDecode(response.body));
-      print('purselist model = $purseListModel');
+      // final response1 = await NetworkProvider().call(path: "/v1/pulseexpenses", method: RequestMethod.get);
+      // final payload = PurseExpensesResponse.fromJson(response1?.data);
+        // purseExpensesResponse = payload;
+        onLoadingPurseListLoadingState = false;
+        onLoadPurseListErrorState = false;
+        update();
     }catch (error) {
-      Get.snackbar(
-          'Error',
-          error.toString() ==
-              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
-              ? 'No internet connection!'
-              : error.toString());
-      if (kDebugMode) {
-        print('Purse Category listt Error ${error.toString()}');
+        onLoadingPurseListLoadingState = false;
+        onLoadPurseListErrorState = true;
+        update();
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        if (kDebugMode) {
+          print('Purse Category listt Error ${error.toString()}');
+        }
+    }
+  }
+
+  Future<void> deletePurse({required String purseId, required BuildContext context}) async {
+    progressIndicator(context);
+    try {
+      final response = await NetworkProvider().call(path: "/v1/pulse/$purseId", method: RequestMethod.delete);
+      if(response?.statusCode == 200 || response?.statusCode == 201){
+        await purseList();
+        Get.back();
+        Get.back();
+        Get.snackbar("Success", response?.data["data"]["message"] ?? "Purse has been deleted successfully");
       }
-
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (error) {
+      Get.back();
+      Get.snackbar('Error', error.toString());
+      throw error.toString();
     }
-    return purseListModel!;
-  }
-  addDefaultItems(int amount){
-    for (var element in _purseCategoryList.value) {
-      _categoryItemsList.value.add(CategoryItems(categoryId: element.id, amount: amount));
-    }
   }
 
-  Future createPurse(Map data) async {
-    final token = await SecureStorage.readUserToken();
+  Future <CreatePurseResponse> createPurse(Map data, BuildContext context) async {
+    progressIndicator(context);
     try {
       _createPurseStatus(CreatePurseEnum.loading);
-      var response = await http.post(
-        Uri.parse(BaseAPI.createPurse),
-        body: jsonEncode(data),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token"
-        },
-      );
-      var res = jsonDecode(response.body);
-      print(response.body);
-      if ((response.statusCode == 200)) {
+      final response = await NetworkProvider().call(path: "/v1/pulse", method: RequestMethod.post, body: data);
+      if ((response?.statusCode == 200 || response?.statusCode == 201)) {
+        CreatePurseResponse.fromJson(response?.data);
+        update();
+        Get.to(()=>Dashboard());
         _createPurseStatus(CreatePurseEnum.success);
        // Get.snackbar('Success', 'Next of kin created successfully!');
-      }else if((response.statusCode == 409)){
-      Get.snackbar('Error', '${res['data']['error']}',colorText: white,backgroundColor: fagoSecondaryColor);
+      }else if((response?.statusCode == 409)){
+        update();
+        Get.to(()=>Dashboard());
+      Get.snackbar('Error', '${response?.data['data']['error']}',colorText: white,backgroundColor: fagoSecondaryColor);
       }
     //  print('here');
-      return response.body;
-    } catch (error) {
+      return CreatePurseResponse.fromJson(response?.data);
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      _createPurseStatus(CreatePurseEnum.error);
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
       _createPurseStatus(CreatePurseEnum.error);
       Get.snackbar(
           'Error',
-          error.toString() ==
-                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+          err.toString() ==
+              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
-      if (kDebugMode) {
-        print('creating purse Error ${error.toString()}');
+              : err.toString());
+      throw err.toString();
+    }
+  }
+
+  Future <RecordPurseExpensesResponse> recordExpenses(Map data, BuildContext context) async {
+    Get.back();
+    progressIndicator(context);
+    try {
+      final response = await NetworkProvider().call(path: "/v1/pulseexpenses", method: RequestMethod.post, body: data);
+      if ((response?.statusCode == 200 || response?.statusCode == 201)) {
+        RecordPurseExpensesResponse.fromJson(response?.data);
+        await purseList();
+        Get.back();
+        update();
+      }else if((response?.statusCode == 409)){
+        Get.back();
+        update();
+        Get.snackbar('Error', '${response?.data['data']['error']}',colorText: white,backgroundColor: fagoSecondaryColor);
       }
+      return RecordPurseExpensesResponse.fromJson(response?.data);
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
+      Get.snackbar(
+          'Error',
+          err.toString() ==
+              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+              ? 'No internet connection!'
+              : err.toString());
+      throw err.toString();
+    }
+  }
+
+  Future <PurseExpensesResponse> getPurseExpense() async {
+    try {
+      final response = await NetworkProvider().call(path: "/v1/pulseexpenses", method: RequestMethod.get);
+      final payload = PurseExpensesResponse.fromJson(response?.data);
+      return  payload;
+    }on dio.DioError catch (err) {
+      onLoadingPurseListLoadingState = false;
+      onLoadPurseListErrorState = true;
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+        onLoadingPurseListLoadingState = false;
+        onLoadPurseListErrorState = true;
+        update();
+        Get.snackbar(
+            'Error',
+            err.toString() ==
+                "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+                ? 'No internet connection!'
+                : err.toString());
+      throw err.toString();
+    }
+  }
+  // final _purseController = Get.put(PurseController());
+  Future <CreatePurseResponse> editPurse(Map data, BuildContext context, String purseId) async {
+    progressIndicator(context);
+    try {
+      _createPurseStatus(CreatePurseEnum.loading);
+      final response = await NetworkProvider().call(path: "/v1/pulse/$purseId", method: RequestMethod.delete).then((value) async {
+        final response = await NetworkProvider().call(path: "/v1/pulse", method: RequestMethod.post, body: data);
+        if ((response?.statusCode == 200 || response?.statusCode == 201)) {
+          CreatePurseResponse.fromJson(response?.data);
+          await purseList();
+          // Get.back();
+          Get.back();
+          update();
+          _createPurseStatus(CreatePurseEnum.success);
+          // Get.snackbar('Success', 'Next of kin created successfully!');
+        }else if((response?.statusCode == 409)){
+          Get.back();
+          update();
+          Get.snackbar('Error', '${response?.data['data']['error']}',colorText: white,backgroundColor: fagoSecondaryColor);
+        }
+      });
+      //  print('here');
+      return CreatePurseResponse.fromJson(response?.data);
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      _createPurseStatus(CreatePurseEnum.error);
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
+      _createPurseStatus(CreatePurseEnum.error);
+      // Get.snackbar(
+      //     'Error',
+      //     err.toString() ==
+      //         "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+      //         ? 'No internet connection!'
+      //         : err.toString());
+      throw err.toString();
     }
   }
 
@@ -251,60 +314,28 @@ class PurseController extends GetxController {
   }
 
   Future purseDurationlist(String id) async {
-    final token = await SecureStorage.readUserToken();
+    onPurseCategoryListLoadingState = true;
+    onPurseCategoryListErrorState = false;
+    update();
     try {
-      _purseCategoryStatus(PurseCategoryEnum.loading);
-      if (kDebugMode) {
-        print('getting purse duration...');
-      }
-      var response = await http.get(
-        Uri.parse(
-          "${BaseAPI.showPurse}$id",
-        ),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $token"
-        },
-      );
-
-      var json = jsonDecode(response.body);
-      if (kDebugMode) {
-        print("categoryDuration data ${response.body}");
-      }
-
-      // if (response.statusCode == 200) {
-      //   throw (json['message']);
-      // }
-
-      if (response.statusCode == 200) {
-        var list = List.from(json['data']['pulse_detail']['pulse_detail']);
-        var purseDurationlist =
-            list.map((e) => PulseDurationModel.fromJson(e)).toList();
-        if (kDebugMode) {
-          print("Duration lenght${purseDurationlist.length} request");
-          print(" Duration ${purseDurationlist.first} request");
-        }
-        _purseDurationList(purseDurationlist);
-        purseDurationlist.isNotEmpty
-            ? _purseCategoryStatus(PurseCategoryEnum.available)
-            : _purseCategoryStatus(PurseCategoryEnum.empty);
-        _purseCategoryStatus(PurseCategoryEnum.success);
-      } else if (response.statusCode == 409) {
-        Get.snackbar('Error',
-            'Go and verify your KYC in other to be able to perform transactions');
-        _purseCategoryStatus(PurseCategoryEnum.error);
-      }
-      return response.body;
+      final response = await NetworkProvider().call(path: "/v1/pulse/$id", method: RequestMethod.get);
+      final payload = PurseCategoryListResponse.fromJson(response?.data);
+      pulseCategoryList = payload.data?.pulseCategoryList;
+      onPurseCategoryListLoadingState = false;
+      onPurseCategoryListErrorState = false;
+      update();
     } catch (error) {
-      _purseCategoryStatus(PurseCategoryEnum.error);
-      Get.snackbar(
-          'Error',
-          error.toString() ==
-                  "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
-              ? 'No internet connection!'
-              : error.toString());
-      if (kDebugMode) {
-        print('Purse DurationList listt Error ${error.toString()}');
+      if (error.toString() == "KYC Not yet verified") {
+        pulseCategoryList = [];
+        onPurseCategoryListLoadingState = false;
+        onPurseCategoryListErrorState = false;
+        update();
+        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
+      }else{
+        onPurseCategoryListLoadingState = false;
+        onPurseCategoryListErrorState = true;
+        update();
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
       }
     }
   }

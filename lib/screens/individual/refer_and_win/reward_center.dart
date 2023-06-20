@@ -6,6 +6,7 @@ import 'package:fagopay/screens/constants/currency.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -77,9 +78,9 @@ class _ReferCenterState extends State<ReferCenter> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                             Row(
+                                             const Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: const[
+                                              children: [
                                                 AutoSizeText(
                                                   'Reward Balance',
                                                   style: TextStyle(
@@ -295,35 +296,40 @@ class _ReferCenterState extends State<ReferCenter> {
                                     SizedBox(
                                       height: 2.h,
                                     ),
-                                    Container(
-                                      height: 6.5.h,
-                                      width: 35.5.h,
-                                      decoration: BoxDecoration(
-                                          color: fagoSecondaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(36),
-                                          border: Border.all(
-                                              color: fagoSecondaryColor)),
-                                      alignment: Alignment.center,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const AutoSizeText(
-                                            'Invite your friends',
-                                            style: TextStyle(
-                                              fontFamily: "Work Sans",
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w600,
-                                              color: white,
+                                    GestureDetector(
+                                      onTap: (){
+                                        Share.share('${_userUcontroller.user?.firstName} invites you to FagoPay with this referral code ${_userUcontroller.user?.referalCode}');
+                                      },
+                                      child: Container(
+                                        height: 6.5.h,
+                                        width: 35.5.h,
+                                        decoration: BoxDecoration(
+                                            color: fagoSecondaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(36),
+                                            border: Border.all(
+                                                color: fagoSecondaryColor)),
+                                        alignment: Alignment.center,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const AutoSizeText(
+                                              'Invite your friends',
+                                              style: TextStyle(
+                                                fontFamily: "Work Sans",
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: white,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 2.h,
-                                          ),
-                                          SvgPicture.asset(
-                                              'assets/icons/invite_friends.svg'),
-                                        ],
+                                            SizedBox(
+                                              width: 2.h,
+                                            ),
+                                            SvgPicture.asset(
+                                                'assets/icons/invite_friends.svg'),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],

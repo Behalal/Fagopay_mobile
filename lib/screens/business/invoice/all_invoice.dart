@@ -1,16 +1,18 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:dio/dio.dart' as dio;
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:fagopay/models/invoice_model.dart';
+import 'package:fagopay/models/business_invoice_model.dart';
+import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
+import 'package:fagopay/screens/business/book_keeping/booking_keeping.dart';
 import 'package:fagopay/screens/business/invoice/components/custom_invoice_card.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:sizer/sizer.dart';
-
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/invoice_controller.dart';
-
 import '../../constants/colors.dart';
 import '../../constants/currency.dart';
 import '../../widgets/head_style_extra_pages.dart';
@@ -30,19 +32,65 @@ class AllInvoice extends StatefulWidget {
 class _AllInvoiceState extends State<AllInvoice> {
   final _invoiceController = Get.find<InvoiceController>();
   final _companyController = Get.find<CompanyController>();
+  List<InvoiceList> get unpaidInvoices {
+    return businessInvoiceResponse!.data!.invoiceList!
+        .where((unpaidInvoice) =>
+    unpaidInvoice.status == 'pending' ||
+        unpaidInvoice.status == 'unpaid')
+        .toList();
+  }
+
+  List<InvoiceList> get otherInvoices {
+    return businessInvoiceResponse!.data!.invoiceList!.where((unpaidInvoice) =>
+    unpaidInvoice.status != 'unpaid' &&
+        unpaidInvoice.status != 'pending' &&
+        unpaidInvoice.status != 'Paid')
+        .toList();
+  }
+
+  BusinessInvoiceResponse? businessInvoiceResponse;
+  bool? isLoadingInvoice;
+  bool? isLoadingInvoiceHasError;
+
+  Future<dio.Response<dynamic>?> getInvoice({required String companyId})async{
+    isLoadingInvoice = true;
+    isLoadingInvoiceHasError = false;
+    setState(() {});
+    try{
+      final response = await NetworkProvider().call(path: "/v1/businessinvoice/$companyId", method: RequestMethod.get);
+      businessInvoiceResponse = BusinessInvoiceResponse.fromJson(response?.data);
+      isLoadingInvoice = false;
+      isLoadingInvoiceHasError = false;
+      setState(() {});
+      return response;
+    }on dio.DioError catch (err) {
+      isLoadingInvoice = false;
+      isLoadingInvoiceHasError = true;
+      setState(() {});
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      isLoadingInvoice = false;
+      isLoadingInvoiceHasError = true;
+      setState(() {});
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
+    }
+  }
 
   bool allTab = true;
   bool unPaidTab = false;
   bool partPaidTab = false;
   bool recordFound = true;
-
+  bool isLoading = true;
   String? selectedFilter = '';
   int currentIndex = 0;
   late final PageController _controller = PageController(viewportFraction: 0.5);
 
   @override
   void initState() {
-    getBusinessInvoices();
+    getInvoice(companyId: _companyController.company!.id!);
     super.initState();
   }
 
@@ -54,13 +102,46 @@ class _AllInvoiceState extends State<AllInvoice> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: getBusinessInvoices,
-        child: Obx(
-          () => SingleChildScrollView(
+    List<BookKeepingModel> bookKeepingContent = [
+      BookKeepingModel(
+        accountType: " Total Invoice",
+        description: "Income",
+        balance: "${businessInvoiceResponse?.data?.totalInvoice ?? ""}",
+        imagePath: "assets/images/inflow.svg",
+      ),
+      // BookKeepingModel(
+      //   accountType: " Total Received",
+      //   description: "Expenses",
+      //   balance: "${businessInvoiceResponse?.data?.totalReceive ?? ""}",
+      //   imagePath: "assets/images/outflow.svg",
+      // ),
+      BookKeepingModel(
+        accountType: "Total Outstanding",
+        description: businessInvoiceResponse?.data == null ? "" "#0.0, retrieved" : 
+        "${businessInvoiceResponse!.data!.invoiceList?.where((e) => e.status == "Paid").toList().map((e) => double.parse(e.total.toString())).toList().reduce((a, b) => a+b)} retrieved",
+        balance: businessInvoiceResponse?.data == null ? "0.0" :
+        "${businessInvoiceResponse!.data!.invoiceList?.where((e) => e.status == "Paid").toList().map((e) => double.parse(e.total.toString())).toList().reduce((a, b) => a+b)}",
+        imagePath: "assets/images/total_credit.svg",
+      ),
+      // BookKeepingModel(
+      //   accountType: "Sales Account",
+      //   description: "Customer’s Debt",
+      //   balance: businessInvoiceResponse?.data == null ? "0.0" : "${businessInvoiceResponse!.data!.invoiceList!.map((e) => num.parse(e.total!)).toList().sumBy((element) => element) -
+      //       businessInvoiceResponse!.data!.invoiceList!.map((e) => num.parse(e.total!)).toList().sumBy((element) => element)}",
+      //   imagePath: "assets/images/total_debit.svg",
+      // ),
+    ];
+    return GetBuilder<InvoiceController>(
+      init: InvoiceController(),
+        builder: (controller){
+      return Scaffold(
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            getInvoice(companyId: _companyController.company!.id!);
+          },
+          child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,13 +248,12 @@ class _AllInvoiceState extends State<AllInvoice> {
                                             horizontal: 1.w, vertical: 1.h),
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           children: [
                                             SvgPicture.asset(
-                                                bookKeepingContent[i]
-                                                    .imagePath),
+                                                bookKeepingContent[i].imagePath),
                                             SizedBox(width: 1.w),
                                             // Container(
                                             //   height: 53,
@@ -188,19 +268,18 @@ class _AllInvoiceState extends State<AllInvoice> {
                                             SizedBox(
                                               child: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                MainAxisAlignment.start,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                                 children: [
                                                   AutoSizeText(
-                                                    bookKeepingContent[i]
-                                                        .accountType,
+                                                    bookKeepingContent[i].accountType,
                                                     style: const TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontSize: 12,
                                                       color: inactiveTab,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(height: 1.h),
@@ -210,14 +289,14 @@ class _AllInvoiceState extends State<AllInvoice> {
                                                         fontFamily: "Work Sans",
                                                         fontSize: 18,
                                                         color: (i == 1 ||
-                                                                i ==
-                                                                    (bookKeepingContent
-                                                                            .length -
-                                                                        1))
+                                                            i ==
+                                                                (bookKeepingContent
+                                                                    .length -
+                                                                    1))
                                                             ? fagoSecondaryColor
                                                             : inactiveTab,
                                                         fontWeight:
-                                                            FontWeight.w700),
+                                                        FontWeight.w700),
                                                   ),
                                                   SizedBox(height: 1.h),
                                                   AutoSizeText(
@@ -230,7 +309,7 @@ class _AllInvoiceState extends State<AllInvoice> {
                                                             ? fagoGreenColor
                                                             : inactiveTabWithOpacity30,
                                                         fontWeight:
-                                                            FontWeight.w600),
+                                                        FontWeight.w600),
                                                   ),
                                                 ],
                                               ),
@@ -256,8 +335,8 @@ class _AllInvoiceState extends State<AllInvoice> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
-                      salesContent.length,
-                      (index) => buildDot(index, context),
+                      bookKeepingContent.length,
+                          (index) => buildDot(index, context),
                     ),
                   ),
                   SizedBox(
@@ -305,7 +384,7 @@ class _AllInvoiceState extends State<AllInvoice> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color:
-                                    (allTab) ? fagoSecondaryColor : inactiveTab,
+                                (allTab) ? fagoSecondaryColor : inactiveTab,
                               ),
                             ),
                           ),
@@ -389,141 +468,122 @@ class _AllInvoiceState extends State<AllInvoice> {
                     height: 2.h,
                   ),
                   // Record Found
-                  recordFound && allTab
+                  recordFound && allTab ? Container(height: 45.h, padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    child: businessInvoiceResponse == null ||
+                        businessInvoiceResponse!.data!.invoiceList!.isEmpty &&
+                        isLoadingInvoice == true && isLoadingInvoiceHasError == false ?
+                    const Center(
+                      child: LoadingWidget(
+                        size: 20,
+                        color: fagoSecondaryColor,
+                      ),
+                    ) : businessInvoiceResponse != null ||
+                        businessInvoiceResponse!.data!.invoiceList!.isNotEmpty && isLoadingInvoice == false && isLoadingInvoiceHasError == false ?
+                    ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: businessInvoiceResponse!.data!.invoiceList!.length,
+                      itemBuilder: (context, index) => CustomInvoiceCard(
+                        customerName: businessInvoiceResponse!.data!.invoiceList![index].customer?.fullname ?? "",
+                        date: Jiffy.parse(businessInvoiceResponse!.data!.invoiceList![index].createdAt!.toString()).format(pattern: 'dd MMM yyyy'),
+                        total: businessInvoiceResponse!.data!.invoiceList![index].total!,
+                        status: businessInvoiceResponse!.data!.invoiceList![index].status!,
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => InvoiceDetails(invoiceId: businessInvoiceResponse!.data!.invoiceList![index].id!,),
+                            settings: RouteSettings(arguments: businessInvoiceResponse!.data!.invoiceList![index].id!,),
+                          ),
+                        ),
+                      ),
+                    ) :  const Center(
+                      child: LoadingWidget(
+                        size: 20,
+                        color: fagoSecondaryColor,
+                      ),
+                    ),
+                  ) : recordFound && unPaidTab
                       ? Container(
-                          height: 45.h,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 2.w, vertical: 1.h),
-                          decoration:
-                              const BoxDecoration(color: Colors.transparent),
-                          child: _invoiceController.invoices.isEmpty
-                              ? const Center(
-                                  child: AutoSizeText('No Invoice yet'),
-                                )
-                              : ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  physics:
-                                      const AlwaysScrollableScrollPhysics(),
-                                  itemCount: _invoiceController.invoices.length,
-                                  itemBuilder: (context, index) =>
-                                      CustomInvoiceCard(
-                                    customerName: _invoiceController
-                                        .invoices[index].customer!['fullname'],
-                                    date: Jiffy.parse(_invoiceController
-                                            .invoices[index].createdAt!)
-                                        .format(pattern: 'dd MMM yyyy'),
-                                    total: _invoiceController
-                                        .invoices[index].total!,
-                                    status: _invoiceController
-                                        .invoices[index].status!,
-                                    onPressed: () => Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const InvoiceDetails(),
-                                        settings: RouteSettings(
-                                          arguments: _invoiceController
-                                              .invoices[index].id!,
-                                        ),
-                                      ),
+                    height: 45.h,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 2.w, vertical: 1.h),
+                    decoration: const BoxDecoration(
+                        color: Colors.transparent),
+                    child: unpaidInvoices.isEmpty
+                        ? const Center(
+                      child: AutoSizeText('No Invoice yet'),
+                    )
+                        : ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics:
+                      const AlwaysScrollableScrollPhysics(),
+                      itemCount: unpaidInvoices.length,
+                      itemBuilder: (context, index) =>
+                          CustomInvoiceCard(
+                            customerName: unpaidInvoices[index]
+                                .customer!.fullname ?? "",
+                            date: Jiffy.parse(unpaidInvoices[index]
+                                .createdAt!.toString())
+                                .format(pattern: 'dd MMM yyyy'),
+                            total: unpaidInvoices[index].total!,
+                            status: unpaidInvoices[index].status!,
+                            onPressed: () =>
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                     InvoiceDetails(invoiceId: businessInvoiceResponse!.data!.invoiceList![index].id!,),
+                                    settings: RouteSettings(
+                                      arguments: unpaidInvoices[index].id!,
                                     ),
                                   ),
                                 ),
-                        )
-                      : recordFound && unPaidTab
-                          ? Container(
-                              height: 45.h,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 2.w, vertical: 1.h),
-                              decoration: const BoxDecoration(
-                                  color: Colors.transparent),
-                              child: _invoiceController.unpaidInvoices.isEmpty
-                                  ? const Center(
-                                      child: AutoSizeText('No Invoice yet'),
-                                    )
-                                  : ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      itemCount: _invoiceController
-                                          .unpaidInvoices.length,
-                                      itemBuilder: (context, index) =>
-                                          CustomInvoiceCard(
-                                        customerName: _invoiceController
-                                            .unpaidInvoices[index]
-                                            .customer!['fullname'],
-                                        date: Jiffy.parse(_invoiceController
-                                                .unpaidInvoices[index]
-                                                .createdAt!)
-                                            .format(pattern: 'dd MMM yyyy'),
-                                        total: _invoiceController
-                                            .unpaidInvoices[index].total!,
-                                        status: _invoiceController
-                                            .unpaidInvoices[index].status!,
-                                        onPressed: () =>
-                                            Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const InvoiceDetails(),
-                                            settings: RouteSettings(
-                                              arguments: _invoiceController
-                                                  .unpaidInvoices[index].id!,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                          ),
+                    ),
+                  )
+                      : Container(
+                    height: 45.h,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 2.w, vertical: 1.h),
+                    decoration: const BoxDecoration(
+                        color: Colors.transparent),
+                    child: otherInvoices.isEmpty
+                        ? const Center(
+                      child: AutoSizeText('No Invoice yet'),
+                    )
+                        : ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics:
+                      const AlwaysScrollableScrollPhysics(),
+                      itemCount: otherInvoices.length,
+                      itemBuilder: (context, index) =>
+                          CustomInvoiceCard(
+                            customerName: otherInvoices[index]
+                                .customer!.fullname ?? "",
+                            date: Jiffy.parse(otherInvoices[index]
+                                .createdAt!.toString())
+                                .format(pattern: 'dd MMM yyyy'),
+                            total: otherInvoices[index].total!,
+                            status: otherInvoices[index].status!,
+                            onPressed: () =>
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                     InvoiceDetails(invoiceId: businessInvoiceResponse!.data!.invoiceList![index].id!),
+                                    settings: RouteSettings(
+                                      arguments: otherInvoices[index].id!,
                                     ),
-                            )
-                          : Container(
-                              height: 45.h,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 2.w, vertical: 1.h),
-                              decoration: const BoxDecoration(
-                                  color: Colors.transparent),
-                              child: _invoiceController.otherInvoices.isEmpty
-                                  ? const Center(
-                                      child: AutoSizeText('No Invoice yet'),
-                                    )
-                                  : ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const AlwaysScrollableScrollPhysics(),
-                                      itemCount: _invoiceController
-                                          .otherInvoices.length,
-                                      itemBuilder: (context, index) =>
-                                          CustomInvoiceCard(
-                                        customerName: _invoiceController
-                                            .otherInvoices[index]
-                                            .customer!['fullname'],
-                                        date: Jiffy.parse(_invoiceController
-                                                .otherInvoices[index]
-                                                .createdAt!)
-                                            .format(pattern: 'dd MMM yyyy'),
-                                        total: _invoiceController
-                                            .otherInvoices[index].total!,
-                                        status: _invoiceController
-                                            .otherInvoices[index].status!,
-                                        onPressed: () =>
-                                            Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const InvoiceDetails(),
-                                            settings: RouteSettings(
-                                              arguments: _invoiceController
-                                                  .otherInvoices[index].id!,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                            ),
+                                  ),
+                                ),
+                          ),
+                    ),
+                  ),
                   // No record Found
                   if (!recordFound)
                     const NoRecordFound(
-                      recordDescription:
-                          'Create invoice now and share to your customers to get paid easily.',
+                      recordDescription: 'Create invoice now and share to your customers to get paid easily.',
                       recordRoute: AddInvoice(),
                       recordText: 'Invoice',
                     )
@@ -532,9 +592,11 @@ class _AllInvoiceState extends State<AllInvoice> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
+
+
 
   Container buildDot(int index, BuildContext context) {
     return Container(
@@ -550,14 +612,38 @@ class _AllInvoiceState extends State<AllInvoice> {
     );
   }
 
-  Future<void> getBusinessInvoices() async {
-    final companyId = _companyController.company!.id!;
-    final response = await _invoiceController.getInvoices(companyId);
-    final resBody = response['data']['Invoice_List'];
-    final returnedInvoices =
-        resBody.map<Invoice>((invoice) => Invoice.fromJson(invoice)).toList();
-    setState(() {
-      _invoiceController.invoices = returnedInvoices;
-    });
-  }
+  // Future<void> getBusinessInvoices() async {
+  //   final companyId = _companyController.company!.id!;
+  //   log(companyId.toString());
+  //   final response = await _invoiceController.getInvoices(companyId);
+  //   final resBody = response['data']['Invoice_List'];
+  //   final returnedInvoices =
+  //       resBody.map<Invoice>((invoice) => Invoice.fromJson(invoice)).toList();
+  //   setState(() {
+  //   //  isLoading = false;
+  //     _invoiceController.invoices = returnedInvoices;
+  //   });
+  // }
 }
+//_invoiceController.invoices.isEmpty
+//                               ? const Center(
+//                                   child: AutoSizeText('No Invoice yet'),
+//                                 )
+//                               : ListView.builder(
+//                                   padding: EdgeInsets.zero,
+//                                   shrinkWrap: true,
+//                                   physics: const AlwaysScrollableScrollPhysics(),
+//                                   itemCount: _invoiceController.invoices.length,
+//                                   itemBuilder: (context, index) => CustomInvoiceCard(
+//                                     customerName: _invoiceController.invoices[index].customer!['fullname'],
+//                                     date: Jiffy.parse(_invoiceController.invoices[index].createdAt!).format(pattern: 'dd MMM yyyy'),
+//                                     total: _invoiceController.invoices[index].total!,
+//                                     status: _invoiceController.invoices[index].status!,
+//                                     onPressed: () => Navigator.of(context).push(
+//                                       MaterialPageRoute(
+//                                         builder: (context) => const InvoiceDetails(),
+//                                         settings: RouteSettings(arguments: _invoiceController.invoices[index].id!,),
+//                                       ),
+//                                     ),
+//                                   ),
+//                                 ),

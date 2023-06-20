@@ -44,13 +44,13 @@ class CustomInvoiceCard extends StatelessWidget {
                           backgroundColor: fagoSecondaryColorWithOpacity10,
                           child: Image.asset(
                             "assets/images/stickynote.png",
-                            color: status == 'paid'
+                            color: status == 'Paid'
                                 ? inactiveTabWithOpacity30
                                 : null,
                           ),
                         ),
                         SizedBox(
-                          width: 2.w,
+                          width: 1.w,
                         ),
                         SizedBox(
                           width: 50.w,
@@ -63,7 +63,7 @@ class CustomInvoiceCard extends StatelessWidget {
                                   style: TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 14,
-                                      color: status == 'paid'
+                                      color: status == 'Paid'
                                           ? inactiveTabWithOpacity30
                                           : inactiveTab,
                                       fontWeight: FontWeight.w600),
@@ -79,7 +79,7 @@ class CustomInvoiceCard extends StatelessWidget {
                                   style: TextStyle(
                                       fontFamily: "Work Sans",
                                       fontSize: 12,
-                                      color: status == 'paid'
+                                      color: status == 'Paid'
                                           ? inactiveTabWithOpacity30
                                           : inactiveTab,
                                       fontWeight: FontWeight.w500),
@@ -94,11 +94,11 @@ class CustomInvoiceCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              if (status == 'paid')
+              if (status == 'Paid')
                 SizedBox(
-                    width: 10.w,
+                    width: 8.w,
                     child: Image.asset("assets/images/paidBanner.png")),
-              if (status == 'paid') SizedBox(width: 10.w),
+              if (status == 'Paid') SizedBox(width: 2.w),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -109,7 +109,7 @@ class CustomInvoiceCard extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: "Work Sans",
                         fontSize: 12,
-                        color: (status == 'paid')
+                        color: (status == 'Paid')
                             ? fagoGreenColorWithOpacity17
                             : fagoSecondaryColor,
                         fontWeight: FontWeight.w700),
@@ -121,7 +121,7 @@ class CustomInvoiceCard extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(horizontal: 2.w, vertical: .5.h),
                     decoration: BoxDecoration(
-                      color: (status == 'paid')
+                      color: (status == 'Paid')
                           ? fagoGreenColorWithOpacity17
                           : fagoSecondaryColorWithOpacity10,
                       borderRadius: const BorderRadius.all(
@@ -129,12 +129,12 @@ class CustomInvoiceCard extends StatelessWidget {
                       ),
                     ),
                     child: AutoSizeText(
-                      status == 'paid' ? "Paid" : "Unpaid",
+                      status == 'Paid' ? "Paid" : "Unpaid",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Work Sans",
                           fontSize: 8,
-                          color: status == 'paid'
+                          color: status == 'Paid'
                               ? inactiveTabWithOpacity30
                               : fagoGreenColor,
                           fontWeight: FontWeight.w400),

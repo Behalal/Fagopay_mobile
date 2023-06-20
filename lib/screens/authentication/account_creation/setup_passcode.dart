@@ -2,7 +2,6 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
@@ -166,44 +165,10 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                         if (_registrationController.passCode.text.isEmpty ||
                             _registrationController
                                 .passCodeConfirm.text.isEmpty) {
-                          // SweetAlertV2.show(context,
-                          //     title: "Kindly enter your password",
-                          //     style: SweetAlertV2Style.error,
-                          //     titleStyle: const TextStyle(
-                          //       fontFamily: "Work Sans",
-                          //       fontSize: 10,
-                          //       fontWeight: FontWeight.w400,
-                          //     ));
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //   const SnackBar(
-                          //     content: Text('Kindly enter your password'),
-                          //   ),
-                          // );
-                          Fluttertoast.showToast(
-                            msg: "Kindly enter your password",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                          Get.snackbar("Error","Kindly enter your password");
                         } else if (_registrationController.passCode.text !=
                             _registrationController.passCodeConfirm.text) {
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //   const SnackBar(
-                          //     content: Text('Passcode does not match'),
-                          //   ),
-                          // );
-                          Fluttertoast.showToast(
-                            msg: "Passcode does not match",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
+                          Get.snackbar("Error","Passcode does not match");
                         } else {
                           setState(() {
                             _isLoading = true;
@@ -260,20 +225,7 @@ class _SetupPassCodeState extends State<SetupPassCode> {
         });
       });
       if ((!mounted)) return;
-      Fluttertoast.showToast(
-        msg: "Pin successfully set",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Pin successfully set'),
-      //   ),
-      // );
+      Get.snackbar("Success","Pin successfully set");
     }
     // Fluttertoast.showToast(
     //   msg: "Error setting up Passcode!",

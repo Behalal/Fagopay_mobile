@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class SupplierExpenseHistoryCard extends StatelessWidget {
-  final String supplierName, note, expenseDate;
+  final String supplierName, note, expenseDate, categoryName, amount;
 
   const SupplierExpenseHistoryCard(
       {super.key,
       required this.supplierName,
       required this.note,
-      required this.expenseDate});
+      required this.expenseDate, required this.categoryName, required this.amount});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SupplierExpenseHistoryCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 1.h),
       width: 90.w,
       child: Row(
-        // mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
@@ -70,6 +70,36 @@ class SupplierExpenseHistoryCard extends StatelessWidget {
                     fontWeight: FontWeight.w400),
               ),
             ],
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                AutoSizeText(
+                  'NGN ${double.parse(amount).toStringAsFixed(1)}',
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 10,
+                      color: fagoSecondaryColor,
+                      fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 0.5.h,
+                ),
+                AutoSizeText(
+                  categoryName,
+                  textAlign: TextAlign.right, maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 12,
+                      color: inactiveTab,
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
           ),
         ],
       ),

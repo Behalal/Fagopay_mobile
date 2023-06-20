@@ -1,53 +1,35 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:dio/dio.dart'as dio;
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/sales_model.dart';
+import '../models/sales_response_model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
 
 class SalesController extends GetxController {
-  final Rx<List<Sales>> _sales = Rx([]);
-
-  List<Sales> get sales {
-    return [..._sales.value];
-  }
-
-  set sales(List<Sales> sales) {
-    _sales(sales);
-  }
-
-  Sales findSaleById(String id) {
-    return sales.firstWhere((sale) => sale.id == id);
-  }
-
-  void filterSales(String value) {
-    sales.where((sale) => sale.paymentStatus == value).toList();
-    update();
-  }
+  // final Rx<List<Sales>> _sales = Rx([]);
+  //
+  // List<Sales> get sales {
+  //   return [..._sales.value];
+  // }
+  //
+  // set sales(List<Sales> sales) {
+  //   _sales(sales);
+  // }
+  //
+  // Sales findSaleById(String id) {
+  //   return sales.firstWhere((sale) => sale.id == id);
+  // }
 
   TextEditingController salesAmountController = TextEditingController();
   TextEditingController amountPaidController = TextEditingController();
   TextEditingController salesDescriptionController = TextEditingController();
-
-  Future<dynamic> getBusinessSales(String companyId) async {
-    final token = await SecureStorage.readUserToken();
-    try {
-      final responseData = await NetworkHelper.getRequest(
-        url: "${BaseAPI.businessSalesPath}/$companyId",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token",
-        },
-      );
-      return responseData;
-    } catch (e) {
-      log(e.toString());
-    }
-  }
 
   Future<dynamic> createBusinessSales(
       {required String companyId,

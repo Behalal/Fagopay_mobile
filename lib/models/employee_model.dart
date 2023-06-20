@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:fagopay/models/company_model.dart';
+import 'package:fagopay/models/customer_model.dart';
 
 class Employee {
   String? id;

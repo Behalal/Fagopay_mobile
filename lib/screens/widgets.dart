@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
@@ -94,9 +94,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 1.5.h,
-                      ),
+                      SizedBox(height: 1.5.h,),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
                         child: Container(
@@ -153,52 +151,17 @@ class _PinCodeModalState extends State<PinCodeModal> {
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
                         child: GestureDetector(
                             onTap: () async {
-                              if (pincontroller.text.length != 4 ||
-                                  pincontroller.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                  msg: "Kindly enter your pin",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
+                              if (pincontroller.text.length != 4 || pincontroller.text.isEmpty) {
+                                Get.snackbar("Error","Kindly enter your pin");
                                 return;
                               }
-                              if (_userController.userAccountDetails!.balance! <
-                                      1 ||
-                                  _userController
-                                          .userAccountDetails!.balance! ==
-                                      0) {
-                                Fluttertoast.showToast(
-                                  msg: "Insufficient Wallet Balance",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
+                              if (_userController.userAccountDetails!.balance! < 1 || _userController.userAccountDetails!.balance! == 0) {
+                                Get.snackbar("Error","Insufficient Wallet Balance");
                                 return;
                               }
-                              if (_userController.switchedAccountType == 2 &&
-                                      double.parse(_companyController.company!
-                                              .accountDetails!.balance!) <
-                                          1 ||
-                                  _userController.switchedAccountType == 2 &&
-                                      double.parse(_companyController.company!
-                                              .accountDetails!.balance!) ==
-                                          0) {
-                                Fluttertoast.showToast(
-                                  msg: "Insufficient Wallet Balance",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
+                              if (_userController.switchedAccountType == 2 && int.parse(_companyController.company!.account!.balance.toString()) < 1 ||
+                                  _userController.switchedAccountType == 2 && int.parse(_companyController.company!.account!.balance.toString()) == 0) {
+                                Get.snackbar("Error","Insufficient Wallet Balance");
                                 return;
                               }
                               setState(() {
@@ -213,8 +176,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                 return;
                               }
                               if (widget.action == "buy_light") {
-                                await buyElectricity(
-                                    context, pincontroller.text);
+                                await buyElectricity(context, pincontroller.text);
                                 return;
                               }
                               if (widget.action == "buy_internet") {
@@ -222,8 +184,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                 return;
                               }
                               if (widget.action == "tv") {
-                                await buyCableSubscription(
-                                    context, pincontroller.text);
+                                await buyCableSubscription(context, pincontroller.text);
                                 return;
                               }
                               if (widget.action == "bank_transfer") {
@@ -231,8 +192,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
                                 return;
                               }
                               if (widget.action == "fago_to_fago") {
-                                await fagoToFagoTransfer(
-                                    context, pincontroller.text);
+                                await fagoToFagoTransfer(context, pincontroller.text);
                                 return;
                               }
                             },
@@ -275,182 +235,94 @@ class _PinCodeModalState extends State<PinCodeModal> {
 
   Future<void> buyAirtime(BuildContext context, String pinCode) async {
     final response = await _billController.buyAirtime(pinCode);
-    final jsonBody = jsonDecode(response.body);
-    // if (!mounted) return;
-    if (response.statusCode != 200) {
+    final jsonBody = response?.data;
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('${jsonBody['data']['error']}'),
-      //   ),
-      // );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
       });
-
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Airtime Purchase Successful'),
-      //   ),
-      // );
       if (!mounted) return;
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (BuildContext context) => TransactionSuccessful(
           amount: buyAirtimeFields.amount,
           number: buyAirtimeFields.getphone,
-          action: 'airtime',
+          action: 'airtime', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+        widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+        widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
         ),
       ));
-      Fluttertoast.showToast(
-        msg: "Airtime Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Airtime Purchase Successful");
     }
   }
 
   Future<void> buyData(BuildContext context, String pinCode) async {
     final response = await _billController.buyData(pinCode);
-    final jsonBody = jsonDecode(response.body);
-    if (response.statusCode != 200) {
+    final jsonBody = response?.data;
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('${jsonBody['data']['error']}'),
-      //   ),
-      // );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
       });
-
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Databundle Purchase Successful'),
-      //   ),
-      // );
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
             amount: buyDataFields.amount,
             number: buyDataFields.getphone,
-            action: 'data',
+            action: 'data', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+          widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+          widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
           ),
         ),
       );
-      Fluttertoast.showToast(
-        msg: "Databundle Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","DataBundle Purchase Successful");
     }
   }
 
   Future<void> buyElectricity(BuildContext context, String pinCode) async {
     final response = await _billController.buyElectricity(pinCode);
-    final jsonBody = jsonDecode(response.body);
-    if (response.statusCode != 200) {
+    final jsonBody = response?.data;
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('${jsonBody['data']['error']}'),
-      //   ),
-      // );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
       });
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Electricity Purchase Successful'),
-      //   ),
-      // );
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
             amount: buyElectricityFields.amount,
             number: buyElectricityFields.getphone,
-            action: 'electricity',
+            action: 'electricity', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+          widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+          widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
           ),
         ),
       );
-      Fluttertoast.showToast(
-        msg: "Electricity Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Electricity Purchase Successful");
     }
   }
 
   Future<void> buyInternet(BuildContext context, String pinCode) async {
     final response = await _billController.buyInternet(pinCode);
-    final jsonBody = jsonDecode(response.body);
-    if (response.statusCode != 200) {
+    final jsonBody = response?.data;
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('${jsonBody['data']['error']}'),
-      //   ),
-      // );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
@@ -467,94 +339,56 @@ class _PinCodeModalState extends State<PinCodeModal> {
           builder: (BuildContext context) => TransactionSuccessful(
             amount: buyInternetFields.amount,
             number: buyInternetFields.billersCode,
-            action: 'Internet Subscription',
+            action: 'Internet Subscription', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+          widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+          widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
           ),
         ),
       );
-      Fluttertoast.showToast(
-        msg: "Internet Subscription Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Internet Subscription Purchase Successful");
     }
   }
 
   Future<void> buyCableSubscription(
       BuildContext context, String pinCode) async {
     final response = await _billController.buyCableSubscription(pinCode);
-    final jsonBody = jsonDecode(response.body);
-    if (response.statusCode != 200) {
+    final jsonBody = response?.data;
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text('${jsonBody['data']['error']}'),
-      //   ),
-      // );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
       });
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   const SnackBar(
-      //     content: Text('Cable Subscription Purchase Successful'),
-      //   ),
-      // );
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
             amount: buyTvCableFields.amount,
             number: buyTvCableFields.billersCode,
-            action: 'Cable Subscription',
+            action: 'Cable Subscription', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+          widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+          widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
           ),
         ),
       );
-      Fluttertoast.showToast(
-        msg: "Cable Subscription Purchase Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Cable Subscription Purchase Successful");
     }
   }
 
   Future<void> bankTransfer(BuildContext context, String pinCode) async {
     final response = await _transactionController.bankTransfer(pinCode);
-    final jsonBody = jsonDecode(response.body);
+    final jsonBody = response?.data;
     if (kDebugMode) {
       print(jsonBody);
     }
-    if (response.statusCode != 200) {
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
@@ -565,64 +399,43 @@ class _PinCodeModalState extends State<PinCodeModal> {
           builder: (BuildContext context) => TransactionSuccessful(
             amount: bankTransferFields.amount,
             number: bankTransferFields.accountNumber,
-            action: 'Bank Transfer',
+            action: 'Bank Transfer', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+          widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+          widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
           ),
         ),
       );
-      Fluttertoast.showToast(
-        msg: "Bank Transfer Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Bank Transfer Successful");
     }
   }
 
   Future<void> fagoToFagoTransfer(BuildContext context, String pinCode) async {
     final response = await _transactionController.fagoToFagoTransfer(pinCode);
-    final jsonBody = jsonDecode(response.body);
+    final jsonBody = response?.data;
     if (kDebugMode) {
       print(jsonBody);
     }
-    if (response.statusCode != 200) {
+    if (response?.statusCode != 200) {
       setState(() {
         Navigator.of(context).pop();
       });
-      Fluttertoast.showToast(
-        msg: "${jsonBody['data']['error']}",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     } else {
       setState(() {
         _isLoading = "1";
       });
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) => TransactionSuccessful(
             amount: bankTransferFields.amount,
             number: bankTransferFields.phoneNumber,
-            action: 'Fago to Fago Transfer',
+            action: 'Fago to Fago Transfer', transactionType: widget.action == "buy_airtime" ? "Airtime Purchase" : widget.action == "buy_data" ? "DataBundle Purchase" :
+          widget.action == "buy_light" ? "Electricity Bill Purchase" : widget.action == "buy_internet" ? "Internet Purchase" : widget.action == "tv" ? "Cable Subscription" :
+          widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
           ),
         ),
       );
-      Fluttertoast.showToast(
-        msg: "Transfer Successful",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Success","Transfer Successful");
     }
   }
 }

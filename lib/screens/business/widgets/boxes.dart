@@ -15,6 +15,7 @@ class CustomerBox extends StatelessWidget {
   Color? boxBackground;
   Color? textImageColor;
   bool onlyText;
+  void Function()? onTap;
 
   CustomerBox({
     Key? key,
@@ -27,6 +28,7 @@ class CustomerBox extends StatelessWidget {
     this.boxBackground,
     this.textImageColor,
     this.onlyText = false,
+    this.onTap
   }) : super(key: key);
 
   @override
@@ -83,7 +85,7 @@ class CustomerBox extends StatelessWidget {
                     firstBoxMainValue,
                     style: TextStyle(
                         fontFamily: "Work Sans",
-                        fontSize: 32,
+                        fontSize: 28,
                         color: (textImageColor != null)
                             ? textImageColor
                             : fagoSecondaryColor,
@@ -107,78 +109,43 @@ class CustomerBox extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          width: 43.w,
-          padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.h),
-          decoration: BoxDecoration(
-            color: (boxBackground != null)
-                ? boxBackground
-                : fagoSecondaryColorWithOpacity10,
-          ),
-          child: Column(
-            mainAxisAlignment:
-                (onlyText) ? MainAxisAlignment.center : MainAxisAlignment.start,
-            crossAxisAlignment: (onlyText)
-                ? CrossAxisAlignment.center
-                : CrossAxisAlignment.start,
-            children: [
-              if (secondBoxImage != null)
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: 43.w,
+            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.2.h),
+            decoration: const BoxDecoration(
+              color:fagoSecondaryColorWithOpacity10,
+            ),
+            child:  Column(
+              mainAxisAlignment: MainAxisAlignment.center ,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
                 SizedBox(
                   height: 4.h,
-                  child: CircleAvatar(
+                  child: const CircleAvatar(
                     backgroundColor: white,
-                    child: SvgPicture.asset(
-                      secondBoxImage!,
-                      color: textImageColor,
-                      height: 3.h,
-                      width: 3.w,
-                    ),
+                    child: Icon(Icons.add, color: fagoSecondaryColor,),
                   ),
-                )
-              else
-                SizedBox(
-                  height: 1.5.h,
                 ),
-              SizedBox(
-                height: 1.h,
-              ),
-              Row(
-                mainAxisAlignment: (onlyText)
-                    ? MainAxisAlignment.center
-                    : MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(width: 1.5.w),
-                  AutoSizeText(
-                    secondBoxMainValue,
-                    textAlign: TextAlign.justify,
+                SizedBox(
+                  height: 6.h,
+                ),
+                FittedBox(
+                  child: AutoSizeText(
+                    secondBoxDescription,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         fontFamily: "Work Sans",
-                        fontSize: 32,
+                        fontSize: 12,
                         color: (textImageColor != null)
                             ? textImageColor
-                            : fagoSecondaryColor,
-                        fontWeight: FontWeight.w700),
+                            : inactiveTab,
+                        fontWeight: FontWeight.w500),
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 1.5.h,
-              ),
-              FittedBox(
-                child: AutoSizeText(
-                  secondBoxDescription,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "Work Sans",
-                      fontSize: 12,
-                      color: (textImageColor != null)
-                          ? textImageColor
-                          : inactiveTab,
-                      fontWeight: FontWeight.w500),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         )
       ],

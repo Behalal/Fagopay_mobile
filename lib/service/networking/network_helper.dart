@@ -18,7 +18,7 @@ class NetworkHelper {
     }
   }
 
-  static Future<dynamic> postRequest(
+  static Future<http.Response> postRequest(
       {required String url,
       Map<String, String>? headers,
       required Object body}) async {
@@ -30,7 +30,7 @@ class NetworkHelper {
     return response;
   }
 
-  static Future<dynamic> putRequest(
+  static Future<http.Response> putRequest(
       {required String url,
       Map<String, String>? headers,
       required Object body}) async {

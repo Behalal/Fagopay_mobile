@@ -9,7 +9,7 @@ import '../constants/currency.dart';
 
 class AccountDetails extends StatefulWidget {
   final String action;
-  final AccountDetail accountDetails;
+  final dynamic accountDetails;
 
   const AccountDetails({
     Key? key,
@@ -79,7 +79,7 @@ class _AccountDetailsState extends State<AccountDetails> {
                   SizedBox(height: 1.h),
                   AutoSizeText(
                     (widget.accountDetails.accountNumber != "")
-                        ? "$currencySymbol 300,000.00"
+                        ? "$currencySymbol ${double.parse("1000000.00")-double.parse(widget.accountDetails.balance.toString())}"
                         : "${currencySymbol}0.00",
                     style: const TextStyle(
                       fontFamily: "Work Sans",

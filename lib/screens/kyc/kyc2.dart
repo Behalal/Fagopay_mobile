@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../models/kyc_model.dart';
@@ -315,20 +315,7 @@ class BvnVerificationState extends State<BvnVerification> {
                   child: GestureDetector(
                     onTap: (() {
                       if (bvnValue.text.isEmpty) {
-                        Fluttertoast.showToast(
-                          msg: "Kindly enter your BVN",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.TOP,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(
-                        //     content: Text('Kindly enter your BVN'),
-                        //   ),
-                        // );
+                        Get.snackbar("Error","Kindly enter your BVN");
                       } else {
                         KycDetailsValue.setbvn = bvnValue.text;
                         if (otpSelected) {

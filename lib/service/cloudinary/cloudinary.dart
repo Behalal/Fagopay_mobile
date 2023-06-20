@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class Cloudinary {
   static final cloudinaryUsers =
@@ -20,15 +19,7 @@ class Cloudinary {
       );
       imageResponse = response.secureUrl;
     } on CloudinaryException {
-      Fluttertoast.showToast(
-        msg: "Failed to upload Image",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      Get.snackbar("Error","Failed to upload Image");
     }
     return imageResponse;
   }

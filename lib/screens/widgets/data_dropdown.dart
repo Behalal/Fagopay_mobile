@@ -51,18 +51,18 @@ class _DataDropDownState extends State<DataDropDown> {
           ),
         ),
         SizedBox(
-          height: 2.h,
+          height: 1.h,
         ),
         Container(
           width: 90.w,
           decoration: BoxDecoration(
-              border: Border.all(color: fagoSecondaryColor),
+              border: Border.all(color: textBoxBorderColor,),
               borderRadius: const BorderRadius.all(Radius.circular(5))),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
             child: DropdownButton(
               underline: const SizedBox(),
-              isExpanded: true,
+              isExpanded: true, icon: const Icon(Icons.keyboard_arrow_down_outlined, color: stepsColor,),
               alignment: AlignmentDirectional.centerStart,
               value: selectedValue,
               items: dropdownItems,

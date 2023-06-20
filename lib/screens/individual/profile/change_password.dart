@@ -1,22 +1,15 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/edit_controller/profile_controller.dart';
 import 'package:fagopay/controllers/login_controller.dart';
-import 'package:fagopay/functions/constant.dart';
-import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
-import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/head_style_extra_pages.dart';
+import 'package:fagopay/service/local/local_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sizer/sizer.dart';
-
-import '../../../controllers/registration_controller.dart';
 import '../../../functions/functions.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -32,8 +25,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final TextEditingController _otpController = TextEditingController();
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  final _loginController = Get.find<LoginController>();
+  final _ctrl = Get.put(ProfileController());
   Functions function = Functions();
+  String? otpText;
   @override
   void dispose() {
     _otpController.dispose();
@@ -41,6 +35,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     super.dispose();
   }
   bool _passRequirementMet = false;
+  bool _passvisibility = false;
+  bool _confirmpassvisibility = false;
   bool showPassword = false;
   bool _upto8Characters = false;
   bool _numbers = false;
@@ -48,422 +44,669 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   bool _upperCase = false;
   bool _symbolSpecial = false;
   bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    print(_newPasswordController.text);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const ProgressStyle(
-              stage: 0,
-              pageName: "Edit Profile",
-              // backRoute: MakeRequest(),
-            ),
-            SizedBox(
-              height: 2.h,
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.5.w),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const AutoSizeText(
-                        'Create New Password',
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: fagoSecondaryColor,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      const AutoSizeText(
-                        'Provide a strong password to secure your \naccount',
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: stepsColorWithOpacity55,
-                        ),
-                      ),
-                      ///Code to input old passcode
-                      // SizedBox(
-                      //   height: 3.h,
-                      // ),
-                      // const AutoSizeText(
-                      //   'Old Password',
-                      //   style: TextStyle(
-                      //     fontFamily: "Work Sans",
-                      //     fontSize: 14,
-                      //     fontWeight: FontWeight.w400,
-                      //     color: welcomeText,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 1.h,
-                      // ),
-                      // _PasswordInput(
-                      //   onTap: (s){},
-                      //   controller: _passwordController,
-                      // ),
-                      // SizedBox(
-                      //   height: 1.h,
-                      // ),
-                      // const Divider(
-                      //   color: stepsColor,
-                      // ),
-                      SizedBox(height: 2.h),
-                      const AutoSizeText(
-                        'Enter New Password',
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: welcomeText,
-                        ),
-                      ),
-                      SizedBox(height: 1.h),
-                      _PasswordInput(
-                        onTap: (value){
-                          if (value.length >= 8) {
-                            setState(() {
-                              _upto8Characters = true;
-                            });
-                          }else {
-                            setState(() {
-                              _upto8Characters = false;
-                            });
-                          }
-                          if (function.checkLoweCase(value)) {
-                            setState(() {
-                              _lowerCase = true;
-                            });
-                          } else {
-                            setState(() {
-                              _lowerCase = false;
-                            });
-                          } if (function.checknumbers(value)) {
-                            setState(() {
-                              _numbers = true;
-                            });
-                          } else {
-                            setState(() {
-                              _numbers = false;
-                            });
-                          }
-                          if (function.checkUpperCase(value)) {
-                            setState(() {
-                              _upperCase = true;
-                            });
-                          } else {
-                            setState(() {
-                              _upperCase = false;
-                            });
-                          }
-                          if (function.specialCharacters(value)) {
-                            setState(() {
-                              _symbolSpecial = true;
-                            });
-                          } else {
-                            setState(() {
-                              _symbolSpecial = false;
-                            });
-                          }
-                          if (checkRequirement(value) && value == _confirmPasswordController.text) {
-                            setState(() {
-                              _passRequirementMet = true;
-                            });
-                          } else {
-                            setState(() {
-                              _passRequirementMet = false;
-                            });
-                          }
-                     //     print(_upto8Characters);
-                        },
-                        controller: _newPasswordController,
-                      ),
-                      SizedBox(height: 1.h),
-                      const AutoSizeText(
-                        'Confirm New Password',
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: welcomeText,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      _ConfirmPasswordInput(
-                        controller: _confirmPasswordController,
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                  Wrap(
-                    spacing: 1,
-                    runSpacing: 2,
-                    children:  [
-                      Chip(
-                        // backgroundColor: Colors.red,
-                        label: const Text(
-                          'At least 8 character strong',
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        avatar: Icon(
-                          Icons.check_circle_outline,
-                          size: 12,
-                          color: _upto8Characters? requirementMet: requirementNotMet,
-                        ),
-                      ),
-                      Chip(
-                        label: const Text(
-                          'One lower case character',
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        avatar: Icon(
-                          Icons.check_circle_outline,
-                          size: 12,
-                          color: _lowerCase  ? requirementMet:requirementNotMet,
-                        ),
-                      ),
-                      Chip(
-                        label: const Text(
-                          'One upper case',
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        avatar: Icon(
-                          Icons.check_circle_outline,
-                          size: 12,
-                          color:   _upperCase? requirementMet:requirementNotMet,
-                        ),
-                      ),
-                      Chip(
-                        label: const Text(
-                          'A symbol or special character',
-                          style: TextStyle(
-                            fontSize: 10,
-                          ),
-                        ),
-                        avatar: Icon(
-                          Icons.check_circle_outline,
-                          size: 12,
-                          color: _symbolSpecial ? requirementMet:requirementNotMet,
-                        ),
-                      ),
-                    ],
+    return GetBuilder<ProfileController>(
+        init: ProfileController(),
+        builder: (controller){
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 5.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const ProgressStyle(
+                    stage: 0,
+                    pageName: "Edit Profile",
+                    // backRoute: MakeRequest(),
                   ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      isLoading ?const LoadingWidget(color: fagoSecondaryColor,):GestureDetector(
-                        onTap: (){
-                          // if(_otpController.text.isEmpty){
-                          //   Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor, colorText: white);
-                          // }
-                          ///
-                          //  if(checkRequirement){
-                          //   Get.snackbar('Error', 'validation requirement not reached',backgroundColor: fagoSecondaryColor,colorText: white);
-                          // }
-                             setState(() {
-                               isLoading = true;
-                             });
-                             sendOtP();
-                        },
-                        child: Center(
-                          child: AuthButtons(
-                            form: true,
-                            text: "Update",
-                          ),
+                  SizedBox(
+                    height: 2.h,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const AutoSizeText(
+                              'Create New Password',
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: fagoSecondaryColor,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            const AutoSizeText(
+                              'Provide a strong password to secure your \naccount',
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: stepsColorWithOpacity55,
+                              ),
+                            ),
+                            ///Code to input old passcode
+                            // SizedBox(
+                            //   height: 3.h,
+                            // ),
+                            // const AutoSizeText(
+                            //   'Old Password',
+                            //   style: TextStyle(
+                            //     fontFamily: "Work Sans",
+                            //     fontSize: 14,
+                            //     fontWeight: FontWeight.w400,
+                            //     color: welcomeText,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 1.h,
+                            // ),
+                            // _PasswordInput(
+                            //   onTap: (s){},
+                            //   controller: _passwordController,
+                            // ),
+                            // SizedBox(
+                            //   height: 1.h,
+                            // ),
+                            // const Divider(
+                            //   color: stepsColor,
+                            // ),
+                            SizedBox(height: 2.h),
+                            const AutoSizeText(
+                              'Enter New Password',
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: welcomeText,
+                              ),
+                            ),
+                            SizedBox(height: 1.h),
+                            SizedBox(
+                              height: 56,
+                              width: 341,
+                              child: TextFormField(
+                                controller: _newPasswordController,
+                                onChanged: ((value) {
+                                  if (value.length >= 8) {
+                                    setState(() {
+                                      _upto8Characters = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _upto8Characters = false;
+                                    });
+                                  }
+
+                                  if (function.checkLoweCase(value)) {
+                                    setState(() {
+                                      _lowerCase = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _lowerCase = false;
+                                    });
+                                  }
+
+                                  if (function.checknumbers(value)) {
+                                    setState(() {
+                                      _numbers = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _numbers = false;
+                                    });
+                                  }
+
+                                  if (function.checkUpperCase(value)) {
+                                    setState(() {
+                                      _upperCase = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _upperCase = false;
+                                    });
+                                  }
+
+                                  if (function.specialCharacters(value)) {
+                                    setState(() {
+                                      _symbolSpecial = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _symbolSpecial = false;
+                                    });
+                                  }
+                                  if (checkRequirement(value) && value == _newPasswordController.text) {
+                                    setState(() {
+                                      _passRequirementMet = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _passRequirementMet = false;
+                                    });
+                                  }
+                                }),
+                                obscureText: !_passvisibility,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                style: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: signInPlaceholder),
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderSide: const BorderSide(
+                                        color: textBoxBorderColor,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                                        borderSide: BorderSide(
+                                            color: textBoxBorderColor,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)),
+                                    hintText: "Password",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: signInPlaceholder,
+                                    ),
+                                    prefixIcon: const Image(
+                                        image:
+                                        AssetImage("assets/images/password_icon.png")),
+                                    suffixIcon: IconButton(
+                                      icon: (_passvisibility)
+                                          ? const Icon(
+                                        Icons.visibility_off,
+                                        size: 20,
+                                      )
+                                          : const Icon(
+                                        Icons.visibility,
+                                        size: 20,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _passvisibility = !_passvisibility;
+                                        });
+                                      },
+                                    )),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            const AutoSizeText(
+                              'Confirm New Password',
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: welcomeText,
+                              ),
+                            ),
+                            SizedBox(height: 1.h),
+                            SizedBox(
+                              height: 56,
+                              width: 341,
+                              child: TextFormField(
+                                controller: _confirmPasswordController,
+                                onChanged: (value) {
+                                  if (value != _confirmPasswordController.text &&
+                                      !checkRequirement(_confirmPasswordController.text)) {
+                                    setState(() {
+                                      _passRequirementMet = false;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      _passRequirementMet = true;
+                                    });
+                                  }
+                                },
+                                obscureText: !_confirmpassvisibility,
+                                enableSuggestions: false,
+                                autocorrect: false,
+                                style: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: signInPlaceholder),
+                                decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      borderSide: const BorderSide(
+                                        color: textBoxBorderColor,
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                                        borderSide: BorderSide(
+                                            color: textBoxBorderColor,
+                                            width: 1.0,
+                                            style: BorderStyle.solid)),
+                                    hintText: "Confirm Password",
+                                    hintStyle: const TextStyle(
+                                      fontFamily: "Work Sans",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: signInPlaceholder,
+                                    ),
+                                    prefixIcon: const Image(
+                                        image:
+                                        AssetImage("assets/images/password_icon.png")),
+                                    suffixIcon: IconButton(
+                                      icon: (_confirmpassvisibility)
+                                          ? const Icon(
+                                        Icons.visibility_off,
+                                        size: 20,
+                                      )
+                                          : const Icon(
+                                        Icons.visibility,
+                                        size: 20,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _confirmpassvisibility = !_confirmpassvisibility;
+                                        });
+                                      },
+                                    )),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 3.h,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                    width: 45.w,
+                                    height: 4.h,
+                                    decoration: const BoxDecoration(
+                                        color: passGuideBg,
+                                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 1.h, horizontal: 0.4.w),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.check_circle_outline_sharp,
+                                            color: (_upto8Characters)
+                                                ? requirementMet
+                                                : requirementNotMet,
+                                            size: 15,
+                                          ),
+                                          SizedBox(
+                                            width: 40.w,
+                                            child: const AutoSizeText(
+                                              "At least 8 characters strong",
+                                              style: TextStyle(
+                                                  fontFamily: "Nunito",
+                                                  color: black,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                                SizedBox(width: 0.7.w),
+                                Container(
+                                  width: 40.w,
+                                  height: 4.h,
+                                  decoration: const BoxDecoration(
+                                      color: passGuideBg,
+                                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 1.h, horizontal: 0.4.w),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle_outline_sharp,
+                                          color: (_lowerCase)
+                                              ? requirementMet
+                                              : requirementNotMet,
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 35.w,
+                                          child: const AutoSizeText(
+                                            "One lower case character",
+                                            style: TextStyle(
+                                                fontFamily: "Nunito",
+                                                color: black,
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                    width: 25.w,
+                                    height: 4.h,
+                                    decoration: const BoxDecoration(
+                                        color: passGuideBg,
+                                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 1.h, horizontal: 0.4.w),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(
+                                            Icons.check_circle_outline_sharp,
+                                            color: (_upperCase)
+                                                ? requirementMet
+                                                : requirementNotMet,
+                                            size: 15,
+                                          ),
+                                          SizedBox(
+                                            width: 20.w,
+                                            child: const AutoSizeText(
+                                              "One upper case ",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontFamily: "Nunito",
+                                                  color: black,
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                                SizedBox(
+                                  width: 1.w,
+                                ),
+                                Container(
+                                  width: 25.w,
+                                  height: 4.h,
+                                  decoration: const BoxDecoration(
+                                      color: passGuideBg,
+                                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 1.h, horizontal: 0.4.w),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle_outline_sharp,
+                                          color: (_numbers)
+                                              ? requirementMet
+                                              : requirementNotMet,
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 20.w,
+                                          child: const AutoSizeText(
+                                            "One number",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontFamily: "Nunito",
+                                                color: black,
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 1.h,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 80.0),
+                              child: Container(
+                                  width: 50.w,
+                                  height: 4.h,
+                                  decoration: const BoxDecoration(
+                                      color: passGuideBg,
+                                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(width: 2,),
+                                      Icon(
+                                        Icons.check_circle_outline_sharp,
+                                        color: (_symbolSpecial)
+                                            ? requirementMet
+                                            : requirementNotMet,
+                                        size: 15,
+                                      ),
+                                      SizedBox(
+                                        width: 45.w,
+                                        child: const AutoSizeText(
+                                          "A symbol or special character",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              color: black,
+                                              fontSize: 7,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Padding(
+                                padding:
+                                EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h),
+                                child: GestureDetector(
+                                    onTap: () async {
+                                      if (_newPasswordController.text.isEmpty || _confirmPasswordController.text.isEmpty) {
+                                        Get.snackbar("Error", "Kindly enter your password");
+                                      } else if (_newPasswordController.text != _confirmPasswordController.text) {
+                                        Get.snackbar("Error","Password does not match");
+                                      } else {
+                                        controller.password = _confirmPasswordController.text;
+                                        await controller.changePassword(context: context).then((value){
+                                          if(value.data != null){
+                                            otpBottomSheet(
+                                              onTap: () async {
+                                                Get.put<LocalCachedData>(await LocalCachedData.create());
+                                                final userDetails = await LocalCachedData.instance.getUserDetails();
+                                                var emailOrPassword = userDetails?.data?.userdetail?.phoneNumber ?? userDetails?.data?.userdetail?.email ?? "";
+                                                if (otpText == null || otpText == '' || otpText?.length != 6) {
+                                                  Get.snackbar("Alert", "Enter the otp sent to $emailOrPassword to continue!");
+                                                } else {
+                                                  Get.back();
+                                                  await _ctrl.validateForgotResetPassword(otp: otpText!, password: _ctrl.password!, context: context);
+                                                }
+                                              },
+                                            );
+                                          }
+                                        });
+                                      }
+                                    },
+                                    child: AuthButtons(
+                                      color: (controller.isSetUpPasswordLoading) ? signInPlaceholder : null,
+                                      imageWidth: (controller.isSetUpPasswordLoading) ? 50 : null,
+                                      imageheight: (controller.isSetUpPasswordLoading) ? 50 : null,
+                                      form: true,
+                                      text: "Update",
+                                      //route: const DashboardHome(),
+                                    )
+                                ))
+                          ],
                         ),
                       ),
-                      // _ContinueButton(
-                      //   onPressed: () async {
-                      //     if (_passwordController.text != "" &&
-                      //         _confirmPasswordController.text != "") {
-                      //       if (_confirmPasswordController.text !=
-                      //           _passwordController.text) {
-                      //         Fluttertoast.showToast(
-                      //           msg: "Passwords dont match!",
-                      //           toastLength: Toast.LENGTH_LONG,
-                      //           gravity: ToastGravity.TOP,
-                      //           timeInSecForIosWeb: 2,
-                      //           backgroundColor: Colors.red,
-                      //           textColor: Colors.white,
-                      //           fontSize: 16.0,
-                      //         );
-                      //         return;
-                      //       }
-                      //       await createNewPassword(context);
-                      //       return;
-                      //     }
-                      //     Fluttertoast.showToast(
-                      //       msg: "Enter the fields correctly",
-                      //       toastLength: Toast.LENGTH_LONG,
-                      //       gravity: ToastGravity.TOP,
-                      //       timeInSecForIosWeb: 2,
-                      //       backgroundColor: Colors.red,
-                      //       textColor: Colors.white,
-                      //       fontSize: 16.0,
-                      //     );
-                      //   },
-                      // ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
-  sendOtP(){
-    var data = {
-      "code": _otpController.text.trim(),
-      "password": _newPasswordController.text.trim(),
-      "password_confirmation": _confirmPasswordController.text.trim()
-    };
-    var data2 = {
-      "username": "09056193199"
-    };
-    RegistrationController().sendOtp(data2).then((value) {
-      setState(() {
-        isLoading = false;
-      });
-      Functions().popUp(context: context,
-          widget: Container(
-            padding:  EdgeInsets.symmetric(horizontal: 8.w),
-            decoration: const BoxDecoration(
-              color: white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+
+  void otpBottomSheet({required void Function()? onTap}){
+    Get.bottomSheet(
+      StatefulBuilder(builder: (context, update){
+        TextEditingController controller = TextEditingController();
+        return Container(decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+          constraints: BoxConstraints(maxHeight: Get.height/2.5,), padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+          child: Column(
+            children: [
+              const SizedBox(height: 10,),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(alignment: Alignment.centerLeft,
+                          child: Text("Enter OTP", style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(color: signInText, fontSize: 18, fontWeight: FontWeight.w600),)),
+                      const SizedBox(height: 5,),
+                      Align(alignment: Alignment.centerLeft,
+                        child: Text("An Otp was sent to your account. \nCheck your email or password", textAlign: TextAlign.left,
+                          style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w300,),),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Container(
+                      height: 35, width: 35, decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.black26),
+                      child: const Center(
+                        child: Icon(
+                          Icons.clear, color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(height: 2.h,),
-                Text('OTP Code',style: Constant().textStyle(size: 18 , weight: FontWeight.w600)),
-                SizedBox(height: 2.h,),
-                Text('Enter the OTP sent to your phone number  "09087877676"',style: Constant().textStyle(size: 15, weight: FontWeight.w400,color: successDescription),textAlign: TextAlign.center),
-                SizedBox(height: 2.h,),
-                TextField(
-                  controller: _otpController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: fagoSecondaryColor)),
-                    focusColor: fagoSecondaryColor,
-                    hintText: 'Enter OTP',
-                    hintStyle: const TextStyle(
-                      fontSize: 14,
+              const SizedBox(height: 30,),
+              Padding(
+                  padding: EdgeInsets.only(left: 2.5.w, right: 2.5.w),
+                  child: PinCodeTextField(
+                    length: 6, controller: controller,
+                    appContext: Get.context!,
+                    pastedTextStyle: const TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 36,
+                      color: inactiveTab,
                     ),
-                    prefixIconColor: const Color(0XFFe8a5aa),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: fagoSecondaryColor,
-                        width: 5.0,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      ),
+                    keyboardType: TextInputType.number,
+                    pinTheme: PinTheme(
+                      activeColor: signInText,
+                      shape: PinCodeFieldShape.box,
+                      borderRadius: BorderRadius.circular(5),
+                      fieldHeight: 45,
+                      fieldWidth: 45,
+                      activeFillColor: Colors.white,
                     ),
-                    prefixIcon: SvgPicture.asset(
-                      'assets/icons/lock-icon.svg',
-                      fit: BoxFit.scaleDown,
-                      height: 20,
-                      width: 20,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 3.h,),
-                GestureDetector(
-                  onTap: (){
-                    RegistrationController().changePassword(data).then((value) {
-                      Navigator.pop(context);
-                    var res =  jsonDecode(value);
-                      if(res['']['code']== 200){
-
-                      }else{
-
+                    onChanged: (String value) async {
+                      if (value.length == 6) {
+                        otpText = controller.text;
                       }
-                    });
-                  },
-                  child: AuthButtons(
-                    form: true,
-                    color: inactiveTab ,
-                    text: "Proceed",
+                    },
+                  )),
+              Row(crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Didn\'t recieve an otp?',
+                      style: TextStyle(
+                        color: fagoSecondaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
+                  Expanded(child: Container()),
+                  const Icon(
+                    Icons.refresh,
+                    size: 15,
+                    color: fagoSecondaryColor,
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Resend',
+                      style: TextStyle(
+                        color: fagoSecondaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: onTap,
+                child: Container(
+                    height: 50,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(36),
+                      color: fagoSecondaryColor,
+                    ),
+                    child: const Center(
+                      child: AutoSizeText(
+                        "Continue",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w600,
+                            color: white),
+                      ),
+                    )
                 ),
-                SizedBox(height: 20.h,),
-
-              ],
-            ),
-          ));
-    });
+              ),
+              const SizedBox(height: 20,),
+            ],
+          ),
+        );
+      }), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20),),),
+      isScrollControlled: true, isDismissible: false,
+    );
   }
 
   bool checkRequirement(String value) {
     bool met = (function.checkLoweCase(value) && function.checkUpperCase(value) && function.checknumbers(value) && function.specialCharacters(value) && value.length >= 8);
 
     return met;
-  }
-
-  Future<void> createNewPassword(BuildContext context) async {
-    final progress = ProgressHUD.of(context);
-    progress!.show();
-    final response = await _loginController.createNewPassword(widget.pinCode, _otpController.text, _newPasswordController.text);
-    final jsonBody = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      progress.dismiss();
-      Fluttertoast.showToast(
-        msg:
-            "Password has been reset successfuly. Proceed to login with your new password",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (BuildContext context) => const SignIn(),
-            ),
-            (route) => false);
-      });
-      return;
-    }
-    progress.dismiss();
-    Fluttertoast.showToast(
-      msg: "${jsonBody['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
   }
 }
 

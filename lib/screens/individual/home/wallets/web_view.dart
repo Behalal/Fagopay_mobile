@@ -2,7 +2,6 @@ import 'package:fagopay/functions/constant.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class FundWalletWebView extends StatefulWidget {
@@ -17,34 +16,32 @@ class _FundWalletWebViewState extends State<FundWalletWebView> {
   WebViewController? controller;
   @override
   Widget build(BuildContext context) {
-    //print('url = ${widget.url}');
-      controller = WebViewController()
-        ..setBackgroundColor(const Color(0x00000000))
-        ..setNavigationDelegate(
-          NavigationDelegate(
-            onProgress: (int progress) {
-              // Update loading bar.
-            },
-            onPageStarted: (String url) {},
-            onUrlChange: (url){
-              print('url changed = $url');
-            },
-            onPageFinished: (String url) {},
-            onWebResourceError: (WebResourceError error) {},
-            onNavigationRequest: (NavigationRequest request) {
-              print('navigation url = ${request.url}');
-              if (request.url.contains('status=cancelled')) {
-                Get.snackbar('Canceled','Transactions Canceled',colorText: white,backgroundColor: fagoSecondaryColor);
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            print('navigation url = ${request.url}');
+            if (request.url.contains('status=cancelled')) {
+              Get.snackbar('Canceled','Transactions Canceled',colorText: white,backgroundColor: fagoSecondaryColor);
               //  return NavigationDecision.prevent;
-                Navigator.pop(context);
-              }else if(request.url.contains('status=completed')){
-                Get.snackbar('Success','Transactions Successful',colorText: white,backgroundColor: fagoGreenColor);
-                Navigator.pop(context);
-              }
-              return NavigationDecision.navigate;
-            },
-          ),
-        )..loadRequest(Uri.parse(widget.url));
+              Navigator.pop(context);
+            }else if(request.url.contains('status=completed')){
+              Get.snackbar('Success','Transactions Successful',colorText: white,backgroundColor: fagoGreenColor);
+              Navigator.pop(context);
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: fagoBlackColor),

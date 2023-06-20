@@ -15,19 +15,19 @@ class BookKeepingModel {
 
 List<BookKeepingModel> bookKeepingContent = [
   BookKeepingModel(
-      accountType: "Total Inflow",
+      accountType: " Total Invoice",
       description: "Income",
       balance: "900,340.00",
       imagePath: "assets/images/inflow.svg",
     ),
   BookKeepingModel(
-      accountType: "Total Outflow",
+      accountType: " Total Received",
       description: "Expenses",
       balance: "900,340.00",
       imagePath: "assets/images/outflow.svg",
     ),
   BookKeepingModel(
-      accountType: "Total Credit",
+      accountType: "Total Outstanding",
       description: "#600,000 retrieved",
       balance: "0.00",
       imagePath: "assets/images/total_credit.svg",

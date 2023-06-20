@@ -1,11 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/bill_controller.dart';
+import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_contact_picker/flutter_native_contact_picker.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../models/data_model.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
@@ -42,7 +41,7 @@ class _BuyDataState extends State<BuyData> {
   void initState() {
     dataDropdown.add(
       const DropdownMenuItem(
-          value: "", child: Text("Select a service Provider")),
+          value: "", child: Text("Select a bundle")),
     );
     super.initState();
   }
@@ -104,14 +103,20 @@ class _BuyDataState extends State<BuyData> {
               ],
             ),
           ),
-          body: Builder(builder: (context) {
+          body:
+          Builder(builder: (context) {
             return TabBarView(
               children: [
                 const BuyAirtime(),
+                _isLoading == true ? Center(
+                  child: LoadingWidget(
+                    color: fagoSecondaryColor,
+                    size: MediaQuery.of(context).size.height/2.5,
+                  ),
+                ) :
                 SingleChildScrollView(
                   child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
+                    padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,8 +198,7 @@ class _BuyDataState extends State<BuyData> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(10.0),
                                   child: Image(
-                                      image: AssetImage(
-                                          "assets/images/airtel.png")),
+                                      image: AssetImage("assets/images/airtel.png")),
                                 ),
                               ),
                             ),
@@ -331,7 +335,6 @@ class _BuyDataState extends State<BuyData> {
                           height: 0.5.h,
                         ),
                         Container(
-                          width: 90.w,
                           decoration: const BoxDecoration(
                               color: fagoSecondaryColorWithOpacity10,
                               borderRadius:
@@ -346,8 +349,8 @@ class _BuyDataState extends State<BuyData> {
                                 const Image(
                                     image: AssetImage(
                                         "assets/images/account.png")),
-                                SizedBox(
-                                  width: 2.w,
+                                const SizedBox(
+                                  width: 10,
                                 ),
                                 AutoSizeText(
                                   _contact.fullName!,
@@ -358,9 +361,7 @@ class _BuyDataState extends State<BuyData> {
                                     color: welcomeText,
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 15.w,
-                                ),
+                                SizedBox(width: 1.w,),
                                 GestureDetector(
                                   onTap: (() async {
                                     Contact? contact =
@@ -386,11 +387,6 @@ class _BuyDataState extends State<BuyData> {
                             ),
                           ),
                         ),
-                        // Text(
-                        //   _contact==null
-                        //       ? 'No contact selected.'
-                        //       : _contact.toString(),
-                        // ),
                         SizedBox(
                           height: 2.h,
                         ),
@@ -459,20 +455,7 @@ class _BuyDataState extends State<BuyData> {
                                   buyDataFields.serviceid.isEmpty ||
                                   _billsController
                                       .amountController.text.isEmpty) {
-                                Fluttertoast.showToast(
-                                  msg: "Kindly enter all fields",
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.TOP,
-                                  timeInSecForIosWeb: 2,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   const SnackBar(
-                                //     content: Text('Kindly enter all fields'),
-                                //   ),
-                                // );
+                                Get.snackbar("Error","Kindly enter all fields");
                               } else {
                                 setState(() {
                                   buyDataFields.setPhone = _billsController

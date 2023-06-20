@@ -54,19 +54,21 @@ class ConfirmTransactions extends StatelessWidget {
               ),
               Container(
                 width: 90.w,
-                decoration: const BoxDecoration(
-                  color: fagoPrimaryColor,
+                decoration: BoxDecoration(
+                  color: fagoPrimaryColor, borderRadius: BorderRadius.circular(5)
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 14.w, vertical: 2.h),
-                  child: const AutoSizeText(
-                    "Transaction Overview",
-                    style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontWeight: FontWeight.w700,
-                        fontSize: 22,
-                        color: white),
+                  EdgeInsets.symmetric(horizontal: 14.w, vertical: 15),
+                  child: const Center(
+                    child: AutoSizeText(
+                      "Transaction Overview",
+                      style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: white),
+                    ),
                   ),
                 ),
               ),
@@ -421,7 +423,7 @@ class ConfirmTransactions extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const AutoSizeText(
-                        "Transfer Fee",
+                        "Airtime Fee",
                         style: TextStyle(
                             fontFamily: "Work Sans",
                             fontSize: 14,
@@ -525,9 +527,9 @@ class ConfirmTransactions extends StatelessWidget {
                         Radius.circular(25),
                       ),
                     ),
-                    child:  Row(
+                    child:  const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         AutoSizeText(
                           "Cancel",
                           textAlign: TextAlign.center,

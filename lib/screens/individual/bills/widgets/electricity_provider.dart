@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/bill_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../constants/colors.dart';
@@ -54,51 +56,55 @@ class _ElectricityProviderState extends State<ElectricityProvider> {
   String selectedValue = "";
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const AutoSizeText(
-          "Select Power Company",
-          style: TextStyle(
-            fontFamily: "Work Sans",
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: welcomeText,
-          ),
-        ),
-        SizedBox(
-          height: 1.h,
-        ),
-        Container(
-          width: 90.w,
-          decoration: BoxDecoration(
-              border: Border.all(color: fagoSecondaryColor),
-              borderRadius: const BorderRadius.all(Radius.circular(5))),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-            child: DropdownButton(
-              underline: const SizedBox(),
-              isExpanded: true,
-              alignment: AlignmentDirectional.centerStart,
-              value: selectedValue,
-              items: dropdownItems,
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedValue = newValue!;
-                  buyElectricityFields.setServiceid = selectedValue;
-                });
-              },
-              style: const TextStyle(
-                  decoration: TextDecoration.none,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Work Sans",
-                  color: signInPlaceholder),
+    return GetBuilder<BillController>(
+      init: BillController(),
+        builder: (controller){
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const AutoSizeText(
+            "Select Power Company",
+            style: TextStyle(
+              fontFamily: "Work Sans",
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: welcomeText,
             ),
           ),
-        ),
-      ],
-    );
+          SizedBox(
+            height: 1.h,
+          ),
+          Container(
+            width: 90.w,
+            decoration: BoxDecoration(
+                border: Border.all(color: fagoSecondaryColor),
+                borderRadius: const BorderRadius.all(Radius.circular(5))),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4.w),
+              child: DropdownButton(
+                underline: const SizedBox(),
+                isExpanded: true,
+                alignment: AlignmentDirectional.centerStart,
+                value: selectedValue,
+                items: dropdownItems,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedValue = newValue!;
+                    buyElectricityFields.setServiceid = selectedValue;
+                  });
+                },
+                style: const TextStyle(
+                    decoration: TextDecoration.none,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Work Sans",
+                    color: signInPlaceholder),
+              ),
+            ),
+          ),
+        ],
+      );
+    });
   }
 }

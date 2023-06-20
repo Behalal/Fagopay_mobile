@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/screens/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,8 @@ import '../support_request.dart';
 class RequestListWidget extends StatelessWidget {
   RequestListWidget({Key? key}) : super(key: key);
   final _moneyRequest = Get.put(RequestMoney());
+  final _userController = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
   // int? myRequestType;
 
   @override
@@ -28,9 +32,7 @@ class RequestListWidget extends StatelessWidget {
                     physics: const ScrollPhysics(),
                     shrinkWrap: false,
                     itemCount: _moneyRequest.requestedMoneyList.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                          height: 1.6.h,
-                        ),
+                    separatorBuilder: (context, index) => SizedBox(height: 1.6.h,),
                     itemBuilder: (context, index) {
                       var item = _moneyRequest.requestedMoneyList[index];
                       return InkWell(
@@ -43,33 +45,24 @@ class RequestListWidget extends StatelessWidget {
                           // width: 90.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            color: fagoSecondaryColorWithOpacity10,
+                            color: item.status == "pending" ? fagoSecondaryColorWithOpacity10 : item.status == "success" ? fagoGreenColorWithOpacity10 : Colors.transparent,
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 3.w, vertical: 1.h),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      const CircleAvatar(
-                                        radius: 30, // Image radius
-                                        backgroundImage: AssetImage(
-                                            'assets/images/fago(2).png'),
+                                       CircleAvatar(
+                                        radius: 30, backgroundColor: item.status == "pending" ? fagoSecondaryColorWithOpacity10.withOpacity(0.1) : item.status == "success" ? fagoGreenColorWithOpacity10.withOpacity(0.1) : Colors.transparent,
+                                        child: Text(_userController.switchedAccountType == 2 ? '${_companyController.company?.companyName?.substring(0, 1)}'??'' :
+                                          '${_userController.user?.firstName?.substring(0, 1) ?? ""}${_userController.user?.lastName?.substring(0, 1) ?? ""}',
+                                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800,color: item.status == "pending" ? fagoSecondaryColor : fagoGreenColor,wordSpacing: 2),),
                                       ),
-                                      SizedBox(
-                                        width: 2.w,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                      SizedBox(width: 2.w,),
+                                      Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -85,20 +78,16 @@ class RequestListWidget extends StatelessWidget {
                                           SizedBox(
                                             height: 1.h,
                                           ),
-                                          AutoSizeText(
-                                            "$currencySymbol ${item.requestedAmount}",
-                                            style: const TextStyle(
+                                          AutoSizeText("$currencySymbol ${item.requestedAmount}",
+                                            style: TextStyle(
                                               fontFamily: "Work Sans",
                                               fontSize: 20,
                                               fontWeight: FontWeight.w700,
-                                              color: fagoSecondaryColor,
+                                              color: item.status == "pending" ? fagoSecondaryColor : fagoGreenColor,
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 1.h,
-                                          ),
-                                          AutoSizeText(
-                                            " ${item.createdAt!.year.toString()}-${item.createdAt!.month.toString().padLeft(2, '0')}-${item.createdAt!.day.toString().padLeft(2, '0')} ${item.createdAt!.hour.toString().padLeft(2, '0')}:${item.createdAt!.minute.toString().padLeft(2, '0')}",
+                                          SizedBox(height: 1.h,),
+                                          AutoSizeText("${item.createdAt!.year.toString()}-${item.createdAt!.month.toString().padLeft(2, '0')}-${item.createdAt!.day.toString().padLeft(2, '0')} ${item.createdAt!.hour.toString().padLeft(2, '0')}:${item.createdAt!.minute.toString().padLeft(2, '0')}",
                                             style: const TextStyle(
                                               fontFamily: "Work Sans",
                                               fontSize: 12,
@@ -115,30 +104,29 @@ class RequestListWidget extends StatelessWidget {
                                   ),
                                   InkWell(
                                     onTap: () {
-                                    //  Navigator.p
-                                      Get.to(() => SupportRequest(item: item,))?.then((value) {
+                                      item.status == "pending" ? Get.to(() => SupportRequest(item: item,))?.then((value) {
                                         print(value);
                                         if(value != null){
                                           _moneyRequest.requestedMoney();
                                         }
-                                      });
+                                      }) : null;
                                     },
                                     child: Container(
                                       width: 17.w,
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
+                                      decoration:  BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
                                               Radius.circular(15)),
-                                          color: buttonColor),
+                                          color: item.status == "pending" ? fagoSecondaryColor : fagoGreenColor,),
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 3.w, vertical: 0.5.h),
-                                        child: const Row(
+                                            horizontal: 1.w, vertical: 0.5.h),
+                                        child:  Row(
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           children:  [
                                             AutoSizeText(
-                                              "View",
-                                              style: TextStyle(
+                                              item.status == "pending" ? "View" : "Approved",
+                                              style: const TextStyle(
                                                 fontFamily: "Work Sans",
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w500,

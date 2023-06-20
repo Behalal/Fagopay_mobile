@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../../models/user_model/completeUserModel.dart';
 import '../../constants/colors.dart';
 
 class NextOfKinPage extends StatefulWidget {
@@ -32,6 +33,15 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
   var number = "";
   int? transactionType;
   String? selectedRelationship;
+  @override
+  void initState() {
+    _userController.nameController.text = _userController.user?.nextofkin?.fullName ?? "";
+    _userController.phoneNumController.text = _userController.user?.nextofkin?.phoneNumber ?? "";
+    _userController.emailController.text = _userController.user?.nextofkin?.email ?? "";
+    _userController.addressController.text = _userController.user?.nextofkin?.houseAddress ?? "";
+    _userController.relationshipController.text = _userController.user?.nextofkin?.relationship ?? "";
+    super.initState();
+  }
   final List<String> items = [
     'Siblings',
     'Father',
@@ -44,7 +54,7 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-            padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 5.w),
+            padding: EdgeInsets.only(left: 5.w, right: 5.w, top: 6.h),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,6 +74,7 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                         child: Form(
                           key: formKey,
                           child: SingleChildScrollView(
+                            physics: const BouncingScrollPhysics(),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -305,8 +316,7 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                               fagoSecondaryColorWithOpacity)),
                                   child: DropdownButtonHideUnderline(
                                     child: DropdownButton2(
-                                      hint: Text(
-                                        'Categories',
+                                      hint: Text(_userController.relationshipController.text.isEmpty ? 'Categories' : _userController.relationshipController.text,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Theme.of(context).hintColor,
@@ -327,8 +337,7 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                       value: selectedRelationship,
                                       onChanged: (value) {
                                         setState(() {
-                                          selectedRelationship =
-                                              value as String;
+                                          _userController.relationshipController.text = value as String;
                                         });
                                       },
                                       buttonStyleData: const ButtonStyleData(
@@ -345,62 +354,56 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                 SizedBox(
                                   height: 3.h,
                                 ),
-                                Obx(() {
-                                  return InkWell(
-                                    onTap: () {
-                                      NextOfKinModel nextOfKin = NextOfKinModel(
-                                          fullName: _userController
-                                              .nameController.text
-                                              .trim(),
-                                          houseAddress: _userController
-                                              .addressController.text
-                                              .trim(),
-                                          phoneNumber: number +
-                                              _userController
-                                                  .phoneNumController.text
-                                                  .trim(),
-                                          email: _userController
-                                              .emailController.text
-                                              .trim(),
-                                          relationship: selectedRelationship);
+                                InkWell(
+                                  onTap: () {
+                                    NextOfKinModel nextOfKin = NextOfKinModel(
+                                        fullName: _userController
+                                            .nameController.text
+                                            .trim(),
+                                        houseAddress: _userController
+                                            .addressController.text
+                                            .trim(),
+                                        phoneNumber: number +
+                                            _userController
+                                                .phoneNumController.text
+                                                .trim(),
+                                        email: _userController
+                                            .emailController.text
+                                            .trim(),
+                                        relationship: selectedRelationship);
 
-                                      if (kDebugMode) {
-                                        print(
-                                            'Next of kin: ${nextOfKin.toJson()}');
-                                      }
-                                      print('here i am');
-                                      if (_userController.nextOfKinStatus !=
-                                              NextOfKinEnum.loading &&
-                                          formKey.currentState!.validate()) {
-                                        print('here i am 3');
-                                        _userController.uploadNextOfKin(nextOfKin);
-                                      }
-                                      print('here i am 2');
-                                    },
-                                    child: Container(
-                                        height: 50,
-                                        width: Get.width,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(36),
-                                            color: fagoSecondaryColor),
-                                        child: (_userController
-                                                    .nextOfKinStatus ==
-                                                NextOfKinEnum.loading)
-                                            ? const LoadingWidget()
-                                            : const Center(
-                                                child: AutoSizeText(
-                                                  'Save',
-                                                  style: TextStyle(
-                                                    fontFamily: "Work Sans",
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w400,
-                                                    color: white,
-                                                  ),
-                                                ),
-                                              )),
-                                  );
-                                }),
+                                    if (kDebugMode) {
+                                      print(
+                                          'Next of kin: ${nextOfKin.toJson()}');
+                                    }
+                                    print('here i am');
+                                    if (_userController.nextOfKinStatus !=
+                                        NextOfKinEnum.loading &&
+                                        formKey.currentState!.validate()) {
+                                      print('here i am 3');
+                                      _userController.uploadNextOfKin(context: context);
+                                    }
+                                    print('here i am 2');
+                                  },
+                                  child: Container(
+                                      height: 50,
+                                      width: Get.width,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(36),
+                                          color: fagoSecondaryColor),
+                                      child: const Center(
+                                        child: AutoSizeText(
+                                          'Save',
+                                          style: TextStyle(
+                                            fontFamily: "Work Sans",
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: white,
+                                          ),
+                                        ),
+                                      )),
+                                ),
                                 // Center(
                                 //   child: AuthButtons(
                                 //     form: false,
@@ -458,8 +461,8 @@ class NameTextfield extends StatelessWidget {
         keyboardType: keyboadType,
         style: const TextStyle(
             fontFamily: "Work Sans",
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            fontSize: 16,
             color: stepsColor),
         decoration: InputDecoration(
           contentPadding:

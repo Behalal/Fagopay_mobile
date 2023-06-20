@@ -9,9 +9,10 @@ class InvoiceItemDetailsCard extends StatelessWidget {
     required this.itemname,
     required this.price,
     required this.total,
-    required this.quantity,
+    required this.quantity, this.onTap,
   });
 
+  final void Function()? onTap;
   final String itemname, price, total;
   final int quantity;
 
@@ -24,7 +25,7 @@ class InvoiceItemDetailsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            width: 40.w,
+            width: 28.w,
             child: AutoSizeText(
               itemname,
               overflow: TextOverflow.ellipsis,
@@ -57,6 +58,38 @@ class InvoiceItemDetailsCard extends StatelessWidget {
           // Image.asset(
           //   "assets/images/archive.png",
           // ),
+          GestureDetector(
+            onTap: onTap,
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 0.5.h, horizontal: 2.w),
+              decoration: const BoxDecoration(
+                  color: fagoSecondaryColorWithOpacity10,
+                  borderRadius: BorderRadius.all(Radius.circular(50))),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/archive.png",
+                    ),
+                    SizedBox(
+                      width: 0.3.w,
+                    ),
+                    const AutoSizeText(
+                      "Remove",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                        color: fagoSecondaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:fagopay/models/sales_model.dart';
 
 class Customer {
   String? id;
@@ -10,8 +8,8 @@ class Customer {
   String? state;
   String? city;
   String? address;
+  List<Map<String, String?>>? transactions;
   Company? company;
-  List<Sales>? transactions;
 
   Customer({
     this.id,
@@ -22,36 +20,44 @@ class Customer {
     this.state,
     this.city,
     this.address,
-    this.company,
     this.transactions,
+    this.company,
   });
 
-  static Customer fromJson(json) => Customer(
-        id: json['id'] as String?,
-        fullname: json['fullname'] as String?,
-        phoneNumber: json['phone_number'] as String?,
-        email: json['email'] as String?,
-        country: json['country'] as String?,
-        state: json['state'] as String?,
-        transactions: List<Sales>.from(json['transactions']!.map((x) => x)),
-        city: json['city'] as String?,
-        address: json['address'] as String?,
-        company: Company.fromJson(json['company']),
-      );
+  factory Customer.fromJson(Map<String, dynamic> json) => Customer(
+    id: json["id"],
+    fullname: json["fullname"],
+    phoneNumber: json["phone_number"],
+    email: json["email"],
+    country: json["country"],
+    state: json["state"],
+    city: json["city"],
+    address: json["address"],
+    transactions: json["transactions"] == null ? [] : List<Map<String, String?>>.from(json["transactions"]!.map((x) => Map.from(x).map((k, v) => MapEntry<String, String?>(k, v)))),
+    company: json["company"] == null ? null : Company.fromJson(json["company"]),
+  );
 
-  @override
-  String toString() {
-    return 'Customer(id: $id, fullname: $fullname, phoneNumber: $phoneNumber, email: $email, country: $country, state: $state, city: $city, address: $address, company: $company, transactions: $transactions)';
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "fullname": fullname,
+    "phone_number": phoneNumber,
+    "email": email,
+    "country": country,
+    "state": state,
+    "city": city,
+    "address": address,
+    "transactions": transactions == null ? [] : List<dynamic>.from(transactions!.map((x) => Map.from(x).map((k, v) => MapEntry<String, dynamic>(k, v)))),
+    "company": company?.toJson(),
+  };
 }
 
 class Company {
-  String id;
-  String companyName;
+  String? id;
+  String? companyName;
 
   Company({
-    required this.id,
-    required this.companyName,
+    this.id,
+    this.companyName,
   });
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(

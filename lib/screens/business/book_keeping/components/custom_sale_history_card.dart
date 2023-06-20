@@ -96,9 +96,9 @@ class CustomSaleHistoryCard extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 0.6.h),
-                decoration: const BoxDecoration(
-                    color: fagoGreenColorWithOpacity10,
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                decoration: BoxDecoration(
+                    color: salesStatus == "Part Paid" ? fagoSecondaryColor : fagoGreenColorWithOpacity10,
+                    borderRadius: const BorderRadius.all(Radius.circular(25))),
                 child: AutoSizeText(
                   salesStatus,
                   textAlign: TextAlign.center,
@@ -107,7 +107,7 @@ class CustomSaleHistoryCard extends StatelessWidget {
                     fontSize: 8,
                     color: salesStatus == 'Fully Paid'
                         ? fagoGreenColor
-                        : Colors.black,
+                        : Colors.white,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

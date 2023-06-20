@@ -2,6 +2,8 @@
 import 'package:fagopay/models/company_model.dart';
 import 'package:fagopay/models/supplier_model.dart';
 
+import 'customer_model.dart';
+
 class Expenses {
   String? id;
   String? reason;

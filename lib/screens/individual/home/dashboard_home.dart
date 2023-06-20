@@ -1,17 +1,27 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/notification_controller.dart';
+import 'package:fagopay/local_notification_services.dart';
+import 'package:fagopay/screens/authentication/widgets/email_phone_input.dart';
 import 'package:fagopay/screens/individual/bills/qr_code/my_qr_code.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
-import '../../../controllers/company_controller.dart';
+import 'package:fagopay/screens/widgets/navigation_bar.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:dio/dio.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../../controllers/government_identity_verification_controller.dart';
 import '../bills/data.dart';
-import '../bills/how_it_works.dart';
-import '../bills/qr_code/create_qr_code.dart';
 import '../bills/swap_airtime.dart';
 import '../refer_and_win/refer_page.dart';
 import '../requests/requests.dart';
 import '../transactions/fago_to_bank.dart';
 import '../transactions/fago_to_fago.dart';
-import '../../kyc/countdown_page2.dart';
 import '../../kyc/personal_verification_page.dart';
 import '../../business/book_keeping/booking_keeping.dart';
 import '../../business/invoice/all_invoice.dart';
@@ -35,7 +45,7 @@ import '../../../models/user_model/user.dart';
 
 class DashboardHome extends StatefulWidget {
   final String? accountType;
-  final User userDetails;
+  final UserDetail userDetails;
   final AccountDetail? accountDetails;
 
   const DashboardHome({
@@ -51,17 +61,409 @@ class DashboardHome extends StatefulWidget {
 
 class _DashboardHomeState extends State<DashboardHome> {
   bool isLoading = false;
-
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
   final _loginController = Get.find<LoginController>();
   final _userController = Get.find<UserController>();
+  final _notificationController = Get.put(NotificationController());
   final _governmentIdentityController = Get.find<GovernmentIdentityVerificationController>();
-  final _companyController = Get.find<CompanyController>();
+
+  Timer interval(Duration duration, func) {
+    Timer function() {
+      Timer timer = Timer(duration, function);
+
+      func(timer);
+
+      return timer;
+    }
+
+    return Timer(duration, function);
+  }
+
+  checkEmailOrPassword(){
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      if(_userController.user?.email == null || _userController.user?.email == ""){
+        interval(const Duration(minutes: 1), (timer) {
+          showEmailAlertDialog(context);
+          if (kDebugMode) {
+            print(_userController.emailPromptCount++);
+          }
+          if (_userController.emailPromptCount > 0) timer.cancel();
+        });
+      }else if(_userController.user?.phoneNumber == null || _userController.user?.phoneNumber == ""){
+        interval(const Duration(minutes: 1), (timer) {
+          showPhoneNumberAlertDialog(context);
+          if (kDebugMode) {
+            print(_userController.phonePromptCount++);
+          }
+          if (_userController.phonePromptCount > 0) timer.cancel();
+        });
+      }
+    });
+  }
+
+  String? otpText;
+  final controller = TextEditingController();
+
+  void showOtpDialog({required String emailOrPhone}){
+    showDialog(context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: MediaQuery.of(context).size.height/2, color: fagoSecondaryColorWithOpacity10.withOpacity(0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 5,),
+                  Container(height: 1, width: 100, color: fagoSecondaryColor,),
+                  const SizedBox(height: 30,),
+                  const Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Image.asset('assets/images/home_nav_logo.png',height: 30, width: 30,),
+                      // const SizedBox(width: 10,),
+                      AutoSizeText(
+                        'Verify Email/Phone',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(color: fagoSecondaryColor,),
+                  const SizedBox(height: 40,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        'Provide OTP',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+                   Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        "We sent OTP to $emailOrPhone Please \ncheck your inbox and enter the OTP received.",
+                        style: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15,),
+                  Padding(
+                      padding: EdgeInsets.only(left: 2.5.w, right: 2.5.w),
+                      child: PinCodeTextField(
+                        length: 6, controller: controller,
+                        appContext: Get.context!,
+                        pastedTextStyle: const TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 36,
+                          color: inactiveTab,
+                        ),
+                        keyboardType: TextInputType.number,
+                        pinTheme: PinTheme(
+                          activeColor: signInText,
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(5),
+                          fieldHeight: 38,
+                          fieldWidth: 38,
+                          activeFillColor: Colors.white,
+                        ),
+                        onChanged: (String value) async {
+                          if(value.isEmpty || value == ''){
+                            Get.snackbar("Error", "Please enter OTP");
+                          }else if (value.length < 6){
+                            null;
+                          }else if (value.length == 6) {
+                            otpText = controller.text;
+                          }
+                        },
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Didn\'t recieve an otp?',
+                            style: TextStyle(
+                              color: fagoSecondaryColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        Expanded(child: Container()),
+                        const Icon(
+                          Icons.refresh,
+                          size: 15,
+                          color: fagoSecondaryColor,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Get.back();
+                            resendEmailPhoneNumberPromptOtp(phoneNumberOrPassword: emailOrPhone);
+                          },
+                          child: const Text(
+                            'Resend',
+                            style: TextStyle(
+                              color: fagoSecondaryColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 35.0),
+                    child: InkWell(
+                      onTap: (){
+                        Get.back();
+                        verifyOtp(phoneNumberOrPassword: emailOrPhone, otp: otpText!);
+                      },
+                      child: Container(
+                          height: 43,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(36),
+                            color: fagoSecondaryColor,
+                          ),
+                          child: const Center(
+                            child: AutoSizeText(
+                              "Continue",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: "Work Sans",
+                                  fontWeight: FontWeight.w600,
+                                  color: white),
+                            ),
+                          )
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void showEmailAlertDialog(BuildContext context){
+    showDialog(context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: MediaQuery.of(context).size.height/2, color: fagoSecondaryColorWithOpacity10.withOpacity(0.05),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 5,),
+                  Container(height: 1, width: 100, color: fagoSecondaryColor,),
+                  const SizedBox(height: 30,),
+                  const Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Image.asset('assets/images/home_nav_logo.png',height: 30, width: 30,),
+                      // const SizedBox(width: 10,),
+                      AutoSizeText(
+                        'SetUp Email',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(color: fagoSecondaryColor,),
+                  const SizedBox(height: 40,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        'Verify Email',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        "Setup Email address to get access to \nimportant information and updates.",
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: EmailPhone(
+                      prefixIcon: const Icon(Icons.email_outlined, color: signInText,),
+                      hintText: "Enter email",
+                      controller: emailController,
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: GestureDetector(
+                      onTap: (){
+                        if(emailController.text.isEmpty){
+                          Get.snackbar("Error", "Please enter a valid email address", backgroundColor: Colors.white, colorText: stepsColor);
+                        }else{
+                          Get.back();
+                          verifyEmailOrPassword(emailOrPhoneNumber: emailController.text);
+                        }
+                      },
+                      child: Container(
+                        height: 43, decoration: BoxDecoration(color: fagoSecondaryColor, borderRadius: BorderRadius.circular(30)),
+                        child: Center(child: Text("Continue", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white, fontWeight:  FontWeight.w700),)),
+                      ),
+                    ),
+                  ),
+                  // const SizedBox(height: 20,),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void showPhoneNumberAlertDialog(BuildContext context){
+    showDialog(context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)), //this right here
+            child: Container(
+              height: MediaQuery.of(context).size.height/2, color: fagoSecondaryColorWithOpacity10.withOpacity(0.05),
+              child:  Column(mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 5,),
+                  Container(height: 1, width: 100, color: fagoSecondaryColor,),
+                  const SizedBox(height: 30,),
+                  const Row(mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Image.asset('assets/images/home_nav_logo.png', height: 30, width: 30,),
+                      // const SizedBox(width: 10,),
+                      AutoSizeText(
+                        'Verify Phone Number',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(color: fagoSecondaryColor,),
+                  const SizedBox(height: 40,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                        'SetUp Phone Number',
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: fagoSecondaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(alignment: Alignment.centerLeft,
+                      child: AutoSizeText(
+                      "Setup PhoneNumber to get access to \nimportant information and updates.",
+                        style: TextStyle(
+                          fontFamily: "Work Sans",
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: stepsColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: EmailPhone(
+                      prefixIcon: const Icon(Icons.local_phone, color: signInText,),
+                      hintText: "Enter phone number",
+                      controller: phoneNumber,
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: GestureDetector(
+                      onTap: (){
+                        if(phoneNumber.text.isEmpty){
+                          Get.snackbar("Error", "Please enter a valid phone number",backgroundColor: Colors.white, colorText: stepsColor);
+                        }else{
+                          Get.back();
+                          verifyEmailOrPassword(emailOrPhoneNumber: phoneNumber.text);
+                        }
+                      },
+                      child: Container(
+                        height: 43, decoration: BoxDecoration(color: fagoSecondaryColor, borderRadius: BorderRadius.circular(30)),
+                        child: Center(child: Text("Continue", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.w700),)),
+                      ),
+                    ),
+                  ),
+                  // const SizedBox(height: 20,),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   void initState() {
+    _notificationController.getNotification();
+    checkEmailOrPassword();
     getUserDetails();
     getIdentityDetails();
-    // getCompany();
     super.initState();
   }
 
@@ -90,6 +492,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
                     child: Obx(() {
                       // print(
                       //     ' user details Under home Obx ${_loginController.getUserDetails()}');
@@ -213,20 +616,12 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            100),
+                                                    borderRadius: BorderRadius.circular(100),
                                                     child: Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8),
-                                                      color: white,
-                                                      height: 35,
-                                                      width: 35,
-                                                      child: SvgPicture.asset(
-                                                        'assets/icons/bi_shield-lock.svg',
-                                                        color:
-                                                            fagoSecondaryColor,
+                                                      padding: const EdgeInsets.all(8),
+                                                      color: white, height: 35, width: 35,
+                                                      child: SvgPicture.asset('assets/icons/bi_shield-lock.svg',
+                                                        color: fagoSecondaryColor,
                                                       ),
                                                     ),
                                                   ),
@@ -457,9 +852,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                if (widget.userDetails
-                                                        .kycVerified ==
-                                                    0) {
+                                                if (widget.userDetails.kycVerified == 0) {
                                                   Get.defaultDialog(
                                                       title: "",
                                                       middleText: "",
@@ -530,73 +923,28 @@ class _DashboardHomeState extends State<DashboardHome> {
                                               },
                                               child: Column(
                                                 children: [
-                                                  SvgPicture.asset(
-                                                    'assets/icons/new_scanToPay_icon.svg',
-                                                    height: 2.5.h,
-                                                    width: 2.5.w,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.5.h,
-                                                  ),
-                                                  const AutoSizeText(
-                                                    "Scan to \nPay",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontFamily: "Work Sans",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 5,
-                                                      color: black,
-                                                    ),
-                                                  ),
+                                                  SvgPicture.asset('assets/icons/new_scanToPay_icon.svg', height: 2.5.h, width: 2.5.w,),
+                                                  SizedBox(height: 1.5.h,),
+                                                  const AutoSizeText("Scan to \nPay", textAlign: TextAlign.center,
+                                                    style: TextStyle(fontFamily: "Work Sans", fontWeight: FontWeight.w400, fontSize: 5, color: black,),),
                                                 ],
                                               ),
                                             ),
-                                            _userController.switchedAccountType == 2 ?Container():InkWell(
+                                            _userController.switchedAccountType == 2 ? Container() : InkWell(
                                               onTap: () {
-                                                if (widget.userDetails
-                                                        .kycVerified ==
-                                                    0) {
-                                                  Get.defaultDialog(
-                                                      title: "",
-                                                      middleText: "",
-                                                      titlePadding:
-                                                          EdgeInsets.zero,
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 8),
-                                                      content:
-                                                          unverifiedUserDialogue());
+                                                if (widget.userDetails.kycVerified == 0) {
+                                                  Get.defaultDialog(title: "", middleText: "", titlePadding: EdgeInsets.zero, contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
                                                   return;
                                                 }
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const RequestHome()),
-                                                );
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RequestHome()),);
                                               },
                                               child: Column(
                                                 children: [
-                                                  SvgPicture.asset(
-                                                    'assets/icons/new_requestMoney_icon.svg',
-                                                    height: 2.5.h,
-                                                    width: 2.5.w,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 1.5.h,
-                                                  ),
-                                                  const AutoSizeText(
-                                                    "Request \nMoney",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontFamily: "Work Sans",
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 5,
-                                                      color: black,
-                                                    ),
+                                                  SvgPicture.asset('assets/icons/new_requestMoney_icon.svg', height: 2.5.h, width: 2.5.w,),
+                                                  SizedBox(height: 1.5.h,),
+                                                  const AutoSizeText("Request \nMoney",
+                                                    textAlign: TextAlign.center, style: TextStyle(fontFamily: "Work Sans", fontWeight: FontWeight.w400, fontSize: 5, color: black,),
                                                   ),
                                                 ],
                                               ),
@@ -618,28 +966,13 @@ class _DashboardHomeState extends State<DashboardHome> {
                                           children: [
                                             InkWell(
                                               onTap: () {
-                                                if (widget.userDetails
-                                                        .kycVerified ==
-                                                    0) {
-                                                  Get.defaultDialog(
-                                                      title: "",
-                                                      middleText: "",
-                                                      titlePadding:
-                                                          EdgeInsets.zero,
-                                                      contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 8),
-                                                      content:
-                                                          unverifiedUserDialogue());
+                                                if (widget.userDetails.kycVerified == 0) {
+                                                  Get.defaultDialog(title: "", middleText: "", titlePadding: EdgeInsets.zero,
+                                                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
                                                   return;
                                                 }
-                                                Navigator.of(context).push(
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const BuyData()),
-                                                );
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BuyData()),);
                                               },
                                               child: Column(
                                                 children: [
@@ -728,35 +1061,39 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                 ],
                                               ),
                                             ),
-                                            InkWell(
+                                            _userController.switchedAccountType == 2 ? InkWell(
                                               onTap: () {
-                                                if (widget.userDetails
-                                                        .kycVerified ==
-                                                    0) {
+                                                if (widget.userDetails.kycVerified == 0) {
                                                   Get.defaultDialog(
                                                       title: "",
                                                       middleText: "",
                                                       titlePadding:
-                                                          EdgeInsets.zero,
+                                                      EdgeInsets.zero,
                                                       contentPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              horizontal: 8,
-                                                              vertical: 8),
-                                                      content:
-                                                          unverifiedUserDialogue());
+                                                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
                                                   return;
                                                 }
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //       builder: (context) =>
+                                                //           const CountdownPage2()),
+                                                // );
+                                                // Navigator.of(context).push(
+                                                //   MaterialPageRoute(
+                                                //       builder: (context) =>
+                                                //           const kyc_success()),
+                                                // );
                                                 Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const SwapAirtime()),
+                                                      const SharePaymentLink()),
                                                 );
                                               },
                                               child: Column(
                                                 children: [
                                                   SvgPicture.asset(
-                                                    'assets/icons/new_swapAirtime_icon.svg',
+                                                    'assets/icons/new_payment_link.svg',
                                                     height: 2.5.h,
                                                     width: 2.5.w,
                                                   ),
@@ -764,20 +1101,40 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                     height: 1.5.h,
                                                   ),
                                                   const AutoSizeText(
-                                                    "Swap \nAirtime",
+                                                    "Payment \nLink",
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontWeight:
-                                                          FontWeight.w400,
+                                                      FontWeight.w400,
                                                       fontSize: 5,
                                                       color: black,
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                            ),
+                                            ) :
                                             InkWell(
+                                              onTap: () {
+                                                if (widget.userDetails.kycVerified == 0) {
+                                                  Get.defaultDialog(title: "",
+                                                      middleText: "", titlePadding: EdgeInsets.zero,
+                                                      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                                                      content: unverifiedUserDialogue());
+                                                  return;
+                                                }
+                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SwapAirtime()),);
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  SvgPicture.asset('assets/icons/new_swapAirtime_icon.svg', height: 2.5.h, width: 2.5.w,),
+                                                  SizedBox(height: 1.5.h,),
+                                                  const AutoSizeText("Swap \nAirtime", textAlign: TextAlign.center,
+                                                    style: TextStyle(fontFamily: "Work Sans", fontWeight: FontWeight.w400, fontSize: 5, color: black,),),
+                                                ],
+                                              ),
+                                            ),
+                                            _userController.switchedAccountType == 2 ? const SizedBox() : InkWell(
                                               onTap: () {
                                                 if (widget.userDetails.kycVerified == 0) {
                                                   Get.defaultDialog(
@@ -946,8 +1303,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                                                                     .symmetric(
                                                                 horizontal: 8,
                                                                 vertical: 8),
-                                                        content:
-                                                            unverifiedUserDialogue());
+                                                        content: unverifiedUserDialogue());
                                                     return;
                                                   }
                                                   Navigator.of(context).push(
@@ -1480,17 +1836,85 @@ class _DashboardHomeState extends State<DashboardHome> {
     );
   }
 
+  Future<void> verifyEmailOrPassword({required String emailOrPhoneNumber}) async {
+    progressIndicator(context);
+    try {
+      final body = jsonEncode({
+        "identifier": emailOrPhoneNumber
+      });
+      final response = await NetworkProvider().call(path: "/v1/verify/email-phone-prompt", method: RequestMethod.post, body: body);
+      if(response?.statusCode == 200 || response?.statusCode == 201){
+        Get.back();
+        showOtpDialog(emailOrPhone: emailOrPhoneNumber);
+      }
+    }on DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (error) {
+      Get.back();
+      Get.snackbar('Error', error.toString());
+      throw error.toString();
+    }
+  }
+
+  Future<void> verifyOtp({required String phoneNumberOrPassword, required String otp}) async {
+    progressIndicator(context);
+    try {
+      final body = jsonEncode({
+        "identifier": phoneNumberOrPassword,
+        "otp": otp,
+      });
+      final response = await NetworkProvider().call(path: "/v1/verify/validate-email-phone-otp", method: RequestMethod.post, body: body);
+      if(response?.statusCode == 200 || response?.statusCode == 201){
+        Get.back();
+        Get.snackbar("Success", response?.data["data"]["message"] ?? "Verification was successful");
+      }
+    }on DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (error) {
+      Get.back();
+      Get.snackbar('Error', error.toString());
+      throw error.toString();
+    }
+  }
+
+  Future<void> resendEmailPhoneNumberPromptOtp({required String phoneNumberOrPassword}) async {
+    progressIndicator(context);
+    try {
+      final body = jsonEncode({
+        "identifier": phoneNumberOrPassword
+      });
+      final response = await NetworkProvider().call(path: "/v1/verify/resend-email-phone-prompt", method: RequestMethod.post, body: body);
+      if(response?.statusCode == 200 || response?.statusCode == 201){
+        Get.back();
+        Get.snackbar("Success", response?.data["data"]["message"] ?? "Verification was successful");
+      }
+    }on DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (error) {
+      Get.back();
+      Get.snackbar('Error', error.toString());
+      throw error.toString();
+    }
+  }
+
   Future<void> getUserDetails() async {
     final response = await _loginController.getUserDetails();
    // print(' response is = ${response['data']['userdetail']['nextofkin']}');
-    final userjsonBodyData = response['data']['userdetail'];
-    final userDetails = User.fromJson(userjsonBodyData);
-    final userAccountjsonBodyData = response['data']['userdetail']['accountdetail'];
+    final userjsonBodyData = response?.data['data']['userdetail'];
+    final userDetails = UserDetail.fromJson(userjsonBodyData);
+    final userAccountjsonBodyData = response?.data['data']['userdetail']['accountdetail'];
     final userAccountDetails = AccountDetail.fromJson(userAccountjsonBodyData);
-    setState(() {
       _userController.setUserAccountDetails = userAccountDetails;
       _userController.setUser = userDetails;
-    });
     //print('User details are kyc number is ${userDetails.kycVerified}');
   }
 
@@ -1766,9 +2190,8 @@ class _ViewAccountModalState extends State<ViewAccountModal> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(
-                                'assets/icons/fundAccount_icon.svg'),
-                            const AutoSizeText(
+                            SvgPicture.asset('assets/icons/fundAccount_icon.svg'),
+                            const Text(
                               "Create Sub Account",
                               style: TextStyle(
                                 fontFamily: "Work Sans",

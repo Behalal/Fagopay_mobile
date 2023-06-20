@@ -1,14 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/login_controller.dart';
-import 'package:fagopay/screens/authentication/sign_in.dart';
+import 'package:fagopay/functions/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
+import 'package:sizer/sizer.dart';
 import '../constants/colors.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
@@ -25,9 +20,22 @@ class ResetPasswordScreen extends StatefulWidget {
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final _loginController = Get.find<LoginController>();
+  bool checkRequirement(String value) {
+    bool met = (function.checkLoweCase(value) && function.checkUpperCase(value) && function.checknumbers(value) && function.specialCharacters(value) && value.length >= 8);
+
+    return met;
+  }
+  bool _upto8Characters = false;
+  bool _numbers = false;
+  bool _lowerCase = false;
+  bool _upperCase = false;
+  bool _symbolSpecial = false;
+  bool _passvisibility = false;
+  bool _confirmpassvisibility = false;
+  bool _passRequirementMet = false;
+  Functions function = Functions();
 
   @override
   void dispose() {
@@ -38,161 +46,471 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
-      child: Builder(
-        builder: (context) => GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              elevation: 0,
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_rounded),
-                onPressed: () => Navigator.of(context).pop(),
-                color: fagoBlackColor,
-              ),
-              title: const Text(
-                'Reset Password',
-                style: TextStyle(
-                  color: fagoSecondaryColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Work Sans',
-                ),
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const LinearProgressIndicator(
-                    color: fagoSecondaryColor,
-                    backgroundColor: fagoSecondaryColorWithOpacity,
-                    minHeight: 1.75,
-                    value: 0.5,
-                  ),
-                  const SizedBox(height: 5),
-                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        'Step 4 of 4',
-                        style: TextStyle(
-                          color: fagoBlackColor,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 35),
-                  const Text(
-                    'Setup Password',
-                    style: TextStyle(
-                      color: fagoSecondaryColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Work Sans',
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    'Provide a strong password to \nsecure your account',
-                    style: TextStyle(
-                      color: fagoBlackColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  _PasswordInput(
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(height: 10),
-                  _ConfirmPasswordInput(
-                    controller: _confirmPasswordController,
-                  ),
-                  const SizedBox(height: 15),
-                  const _PasswordVerificationChips(),
-                  const SizedBox(height: 25),
-                  _ContinueButton(
-                    onPressed: () async {
-                      if (_passwordController.text != "" &&
-                          _confirmPasswordController.text != "") {
-                        if (_confirmPasswordController.text !=
-                            _passwordController.text) {
-                          Fluttertoast.showToast(
-                            msg: "Passwords dont match!",
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.TOP,
-                            timeInSecForIosWeb: 2,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-                          return;
-                        }
-                        await createNewPassword(context);
-                        return;
-                      }
-                      Fluttertoast.showToast(
-                        msg: "Enter the fields correctly",
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.TOP,
-                        timeInSecForIosWeb: 2,
-                        backgroundColor: Colors.red,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
+          onPressed: () => Navigator.of(context).pop(),
+          color: fagoBlackColor,
+        ),
+        title: const Text(
+          'Reset Password',
+          style: TextStyle(
+            color: fagoSecondaryColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Work Sans',
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> createNewPassword(BuildContext context) async {
-    final progress = ProgressHUD.of(context);
-    progress!.show();
-    final response = await _loginController.createNewPassword(widget.pinCode,
-        _passwordController.text, _confirmPasswordController.text);
-    final jsonBody = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      progress.dismiss();
-      Fluttertoast.showToast(
-        msg:
-            "Password has been reset successfuly. Proceed to login with your new password",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (BuildContext context) => const SignIn(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const LinearProgressIndicator(
+              color: fagoSecondaryColor,
+              backgroundColor: fagoSecondaryColorWithOpacity,
+              minHeight: 1.75,
+              value: 0.5,
             ),
-            (route) => false);
-      });
-      return;
-    }
-    progress.dismiss();
-    Fluttertoast.showToast(
-      msg: "${jsonBody['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
+            const SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                Text(
+                  'Step 4 of 4',
+                  style: TextStyle(
+                    color: fagoBlackColor,
+                    fontSize: 12,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 25),
+            const Text(
+              'Setup Password',
+              style: TextStyle(
+                color: fagoSecondaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Work Sans',
+              ),
+            ),
+            const SizedBox(height: 15),
+            const Text(
+              'Provide a strong password to \nsecure your account',
+              style: TextStyle(
+                color: fagoBlackColor,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              height: 56,
+              width: 341,
+              child: TextFormField(
+                controller: _passwordController,
+                onChanged: ((value) {
+                  if (value.length >= 8) {
+                    setState(() {
+                      _upto8Characters = true;
+                    });
+                  } else {
+                    setState(() {
+                      _upto8Characters = false;
+                    });
+                  }
+
+                  if (function.checkLoweCase(value)) {
+                    setState(() {
+                      _lowerCase = true;
+                    });
+                  } else {
+                    setState(() {
+                      _lowerCase = false;
+                    });
+                  }
+
+                  if (function.checknumbers(value)) {
+                    setState(() {
+                      _numbers = true;
+                    });
+                  } else {
+                    setState(() {
+                      _numbers = false;
+                    });
+                  }
+
+                  if (function.checkUpperCase(value)) {
+                    setState(() {
+                      _upperCase = true;
+                    });
+                  } else {
+                    setState(() {
+                      _upperCase = false;
+                    });
+                  }
+
+                  if (function.specialCharacters(value)) {
+                    setState(() {
+                      _symbolSpecial = true;
+                    });
+                  } else {
+                    setState(() {
+                      _symbolSpecial = false;
+                    });
+                  }
+                  if (checkRequirement(value) && value == _confirmPasswordController.text) {
+                    setState(() {
+                      _passRequirementMet = true;
+                    });
+                  } else {
+                    setState(() {
+                      _passRequirementMet = false;
+                    });
+                  }
+                }),
+                obscureText: !_passvisibility,
+                enableSuggestions: false,
+                autocorrect: false,
+                style: const TextStyle(
+                    fontFamily: "Work Sans",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: signInPlaceholder),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(
+                        color: textBoxBorderColor,
+                        width: 1.0,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: textBoxBorderColor,
+                            width: 1.0,
+                            style: BorderStyle.solid)),
+                    hintText: "Password",
+                    hintStyle: const TextStyle(
+                      fontFamily: "Work Sans",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: signInPlaceholder,
+                    ),
+                    prefixIcon: const Image(
+                        image:
+                        AssetImage("assets/images/password_icon.png")),
+                    suffixIcon: IconButton(
+                      icon: (_passvisibility)
+                          ? const Icon(
+                        Icons.visibility_off,
+                        size: 20,
+                      )
+                          : const Icon(
+                        Icons.visibility,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passvisibility = !_passvisibility;
+                        });
+                      },
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 2.h,
+            ),
+            SizedBox(
+              height: 56,
+              width: 341,
+              child: TextFormField(
+                controller: _confirmPasswordController,
+                onChanged: (value) {
+                  if (value != _passwordController.text &&
+                      !checkRequirement(
+                          _passwordController.text)) {
+                    setState(() {
+                      _passRequirementMet = false;
+                    });
+                  } else {
+                    setState(() {
+                      _passRequirementMet = true;
+                    });
+                  }
+                },
+                obscureText: !_confirmpassvisibility,
+                enableSuggestions: false,
+                autocorrect: false,
+                style: const TextStyle(
+                    fontFamily: "Work Sans",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: signInPlaceholder),
+                decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                      borderSide: const BorderSide(
+                        color: textBoxBorderColor,
+                        width: 1.0,
+                      ),
+                    ),
+                    border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(
+                            color: textBoxBorderColor,
+                            width: 1.0,
+                            style: BorderStyle.solid)),
+                    hintText: "Confirm Password",
+                    hintStyle: const TextStyle(
+                      fontFamily: "Work Sans",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: signInPlaceholder,
+                    ),
+                    prefixIcon: const Image(
+                        image:
+                        AssetImage("assets/images/password_icon.png")),
+                    suffixIcon: IconButton(
+                      icon: (_confirmpassvisibility)
+                          ? const Icon(
+                        Icons.visibility_off,
+                        size: 20,
+                      )
+                          : const Icon(
+                        Icons.visibility,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _confirmpassvisibility = !_confirmpassvisibility;
+                        });
+                      },
+                    )),
+              ),
+            ),
+            const SizedBox(height: 15),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    width: 45.w,
+                    height: 4.h,
+                    decoration: const BoxDecoration(
+                        color: passGuideBg,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 1.h, horizontal: 0.4.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Icons.check_circle_outline_sharp,
+                            color: (_upto8Characters)
+                                ? requirementMet
+                                : requirementNotMet,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 40.w,
+                            child: const AutoSizeText(
+                              "At least 8 characters strong",
+                              style: TextStyle(
+                                  fontFamily: "Nunito",
+                                  color: black,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+                SizedBox(width: 0.7.w),
+                Container(
+                  width: 40.w,
+                  height: 4.h,
+                  decoration: const BoxDecoration(
+                      color: passGuideBg,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 1.h, horizontal: 0.4.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline_sharp,
+                          color: (_lowerCase)
+                              ? requirementMet
+                              : requirementNotMet,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 35.w,
+                          child: const AutoSizeText(
+                            "One lower case character",
+                            style: TextStyle(
+                                fontFamily: "Nunito",
+                                color: black,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    width: 25.w,
+                    height: 4.h,
+                    decoration: const BoxDecoration(
+                        color: passGuideBg,
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 1.h, horizontal: 0.4.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            Icons.check_circle_outline_sharp,
+                            color: (_upperCase)
+                                ? requirementMet
+                                : requirementNotMet,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                            child: const AutoSizeText(
+                              "One upper case ",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: "Nunito",
+                                  color: black,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+                SizedBox(
+                  width: 1.w,
+                ),
+                Container(
+                  width: 25.w,
+                  height: 4.h,
+                  decoration: const BoxDecoration(
+                      color: passGuideBg,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 1.h, horizontal: 0.4.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Icon(
+                          Icons.check_circle_outline_sharp,
+                          color: (_numbers)
+                              ? requirementMet
+                              : requirementNotMet,
+                          size: 15,
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                          child: const AutoSizeText(
+                            "One number",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "Nunito",
+                                color: black,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 1.h,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 80.0),
+              child: Container(
+                  width: 50.w,
+                  height: 4.h,
+                  decoration: const BoxDecoration(
+                      color: passGuideBg,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline_sharp,
+                        color: (_symbolSpecial)
+                            ? requirementMet
+                            : requirementNotMet,
+                        size: 15,
+                      ),
+                      SizedBox(
+                        width: 45.w,
+                        child: const AutoSizeText(
+                          "A symbol or special character",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: "Nunito",
+                              color: black,
+                              fontSize: 7,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
+            const SizedBox(height: 25),
+            _ContinueButton(
+              onPressed: () async {
+                if (_passwordController.text != "" &&
+                    _confirmPasswordController.text != "") {
+                  if (_confirmPasswordController.text !=
+                      _passwordController.text) {
+                    Get.snackbar("Error","Passwords don't match!");
+                    return;
+                  }
+                  await _loginController.createNewPassword(id: widget.pinCode,
+                    password: _passwordController.text,
+                    confirmedPassword: _confirmPasswordController.text, context: context,);
+                  return;
+                }
+                Get.snackbar("Error","Enter the fields correctly");
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -224,147 +542,3 @@ class _ContinueButton extends StatelessWidget {
   }
 }
 
-class _PasswordVerificationChips extends StatelessWidget {
-  const _PasswordVerificationChips();
-
-  @override
-  Widget build(BuildContext context) {
-    return  Wrap(
-      spacing: 1,
-      runSpacing: 2,
-      children: const [
-        Chip(
-          label: Text(
-            'At least 8 character strong',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-        Chip(
-          label: Text(
-            'One lower case character',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-        Chip(
-          label: Text(
-            'One upper case',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-        Chip(
-          label: Text(
-            'A symbol or special character',
-            style: TextStyle(
-              fontSize: 10,
-            ),
-          ),
-          avatar: Icon(
-            Icons.check_circle_outline,
-            size: 12,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _PasswordInput extends StatelessWidget {
-  final TextEditingController controller;
-
-  const _PasswordInput({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: true,
-      decoration: InputDecoration(
-        focusColor: const Color(0XFFe8a5aa),
-        hintText: 'Password',
-        hintStyle: const TextStyle(
-          fontSize: 14,
-        ),
-        prefixIconColor: const Color(0XFFe8a5aa),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0XFFe8a5aa),
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
-          ),
-        ),
-        prefixIcon: SvgPicture.asset(
-          'assets/icons/lock-icon.svg',
-          fit: BoxFit.scaleDown,
-          height: 20,
-          width: 20,
-        ),
-      ),
-    );
-  }
-}
-
-class _ConfirmPasswordInput extends StatelessWidget {
-  final TextEditingController controller;
-
-  const _ConfirmPasswordInput({required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: true,
-      decoration: InputDecoration(
-        focusColor: const Color(0XFFe8a5aa),
-        hintText: 'Confirm Password',
-        hintStyle: const TextStyle(
-          fontSize: 14,
-        ),
-        prefixIconColor: const Color(0XFFe8a5aa),
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0XFFe8a5aa),
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(5.0),
-          ),
-        ),
-        prefixIcon: SvgPicture.asset(
-          'assets/icons/lock-icon.svg',
-          fit: BoxFit.scaleDown,
-          height: 20,
-          width: 20,
-        ),
-        suffixIcon: SvgPicture.asset(
-          'assets/icons/show-password-icon.svg',
-          fit: BoxFit.scaleDown,
-          height: 20,
-          width: 20,
-        ),
-      ),
-    );
-  }
-}

@@ -2,12 +2,10 @@
 import 'dart:convert';
 
 import 'package:fagopay/controllers/customers_controller.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../controllers/company_controller.dart';
 import '../../../controllers/user_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
@@ -44,67 +42,55 @@ class _AddCustomerState extends State<AddCustomer> {
   Widget build(BuildContext context) {
     // final progress = ProgressHUD.of(context);
     // progress?.dismiss();
-    //print(_companyController.company!.id!);
-    return ProgressHUD(
-      child: Builder(
-        builder: (context) => GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const ProgressStyle(
-                      stage: 50,
-                      width: 4,
-                      pageName: "Add Customers",
-                    ),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    const BusinessWarning(),
-                    SizedBox(
-                      height: 3.h,
-                    ),
-                    const BusinessForm(),
-                    SizedBox(
-                      height: 4.h,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        if (_customerController.nameController.text != "" &&
-                            _customerController.phoneController.text != "" &&
-                            _customerController.emailController.text != "" &&
-                            _customerController.addressController.text != "" &&
-                            _customerController.countryController.text != "" &&
-                            _customerController.stateController.text != "" &&
-                            _customerController.cityController.text != "") {
-                          await registerCustomer(context);
-                          return;
-                        }
-                        Fluttertoast.showToast(
-                          msg: "Enter the fields correctly",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.TOP,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: AuthButtons(
-                            form: true, text: "Submit", route: null),
-                      ),
-                    ),
-                  ],
+    // print(_companyController.company!.id!);
+    return Scaffold(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.only(top: 4.h, left: 5.w, right: 5.w, bottom: 8.h),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ProgressStyle(
+                stage: 50,
+                width: 2,
+                pageName: "Add Customers",
+              ),
+              SizedBox(
+                height: 3.h,
+              ),
+              const BusinessWarning(),
+              SizedBox(
+                height: 3.h,
+              ),
+              const BusinessForm(),
+              SizedBox(
+                height: 4.h,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  if (_customerController.nameController.text.isEmpty ||
+                      _customerController.phoneController.text.isEmpty ||
+                      _customerController.emailController.text.isEmpty ||
+                      _customerController.addressController.text.isEmpty ||
+                      _customerController.countryController.text.isEmpty ||
+                      _customerController.stateController.text.isEmpty ||
+                      _customerController.cityController.text.isEmpty) {
+                    Get.snackbar("Error","Enter the fields correctly");
+                  }else if(_customerController.phoneController.text.length < 11){
+                    Get.snackbar("Error","Please enter a valid Phone Number");
+                  }else{
+                    await registerCustomer(context);
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: AuthButtons(
+                      form: true, text: "Submit", route: null),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -112,10 +98,7 @@ class _AddCustomerState extends State<AddCustomer> {
   }
 
   Future<void> registerCustomer(BuildContext context) async {
-    print(_companyController.company!.id!);
-    print(_userController.user!.id!);
-    final progress = ProgressHUD.of(context);
-    progress!.show();
+    progressIndicator(context);
     final response = await _customerController.registerNewCustomer(
       companyId: _companyController.company!.id!,
       name: _customerController.nameController.text,
@@ -129,29 +112,28 @@ class _AddCustomerState extends State<AddCustomer> {
     final jsonBody = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      progress.dismiss();
       if (!mounted) return;
+      Navigator.of(context).pop();
       Navigator.pop(context,false);
-      Fluttertoast.showToast(
-        msg: "Customer Detail Created Successfully",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 2,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      _customerController.nameController.clear();
+      _customerController.phoneController.clear();
+      _customerController.emailController.clear();
+      _customerController.addressController.clear();
+      _customerController.countryController.clear();
+      _customerController.stateController.clear();
+      _customerController.cityController.clear();
+      Get.snackbar("Success","Customer Detail Created Successfully");
       return;
+    }else{
+     _customerController.nameController.clear();
+     _customerController.phoneController.clear();
+     _customerController.emailController.clear();
+     _customerController.addressController.clear();
+     _customerController.countryController.clear();
+     _customerController.stateController.clear();
+     _customerController.cityController.clear();
+      Get.back();
+      Get.snackbar("Error","${jsonBody['data']['error']}");
     }
-    progress.dismiss();
-    Fluttertoast.showToast(
-      msg: "${jsonBody['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
   }
 }

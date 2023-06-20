@@ -25,7 +25,7 @@ class MyPurseList extends StatefulWidget {
 }
 
 class _MyPurseListState extends State<MyPurseList> {
-  final _pursecontroller = Get.find<PurseController>();
+  final _pursecontroller = Get.put(PurseController());
   bool isIndividual = false;
   int? myRequestType;
   var number = "";
@@ -83,10 +83,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 3.w, vertical: .9.h),
-                                      child:  Row(
+                                      child:  const Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: const [
+                                        children: [
                                           // SvgPicture.asset(
                                           //     'assets/icons/record_spending_wallet.svg'),
                                           AutoSizeText(
@@ -139,8 +139,7 @@ class _MyPurseListState extends State<MyPurseList> {
                                                     style: TextStyle(
                                                       fontFamily: "Work Sans",
                                                       fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w300,
+                                                      fontWeight: FontWeight.w300,
                                                       color: stepsColor,
                                                     ),
                                                   ),
@@ -172,8 +171,7 @@ class _MyPurseListState extends State<MyPurseList> {
                                                             fontFamily:
                                                                 "Work Sans",
                                                             fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.w500,
+                                                            fontWeight: FontWeight.w500,
                                                             color: welcomeText,
                                                           ),
                                                         ),
@@ -212,10 +210,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                       SizedBox(
                                         height: 1.5.h,
                                       ),
-                                       Row(
+                                       const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const[
+                                        children: [
                                           AutoSizeText(
                                             'Amount Spent',
                                             style: TextStyle(
@@ -239,10 +237,10 @@ class _MyPurseListState extends State<MyPurseList> {
                                       SizedBox(
                                         height: 0.5.h,
                                       ),
-                                       Row(
+                                       const Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: const [
+                                        children: [
                                           AutoSizeText(
                                             'NGN 380,000.00',
                                             style: TextStyle(

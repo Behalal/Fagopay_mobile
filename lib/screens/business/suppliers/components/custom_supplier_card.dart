@@ -38,7 +38,7 @@ class CustomSupplierCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 2.w,
+                  width: 3.w,
                 ),
                 SizedBox(
                   width: 65.w,
@@ -47,7 +47,7 @@ class CustomSupplierCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         fontFamily: "Work Sans",
-                        fontSize: 20,
+                        fontSize: 18,
                         color: inactiveTab,
                         fontWeight: FontWeight.w500),
                   ),
@@ -55,19 +55,19 @@ class CustomSupplierCard extends StatelessWidget {
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 4.h,
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: Image.asset("assets/images/edit.png"),
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     SizedBox(
+          //       height: 4.h,
+          //       child: CircleAvatar(
+          //         backgroundColor: Colors.transparent,
+          //         child: Image.asset("assets/images/edit.png"),
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );

@@ -234,7 +234,7 @@ class _BusinessBoxState extends State<BusinessBox> {
                                       width: 1.h,
                                     ),
                                     const AutoSizeText(
-                                      "Create upto 3 Business Account",
+                                      "Create up to 3 Business Account",
                                       // "hello",
                                       textAlign: TextAlign.left,
                                       minFontSize: 10,
@@ -266,7 +266,7 @@ class _BusinessBoxState extends State<BusinessBox> {
                                         width: 1.h,
                                       ),
                                       const AutoSizeText(
-                                        "Create upto 5 sub Account per \nBusiness",
+                                        "Create u pto 5 sub Account per \nBusiness",
                                         // "hello",
                                         textAlign: TextAlign.left,
                                         minFontSize: 10,

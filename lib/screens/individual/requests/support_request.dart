@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/functions/constant.dart';
@@ -295,30 +296,30 @@ class _SupportRequestState extends State<SupportRequest> {
     var data = {
       "amount": widget.item.requestedAmount.toString(),
       "request_id": widget.item.id.toString(),
+      // "transaction_pin": _pinController.paymentPin,
       "action": "decline",
+      "comment": "Unable to approve such amount due to stringent cash inflow",
     };
     var data2 = {
       "amount": widget.item.requestedAmount.toString(),
       "request_id": widget.item.id.toString(),
        "transaction_pin": _pinController.paymentPin,
       "action": "approve",
-      // "comment": "Unable to approve such amount due to stringent cash inflow"
+      "comment": "Unable to approve such amount due to stringent cash inflow"
     };
     RequestMoney().processRequestMoney(data: isApprove?data2:data).then((value) {
-     var res =  jsonDecode(value.body);
+     var res =  value?.data;
      print( res['data']['error']);
      if(res['data']['code'] == 200){
        setState(() {
          isLoading = false;
        });
-       Get.snackbar('Success', res['data']['message'],colorText: white,backgroundColor: fagoGreenColor);
+       Get.snackbar('Success', res['data']['message']);
        Navigator.pop(context,true);
      }else{
        Get.snackbar(
            'Error',
            res['data']['error'],
-         backgroundColor: fagoSecondaryColor,
-         colorText: white,
        );
        setState(() {
          isLoading = false;

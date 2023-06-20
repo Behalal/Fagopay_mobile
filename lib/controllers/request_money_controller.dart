@@ -1,5 +1,8 @@
 import 'dart:convert';
-
+import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/models/request_money/verify_phoneNumber_response_model.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -138,35 +141,22 @@ class RequestMoney extends GetxController {
     }
    return response!;
   }
-  Future processRequestMoney({ required Map data}) async {
-    final token = await SecureStorage.readUserToken();
-    http.Response? response;
+  Future<dio.Response<dynamic>?> processRequestMoney({ required Map data}) async {
     try{
-      response = await http.post(
-        Uri.parse("${BaseAPI.transactionsPath}process-money-request"),
-        headers: {
-     //     "Content-Type": "application/json",
-          "Authorization": "Bearer $token"
-        },
-        body: data,
-      );
-     //  if(response.statusCode == 200){
-     //    //_myRequestStatus(MyRequestStatus.success);
-     //  }else{
-     // //   _myRequestStatus(MyRequestStatus.error);
-     //  }
-    }catch (error) {
-      Get.snackbar(
-          'Error',
-          error.toString() ==
-              "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
-              ? 'No internet connection!'
-              : error.toString());
-      if (kDebugMode) {
-        print('requested money Error ${error.toString()}');
-      }
+      var postBody = jsonEncode(data);
+      final response = await NetworkProvider().call(path: "/v1/transaction/process-money-request", method: RequestMethod.post, body: postBody);
+      return response;
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      update();
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Error', err.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : err.toString());
+      throw err.toString();
     }
-    return response!;
   }
   Future requestedMoney() async {
     final token = await SecureStorage.readUserToken();
@@ -275,53 +265,76 @@ class RequestMoney extends GetxController {
   //   }
   // }
 
-  Future lookUpPhone({required String phone}) async {
-    final token = await SecureStorage.readUserToken();
-    try {
-      _looUpPhonStatus(LookUpPhone.loading);
-
-      var response = await http.get(
-          Uri.parse(
-            "${BaseAPI.lookupPhoneNum}$phone",
-          ),
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': 'Bearer $token'
-          });
-      print('here 1');
-      var json = jsonDecode(response.body);
-      if (kDebugMode) {
-        print(response.body);
-      }
-      print('here 3');
-      if (kDebugMode) {
-        print("lookup data ${response.body}");
-      }
-      if (response.statusCode == 200) {
-        var json = jsonDecode(response.body);
-
-        var phoneNumDetails =
-            LookUpPhoneNumber.fromJson(json['data']['account_detail']);
-        mUser(phoneNumDetails);
-        if (kDebugMode) {
-          print("phone number mUser $mUser request");
-          // print("phone number details $phoneNumDetails request");
-        }
-        _looUpPhonStatus(LookUpPhone.success);
-      } else if (response.statusCode == 404) {
-        // Get.snackbar(
-        //     'Error', 'Make sure the number is a register number on fagopay');
-        _looUpPhonStatus(LookUpPhone.error);
-      }
-      return response.body;
-    } catch (error) {
-      _looUpPhonStatus(LookUpPhone.error);
-      Get.snackbar(
-          'Error',
-          error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
-      if (kDebugMode) {
-        print('look up phone Error ${error.toString()}');
-      }
+  String accountName = '';
+  bool? onLookUpNumberLoadingState;
+  bool? onLookUpNumberErrorState;
+  Future<void> lookUpPhone({required String phoneNumber})async{
+    onLookUpNumberLoadingState = true;
+    onLookUpNumberErrorState = false;
+    update();
+    try{
+      final response = await NetworkProvider().call(path: "/v1/transaction/account-lookup-by-phone/$phoneNumber", method: RequestMethod.get);
+      final responseMessage = VerifyPhoneNumberResponse.fromJson(response!.data);
+      onLookUpNumberLoadingState = false;
+      onLookUpNumberErrorState = false;
+      accountName = responseMessage.data!.accountDetail!.accountName!;
+      update();
+    }on dio.DioError catch (err) {
+      onLookUpNumberLoadingState = false;
+      onLookUpNumberErrorState = true;
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      accountName = err.response?.data['data']['error'] ?? "Couldn't find number";
+      throw errorMessage;
+    } catch (err) {
+      onLookUpNumberLoadingState = false;
+      onLookUpNumberErrorState = true;
+      update();
+      accountName = "Couldn't find number";
+      throw err.toString();
     }
   }
+
+
+  // Future lookUpPhone({required String phone}) async {
+  //   final token = await SecureStorage.readUserToken();
+  //   try {
+  //     _looUpPhonStatus(LookUpPhone.loading);
+  //
+  //     var response = await http.get(
+  //         Uri.parse(
+  //           "${BaseAPI.lookupPhoneNum}$phone",
+  //         ),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           'Authorization': 'Bearer $token'
+  //         });
+  //     if (kDebugMode) {
+  //       print("lookup data ${response.body}");
+  //     }
+  //     if (response.statusCode == 200) {
+  //       var json = jsonDecode(response.body);
+  //       var phoneNumDetails = LookUpPhoneNumber.fromJson(json['data']['account_detail']);
+  //       mUser(phoneNumDetails);
+  //       if (kDebugMode) {
+  //         print("phone number mUser $mUser request");
+  //         // print("phone number details $phoneNumDetails request");
+  //       }
+  //       _looUpPhonStatus(LookUpPhone.success);
+  //     } else if (response.statusCode == 404) {
+  //       // Get.snackbar(
+  //       //     'Error', 'Make sure the number is a register number on fagopay');
+  //       _looUpPhonStatus(LookUpPhone.error);
+  //     }
+  //     return response.body;
+  //   } catch (error) {
+  //     _looUpPhonStatus(LookUpPhone.error);
+  //     Get.snackbar(
+  //         'Error',
+  //         error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+  //     if (kDebugMode) {
+  //       print('look up phone Error ${error.toString()}');
+  //     }
+  //   }
+  // }
 }

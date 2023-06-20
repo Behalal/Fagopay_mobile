@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-
-import '../models/invoice_model.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
@@ -9,35 +11,84 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InvoiceController extends GetxController {
-  final Rx<List<Invoice>> _invoices = Rx([]);
+  // final Rx<List<Invoice>> _invoices = Rx([]);
+  //
+  // List<Invoice> get invoices {
+  //   return [..._invoices.value];
+  // }
+  //
+  // set invoices(List<Invoice> invoices) {
+  //   _invoices(invoices);
+  // }
 
-  List<Invoice> get invoices {
-    return [..._invoices.value];
+
+  Future<dio.Response<dynamic>?> markInvoiceAsPaid({required String invoiceId,required BuildContext context})async{
+    progressIndicator(context);
+    try{
+      final response = await NetworkProvider().call(path: "/v1/businessinvoice/mark-as-paid/$invoiceId", method: RequestMethod.get);
+      Get.back();
+      Get.back();
+      Get.snackbar('Success', response?.data['message'] ?? "Invoice marked as paid");
+      return response;
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
+    }
   }
 
-  set invoices(List<Invoice> invoices) {
-    _invoices(invoices);
+  Future<dio.Response<dynamic>?> logPayment({required String invoiceId, required amountPaid, required BuildContext context})async{
+    progressIndicator(context);
+    try{
+      var body = jsonEncode({
+        "invoice_id": invoiceId,
+        "amount": amountPaid
+      });
+      final response = await NetworkProvider().call(path: "/v1/businessinvoice/log-payment", method: RequestMethod.post, body: body);
+      Get.back();
+      Get.snackbar('Success', response?.data['message'] ?? "Request Successful");
+      return response;
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
+    }
   }
 
-  List<Invoice> get unpaidInvoices {
-    return invoices
-        .where((unpaidInvoice) =>
-            unpaidInvoice.status == 'pending' ||
-            unpaidInvoice.status == 'unpaid')
-        .toList();
-  }
 
-  List<Invoice> get otherInvoices {
-    return invoices
-        .where((unpaidInvoice) =>
-            unpaidInvoice.status != 'unpaid' &&
-            unpaidInvoice.status != 'pending' &&
-            unpaidInvoice.status != 'paid')
-        .toList();
-  }
-
-  Invoice findInvoiceById(String id) {
-    return invoices.firstWhere((invoice) => invoice.id == id);
+  Future<dio.Response<dynamic>?> deleteInvoice({required String invoiceId, required BuildContext context})async{
+    progressIndicator(context);
+    try{
+      final response = await NetworkProvider().call(path: "/v1/businessinvoice/log-payment", method: RequestMethod.delete,);
+      Get.back();
+      Get.snackbar('Success', response?.data['message'] ?? "Request Successful");
+      return response;
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
+    }
   }
 
   TextEditingController itemNameController = TextEditingController();
@@ -45,6 +96,8 @@ class InvoiceController extends GetxController {
   TextEditingController priceController = TextEditingController();
   TextEditingController discountRateController = TextEditingController();
   TextEditingController taxRateController = TextEditingController();
+
+
 
   Future<dynamic> getInvoices(String companyId) async {
     final token = await SecureStorage.readUserToken();

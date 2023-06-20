@@ -36,7 +36,7 @@ List<ServiceModel> serviceContent = [
     route: FagoToBank(
       userDetails: _userController.user!,
       accountDetails: _userController.switchedAccountType == 2
-          ? _companyController.company!.accountDetails!
+          ? _companyController.company!.account!
           : _userController.userAccountDetails!,
     ),
   ),

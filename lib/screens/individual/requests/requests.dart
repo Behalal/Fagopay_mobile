@@ -2,12 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/individual/requests/widgets/my_request.dart';
 import 'package:fagopay/screens/individual/requests/widgets/request_list.dart';
 import '../../../controllers/request_money_controller.dart';
-import '../../authentication/recover_password_otp_screen.dart';
-import 'support_request.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../constants/colors.dart';
-import '../../constants/currency.dart';
 import 'make_request.dart';
 import '../../widgets/head_style_extra_pages.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +46,7 @@ class _RequestHomeState extends State<RequestHome> {
   void dispose() {
     super.dispose();
   }
-  List<Widget> _widgetOptions =[
+  final List<Widget> _widgetOptions =[
     MyRequestWidget(),
     RequestListWidget(),
   ];

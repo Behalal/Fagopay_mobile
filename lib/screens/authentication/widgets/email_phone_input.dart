@@ -5,12 +5,16 @@ import '../../constants/colors.dart';
 class EmailPhone extends StatelessWidget {
   final TextEditingController controller;
   final String? errorText;
+  final String? hintText;
+  final Widget? prefixIcon;
+  final TextInputType? keyboardType;
   final Function(String)? onChanged;
   const EmailPhone({
     super.key,
     this.errorText,
     this.onChanged,
-    required this.controller,
+    this.hintText,
+    required this.controller, this.prefixIcon, this.keyboardType,
   });
 
   @override
@@ -21,7 +25,7 @@ class EmailPhone extends StatelessWidget {
       child: TextFormField(
         controller: controller,
         onChanged: onChanged,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: keyboardType ?? TextInputType.emailAddress,
         style: const TextStyle(
             fontFamily: "Work Sans",
             fontWeight: FontWeight.w400,
@@ -32,30 +36,31 @@ class EmailPhone extends StatelessWidget {
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5.0),
             borderSide: const BorderSide(
-              color: textBoxBorderColor,
+              color: signInText,
               width: 1.0,
             ),
           ),
+
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               borderSide: BorderSide(
-                  color: textBoxBorderColor,
+                  color: signInText,
                   width: 1.0,
                   style: BorderStyle.solid)),
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               borderSide: BorderSide(
-                  color: linearGradient1,
+                  color: signInText,
                   width: 1.0,
                   style: BorderStyle.solid)),
-          hintText: "Phone number or Email",
+          hintText: hintText ?? "Phone number or Email",
           hintStyle: const TextStyle(
             fontFamily: "Work Sans",
             fontWeight: FontWeight.w400,
             fontSize: 14,
             color: signInPlaceholder,
           ),
-          prefixIcon: const Image(image: AssetImage("assets/images/phone.png")),
+          prefixIcon: prefixIcon ?? const Image(image: AssetImage("assets/images/phone.png")),
         ),
       ),
     );

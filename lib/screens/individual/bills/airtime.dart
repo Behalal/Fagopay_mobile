@@ -1,9 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-
 import '../../../controllers/bill_controller.dart';
 import '../../authentication/widgets/auth_buttons.dart';
 import '../../constants/colors.dart';
@@ -330,20 +328,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                           airtelActive == false &&
                           gloActive == false &&
                           etisatActive == false) {
-                        Fluttertoast.showToast(
-                          msg: "Select a Network Provider",
-                          toastLength: Toast.LENGTH_LONG,
-                          gravity: ToastGravity.TOP,
-                          timeInSecForIosWeb: 2,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                        // ScaffoldMessenger.of(context).showSnackBar(
-                        //   const SnackBar(
-                        //     content: Text('Select a Network Provider'),
-                        //   ),
-                        // );
+                        Get.snackbar("Error","Select a Network Provider");
                         return;
                       }
                       Navigator.of(context).pushReplacement(

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -39,7 +39,7 @@ class _TVSubscriptionState extends State<TVSubscription> {
 
   String verifiedCableUser = "";
   bool verifiedUser = false;
-  final bool _isLoading = false;
+  late bool _isLoading = false;
 
   @override
   void dispose() {
@@ -49,330 +49,328 @@ class _TVSubscriptionState extends State<TVSubscription> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return ProgressHUD(
-      child: Builder(
-        builder: (context) => GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const ProgressStyle(
-                        stage: 50,
-                        pageName: "Cable Subscription",
-                        // backRoute: const DashboardHome(),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ProgressStyle(
+                  stage: 50,
+                  pageName: "Cable Subscription",
+                  // backRoute: const DashboardHome(),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                TVProviders(
+                  onChanged: (String? newValue) async {
+                    setState(() {
+                      buyTvCableFields.setServiceid = newValue!;
+                    });
+                    await fetchDataByServiceId(newValue!);
+                  },
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                _isLoading == true ?
+                    const Center(
+                      child: CupertinoActivityIndicator(color: fagoSecondaryColor,),
+                    ) :
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const AutoSizeText(
+                      "Select Package",
+                      style: TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: welcomeText,
                       ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      TVProviders(
-                        onChanged: (String? newValue) async {
-                          setState(() {
-                            buyTvCableFields.setServiceid = newValue!;
-                          });
-                          await fetchDataByServiceId(newValue!);
-                        },
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const AutoSizeText(
-                            "Select Package",
-                            style: TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: welcomeText,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Container(
-                            width: 90.w,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: fagoSecondaryColor),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(5))),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 1.h),
-                              child: DropdownButton(
-                                underline: const SizedBox(),
-                                isExpanded: true,
-                                alignment: AlignmentDirectional.centerStart,
-                                value: priceSelected,
-                                items: dropdownItems2,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    priceSelected = newValue!;
-                                    if (priceSelected.isNotEmpty) {
-                                      _billcontroller.amountController.text =
-                                          allData![int.parse(priceSelected)]
-                                              .variationAmount;
-                                      buyTvCableFields.setAmount =
-                                          _billcontroller.amountController.text;
-                                      buyTvCableFields.getVariationCode =
-                                          allData![int.parse(priceSelected)]
-                                              .variationCode;
-                                      buyTvCableFields.setName =
-                                          allData![int.parse(priceSelected)]
-                                              .name;
-                                    }
-                                  });
-                                },
-                                style: const TextStyle(
-                                    decoration: TextDecoration.none,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: "Work Sans",
-                                    color: signInPlaceholder),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 0.5.h,
-                      ),
-                      Container(
-                        width: 90.w,
-                        decoration: const BoxDecoration(
-                            color: fagoSecondaryColorWithOpacity10,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 4.w, vertical: 1.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const AutoSizeText(
-                                "Price",
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: welcomeText,
-                                ),
-                              ),
-                              AutoSizeText(
-                                "$currencySymbol${buyTvCableFields.amount != '' ? buyTvCableFields.amount : 0}",
-                                style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontFamily: "Work Sans",
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: welcomeText,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      const AutoSizeText(
-                        "Enter Router Number",
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: welcomeText,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      SizedBox(
-                        width: 90.w,
-                        child: TextFormField(
-                          onChanged: (value) async {
-                            if (value.length >= 10 &&
-                                buyTvCableFields.serviceid.isNotEmpty) {
-                              buyTvCableFields.setBillersCode = value;
-                              await verifySmartCardNumber(
-                                  context, value, buyTvCableFields.serviceid);
-                            }
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    Container(
+                      width: 90.w,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: fagoSecondaryColor),
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(5))),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.w),
+                        child: DropdownButton(
+                          underline: const SizedBox(),
+                          isExpanded: true,
+                          alignment: AlignmentDirectional.centerStart,
+                          value: priceSelected,
+                          items: dropdownItems2,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              priceSelected = newValue!;
+                              if (priceSelected.isNotEmpty) {
+                                _billcontroller.amountController.text =
+                                    allData![int.parse(priceSelected)]
+                                        .variationAmount;
+                                buyTvCableFields.setAmount =
+                                    _billcontroller.amountController.text;
+                                buyTvCableFields.getVariationCode =
+                                    allData![int.parse(priceSelected)]
+                                        .variationCode;
+                                buyTvCableFields.setName =
+                                    allData![int.parse(priceSelected)]
+                                        .name;
+                              }
+                            });
                           },
-                          controller: _billcontroller.meterNoController,
-                          keyboardType: TextInputType.number,
                           style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
                               fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "Work Sans",
                               color: signInPlaceholder),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 4.w, vertical: 1.h),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: const BorderSide(
-                                color: textBoxBorderColor,
-                                width: 1.0,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 0.5.h,
+                    ),
+                    Container(
+                      width: 90.w,
+                      decoration: const BoxDecoration(
+                          color: fagoSecondaryColorWithOpacity10,
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 4.w, vertical: 1.h),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const AutoSizeText(
+                              "Price",
+                              style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: welcomeText,
                               ),
                             ),
-                            border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid)),
-                            hintText: "Enter Card Number",
-                            hintStyle: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: signInPlaceholder,
+                            AutoSizeText(
+                              "$currencySymbol${buyTvCableFields.amount != '' ? buyTvCableFields.amount : 0}",
+                              style: const TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontFamily: "Work Sans",
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: welcomeText,
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                const AutoSizeText(
+                  "Enter Router Number",
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: welcomeText,
+                  ),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                SizedBox(
+                  width: 90.w,
+                  child: TextFormField(
+                    onChanged: (value) async {
+                      if (value.length >= 10 &&
+                          buyTvCableFields.serviceid.isNotEmpty) {
+                        buyTvCableFields.setBillersCode = value;
+                        await verifySmartCardNumber(
+                            context, value, buyTvCableFields.serviceid);
+                      }
+                    },
+                    controller: _billcontroller.meterNoController,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 4.w, vertical: 1.h),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: const BorderSide(
+                          color: textBoxBorderColor,
+                          width: 1.0,
+                        ),
+                      ),
+                      border: const OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(5)),
+                          borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid)),
+                      hintText: "Enter Card Number",
+                      hintStyle: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 0.5.h,
+                ),
+                Container(
+                  width: 90.w,
+                  decoration: const BoxDecoration(
+                      color: fagoSecondaryColorWithOpacity10,
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 4.w, vertical: 1.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const AutoSizeText(
+                          "Fullname",
+                          style: TextStyle(
+                            fontFamily: "Work Sans",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: welcomeText,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 0.5.h,
-                      ),
-                      Container(
-                        width: 90.w,
-                        decoration: const BoxDecoration(
-                            color: fagoSecondaryColorWithOpacity10,
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 4.w, vertical: 1.h),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const AutoSizeText(
-                                "Fullname",
-                                style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: welcomeText,
-                                ),
-                              ),
-                              AutoSizeText(
-                                verifiedCableUser,
-                                style: const TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontFamily: "Work Sans",
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: welcomeText,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 2.h,
-                      ),
-                      const AutoSizeText(
-                        "Phone Number",
-                        style: TextStyle(
-                          fontFamily: "Work Sans",
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: welcomeText,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      SizedBox(
-                        width: 90.w,
-                        child: TextFormField(
-                          controller: _billcontroller.phoneController,
-                          keyboardType: TextInputType.phone,
+                        AutoSizeText(
+                          verifiedCableUser,
                           style: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontSize: 14,
-                              color: stepsColor),
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 4.w, vertical: 1.h),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: const BorderSide(
-                                color: textBoxBorderColor,
-                                width: 1.0,
-                              ),
-                            ),
-                            border: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                borderSide: BorderSide(
-                                    color: textBoxBorderColor,
-                                    width: 1.0,
-                                    style: BorderStyle.solid)),
-                            hintText: "Enter phone number",
-                            hintStyle: const TextStyle(
-                              fontFamily: "Work Sans",
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: signInPlaceholder,
-                            ),
+                            decoration: TextDecoration.underline,
+                            fontFamily: "Work Sans",
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: welcomeText,
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                const AutoSizeText(
+                  "Phone Number",
+                  style: TextStyle(
+                    fontFamily: "Work Sans",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: welcomeText,
+                  ),
+                ),
+                SizedBox(
+                  height: 1.h,
+                ),
+                SizedBox(
+                  width: 90.w,
+                  child: TextFormField(
+                    controller: _billcontroller.phoneController,
+                    keyboardType: TextInputType.phone,
+                    style: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontSize: 14,
+                        color: stepsColor),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 4.w, vertical: 1.h),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                        borderSide: const BorderSide(
+                          color: textBoxBorderColor,
+                          width: 1.0,
+                        ),
                       ),
-                      SizedBox(
-                        height: 12.h,
+                      border: const OutlineInputBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(5)),
+                          borderSide: BorderSide(
+                              color: textBoxBorderColor,
+                              width: 1.0,
+                              style: BorderStyle.solid)),
+                      hintText: "Enter phone number",
+                      hintStyle: const TextStyle(
+                        fontFamily: "Work Sans",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: signInPlaceholder,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: GestureDetector(
-                          onTap: (() {
-                            if (_billcontroller.meterNoController.text.length >=
-                                    10 &&
-                                buyTvCableFields.serviceid.isNotEmpty &&
-                                buyTvCableFields.variationCode.isNotEmpty &&
-                                _billcontroller
-                                    .amountController.text.isNotEmpty) {
-                              buyTvCableFields.setAmount =
-                                  _billcontroller.amountController.text;
-                              buyTvCableFields.setBillersCode =
-                                  _billcontroller.meterNoController.text;
-                              buyTvCableFields.setPhone =
-                                  _billcontroller.phoneController.text;
-                              goToPage(
-                                  context,
-                                  ConfirmTransactions(
-                                    backRoute: const TVSubscription(),
-                                    action: 'tv',
-                                  ));
-                            }
-                          }),
-                          child: AuthButtons(
-                            form: true,
-                            text: "Continue",
-                            route: ConfirmTransactions(
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  child: GestureDetector(
+                    onTap: (() {
+                      if (_billcontroller.meterNoController.text.length >=
+                          10 &&
+                          buyTvCableFields.serviceid.isNotEmpty &&
+                          buyTvCableFields.variationCode.isNotEmpty &&
+                          _billcontroller
+                              .amountController.text.isNotEmpty) {
+                        buyTvCableFields.setAmount =
+                            _billcontroller.amountController.text;
+                        buyTvCableFields.setBillersCode =
+                            _billcontroller.meterNoController.text;
+                        buyTvCableFields.setPhone =
+                            _billcontroller.phoneController.text;
+                        goToPage(
+                            context,
+                            ConfirmTransactions(
                               backRoute: const TVSubscription(),
                               action: 'tv',
-                            ),
-                          ),
-                        ),
-                      )
-                    ]),
-              ),
-            ),
-          ),
+                            ));
+                      }
+                    }),
+                    child: AuthButtons(
+                      form: true,
+                      text: "Continue",
+                      route: ConfirmTransactions(
+                        backRoute: const TVSubscription(),
+                        action: 'tv',
+                      ),
+                    ),
+                  ),
+                )
+              ]),
         ),
       ),
     );
@@ -380,37 +378,34 @@ class _TVSubscriptionState extends State<TVSubscription> {
 
   Future<void> verifySmartCardNumber(
       BuildContext context, String cardNo, String serviceID) async {
-    final progress = ProgressHUD.of(context);
-    progress!.show();
+    progressIndicator(context);
     final response =
         await _billcontroller.verifySmartCardNumber(cardNo, serviceID);
-    final jsonBodyData = jsonDecode(response.body);
+    final jsonBodyData = response?.data;
     final customerDetail = jsonBodyData['data']['customer_detail'];
-    if (response.statusCode == 200) {
-      progress.dismiss();
+    if (response?.statusCode == 200) {
+      Get.back();
       setState(() {
         verifiedCableUser = customerDetail['Customer_Name'];
         verifiedUser = true;
       });
       return;
     }
-    progress.dismiss();
+    Get.back();
     setState(() {
       verifiedCableUser = "";
       verifiedUser = false;
     });
-    Fluttertoast.showToast(
-      msg: "${jsonBodyData['data']['error']}",
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.TOP,
-      timeInSecForIosWeb: 2,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    Get.snackbar("Error","${jsonBodyData['data']['error']}");
   }
 
   Future<void> fetchDataByServiceId(String serviceId) async {
+    setState(() {
+      _isLoading = true;
+      dataDropdown = [
+        const DropdownMenuItem(value: "", child: Text("Select Package")),
+      ];
+    });
     final response = await _billcontroller.getDatabyServiceId(serviceId);
     List<DataDetails> x = response['data']['variation']
         .map<DataDetails>((variation) => DataDetails.fromJson(variation))
@@ -418,6 +413,7 @@ class _TVSubscriptionState extends State<TVSubscription> {
     setState(() {
       allData = x;
       dataDropdown = getDataList(allData!);
+      _isLoading = false;
     });
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: unrelated_type_equality_checks
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
@@ -116,12 +114,12 @@ class _SharePaymentLinkState extends State<SharePaymentLink> {
                                     radius: 30,
                                     backgroundColor: fagoSecondaryColor.withOpacity(0.05),
                                     child: Text(
-                                        isUser? '${_userUcontroller.user?.firstName?.substring(0, 1)}${_userUcontroller.user?.lastName?.substring(0, 1)}':
-                                        '${_companyController.company?.accountDetails?.accountName?.substring(0, 1)}'??'',
+                                        isUser? '${_userUcontroller.user?.firstName?.substring(0, 1) ?? ""}${_userUcontroller.user?.lastName?.substring(0, 1) ?? ""}':
+                                        '${_companyController.company?.companyName?.substring(0, 1)}'??'',
                                       style: textStyle(size: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,space: 2),),
                                   ),
                                    AutoSizeText(
-                                    isUser?"${_userUcontroller.user?.firstName} ${_userUcontroller.user?.lastName}":'${_companyController.company?.accountDetails?.accountName}',
+                                    isUser?"${_userUcontroller.user?.firstName ?? ""} ${_userUcontroller.user?.lastName ?? ""}":'${_companyController.company?.account?.accountName}',
                                     style: textStyle(size: 22,fontWeight:  FontWeight.w700)
                                   ),
                                   paymentUrl.isEmpty?Text('No payment link yet',style: textStyle(size: 15,fontWeight:  FontWeight.w500,),):Container(),

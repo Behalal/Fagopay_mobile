@@ -26,10 +26,9 @@ class CustomerPage extends StatefulWidget {
 class _CustomerPageState extends State<CustomerPage> {
   final _customerController = Get.find<CustomerController>();
   final _companyController = Get.find<CompanyController>();
-  bool isLoading = false;
   @override
   void initState() {
-    getCustomers();
+    _customerController.getCustomers(companyId: _companyController.company!.id!);
     super.initState();
   }
 
@@ -37,9 +36,12 @@ class _CustomerPageState extends State<CustomerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: getCustomers,
-        child: Obx(
-          () => Padding(
+        onRefresh: ()async{
+          await _customerController.getCustomers(companyId: _companyController.company!.id!);
+        },
+        child: GetBuilder<CustomerController>(
+            builder: (controller){
+          return Padding(
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 5.w),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -52,42 +54,38 @@ class _CustomerPageState extends State<CustomerPage> {
                 SizedBox(
                   height: 3.h,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const AddCustomer())).then((value) {
-                      if(value != null){
-                        getCustomers();
-                      }
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 53.w, right: 2.w),
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
-                      decoration: const BoxDecoration(
-                          color: fagoSecondaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(25))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset("assets/images/add_grp.png", scale: 1.5,),
-                          const Expanded(
-                            child:  AutoSizeText(
-                              "Add Customer",
-                              style: TextStyle(
-                                  fontFamily: "Work Sans",
-                                  fontSize: 5,
-                                  color: white,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //
+                //   },
+                //   child: Padding(
+                //     padding: EdgeInsets.only(left: 53.w, right: 2.w),
+                //     child: Container(
+                //       padding:
+                //       EdgeInsets.symmetric(horizontal: 4.w, vertical: 1.h),
+                //       decoration: const BoxDecoration(
+                //           color: fagoSecondaryColor,
+                //           borderRadius: BorderRadius.all(Radius.circular(25))),
+                //       child: Row(
+                //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           Image.asset("assets/images/add_grp.png", scale: 1.5,),
+                //           const Expanded(
+                //             child:  AutoSizeText(
+                //               "Add Customer",
+                //               style: TextStyle(
+                //                   fontFamily: "Work Sans",
+                //                   fontSize: 5,
+                //                   color: white,
+                //                   fontWeight: FontWeight.w600),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: 2.h,
                 ),
@@ -96,18 +94,23 @@ class _CustomerPageState extends State<CustomerPage> {
                   secondBoxImage: "assets/images/archive-book.svg",
                   firstBoxDescription: "No. of Customers",
                   firstBoxMainValue:
-                      _customerController.customers.length.toString(),
+                  _customerController.customers.length.toString(),
                   secondBoxMainValue: "234",
-                  secondBoxDescription: "Total Transaction Value",
+                  secondBoxDescription: "Add Customer",
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const AddCustomer())).then((value) async {
+                      if(value != null){
+                        await _customerController.getCustomers(companyId: _companyController.company!.id!);
+                      }
+                    });
+                  },
                 ),
-                SizedBox(
-                  height: 2.h,
-                ),
-                Row(
+                SizedBox(height: 2.h,),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const AutoSizeText(
+                    AutoSizeText(
                       "My Favorite Customers",
                       textAlign: TextAlign.justify,
                       style: TextStyle(
@@ -116,67 +119,50 @@ class _CustomerPageState extends State<CustomerPage> {
                           color: inactiveTab,
                           fontWeight: FontWeight.w500),
                     ),
-                    SvgPicture.asset("assets/images/document-filter.svg"),
+                    // SvgPicture.asset("assets/images/document-filter.svg"),
                   ],
                 ),
                 SizedBox(height: 1.h),
-                _customerController.customers.isEmpty ? SizedBox(
-                        height: 20.h,
-                        child: const Center(
-                            child: AutoSizeText('No customers yet')),
-                      )
-                    : isLoading ? const Center(child: LoadingWidget(color: fagoSecondaryColor,)):Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          // itemCount: 3,
-                          itemCount: _customerController.customers.length,
-                          itemBuilder: (context, index) => CustomCustomerCard(
-                            // fullName: "Korede",
-                            fullName:
-                                _customerController.customers[index].fullname!,
-                            // email: "akored@gmail.com",
-                            email: _customerController.customers[index].email!,
-                            // phoneNumber: "080976543445",
-                            phoneNumber: _customerController
-                                .customers[index].phoneNumber!,
-                            onPressed: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const CustomerDetails(),
-                                settings: RouteSettings(
-                                  arguments:
-                                      _customerController.customers[index].id!,
-                                ),
-                              ),
-                            ),
+                controller.isLoadingCustomers == true ? Center(child: LoadingWidget(color: fagoSecondaryColor,size: MediaQuery.of(context).size.height / 4)) :
+                controller.isLoadingCustomers  == false && _customerController.customers.isEmpty ?
+                SizedBox(height: 20.h, child: const Center(
+                    child: AutoSizeText('No customers yet')),
+                ) : controller.isLoadingCustomers  == false  && _customerController.customers.isNotEmpty || _customerController.customers != [] ?
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    // itemCount: 3,
+                    itemCount: _customerController.customers.length,
+                    itemBuilder: (context, index) => CustomCustomerCard(
+                      // fullName: "Korede",
+                      fullName:
+                      _customerController.customers[index].fullname!,
+                      // email: "akored@gmail.com",
+                      email: _customerController.customers[index].email!,
+                      // phoneNumber: "080976543445",
+                      phoneNumber: _customerController
+                          .customers[index].phoneNumber!,
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CustomerDetailsPage(customerId:  _customerController.customers[index].id.toString(),),
+                          settings: RouteSettings(
+                            arguments:
+                            _customerController.customers[index].id!,
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                ) :  Center(child: LoadingWidget(color: fagoSecondaryColor, size: MediaQuery.of(context).size.height / 4,)),
               ],
             ),
-          ),
-        ),
+          );
+        })
       ),
       // bottomNavigationBar: const LoadMore(),
     );
   }
 
-  Future<void> getCustomers() async {
-    setState(() {
-      isLoading = true;
-    });
-    final companyId = _companyController.company!.id!;
-    final response = await _customerController.getCustomers(companyId).then((value) {
-      print('this value ${value['data']['customers']}');
-      final resBody = value['data']['customers'];
-      print('yooo $resBody');
-      final returnedCustomers = resBody.map<Customer>((customer) => Customer.fromJson(customer)).toList();
-      setState(() {
-        isLoading = false;
-        _customerController.customers = returnedCustomers;
-      });
-    });
-
-  }
 }

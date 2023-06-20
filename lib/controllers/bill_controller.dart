@@ -1,17 +1,24 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
+import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../models/swap_airtime_model.dart/initiateSwap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:dio/dio.dart' as dio;
 import '../models/swap_airtime_model.dart/swapCharges_Model.dart';
 import '../screens/individual/bills/models/bill_post_model.dart';
 import '../service/constants/constants.dart';
 import '../service/networking/network_helper.dart';
 import '../service/secure_storage/secure_storage.dart';
 import 'package:http/http.dart' as http;
+
+import 'company_controller.dart';
 
 enum SwapChargesEnum {
   empty,
@@ -34,6 +41,8 @@ class BillController extends GetxController {
   TextEditingController confirmPhoneController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController meterNoController = TextEditingController();
+
+  bool isLoadingElectricity = false;
 
   final _swapChargesStatus = SwapChargesEnum.empty.obs;
   SwapChargesEnum get swapChargesStatus => _swapChargesStatus.value;
@@ -61,43 +70,89 @@ class BillController extends GetxController {
     }
   }
 
-  Future<dynamic> buyAirtime(String transactionPin) async {
-    final token = await SecureStorage.readUserToken();
+
+  Future<String> fetchAccountId() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    String? accountId = sharedPreferences.getString("accountId");
+    return accountId ?? "";
+  }
+  Future<String> fetchCompanyId() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    String? companyId = sharedPreferences.getString("companyId");
+    return companyId ?? "";
+  }
+  String? companyId;
+  String? accountId;
+  final _userUcontroller = Get.find<UserController>();
+
+  Future<dio.Response<dynamic>?> buyAirtime(String transactionPin) async {
     String amount = buyAirtimeFields.amount;
     String serviceId = buyAirtimeFields.serviceid;
     String phone = buyAirtimeFields.getphone;
-
+    await fetchAccountId().then((value){
+      if(value.isEmpty || value == ""){
+        accountId = "";
+      }else{
+        accountId = value;
+      }
+    });
+    await fetchCompanyId().then((value){
+      if(value.isEmpty || value == ""){
+        companyId = "";
+      }else{
+        companyId = value;
+      }
+    });
     var requestBody = jsonEncode({
       "phone": phone,
       "serviceID": serviceId,
       "amount": amount,
-      "transaction_pin": transactionPin
+      "transaction_pin": transactionPin,
     });
-
-    try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.billPath}airtime-purchase",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token"
-        },
-        body: requestBody,
-      );
-
-      return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+    var requestBodyCompany = jsonEncode({
+      "phone": phone,
+      "serviceID": serviceId,
+      "amount": amount,
+      "transaction_pin": transactionPin,
+      "company_id": companyId,
+      "account": accountId,
+    });
+    try{
+      final response = await NetworkProvider().call(path: "/v1/bills/airtime-purchase", method: RequestMethod.post,
+          body: _userUcontroller.switchedAccountType == 2 ? requestBodyCompany : requestBody);
+      return response;
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
-  Future<dynamic> buyData(String transactionPin) async {
-    final token = await SecureStorage.readUserToken();
+  Future<dio.Response<dynamic>?> buyData(String transactionPin) async {
     String amount = buyDataFields.amount;
     String serviceId = buyDataFields.serviceid;
     String phone = buyDataFields.getphone;
     String billerCode = buyDataFields.billersCode;
     String variationCode = buyDataFields.variationCode;
+    await fetchAccountId().then((value){
+      if(value.isEmpty || value == ""){
+        accountId = "";
+      }else{
+        accountId = value;
+      }
+    });
+    await fetchCompanyId().then((value){
+      if(value.isEmpty || value == ""){
+        companyId = "";
+      }else{
+        companyId = value;
+      }
+    });
 
     var requestBody = jsonEncode({
       "phone": phone,
@@ -108,20 +163,30 @@ class BillController extends GetxController {
       "transaction_pin": transactionPin
     });
 
-    try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.billPath}purchase-data-bundle",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token"
-        },
-        body: requestBody,
-      );
+    var requestBodyCompany = jsonEncode({
+      "phone": phone,
+      "serviceID": serviceId,
+      "amount": double.parse(amount).toInt().toString(),
+      "variation_code": variationCode,
+      "billersCode": billerCode,
+      "transaction_pin": transactionPin,
+      "company_id": companyId,
+      "account": accountId,
+    });
 
+    try {
+      final responseData = await NetworkProvider().call(path: "/v1/bills/purchase-data-bundle", method: RequestMethod.post,
+          body: _userUcontroller.switchedAccountType == 2 ? requestBodyCompany : requestBody);
       return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
@@ -173,14 +238,26 @@ class BillController extends GetxController {
     }
   }
 
-  Future<dynamic> buyElectricity(String transactionPin) async {
-    final token = await SecureStorage.readUserToken();
+  Future<dio.Response<dynamic>?> buyElectricity(String transactionPin) async {
     String amount = buyElectricityFields.amount;
     String serviceID = buyElectricityFields.serviceid;
     String phone = buyElectricityFields.getphone;
     String billerCode = buyElectricityFields.billersCode;
     String variationCode = buyElectricityFields.variationCode;
-
+    await fetchAccountId().then((value){
+      if(value.isEmpty || value == ""){
+        accountId = "";
+      }else{
+        accountId = value;
+      }
+    });
+    await fetchCompanyId().then((value){
+      if(value.isEmpty || value == ""){
+        companyId = "";
+      }else{
+        companyId = value;
+      }
+    });
     var requestBody = jsonEncode({
       "phone": phone,
       "serviceID": serviceID,
@@ -189,88 +266,127 @@ class BillController extends GetxController {
       "billersCode": billerCode,
       "transaction_pin": transactionPin
     });
+    var requestBodyCompany = jsonEncode({
+      "phone": phone,
+      "serviceID": serviceID,
+      "amount": amount,
+      "variation_code": variationCode,
+      "billersCode": billerCode,
+      "transaction_pin": transactionPin,
+      "company_id": companyId,
+      "account": accountId,
+    });
 
     try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.billPath}electricity-purchase",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token"
-        },
-        body: requestBody,
-      );
 
+      final responseData = await NetworkProvider().call(path: "/v1/bills/electricity-purchase", method: RequestMethod.post,
+          body: _userUcontroller.switchedAccountType == 2 ? requestBodyCompany : requestBody);
       return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
-  Future<dynamic> buyInternet(String transactionPin) async {
-    final token = await SecureStorage.readUserToken();
+  Future<dio.Response<dynamic>?> buyInternet(String transactionPin) async {
     String amount = buyInternetFields.amount;
     String serviceID = buyInternetFields.serviceid;
     String billerCode = buyInternetFields.billersCode;
     String variationCode = buyInternetFields.variationCode;
-
+    await fetchAccountId().then((value){
+      if(value.isEmpty || value == ""){
+        accountId = "";
+      }else{
+        accountId = value;
+      }
+    });
+    await fetchCompanyId().then((value){
+      if(value.isEmpty || value == ""){
+        companyId = "";
+      }else{
+        companyId = value;
+      }
+    });
     var requestBody = jsonEncode({
       "serviceID": serviceID,
       "amount": double.parse(amount).toInt(),
       "variation_code": variationCode,
       "billersCode": billerCode,
-      "transaction_pin": transactionPin
+      "transaction_pin": transactionPin,
+    });
+    var requestBodyCompany = jsonEncode({
+      "serviceID": serviceID,
+      "amount": double.parse(amount).toInt(),
+      "variation_code": variationCode,
+      "billersCode": billerCode,
+      "transaction_pin": transactionPin,
+      "company_id": companyId,
+      "account": accountId,
     });
 
     try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.billPath}internet-subscription",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token"
-        },
-        body: requestBody,
-      );
-
+      final responseData = await NetworkProvider().call(path: "/v1/bills/internet-subscription", method: RequestMethod.post,
+          body: _userUcontroller.switchedAccountType == 2 ? requestBodyCompany : requestBody);
       return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
-  Future<dynamic> verifySmartCardNumber(
+  Future<dio.Response<dynamic>?> verifySmartCardNumber(
       String billersCode, String serviceID) async {
-    final token = await SecureStorage.readUserToken();
-
     var requestBody =
         jsonEncode({"billersCode": billersCode, "serviceID": serviceID});
 
     try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.billPath}verify-smart-card-number",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token"
-        },
-        body: requestBody,
-      );
-
+      final responseData = await NetworkProvider().call(path: "/v1/bills/verify-smart-card-number", method: RequestMethod.post,
+          body: requestBody);
       return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
-  Future<dynamic> buyCableSubscription(String transactionPin) async {
-    final token = await SecureStorage.readUserToken();
+  Future<dio.Response<dynamic>?> buyCableSubscription(String transactionPin) async {
     String amount = buyTvCableFields.amount;
     String serviceID = buyTvCableFields.serviceid;
     String phone = buyTvCableFields.getphone;
     String billerCode = buyTvCableFields.billersCode;
     String variationCode = buyTvCableFields.variationCode;
-
+    await fetchAccountId().then((value){
+      if(value.isEmpty || value == ""){
+        accountId = "";
+      }else{
+        accountId = value;
+      }
+    });
+    await fetchCompanyId().then((value){
+      if(value.isEmpty || value == ""){
+        companyId = "";
+      }else{
+        companyId = value;
+      }
+    });
     var requestBody = jsonEncode({
       "phone": phone,
       "serviceID": serviceID,
@@ -279,21 +395,30 @@ class BillController extends GetxController {
       "billersCode": billerCode,
       "transaction_pin": transactionPin
     });
+    var requestBodyCompany = jsonEncode({
+      "phone": phone,
+      "serviceID": serviceID,
+      "amount": double.parse(amount).toInt(),
+      "variation_code": variationCode,
+      "billersCode": billerCode,
+      "transaction_pin": transactionPin,
+      "company_id": companyId,
+      "account": accountId,
+    });
 
     try {
-      final responseData = await NetworkHelper.postRequest(
-        url: "${BaseAPI.billPath}tv-subscription",
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token"
-        },
-        body: requestBody,
-      );
-
+      final responseData = await NetworkProvider().call(path: "/v1/bills/tv-subscription", method: RequestMethod.post,
+          body: _userUcontroller.switchedAccountType == 2 ? requestBodyCompany : requestBody);
       return responseData;
-    } catch (e) {
-      log(e.toString());
-      throw Exception('Failed');
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString());
+      throw err.toString();
     }
   }
 
