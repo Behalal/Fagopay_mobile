@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>704330958916-sk5jvujrvg590t7lm6oskc4kq7cvlv02.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.704330958916-sk5jvujrvg590t7lm6oskc4kq7cvlv02</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBnXc4V9fA7R_FmDEWoPRjqPbn3XVu8GEA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>704330958916</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>net.fagopay.fagopay</string>
+	<key>PROJECT_ID</key>
+	<string>fagopay-ce8c4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fagopay-ce8c4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:704330958916:ios:f597900141bc4be2ad1411</string>
+</dict>
+</plist>
