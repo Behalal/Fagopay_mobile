@@ -86,6 +86,18 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                   SizedBox(
                     height: 4.h,
                   ),
+                  const Text(
+                    "Enter passcode",
+                    style: TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 12,
+                      color: stepsColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
                   Padding(
                       padding: EdgeInsets.only(left: 2.5.w, right: 4.w),
                       child: PinCodeTextField(
@@ -121,6 +133,18 @@ class _SetupPassCodeState extends State<SetupPassCode> {
                       )),
                   SizedBox(
                     height: 3.h,
+                  ),
+                  const Text(
+                    "Confirm passcode",
+                    style: TextStyle(
+                      fontFamily: "Work Sans",
+                      fontSize: 12,
+                      color: stepsColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
                   ),
                   Padding(
                       padding: EdgeInsets.only(left: 2.5.w, right: 4.w),

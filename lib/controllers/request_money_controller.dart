@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart' as dio;
 import 'package:fagopay/models/request_money/verify_phoneNumber_response_model.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -87,7 +89,7 @@ class RequestMoney extends GetxController {
         products.isNotEmpty ? _myRequestStatus(MyRequestStatus.available) : _myRequestStatus(MyRequestStatus.empty);
         _myRequestStatus(MyRequestStatus.success);
       } else if (response.statusCode == 409) {
-        Get.snackbar('Error', 'Go and verify your KYC');
+        Get.snackbar('Error', 'Go and verify your KYC', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
         _myRequestStatus(MyRequestStatus.error);
       }
       print('response body = ${response.body}');
@@ -99,7 +101,7 @@ class RequestMoney extends GetxController {
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('my request Error ${error.toString()}');
       }
@@ -134,7 +136,7 @@ class RequestMoney extends GetxController {
           error.toString() ==
               "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('requested money Error ${error.toString()}');
       }
@@ -150,11 +152,12 @@ class RequestMoney extends GetxController {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
       update();
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Error', err.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : err.toString());
+      Get.snackbar('Error', err.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+          ? 'No internet connection!' : err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -194,7 +197,7 @@ class RequestMoney extends GetxController {
         requestedMon.isNotEmpty ? _requestedMoneyStatus(MyRequestedMoneyStatus.available) : _requestedMoneyStatus(MyRequestedMoneyStatus.empty);
         _requestedMoneyStatus(MyRequestedMoneyStatus.success);
       } else if (response.statusCode == 409) {
-        Get.snackbar('Error', 'Go and verify your KYC');
+        Get.snackbar('Error', 'Go and verify your KYC', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
         _requestedMoneyStatus(MyRequestedMoneyStatus.error);
       }
       return response.body;
@@ -205,7 +208,7 @@ class RequestMoney extends GetxController {
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('requested money Error ${error.toString()}');
       }

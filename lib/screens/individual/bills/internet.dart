@@ -457,7 +457,7 @@ class _InternrtState extends State<Internrt> {
       verrifiedMeterUser = "";
       verifiedUser = false;
     });
-    Get.snackbar("Error","${jsonBodyData['data']['error']}");
+    Get.snackbar("Error","${jsonBodyData['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
   }
 
   List<DropdownMenuItem<String>> getDataList(List<DataDetails> data) {

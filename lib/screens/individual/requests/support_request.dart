@@ -314,12 +314,12 @@ class _SupportRequestState extends State<SupportRequest> {
        setState(() {
          isLoading = false;
        });
-       Get.snackbar('Success', res['data']['message']);
+       Get.snackbar('Success', res['data']['message'], colorText: Colors.white, backgroundColor: fagoSecondaryColor);
        Navigator.pop(context,true);
      }else{
        Get.snackbar(
            'Error',
-           res['data']['error'],
+           res['data']['error'], colorText: Colors.white, backgroundColor: fagoSecondaryColor
        );
        setState(() {
          isLoading = false;

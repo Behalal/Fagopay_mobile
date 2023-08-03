@@ -55,16 +55,16 @@ class _IdentificationVerificationState
         Get.back();
         Get.back();
         Get.back();
-        Get.snackbar("Success", response?.data["data"]["message"] ?? "Verification was successful");
+        Get.snackbar("Success", response?.data["data"]["message"] ?? "Verification was successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
       }
     }on DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (error) {
       Get.back();
-      Get.snackbar('Error', error.toString());
+      Get.snackbar('Error', error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw error.toString();
     }
   }
@@ -374,7 +374,7 @@ class _IdentificationVerificationState
                               );
                               return;
                             }
-                            Get.snackbar("Error","Fill the form properly!");
+                            Get.snackbar("Error","Fill the form properly!", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                           },
                           child: Center(
                             child: AuthButtons(
@@ -406,11 +406,11 @@ class _IdentificationVerificationState
     if (response.statusCode == 200) {
       if (!mounted) return;
       Navigator.of(context).pop();
-      Get.snackbar("Success","Submitted Successfully");
+      Get.snackbar("Success","Submitted Successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return;
     }
     Get.back();
-    Get.snackbar("Error","${jsonBody['data']['error']}");
+    Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
   }
 
   Future<void> _selectImageToUpload(BuildContext context) async {
@@ -431,10 +431,10 @@ class _IdentificationVerificationState
           _selectedImage = imageTemp;
         });
       } else {
-        Get.snackbar("Error","Failed to select Image!, Try Again..");
+        Get.snackbar("Error","Failed to select Image!, Try Again..", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     } on PlatformException {
-      Get.snackbar("Error","Failed to select Image!, Try Again..");
+      Get.snackbar("Error","Failed to select Image!, Try Again..", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 

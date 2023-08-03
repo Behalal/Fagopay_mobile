@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +20,7 @@ class Cloudinary {
       );
       imageResponse = response.secureUrl;
     } on CloudinaryException {
-      Get.snackbar("Error","Failed to upload Image");
+      Get.snackbar("Error","Failed to upload Image", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
     return imageResponse;
   }

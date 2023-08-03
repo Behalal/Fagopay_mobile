@@ -531,9 +531,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 child: GestureDetector(
                                     onTap: () async {
                                       if (_newPasswordController.text.isEmpty || _confirmPasswordController.text.isEmpty) {
-                                        Get.snackbar("Error", "Kindly enter your password");
+                                        Get.snackbar("Error", "Kindly enter your password", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                       } else if (_newPasswordController.text != _confirmPasswordController.text) {
-                                        Get.snackbar("Error","Password does not match");
+                                        Get.snackbar("Error","Password does not match", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                       } else {
                                         controller.password = _confirmPasswordController.text;
                                         await controller.changePassword(context: context).then((value){
@@ -544,7 +544,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                                 final userDetails = await LocalCachedData.instance.getUserDetails();
                                                 var emailOrPassword = userDetails?.data?.userdetail?.phoneNumber ?? userDetails?.data?.userdetail?.email ?? "";
                                                 if (otpText == null || otpText == '' || otpText?.length != 6) {
-                                                  Get.snackbar("Alert", "Enter the otp sent to $emailOrPassword to continue!");
+                                                  Get.snackbar("Alert", "Enter the otp sent to $emailOrPassword to continue!", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                                 } else {
                                                   Get.back();
                                                   await _ctrl.validateForgotResetPassword(otp: otpText!, password: _ctrl.password!, context: context);

@@ -324,6 +324,88 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
     );
   }
 
+
+  void deleteBottomSheet({required void Function()? onTap, required void Function()? onTap1}){
+    Get.bottomSheet(
+      StatefulBuilder(builder: (context, update){
+        return Container(decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+          constraints: BoxConstraints(maxHeight: Get.height/3.3,), padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
+          child: Column(
+            children: [
+              const SizedBox(height: 30,),
+              Column(crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text("Delete request", style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(color: signInText, fontSize: 22, fontWeight: FontWeight.w600),),
+                  const SizedBox(height: 10,),
+                  RichText(text: TextSpan(text: "Are you sure to delete this item",
+                      style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(color: const Color(0xff576275), fontSize: 14, fontWeight: FontWeight.w600),
+                      children: [
+                        TextSpan(text: "Record?", style: Theme.of(Get.context!).textTheme.bodySmall!.copyWith(color: signInText, fontSize: 14, fontWeight: FontWeight.w600),)
+                      ]
+                  ),),
+                  const SizedBox(height: 40,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Row(mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: onTap,
+                          child: Container(
+                              height: 50,
+                              width: Get.width/ 2.8,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(36),
+                                color: fagoSecondaryColor,
+                              ),
+                              child: const Center(
+                                child: AutoSizeText(
+                                  "Continue",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: "Work Sans",
+                                      fontWeight: FontWeight.w600,
+                                      color: white),
+                                ),
+                              )
+                          ),
+                        ),
+                        InkWell(
+                          onTap: onTap1,
+                          child: Container(
+                              height: 50,
+                              width: Get.width/2.8,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(36),
+                                  color: Colors.white, border: Border.all(color: fagoSecondaryColor)
+                              ),
+                              child: const Center(
+                                child: AutoSizeText(
+                                  "Cancel",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: "Work Sans",
+                                      fontWeight: FontWeight.w600,
+                                      color: fagoSecondaryColor),
+                                ),
+                              )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20,),
+            ],
+          ),
+        );
+      }), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20),),),
+      isScrollControlled: true, isDismissible: false,
+    );
+  }
+
   @override
   void initState() {
     getInvoiceDetailsById(invoiceId: widget.invoiceId);
@@ -766,6 +848,14 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                   quantity: invoiceItem.quantity!,
                                   price: invoiceItem.price!,
                                   total: invoiceItem.total!,
+                                      onTap: (){
+                                        deleteBottomSheet(onTap: (){
+                                          Get.back();
+                                          controller.deleteInvoiceDetails(id: invoiceItem.id.toString(), context: context);
+                                        }, onTap1: (){
+                                          Get.back();
+                                        });
+                                      },
                                 ),
                               )
                                   .toList(),
@@ -796,7 +886,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                   ),
                                 ),
                                 AutoSizeText(
-                                  invoiceDetailsResponse?.data?.invoice?.total ?? "",
+                                  "NGN ${invoiceDetailsResponse!.data!.invoice!.invoiceDetail?.map((e) => double.parse(e.total.toString())).toList().reduce((a, b) => (a+b)) ?? "0.00"}",
                                   style: const TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 12,

@@ -132,7 +132,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                       child: GestureDetector(
                         onTap: () {
                           takeScreenShot();
-                          Get.snackbar("Success", "Saved to gallery");
+                          Get.snackbar("Success", "Saved to gallery", colorText: Colors.white, backgroundColor: fagoGreenColor);
                         },
                         child: Container(
                           padding:
@@ -146,8 +146,7 @@ class _TransactionSuccessfulState extends State<TransactionSuccessful> {
                             children: [
                               const Icon(
                                 Icons.file_download_sharp,
-                                size: 15,
-                                color: white,
+                                size: 15, color: white,
                               ),
                               SizedBox(
                                 width: 1.w,

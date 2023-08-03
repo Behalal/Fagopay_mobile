@@ -152,16 +152,16 @@ class _PinCodeModalState extends State<PinCodeModal> {
                         child: GestureDetector(
                             onTap: () async {
                               if (pincontroller.text.length != 4 || pincontroller.text.isEmpty) {
-                                Get.snackbar("Error","Kindly enter your pin");
+                                Get.snackbar("Error","Kindly enter your pin", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                 return;
                               }
                               if (_userController.userAccountDetails!.balance! < 1 || _userController.userAccountDetails!.balance! == 0) {
-                                Get.snackbar("Error","Insufficient Wallet Balance");
+                                Get.snackbar("Error","Insufficient Wallet Balance", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                 return;
                               }
                               if (_userController.switchedAccountType == 2 && int.parse(_companyController.company!.account!.balance.toString()) < 1 ||
                                   _userController.switchedAccountType == 2 && int.parse(_companyController.company!.account!.balance.toString()) == 0) {
-                                Get.snackbar("Error","Insufficient Wallet Balance");
+                                Get.snackbar("Error","Insufficient Wallet Balance", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                 return;
                               }
                               setState(() {
@@ -240,7 +240,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -255,7 +255,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
         widget.action == "bank_transfer" ? "Bank Transfer" : widget.action == "fago_to_fago" ? "Fago Transfer" : "",
         ),
       ));
-      Get.snackbar("Success","Airtime Purchase Successful");
+      Get.snackbar("Success","Airtime Purchase Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }
   }
 
@@ -266,7 +266,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -283,7 +283,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
-      Get.snackbar("Success","DataBundle Purchase Successful");
+      Get.snackbar("Success","DataBundle Purchase Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }
   }
 
@@ -294,7 +294,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -311,7 +311,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
-      Get.snackbar("Success","Electricity Purchase Successful");
+      Get.snackbar("Success","Electricity Purchase Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }
   }
 
@@ -322,7 +322,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -345,7 +345,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
-      Get.snackbar("Success","Internet Subscription Purchase Successful");
+      Get.snackbar("Success","Internet Subscription Purchase Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }
   }
 
@@ -357,7 +357,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -374,7 +374,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
-      Get.snackbar("Success","Cable Subscription Purchase Successful");
+      Get.snackbar("Success","Cable Subscription Purchase Successful", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 
@@ -388,7 +388,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -405,7 +405,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
-      Get.snackbar("Success","Bank Transfer Successful");
+      Get.snackbar("Success","Bank Transfer Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }
   }
 
@@ -419,7 +419,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
       setState(() {
         Navigator.of(context).pop();
       });
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     } else {
       setState(() {
         _isLoading = "1";
@@ -435,7 +435,7 @@ class _PinCodeModalState extends State<PinCodeModal> {
           ),
         ),
       );
-      Get.snackbar("Success","Transfer Successful");
+      Get.snackbar("Success","Transfer Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }
   }
 }

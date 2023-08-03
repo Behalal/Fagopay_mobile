@@ -1,15 +1,16 @@
 // ignore_for_file: unrelated_type_equality_checks
-
+import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
+import 'package:fagopay/screens/widgets/info_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sizer/sizer.dart';
-
+import '';
 import '../../constants/colors.dart';
 
 class FagoMainPage extends StatefulWidget {
@@ -30,6 +31,20 @@ class _FagoMainPageState extends State<FagoMainPage> {
   int? transactionType;
   final _userController = Get.find<UserController>();
   final _companyController = Get.find<CompanyController>();
+
+  showKycDialog() {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, ()=>
+        showInformationDialog(Get.context!, "You don't have transaction record. Kindly complete your kyc verification to make a transaction", "No KYC Verification"));
+  }
+
+
+  @override
+  void initState() {
+    _userController.user?.kycVerified != 1 ?
+    showKycDialog() : null;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,18 +104,22 @@ class _FagoMainPageState extends State<FagoMainPage> {
                   style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,wordSpacing: 2),),
               ),
 
-              const AutoSizeText("Halal Ventures Limited",   style: TextStyle(
+               AutoSizeText(_userController.switchedAccountType == 2 ? "${_companyController.company?.companyName?.toUpperCase()}" : "${_userController.user?.firstName?.toUpperCase()} ${_userController.user?.lastName?.toUpperCase()}",
+                style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: inactiveTab,
               ),),
-              const AutoSizeText("2240148903 | Providus Bank", style: TextStyle(
+              AutoSizeText(_userController.switchedAccountType == 2 ? "${_companyController.company?.account?.accountNumber} | ${_companyController.company?.account?.bankName}" :
+              "${_userController.user?.accountdetail?.accountNumber} | ${_userController.user?.accountdetail?.bankName}",
+                  style: const TextStyle(
                 fontFamily: "Work Sans",
                 fontSize: 14,
                 fontWeight: FontWeight.w300,
                 color: inactiveTab,
               )),
+              _userController.switchedAccountType == 2 ?
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
@@ -110,7 +129,30 @@ class _FagoMainPageState extends State<FagoMainPage> {
                       Container(padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(color: Colors.red.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
                         child: QrImageView(
-                          data: '1234567890',
+                          data: '${_companyController.company?.companyName}\n${_companyController.company?.account?.accountNumber}\n${_companyController.company?.account?.accountName}',
+                          version: 4,
+                          gapless: false,
+                          size: 200.0,
+                          embeddedImageStyle: const QrEmbeddedImageStyle(
+                            size: Size(80, 80),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+                  :
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(color: Colors.red.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
+                        child: QrImageView(
+                          data: '${_userController.user?.firstName} ${_userController.user?.lastName}\n${_userController.user?.accountdetail?.accountNumber}\n${_userController.user?.accountdetail?.accountName}',
                           version: 4,
                           gapless: false,
                           size: 200.0,

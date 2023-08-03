@@ -156,6 +156,7 @@ class _SelectVerificationTypeState extends State<SelectVerificationType> {
                     ),
                     (usePhone)
                         ? TextFormField(
+                      keyboardType: TextInputType.phone,
                         controller: _registrationController.phone,
                         style: const TextStyle(
                             fontFamily: "Work Sans",

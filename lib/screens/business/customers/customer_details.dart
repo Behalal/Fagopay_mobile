@@ -72,9 +72,7 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
   Widget build(BuildContext context) {
     // final customerId = ModalRoute.of(context)!.settings.arguments as String;
     // final customer = _customerController.findCustomerById(customerId);
-    return GetBuilder<CustomerController>(
-        builder: (controller){
-      return Scaffold(
+    return  Scaffold(
         body: customerDetails == null &&
             isLoadingCustomerDetails == true &&
             isLoadingCustomerDetailsHasError == false ?
@@ -109,29 +107,37 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                  Container(width: 43.w, height: 42.w,
-                  padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.h),
-                  decoration: const BoxDecoration(color: fagoSecondaryColorWithOpacity10,),
-                  child:  Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AutoSizeText(customerDetails?.data?.customer?.customerTransactions?.map((e) => e.total).toList().reduce((a, b) => (a!+b!))?.toString() ?? "0.00",
-                        style: const TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 28,
-                            color: fagoSecondaryColor,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(height: 1.5.h,),
-                      const AutoSizeText(
-                        "Transaction Volume",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: "Work Sans",
-                            fontSize: 12,
-                            color: inactiveTab,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ])),
+                    Container(width: 43.w, height: 42.w,
+                        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.h),
+                        decoration: const BoxDecoration(color: fagoSecondaryColorWithOpacity10,),
+                        child:  Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              customerDetails!.data!.customer!.customerTransactions!.isEmpty ?
+                              const AutoSizeText("0.00",
+                                style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 28,
+                                    color: fagoSecondaryColor,
+                                    fontWeight: FontWeight.w700),
+                              ) :
+                              AutoSizeText(customerDetails?.data?.customer?.customerTransactions?.map((e) => e.total).toList().reduce((a, b) => (a!+b!))?.toString() ?? "0.00",
+                                style: const TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 20,
+                                    color: fagoSecondaryColor,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              SizedBox(height: 1.5.h,),
+                              const AutoSizeText(
+                                "Transaction Volume",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: "Work Sans",
+                                    fontSize: 12,
+                                    color: inactiveTab,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ])),
                     Container(width: 43.w, height: 42.w,
                         padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 3.h),
                         decoration: const BoxDecoration(color: fagoSecondaryColorWithOpacity10,),
@@ -158,6 +164,13 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                             ]))
                   ],
                 ),
+                // customerDetails!.data!.customer!.customerTransactions!.isEmpty ?
+                // CustomerBox(
+                //   firstBoxDescription: "Transaction Volume",
+                //   firstBoxMainValue: "0.00",
+                //   secondBoxMainValue: "14",
+                //   secondBoxDescription: "No. of Transaction",
+                // ) :
                 // CustomerBox(
                 //   firstBoxDescription: "Transaction Volume",
                 //   firstBoxMainValue: customerDetails?.data?.customer?.customerTransactions?.map((e) => e.total).toList().reduce((a, b) => (a!+b!))?.substring(0,7) ?? "0.00",
@@ -183,7 +196,17 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                           ),
                           const AutoSizeText("Total Debt", textAlign: TextAlign.center,
                             style: TextStyle(fontFamily: "Work Sans", fontSize: 14, color: inactiveTab, fontWeight: FontWeight.w500),),
-                           AutoSizeText(customerDetails?.data?.customer?.customerTransactions?.map((e) => e.amountPaid).toList().reduce((a, b) => (a!+b!))?.toString() ?? "0.00",
+                          customerDetails!.data!.customer!.customerTransactions!.isEmpty ?
+                          const AutoSizeText("0.00",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: "Work Sans",
+                                fontSize: 30,
+                                color: fagoSecondaryColor,
+                                fontWeight: FontWeight.w700),
+                          ) :
+
+                          AutoSizeText(customerDetails?.data?.customer?.customerTransactions?.map((e) => e.amountPaid).toList().reduce((a, b) => (a!+b!))?.toString() ?? "0.00",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontFamily: "Work Sans",
@@ -210,7 +233,7 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                                 color: white,
                               ),
                               AutoSizeText(
-                                 customerDetails?.data?.customer?.phoneNumber ?? "",
+                                customerDetails?.data?.customer?.phoneNumber ?? "",
                                 style: const TextStyle(
                                     fontFamily: "Work Sans",
                                     fontSize: 10,
@@ -421,13 +444,16 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                             height: 2.h,
                           ),
                           customerDetails!.data!.customer!.customerTransactions!.isEmpty || customerDetails!.data!.customer!.customerTransactions == [] ?
-                              Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset("assets/images/empty-folder.png", height: 60, width: 60,),
-                                  const SizedBox(height: 15,),
-                                  Text("No transaction record yet", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black),),
-                                ],
-                              ) : Column(
+                          Align(alignment: Alignment.center,
+                            child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(height: 50,),
+                                Image.asset("assets/images/empty-folder.png", height: 60, width: 60,),
+                                const SizedBox(height: 15,),
+                                Text("No transaction record yet", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black),),
+                              ],
+                            ),
+                          ) : Column(
                             children: [
                               ...List.generate(customerDetails!.data!.customer!.customerTransactions!.length, (index){
                                 final data = customerDetails!.data!.customer!.customerTransactions?[index];
@@ -454,7 +480,7 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
                                                 crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                                 children: [
-                                                   AutoSizeText(
+                                                  AutoSizeText(
                                                     data?.reference ?? "",
                                                     textAlign: TextAlign.start,
                                                     style: const TextStyle(
@@ -523,8 +549,7 @@ class _CustomerDetailsPageState extends State<CustomerDetailsPage> {
             ),
           ),
         ) : const SizedBox()
-      ) ;
-    });
+    ) ;
   }
 
 }

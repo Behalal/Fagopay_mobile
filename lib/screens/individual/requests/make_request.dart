@@ -301,7 +301,7 @@ class _MakeRequestState extends State<MakeRequest> {
                             _transactionController.dexcriptionController.text, context);
                         return;
                       }
-                      Get.snackbar("Error","Enter the fields correctly",);
+                      Get.snackbar("Error","Enter the fields correctly",colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(

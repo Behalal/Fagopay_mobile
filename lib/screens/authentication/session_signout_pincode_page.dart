@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/constants/colors.dart';
+import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/local/local_storage.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
@@ -34,11 +35,12 @@ class _SessionSignOutPinCodePageState extends State<SessionSignOutPinCodePage> {
       });
       final response = await NetworkProvider().call(path: "/v1/user/validate-login-with-passcode", method: RequestMethod.post, body: postBody);
       final token = response?.data["token"];
-      Get.back();
-      Get.back();
       await LocalCachedData.instance.cacheAuthToken(token: token);
       SecureStorage.setUserToken(token);
-      Get.snackbar('Success', response?.data["massage"] ?? 'Passcode validated successfully!');
+      // Get.back();
+      // Get.back();
+      Get.offAll(()=>const Dashboard());
+      Get.snackbar('Success', response?.data["massage"] ?? 'Passcode validated successfully!', colorText: Colors.white, backgroundColor: fagoGreenColor);
       return response;
     }on dio.DioError catch (err) {
       if(err.response?.data["data"]["error"] == "Token is Expired"){
@@ -46,7 +48,7 @@ class _SessionSignOutPinCodePageState extends State<SessionSignOutPinCodePage> {
         Get.offAll(()=>const SignIn());
       }else{
         Get.back();
-        Get.snackbar('Error', err.response?.data['data']['error']);
+        Get.snackbar('Error', err.response?.data['data']['error'], colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
       final errorMessage = Future.error(ApiError.fromDio(err));
       throw errorMessage;
@@ -54,10 +56,10 @@ class _SessionSignOutPinCodePageState extends State<SessionSignOutPinCodePage> {
       if(err.toString() == "Token is Expired"){
         Get.back();
         Get.offAll(()=>const SignIn());
-        Get.snackbar('Something Went Wrong',err.toString());
+        Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }else{
         Get.back();
-        Get.snackbar('Something Went Wrong',err.toString());
+        Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
       throw err.toString();
     }
@@ -129,24 +131,24 @@ class _SessionSignOutPinCodePageState extends State<SessionSignOutPinCodePage> {
                       ),
                     ),
                   ),
+                  // Positioned(
+                  //   top: 41.h,
+                  //   left: 12.w,
+                  //   child: SizedBox(
+                  //     width: 70.w,
+                  //     child: const AutoSizeText(
+                  //       "Security",
+                  //       style: TextStyle(
+                  //         color: signInText,
+                  //         fontFamily: "Work Sans",
+                  //         fontSize: 32,
+                  //         fontWeight: FontWeight.w600,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned(
-                    top: 41.h,
-                    left: 12.w,
-                    child: SizedBox(
-                      width: 70.w,
-                      child: const AutoSizeText(
-                        "Security",
-                        style: TextStyle(
-                          color: signInText,
-                          fontFamily: "Work Sans",
-                          fontSize: 32,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 47.h,
+                    top: 35.h,
                     left: 12.w,
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -177,6 +179,19 @@ class _SessionSignOutPinCodePageState extends State<SessionSignOutPinCodePage> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          width: 70.w,
+                          child: const AutoSizeText(
+                            "Security",
+                            style: TextStyle(
+                              color: signInText,
+                              fontFamily: "Work Sans",
+                              fontSize: 32,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20,),
                       ],
                     ),
                   ),
@@ -205,9 +220,7 @@ class _SessionSignOutPinCodePageState extends State<SessionSignOutPinCodePage> {
                             activeFillColor: Colors.white,
                           ),
                           onChanged: (String value) {
-                            if (value != passCode.text) {
-
-                            }
+                            if (value != passCode.text) {}
                           },
                         )),
                   ),

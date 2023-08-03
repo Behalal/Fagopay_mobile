@@ -3,6 +3,7 @@ import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/models/auth_model/forgot_password_response.dart';
 import 'package:fagopay/models/auth_model/reset_password_response.dart';
 import 'package:fagopay/models/auth_model/verify_reset_password_otp_response.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/local/local_storage.dart';
@@ -44,13 +45,13 @@ class ProfileController extends GetxController{
       isSetUpPasswordLoading = false;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       isSetUpPasswordLoading = false;
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
    // await forgotPassword(emailOrPassword: userDetails?.data?.userdetail?.phoneNumber ?? userDetails?.data?.userdetail?.email ?? "", context: context, password: password);
@@ -75,19 +76,19 @@ class ProfileController extends GetxController{
             MaterialPageRoute(
               builder: (BuildContext context) => const Dashboard(),
             ), (route) => false);
-        Get.snackbar('Successful', value.data?.message ?? "Password reset successful");
+        Get.snackbar('Successful', value.data?.message ?? "Password reset successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
       });
       return payload;
     }on dio.DioError catch (err) {
       Get.back();
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -105,10 +106,10 @@ class ProfileController extends GetxController{
     }on dio.DioError catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
       update();
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       update();
       throw err.toString();
     }

@@ -430,7 +430,7 @@ class _ElectricityState extends State<Electricity> {
         verrifiedMeterUser = "";
         _verifiedMeter = false;
       });
-      Get.snackbar("Error","${jsonBodyData['data']['error']}");
+      Get.snackbar("Error","${jsonBodyData['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 }

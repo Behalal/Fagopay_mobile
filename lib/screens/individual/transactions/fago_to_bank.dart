@@ -184,7 +184,7 @@ class _FagoToBankState extends State<FagoToBank> {
                       );
                       return;
                     }
-                    Get.snackbar("Error","Enter the fields correctly!",);
+                    Get.snackbar("Error","Enter the fields correctly!", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                   },
                 );
               })

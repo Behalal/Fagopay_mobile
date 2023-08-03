@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fagopay/controllers/company_controller.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import '../../../controllers/transaction_controller.dart';
 import '../../functions.dart';
@@ -111,7 +112,7 @@ class _FagoToFagoState extends State<FagoToFago> {
                       );
                       return;
                     }
-                    Get.snackbar("Error","Enter the fields correctly!");
+                    Get.snackbar("Error","Enter the fields correctly!", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                   },
                 );
               })

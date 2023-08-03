@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
@@ -28,18 +29,18 @@ class InvoiceController extends GetxController {
       final response = await NetworkProvider().call(path: "/v1/businessinvoice/mark-as-paid/$invoiceId", method: RequestMethod.get);
       Get.back();
       Get.back();
-      Get.snackbar('Success', response?.data['message'] ?? "Invoice marked as paid");
+      Get.snackbar('Success', response?.data['message'] ?? "Invoice marked as paid", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return response;
     }on dio.DioError catch (err) {
       Get.back();
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -53,18 +54,19 @@ class InvoiceController extends GetxController {
       });
       final response = await NetworkProvider().call(path: "/v1/businessinvoice/log-payment", method: RequestMethod.post, body: body);
       Get.back();
-      Get.snackbar('Success', response?.data['message'] ?? "Request Successful");
+      Get.back();
+      Get.snackbar('Success', response?.data['message'] ?? "Request Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return response;
     }on dio.DioError catch (err) {
       Get.back();
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -75,18 +77,42 @@ class InvoiceController extends GetxController {
     try{
       final response = await NetworkProvider().call(path: "/v1/businessinvoice/log-payment", method: RequestMethod.delete,);
       Get.back();
-      Get.snackbar('Success', response?.data['message'] ?? "Request Successful");
+      Get.snackbar('Success', response?.data['message'] ?? "Request Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return response;
     }on dio.DioError catch (err) {
       Get.back();
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+      throw err.toString();
+    }
+  }
+
+
+
+  Future<dio.Response<dynamic>?> deleteInvoiceDetails({required String id, required BuildContext context})async{
+    progressIndicator(context);
+    try{
+      final response = await NetworkProvider().call(path: "/v1/businessinvoice/detail-delete/$id", method: RequestMethod.delete,);
+      Get.back();
+      Get.back();
+      Get.snackbar('Success', response?.data['message'] ?? "Request Successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
+      return response;
+    }on dio.DioError catch (err) {
+      Get.back();
+      update();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      update();
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }

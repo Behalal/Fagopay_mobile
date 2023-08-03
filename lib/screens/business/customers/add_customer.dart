@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:fagopay/controllers/customers_controller.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -122,7 +123,8 @@ class _AddCustomerState extends State<AddCustomer> {
       _customerController.countryController.clear();
       _customerController.stateController.clear();
       _customerController.cityController.clear();
-      Get.snackbar("Success","Customer Detail Created Successfully");
+      setState(() {});
+      Get.snackbar("Success","Customer Detail Created Successfully", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       return;
     }else{
      _customerController.nameController.clear();
@@ -132,8 +134,9 @@ class _AddCustomerState extends State<AddCustomer> {
      _customerController.countryController.clear();
      _customerController.stateController.clear();
      _customerController.cityController.clear();
+     setState(() {});
       Get.back();
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 }

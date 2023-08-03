@@ -1,12 +1,13 @@
-import 'dart:developer';
-
+import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/models/categoryItems.dart';
 import 'package:fagopay/models/purse/purse_category_list_response_model.dart';
 import 'package:fagopay/models/purse/purse_list_model.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import 'package:fagopay/screens/individual/purse/create_purse.dart';
 import 'package:fagopay/screens/individual/purse/purse_category_expenses.dart';
+import 'package:fagopay/screens/widgets/info_dialog.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class MyPurse extends StatefulWidget {
 
 class _MyPurseState extends State<MyPurse> {
   final _purseController = Get.put(PurseController());
+  final _userController = Get.find<UserController>();
 
   int? myRequestType;
   var number = "";
@@ -53,7 +55,7 @@ class _MyPurseState extends State<MyPurse> {
       onPurseCategoryListErrorState = true;
       setState(() {});
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (error) {
       if (error.toString() == "KYC Not yet verified") {
@@ -61,14 +63,21 @@ class _MyPurseState extends State<MyPurse> {
         onPurseCategoryListLoadingState = false;
         onPurseCategoryListErrorState = false;
         setState(() {});
-        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
+        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }else{
         onPurseCategoryListLoadingState = false;
         onPurseCategoryListErrorState = true;
         setState(() {});
-        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     }
+  }
+
+
+  showKycDialog() {
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, ()=>
+        showInformationDialog(Get.context!, "You don't have transaction record. Kindly complete your kyc verification to make a transaction", "No KYC Verification"));
   }
   @override
   void initState() {
@@ -83,6 +92,8 @@ class _MyPurseState extends State<MyPurse> {
     for (var element in pulseCategoryList!) {
       categoryItemsList.add(CategoryItems(categoryId: element.id!, amount: 0));
     }
+    _userController.user?.kycVerified != 1 ?
+    showKycDialog() : null;
     super.initState();
   }
   int amount = 0;
@@ -314,8 +325,7 @@ class _MyPurseState extends State<MyPurse> {
                   size: MediaQuery.of(context).size.height/2.5,
                 ),
               ) : controller.purseListModel == null || controller.purseListModel!.data.pulseList.isEmpty || controller.purseListModel!.data.pulseList == [] &&
-             controller.onLoadingPurseListLoadingState == false
-                  && controller.onLoadPurseListErrorState == false ?
+                  controller.onLoadingPurseListLoadingState == false && controller.onLoadPurseListErrorState == false ?
               Expanded(
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -356,6 +366,8 @@ class _MyPurseState extends State<MyPurse> {
                                       ),
                                       InkWell(
                                         onTap: () {
+                                          _userController.user?.kycVerified != 1 ?
+                                          showInformationDialog(Get.context!, "You don't have transaction record. Kindly complete your kyc verification to make a transaction", "No KYC Verification") :
                                           Get.to(() => const CreatePurse());
                                         },
                                         child: Container(
@@ -397,10 +409,7 @@ class _MyPurseState extends State<MyPurse> {
                             )),
                       ),
                     ]),
-              )
-                  : controller.onLoadingPurseListLoadingState == false
-                  && controller.onLoadPurseListErrorState == false
-                  && controller.purseListModel != null ?
+              ) : controller.onLoadingPurseListLoadingState == false && controller.onLoadPurseListErrorState == false && controller.purseListModel != null ?
               SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(

@@ -453,7 +453,7 @@ class _ProofOfAddressState extends State<ProofOfAddress> {
                             await submitProofOfAddress(context);
                             return;
                           }
-                          Get.snackbar("Error","Fill the form properly!");
+                          Get.snackbar("Error","Fill the form properly!", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                         },
                         child: Center(
                           child: AuthButtons(
@@ -489,11 +489,11 @@ class _ProofOfAddressState extends State<ProofOfAddress> {
       Get.back();
       if (!mounted) return;
       Navigator.of(context).pop();
-      Get.snackbar("Success","Supplier Created Successfully");
+      Get.snackbar("Success","Supplier Created Successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return;
     }
     Get.back();
-    Get.snackbar("Error","${jsonBody['data']['error']}");
+    Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
   }
 
   Future<void> getCountries() async {
@@ -544,10 +544,10 @@ class _ProofOfAddressState extends State<ProofOfAddress> {
           _selectedImage = imageTemp;
         });
       } else {
-        Get.snackbar("Error","Failed to select Image!, Try Again..");
+        Get.snackbar("Error","Failed to select Image!, Try Again..", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     } on PlatformException {
-      Get.snackbar("Error","Failed to select Image!, Try Again..");
+      Get.snackbar("Error","Failed to select Image!, Try Again..", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 }

@@ -437,7 +437,7 @@ class _AddInvoiceState extends State<AddInvoice> {
                       total: '${int.parse(invoiceItem['quantity']!) * int.parse(invoiceItem['price']!)}',
                       onTap: (){
                         temporarilyAddedItems.removeAt(index);
-                        detailGrandTotal -= int.parse(invoiceItem["price"]!);
+                        detailGrandTotal -= int.parse(invoiceItem["price"]!) - dicountAmount;
                         subTotal -= int.parse(invoiceItem["price"]!);
                         _invoiceController.taxRateController.clear();
                         taxAmount = 0;
@@ -484,12 +484,20 @@ class _AddInvoiceState extends State<AddInvoice> {
                           }).toList();
                           double detailTotal = detailTotals.reduce((a, b) => a + b);
                           setState(() {
-                            taxAmount = (double.parse(_invoiceController.taxRateController.text) / 100) * detailTotal;
+                            if(_invoiceController.taxRateController.text.isEmpty){
+                              taxAmount = 0;
+                              detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
+                              percentage = (taxAmount/detailGrandTotal)*100/1;
+                              detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
+                            }else{
+                              taxAmount = (double.parse(_invoiceController.taxRateController.text) / 100) * detailTotal;
+                              detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
+                              percentage = (taxAmount/detailGrandTotal)*100/1;
+                              subTotal = detailTotals.reduce((a, b) => a + b);
+                              detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
+                              setState(() {});
+                            }
                           });
-                          percentage = (taxAmount/detailGrandTotal)*100/1;
-                          subTotal = detailTotals.reduce((a, b) => a + b);
-                          detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
-                          setState(() {});
                           return;
                         }else{
                           Get.snackbar("Error","Add an Item First");
@@ -547,12 +555,13 @@ class _AddInvoiceState extends State<AddInvoice> {
                           double detailTotal =
                           detailTotals.reduce((a, b) => a + b);
                           setState(() {
-                            dicountAmount = (double.parse(
-                                _invoiceController
-                                    .discountRateController
-                                    .text) /
-                                100) *
-                                detailTotal;
+                            if(_invoiceController.discountRateController.text.isEmpty){
+                              dicountAmount = 0;
+                              detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
+                            }else{
+                              dicountAmount = (double.parse(_invoiceController.discountRateController.text) / 100) * detailTotal;
+                              detailGrandTotal = (detailTotals.reduce((a, b) => a + b) + taxAmount) - dicountAmount;
+                            }
                           });
                           return;
                         }

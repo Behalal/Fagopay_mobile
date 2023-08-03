@@ -315,7 +315,7 @@ class BvnVerificationState extends State<BvnVerification> {
                   child: GestureDetector(
                     onTap: (() {
                       if (bvnValue.text.isEmpty) {
-                        Get.snackbar("Error","Kindly enter your BVN");
+                        Get.snackbar("Error","Kindly enter your BVN", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                       } else {
                         KycDetailsValue.setbvn = bvnValue.text;
                         if (otpSelected) {

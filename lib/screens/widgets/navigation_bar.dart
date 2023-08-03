@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/local_notification_services.dart';
@@ -165,90 +166,125 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     pushNotificationOnInitConfiguration();
+    onCheckedLoginStatus();
     super.initState();
+  }
+
+  Timer? _timer;
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+
+  Future<void> onCheckedLoginStatus() async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    final loggedIn = await LocalCachedData.instance.getLoginStatus();
+    if(loggedIn == true){
+      _startTimer();
+    }else{
+      null;
+    }
+  }
+
+  void _startTimer() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    _timer = Timer(const Duration(seconds: 180), () {
+      _timer!.cancel();
+      _timer = null;
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SessionSignOutPinCodePage()));
+    });
+  }
+
+  void _handleInteraction([_]) {
+    _startTimer();
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: AppColor().backGround,
-      body: buildPages(),
-      bottomNavigationBar: Container(
-        constraints: const BoxConstraints(),
-        height: Get.height * 0.10,
-        decoration: const BoxDecoration(
-          color: white,
-        ),
-        child: ListView.builder(
-          itemCount: selectedIcons.length,
-          scrollDirection: Axis.horizontal,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.only(
-            left: Get.width * .04,
-            right: Get.width * .04,
-            bottom: Get.width * .04,
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+        onTap: _handleInteraction,
+        onPanDown:_handleInteraction,
+        onPanUpdate: (_) =>_handleInteraction,
+      child: Scaffold(
+        body: buildPages(),
+        bottomNavigationBar: Container(
+          constraints: const BoxConstraints(),
+          height: Get.height * 0.10,
+          decoration: const BoxDecoration(
+            color: white,
           ),
-          itemBuilder: (context, index) => InkWell(
-            onTap: () {
-              setState(
-                () {
-                  selectedIndex = index;
-                },
-              );
-            },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 1500),
-                    curve: Curves.fastLinearToSlowEaseIn,
-                    margin: EdgeInsets.only(
-                      bottom: index == selectedIndex ? 0 : Get.width * .001,
-                      right: Get.width * .03,
-                      left: Get.width * .03,
-                    ),
-                    width: Get.width * .128,
-                    height: Get.width * .014,
-                  ),
-                ),
-                index == 2
-                    ? Image.asset(
-                        'assets/images/home_nav_logo.png',
-                        height: Get.width * .11,
-                        // color: index == selectedIndex
-                        //     ? AppColor().primaryColorPurple.withOpacity(0.5)
-                        //     : Colors.black38,
-                      )
-                    : SvgPicture.asset(
-                        index == selectedIndex
-                            ? selectedIcons[index]
-                            : unSelectedIcons[index],
-                        height: Get.width * .06,
-                        // color: index == selectedIndex
-                        //     ? AppColor().primaryColorPurple.withOpacity(0.5)
-                        //     : Colors.black38,
+          child: ListView.builder(
+            itemCount: selectedIcons.length,
+            scrollDirection: Axis.horizontal,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.only(
+              left: Get.width * .04,
+              right: Get.width * .04,
+              bottom: Get.width * .04,
+            ),
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                setState(
+                  () {
+                    selectedIndex = index;
+                  },
+                );
+              },
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 1500),
+                      curve: Curves.fastLinearToSlowEaseIn,
+                      margin: EdgeInsets.only(
+                        bottom: index == selectedIndex ? 0 : Get.width * .001,
+                        right: Get.width * .03,
+                        left: Get.width * .03,
                       ),
-                SizedBox(
-                  height: 0.5.h,
-                ),
-                AutoSizeText(
-                  navTitle[index],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontFamily: "Work Sans",
-                    fontWeight: FontWeight.w400,
-                    color: index == selectedIndex
-                        ? fagoSecondaryColor
-                        : fagoGreyColor,
+                      width: Get.width * .128,
+                      height: Get.width * .014,
+                    ),
                   ),
-                ),
-              ],
+                  index == 2
+                      ? Image.asset(
+                          'assets/images/home_nav_logo.png',
+                          height: Get.width * .11,
+                          // color: index == selectedIndex
+                          //     ? AppColor().primaryColorPurple.withOpacity(0.5)
+                          //     : Colors.black38,
+                        )
+                      : SvgPicture.asset(
+                          index == selectedIndex
+                              ? selectedIcons[index]
+                              : unSelectedIcons[index],
+                          height: Get.width * .06,
+                          // color: index == selectedIndex
+                          //     ? AppColor().primaryColorPurple.withOpacity(0.5)
+                          //     : Colors.black38,
+                        ),
+                  SizedBox(
+                    height: 0.5.h,
+                  ),
+                  AutoSizeText(
+                    navTitle[index],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontFamily: "Work Sans",
+                      fontWeight: FontWeight.w400,
+                      color: index == selectedIndex
+                          ? fagoSecondaryColor
+                          : fagoGreyColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

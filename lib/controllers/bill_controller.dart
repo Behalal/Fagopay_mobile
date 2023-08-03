@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -124,11 +125,11 @@ class BillController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -181,11 +182,11 @@ class BillController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -285,11 +286,11 @@ class BillController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -337,11 +338,11 @@ class BillController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -413,11 +414,11 @@ class BillController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -468,7 +469,7 @@ class BillController extends GetxController {
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('swap charges amount Error ${error.toString()}');
       }
@@ -500,7 +501,7 @@ class BillController extends GetxController {
       if ((response.statusCode == 200)) {
         _initiateSwapStatus(InitiateSwapEnum.success);
 
-        Get.snackbar('Success', 'Airtime Swap successfully!');
+        Get.snackbar('Success', 'Airtime Swap successfully!', colorText: Colors.white, backgroundColor: fagoGreenColor);
         clear();
       }
       print('here');
@@ -512,7 +513,7 @@ class BillController extends GetxController {
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('swap initiate Error ${error.toString()}');
       }

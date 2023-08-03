@@ -1076,7 +1076,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
          selectedDate = DateTime.now();
          _salesController.salesDescriptionController.clear();
       });
-      Get.snackbar("Success","Sales Created Successfully");
+      Get.snackbar("Success","Sales Created Successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return;
     }else{
       setState(() {
@@ -1087,7 +1087,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
         _salesController.salesDescriptionController.clear();
       });
       Get.back();
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 
@@ -1121,7 +1121,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
       });
       Navigator.of(context).pop();
       Navigator.of(context).pop();
-      Get.snackbar("Success","Expense Created Successfully");
+      Get.snackbar("Success","Expense Created Successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return;
     }else{
       setState(() {
@@ -1133,7 +1133,7 @@ class _AddSalesOrExpensesState extends State<AddSalesOrExpenses> {
         _expensesContoller.expenseAmountController.clear();
       });
      Get.back();
-    Get.snackbar("Error","${jsonBody['data']['error']}");
+    Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 

@@ -396,7 +396,7 @@ class _TVSubscriptionState extends State<TVSubscription> {
       verifiedCableUser = "";
       verifiedUser = false;
     });
-    Get.snackbar("Error","${jsonBodyData['data']['error']}");
+    Get.snackbar("Error","${jsonBodyData['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
   }
 
   Future<void> fetchDataByServiceId(String serviceId) async {

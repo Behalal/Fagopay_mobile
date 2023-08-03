@@ -79,7 +79,7 @@ class _CreatePurseState extends State<CreatePurse> {
       onPurseCategoryListErrorState = true;
       setState(() {});
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (error) {
       if (error.toString() == "KYC Not yet verified") {
@@ -87,12 +87,12 @@ class _CreatePurseState extends State<CreatePurse> {
         onPurseCategoryListLoadingState = false;
         onPurseCategoryListErrorState = false;
         setState(() {});
-        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
+        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }else{
         onPurseCategoryListLoadingState = false;
         onPurseCategoryListErrorState = true;
         setState(() {});
-        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     }
   }
@@ -461,11 +461,11 @@ class _CreatePurseState extends State<CreatePurse> {
                   onTap: () {
                     if(formKey.currentState!.validate()){
                       if(selectedDuration == null){
-                        Get.snackbar('Error', 'Select duration to proceed');
+                        Get.snackbar('Error', 'Select duration to proceed', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                       }else if(  categoryItemsList.isEmpty){
-                        Get.snackbar('Error', 'Add Categories to proceed');
+                        Get.snackbar('Error', 'Add Categories to proceed', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                       }else if(categoryAmount.toString() != double.parse(amountController.text).toInt().toString()){
-                        Get.snackbar('Error', 'Total amount must be equal to category amount',);
+                        Get.snackbar('Error', 'Total amount must be equal to category amount',colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                       } else{
                         Map? data;
                         for (var element in categoryItemsList) {

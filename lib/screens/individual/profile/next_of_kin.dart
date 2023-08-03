@@ -29,7 +29,6 @@ class NextOfKinPage extends StatefulWidget {
 
 class _NextOfKinPageState extends State<NextOfKinPage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final _userController = Get.put(UserController());
   var number = "";
   int? transactionType;
   String? selectedRelationship;
@@ -42,6 +41,8 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
     _userController.relationshipController.text = _userController.user?.nextofkin?.relationship ?? "";
     super.initState();
   }
+
+  final _userController = Get.find<UserController>();
   final List<String> items = [
     'Siblings',
     'Father',
@@ -356,34 +357,41 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    NextOfKinModel nextOfKin = NextOfKinModel(
-                                        fullName: _userController
-                                            .nameController.text
-                                            .trim(),
-                                        houseAddress: _userController
-                                            .addressController.text
-                                            .trim(),
-                                        phoneNumber: number +
-                                            _userController
-                                                .phoneNumController.text
-                                                .trim(),
-                                        email: _userController
-                                            .emailController.text
-                                            .trim(),
-                                        relationship: selectedRelationship);
-
-                                    if (kDebugMode) {
-                                      print(
-                                          'Next of kin: ${nextOfKin.toJson()}');
+                                    if("${_userController.user?.firstName?.toLowerCase()}${_userController.user?.lastName?.toLowerCase()}" == ExtendedString(_userController.nameController.text.toLowerCase()).removeAllWhitespace){
+                                      Get.snackbar("Error", "Personal name cannot be added as next of Kin", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+                                    }else if(_userController.user?.email?.toLowerCase() == _userController.emailController.text.toLowerCase()){
+                                      Get.snackbar("Error", "Personal email cannot be added as next of Kin", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+                                    }else if(_userController.user?.phoneNumber == _userController.phoneNumController.text){
+                                      Get.snackbar("Error", "Personal phone number cannot be added as next of Kin", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+                                    }else{
+                                      NextOfKinModel nextOfKin = NextOfKinModel(
+                                          fullName: _userController
+                                              .nameController.text
+                                              .trim(),
+                                          houseAddress: _userController
+                                              .addressController.text
+                                              .trim(),
+                                          phoneNumber: number +
+                                              _userController
+                                                  .phoneNumController.text
+                                                  .trim(),
+                                          email: _userController
+                                              .emailController.text
+                                              .trim(),
+                                          relationship: selectedRelationship);
+                                      if (kDebugMode) {
+                                        print(
+                                            'Next of kin: ${nextOfKin.toJson()}');
+                                      }
+                                      print('here i am');
+                                      if (_userController.nextOfKinStatus !=
+                                          NextOfKinEnum.loading &&
+                                          formKey.currentState!.validate()) {
+                                        print('here i am 3');
+                                        _userController.uploadNextOfKin(context: context);
+                                      }
+                                      print('here i am 2');
                                     }
-                                    print('here i am');
-                                    if (_userController.nextOfKinStatus !=
-                                        NextOfKinEnum.loading &&
-                                        formKey.currentState!.validate()) {
-                                      print('here i am 3');
-                                      _userController.uploadNextOfKin(context: context);
-                                    }
-                                    print('here i am 2');
                                   },
                                   child: Container(
                                       height: 50,
@@ -416,6 +424,12 @@ class _NextOfKinPageState extends State<NextOfKinPage> {
                         )),
                   ),
                 ])));
+  }
+}
+
+extension ExtendedString on String {
+  String removeAllWhitespace() {
+    return replaceAll(RegExp(r"\s+"), "");
   }
 }
 

@@ -56,64 +56,25 @@ class FagoPay extends StatefulWidget {
 }
 
 class _FagoPayState extends State<FagoPay> {
-  Timer? _timer;
-  final _navigatorKey = GlobalKey<NavigatorState>();
-
-
-  Future<void> onCheckedLoginStatus() async {
-    Get.put<LocalCachedData>(await LocalCachedData.create());
-    final loggedIn = await LocalCachedData.instance.getLoginStatus();
-    if(loggedIn == true){
-      _startTimer();
-    }else{
-      null;
-    }
-  }
-
-  void _startTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-    }
-    _timer = Timer(const Duration(seconds: 180), () {
-      _timer!.cancel();
-      _timer = null;
-      _navigatorKey.currentState?.push(MaterialPageRoute(builder: (context) => const SessionSignOutPinCodePage()));
-    });
-  }
-
-  void _handleInteraction([_]) {
-    _startTimer();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      behavior: HitTestBehavior.translucent,
-      onPointerMove: _handleInteraction,
-      child: Sizer(
-        builder: ((context, orientation, deviceType) {
-          return GestureDetector(
-              onTap: (){
-                FocusScopeNode currentFocus = FocusScope.of(context);
-                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-                  FocusManager.instance.primaryFocus!.unfocus();}
-                },
-            child: GetMaterialApp(
-              initialBinding: AppBinding(),
-              navigatorKey: _navigatorKey,
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.applicationTheme(),
-              home: const SplashScreen(),
-            ),
-          );
-        }),
-      ),
+    return Sizer(
+      builder: ((context, orientation, deviceType) {
+        return GestureDetector(
+            onTap: (){
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                FocusManager.instance.primaryFocus!.unfocus();}
+              },
+          child: GetMaterialApp(
+            initialBinding: AppBinding(),
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme.applicationTheme(),
+            home: const SplashScreen(),
+          ),
+        );
+      }),
     );
-  }
-
-  @override
-  void initState() {
-    onCheckedLoginStatus();
-    super.initState();
   }
 }

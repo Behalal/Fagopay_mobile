@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart' as dio;
+import 'package:fagopay/screens/constants/colors.dart';
+import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import '../models/supplier_model.dart';
@@ -47,13 +49,13 @@ class SupplierController extends GetxController {
       isLoadingSuppliersHasError = true;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       isLoadingSuppliers = false;
       isLoadingSuppliersHasError = true;
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -81,7 +83,7 @@ class SupplierController extends GetxController {
   //   }
   // }
 
-  Future<dynamic> createNewSupplier(
+  Future<dio.Response<dynamic>?> createNewSupplier(
       {required String bankCode,
       required String accountNumber,
       required String accountName,
@@ -90,10 +92,13 @@ class SupplierController extends GetxController {
       required String address,
       required String countryId,
       required String stateId,
-      required String cityId}) async {
-    final token = await SecureStorage.readUserToken();
-
+      required String cityId,
+      required String companyId,
+      required BuildContext context,
+      }) async {
+    progressIndicator(context);
     var requestBody = jsonEncode({
+      "company_id": companyId,
       "bank_code": bankCode,
       "account_number": accountNumber,
       "account_name": accountName,
@@ -107,17 +112,17 @@ class SupplierController extends GetxController {
     });
 
     try {
-      final response = await NetworkHelper.postRequest(
-        url: BaseAPI.suppliersPath,
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-          "Authorization": "Bearer $token",
-        },
-        body: requestBody,
-      );
+      final response = await NetworkProvider().call(path: "/v1/supplier", method: RequestMethod.post, body: requestBody);
       return response;
-    } catch (e) {
-      log(e.toString());
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+      throw err.toString();
     }
   }
 }

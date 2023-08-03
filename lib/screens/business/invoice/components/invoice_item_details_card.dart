@@ -60,33 +60,25 @@ class InvoiceItemDetailsCard extends StatelessWidget {
           // ),
           GestureDetector(
             onTap: onTap,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 0.5.h, horizontal: 2.w),
-              decoration: const BoxDecoration(
-                  color: fagoSecondaryColorWithOpacity10,
-                  borderRadius: BorderRadius.all(Radius.circular(50))),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/archive.png",
-                    ),
-                    SizedBox(
-                      width: 0.3.w,
-                    ),
-                    const AutoSizeText(
-                      "Remove",
-                      style: TextStyle(
-                        fontFamily: "Work Sans",
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: fagoSecondaryColor,
-                      ),
-                    ),
-                  ],
-                ),
+            child: const Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                Icon(Icons.delete, color: fagoSecondaryColor, size: 15,),
+                  // SizedBox(
+                  //   width: 0.3.w,
+                  // ),
+                  // const AutoSizeText(
+                  //   "Remove",
+                  //   style: TextStyle(
+                  //     fontFamily: "Work Sans",
+                  //     fontSize: 10,
+                  //     fontWeight: FontWeight.w400,
+                  //     color: fagoSecondaryColor,
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           )

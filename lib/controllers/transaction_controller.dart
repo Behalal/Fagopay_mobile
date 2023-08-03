@@ -4,6 +4,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:fagopay/controllers/user_controller.dart';
 import 'package:fagopay/fund_wallet.dart';
 import 'package:fagopay/models/request_money/verify_phoneNumber_response_model.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/constants/keys.dart';
 import 'package:fagopay/screens/widgets/info_dialog.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
@@ -231,11 +232,11 @@ class TransactionController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -248,11 +249,11 @@ class TransactionController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -269,16 +270,16 @@ class TransactionController extends GetxController {
       Get.back();
       Get.back();
       Get.back();
-      Get.snackbar("Success",response?.data["message"] ?? "Request Sent Successfully.",);
+      Get.snackbar("Success",response?.data["message"] ?? "Request Sent Successfully.",colorText: Colors.white, backgroundColor: fagoGreenColor);
       return response;
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -325,11 +326,11 @@ class TransactionController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -376,11 +377,11 @@ class TransactionController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -432,7 +433,7 @@ class TransactionController extends GetxController {
       onLoadingBusinessTransactionHistoryErrorState = true;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     }  catch (error) {
       if(error.toString() == "KYC Not yet verified" || error.toString() == "Company Identifier and account number is required"){
@@ -445,7 +446,8 @@ class TransactionController extends GetxController {
         onLoadingBusinessTransactionHistoryLoadingState = false;
         onLoadingBusinessTransactionHistoryErrorState = true;
         update();
-        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+            ? 'No internet connection!' : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     }
   }
@@ -474,7 +476,7 @@ class TransactionController extends GetxController {
       onLoadingTransactionHistoryErrorState = true;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     }  catch (error) {
       if(error.toString() == "KYC Not yet verified"){
@@ -489,7 +491,8 @@ class TransactionController extends GetxController {
         onLoadingTransactionHistoryLoadingState = false;
         onLoadingTransactionHistoryErrorState = true;
         update();
-        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+            ? 'No internet connection!' : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     }
   }

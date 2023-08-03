@@ -153,13 +153,13 @@ class _ChangePassCodeState extends State<ChangePassCode> {
                       GestureDetector(
                         onTap: (){
                           if(oldPasscodeController.text.isEmpty  || oldPasscodeController.text.length <4 ){
-                            Get.snackbar('Error', oldPasscodeController.text.isEmpty?'Old Passcode is required':'Old sPasscode must be 4 letters');
+                            Get.snackbar('Error', oldPasscodeController.text.isEmpty?'Old Passcode is required':'Old sPasscode must be 4 letters', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                           }else if(newPasscodeController.text.isEmpty){
-                            Get.snackbar('Error', newPasscodeController.text.isEmpty?'New Passcode is required':'New Passcode must be 4 letters');
+                            Get.snackbar('Error', newPasscodeController.text.isEmpty?'New Passcode is required':'New Passcode must be 4 letters', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                           }if(confirmPasscodeController.text.isEmpty){
-                            Get.snackbar('Error', confirmPasscodeController.text.isEmpty?'Confirm Passcode is required':'Confirm Passcode must be 4 letters');
+                            Get.snackbar('Error', confirmPasscodeController.text.isEmpty?'Confirm Passcode is required':'Confirm Passcode must be 4 letters', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                           }  else if(newPasscodeController.text != confirmPasscodeController.text){
-                            Get.snackbar('Error', 'New Passcode and confirm passcode does not match');
+                            Get.snackbar('Error', 'New Passcode and confirm passcode does not match', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                           } else{
                             loginController.resetPasscodeFromProfile(oldPassCode: oldPasscodeController.text,
                                 newPassCode: newPasscodeController.text, confirmPassCode: confirmPasscodeController.text, context: context);

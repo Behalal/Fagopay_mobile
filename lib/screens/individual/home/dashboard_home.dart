@@ -344,7 +344,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                     child: GestureDetector(
                       onTap: (){
                         if(emailController.text.isEmpty){
-                          Get.snackbar("Error", "Please enter a valid email address", backgroundColor: Colors.white, colorText: stepsColor);
+                          Get.snackbar("Error", "Please enter a valid email address", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                         }else{
                           Get.back();
                           verifyEmailOrPassword(emailOrPhoneNumber: emailController.text);

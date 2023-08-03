@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart' as dio;
 import 'package:fagopay/models/customer_details.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import '../models/customer_model.dart';
@@ -57,13 +58,13 @@ class CustomerController extends GetxController {
       isLoadingCustomersHasError = true;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       isLoadingCustomers = false;
       isLoadingCustomersHasError = true;
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -115,7 +116,7 @@ class CustomerController extends GetxController {
       countryController.clear();
       stateController.clear();
       cityController.clear();
-      log(e.toString());
+      update();
     }
   }
 }

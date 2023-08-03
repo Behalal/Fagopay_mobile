@@ -328,7 +328,7 @@ class _BuyAirtimeState extends State<BuyAirtime> {
                           airtelActive == false &&
                           gloActive == false &&
                           etisatActive == false) {
-                        Get.snackbar("Error","Select a Network Provider");
+                        Get.snackbar("Error","Select a Network Provider", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                         return;
                       }
                       Navigator.of(context).pushReplacement(

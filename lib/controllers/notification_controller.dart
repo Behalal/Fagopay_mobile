@@ -1,5 +1,6 @@
 import 'package:fagopay/models/notification/mark_notification_as_read_response.dart';
 import 'package:fagopay/models/notification/notification_response.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
@@ -22,11 +23,10 @@ class NotificationController extends GetxController{
       notificationResponse = NotificationResponse.fromJson(response?.data);
       if(NotificationResponse.fromJson(response?.data).data?.notifications != null){
         notificationLength = NotificationResponse.fromJson(response?.data).data!.notifications!.where((element) => element.status == "Unread").toList().length;
+        onLoadingNotification = false;
+        onNotificationResponseError = false;
         update();
       }
-      onLoadingNotification = false;
-      onNotificationResponseError = false;
-      update();
     }on dio.DioError catch (err) {
       onNotificationResponseError = true;
       onLoadingNotification = false;
@@ -48,15 +48,15 @@ class NotificationController extends GetxController{
       await getNotification();
       final payload = MarkAsReadResponse.fromJson(response?.data);
       Get.back();
-      Get.snackbar("Success",payload.data?.message ?? "Marked as read");
+      Get.snackbar("Success",payload.data?.message ?? "Marked as read", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }

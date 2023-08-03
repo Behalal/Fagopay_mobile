@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/screens/authentication/widgets/auth_buttons.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
@@ -34,6 +35,7 @@ class _PleasePayMePageState extends State<PleasePayMePage> {
   var number = "";
   int? transactionType;
   final _userUcontroller = Get.find<UserController>();
+  final _companyController = Get.find<CompanyController>();
 
   final _paymentController = Get.find<PaymentLinkController>();
   @override
@@ -68,6 +70,7 @@ class _PleasePayMePageState extends State<PleasePayMePage> {
                                         radius: 30,
                                         backgroundColor: fagoSecondaryColor.withOpacity(0.05),
                                         child: Text(
+                                          _userUcontroller.switchedAccountType == 2 ? '${_companyController.company?.companyName?.substring(0, 1)}'??'' :
                                           '${_userUcontroller.user?.firstName?.substring(0, 1)}${_userUcontroller.user?.lastName?.substring(0, 1)}',
                                           style: textStyle(size: 22, fontWeight: FontWeight.w800,color: fagoSecondaryColor,space: 2),),
                                       ),
@@ -75,7 +78,8 @@ class _PleasePayMePageState extends State<PleasePayMePage> {
                                         height: 2.h,
                                       ),
                                       AutoSizeText(
-                                          '${_userUcontroller.user?.firstName} ${_userUcontroller.user?.lastName}',
+                                          _userUcontroller.switchedAccountType == 2 ? '${_companyController.company?.companyName?.toUpperCase()}' :
+                                          '${_userUcontroller.user?.firstName?.toUpperCase()} ${_userUcontroller.user?.lastName?.toUpperCase()}',
                                           style: textStyle(size: 18,fontWeight: FontWeight.w700)
                                       ),
                                       SizedBox(
@@ -163,11 +167,11 @@ class _PleasePayMePageState extends State<PleasePayMePage> {
                                     if(_paymentController.amount.text.isEmpty){
                                       Get.snackbar(
                                           'Error',
-                                          'Amount is required');
+                                          'Amount is required', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                     }else if(int.parse(_paymentController.amount.text) <1000){
                                       Get.snackbar(
                                           'Error',
-                                          'Minimum amount is 1000 naira');
+                                          'Minimum amount is 1000 naira', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                                     }
                                     else{
                                       _paymentController.generatePaymentPin(context);

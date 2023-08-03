@@ -1078,7 +1078,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
               Constant().btn(color: fagoPrimaryColor,text: 'Download Receipt',img: 'assets/icons/download.png',onTap: () async {
                 takeScreenShot();
                 Get.back();
-                Get.snackbar("Success", "Saved to gallery");
+                Get.snackbar("Success", "Saved to gallery", colorText: Colors.white, backgroundColor: fagoGreenColor);
               }),
             ],
           ),

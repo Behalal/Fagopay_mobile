@@ -9,6 +9,7 @@ import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
+import 'package:flutter/material.dart';
 import '../models/purse/purse_list_model.dart';
 import '../models/purse/showPurse_Model.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,7 +84,8 @@ class PurseController extends GetxController {
         onLoadingPurseListLoadingState = false;
         onLoadPurseListErrorState = true;
         update();
-        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+            ? 'No internet connection!' : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
         if (kDebugMode) {
           print('Purse Category listt Error ${error.toString()}');
         }
@@ -98,16 +100,16 @@ class PurseController extends GetxController {
         await purseList();
         Get.back();
         Get.back();
-        Get.snackbar("Success", response?.data["data"]["message"] ?? "Purse has been deleted successfully");
+        Get.snackbar("Success", response?.data["data"]["message"] ?? "Purse has been deleted successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
       }
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (error) {
       Get.back();
-      Get.snackbar('Error', error.toString());
+      Get.snackbar('Error', error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw error.toString();
     }
   }
@@ -135,7 +137,7 @@ class PurseController extends GetxController {
       update();
       _createPurseStatus(CreatePurseEnum.error);
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
@@ -146,7 +148,7 @@ class PurseController extends GetxController {
           err.toString() ==
               "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : err.toString());
+              : err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -171,7 +173,7 @@ class PurseController extends GetxController {
       Get.back();
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
@@ -181,7 +183,7 @@ class PurseController extends GetxController {
           err.toString() ==
               "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : err.toString());
+              : err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -196,7 +198,7 @@ class PurseController extends GetxController {
       onLoadPurseListErrorState = true;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoGreenColor);
       throw errorMessage;
     } catch (err) {
         onLoadingPurseListLoadingState = false;
@@ -207,7 +209,7 @@ class PurseController extends GetxController {
             err.toString() ==
                 "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
                 ? 'No internet connection!'
-                : err.toString());
+                : err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -306,7 +308,7 @@ class PurseController extends GetxController {
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('Show purse Error ${error.toString()}');
       }
@@ -330,12 +332,13 @@ class PurseController extends GetxController {
         onPurseCategoryListLoadingState = false;
         onPurseCategoryListErrorState = false;
         update();
-        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions');
+        Get.snackbar('Error', 'Go and verify your KYC in other to be able to perform transactions', colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }else{
         onPurseCategoryListLoadingState = false;
         onPurseCategoryListErrorState = true;
         update();
-        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'" ? 'No internet connection!' : error.toString());
+        Get.snackbar('Error', error.toString() == "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
+            ? 'No internet connection!' : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       }
     }
   }

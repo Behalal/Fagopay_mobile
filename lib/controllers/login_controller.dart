@@ -11,6 +11,7 @@ import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/authentication/account_creation/setup_passcode.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
 import 'package:fagopay/screens/authentication/sign_in.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/local/local_storage.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
@@ -90,11 +91,11 @@ class LoginController extends GetxController {
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(),colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -110,12 +111,12 @@ class LoginController extends GetxController {
       Get.back();
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -132,11 +133,11 @@ class LoginController extends GetxController {
     }on dio.DioError catch (err) {
       _getUserStatus(GetUserStatus.error);
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
         _getUserStatus(GetUserStatus.error);
-        Get.snackbar('Something Went Wrong',err.toString());
+        Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
         throw err.toString();
     }
   }
@@ -190,15 +191,15 @@ class LoginController extends GetxController {
       Get.to(()=>RecoverPasswordOTPScreen(
         email: emailOrPassword,
       ));
-      Get.snackbar('Successful', responseMessage.data?.message ?? "Password reset code has been sent to your email");
+      Get.snackbar('Successful', responseMessage.data?.message ?? "Password reset code has been sent to your email" , colorText: Colors.white, backgroundColor: fagoGreenColor);
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -219,15 +220,15 @@ class LoginController extends GetxController {
           MaterialPageRoute(
             builder: (BuildContext context) => const SignIn(),
           ), (route) => false);
-      Get.snackbar('Successful', payload.data?.message ?? "Password reset successful");
+      Get.snackbar('Successful', payload.data?.message ?? "Password reset successful", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -258,20 +259,20 @@ class LoginController extends GetxController {
           ),
         );
       });
-      Get.snackbar('Successful', payload.data?.message ?? "Password reset code has been sent to your email");
+      Get.snackbar('Successful', payload.data?.message ?? "Password reset code has been sent to your email", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }on dio.DioError catch (err) {
       Get.back();
       isSetUpPasswordLoading = false;
       update();
       final errorMessage = Future.error(ApiError.fromDio(err));
       update();
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       isSetUpPasswordLoading = false;
       update();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       update();
       throw err.toString();
     }
@@ -289,15 +290,15 @@ class LoginController extends GetxController {
       final payload = ResetPasscodeResponse.fromJson(response!.data);
       Get.back();
       Get.back();
-      Get.snackbar('Success', payload.data?.message ?? 'Passcode has been reset successfully',);
+      Get.snackbar('Success', payload.data?.message ?? 'Passcode has been reset successfully', colorText: Colors.white, backgroundColor: fagoGreenColor);
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -321,12 +322,12 @@ class LoginController extends GetxController {
       Get.back();
       _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
       _otpForgotVerifyStatus(OtpForgotVerifyStatus.error);
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }

@@ -461,7 +461,7 @@ class _FundWalletState extends State<FundWallet> {
                       if (_transactioncontroller.amountController.text != ""||_transactioncontroller.amountController.text.isNotEmpty) {
                         await _transactioncontroller.fundWallet(amount: _transactioncontroller.amountController.text);
                       }else{
-                        Get.snackbar("Error","Fill in the form properly!");
+                        Get.snackbar("Error","Fill in the form properly!", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                       }
 
                     },

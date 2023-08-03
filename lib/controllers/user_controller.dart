@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart' as dio;
 import 'package:fagopay/controllers/login_controller.dart';
 import 'package:fagopay/models/next_of_kin_response.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
 import 'package:flutter/material.dart';
@@ -88,15 +89,15 @@ class UserController extends GetxController {
       await getUserDetails();
       Get.back();
       Get.back();
-      Get.snackbar('Successful', responseMessage.message ?? "Next of kin detail added successfully");
+      Get.snackbar('Successful', responseMessage.message ?? "Next of kin detail added successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }
@@ -164,7 +165,7 @@ class UserController extends GetxController {
           error.toString() ==
                   "Failed host lookup: 'fagopay-coreapi-development.herokuapp.com'"
               ? 'No internet connection!'
-              : error.toString());
+              : error.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       if (kDebugMode) {
         print('Show purse Error ${error.toString()}');
       }

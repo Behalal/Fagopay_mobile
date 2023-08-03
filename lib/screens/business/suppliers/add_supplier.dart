@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import '../../../controllers/locations_controller.dart';
@@ -30,6 +31,7 @@ class _AddSuppliesState extends State<AddSupplies> {
   final _transactionController = Get.find<TransactionController>();
   final _locationsController = Get.find<LocationsController>();
   final _supplierController = Get.find<SupplierController>();
+  final _companyController = Get.find<CompanyController>();
   String selectedBankValue = "";
   String selectedCountry = "";
   String selectedState = "";
@@ -628,7 +630,6 @@ class _AddSuppliesState extends State<AddSupplies> {
   }
 
   Future<void> createSupplier(BuildContext context, String? accountName) async {
-    progressIndicator(context);
     final response = await _supplierController.createNewSupplier(
       bankCode: selectedBankValue,
       accountNumber: _supplierController.accountNumberController.text,
@@ -639,10 +640,12 @@ class _AddSuppliesState extends State<AddSupplies> {
       countryId: selectedCountry,
       stateId: selectedState,
       cityId: selectedCity,
+      companyId: _companyController.company!.id!,
+      context: context,
     );
-    final jsonBody = jsonDecode(response.body);
+    final jsonBody = response?.data;
 
-    if (response.statusCode == 200) {
+    if (response?.statusCode == 200) {
       if (!mounted) return;
       setState(() {
         selectedBankValue = "";
@@ -657,7 +660,7 @@ class _AddSuppliesState extends State<AddSupplies> {
       });
       Navigator.of(context).pop();
       Navigator.of(context).pop();
-      Get.snackbar("Success","Supplier Created Successfully");
+      Get.snackbar("Success","Supplier Created Successfully", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return;
     }else{
       setState(() {
@@ -672,7 +675,7 @@ class _AddSuppliesState extends State<AddSupplies> {
         selectedCity = "";
       });
       Get.back();
-      Get.snackbar("Error","${jsonBody['data']['error']}");
+      Get.snackbar("Error","${jsonBody['data']['error']}", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
     }
   }
 }

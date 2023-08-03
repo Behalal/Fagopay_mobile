@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart' as dio;
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/constants/colors.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
@@ -35,16 +36,16 @@ class PaymentLinkController extends GetxController{
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('paymentLink', response?.data['data']['link']);
       Get.back();
-      Get.snackbar('Success', response?.data['message'] ?? "Link generated");
+      Get.snackbar('Success', response?.data['message'] ?? "Link generated", colorText: Colors.white, backgroundColor: fagoGreenColor);
       return response;
     }on dio.DioError catch (err) {
       Get.back();
       final errorMessage = Future.error(ApiError.fromDio(err));
-      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw errorMessage;
     } catch (err) {
       Get.back();
-      Get.snackbar('Something Went Wrong',err.toString());
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
   }

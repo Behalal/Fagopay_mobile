@@ -455,7 +455,7 @@ class _BuyDataState extends State<BuyData> {
                                   buyDataFields.serviceid.isEmpty ||
                                   _billsController
                                       .amountController.text.isEmpty) {
-                                Get.snackbar("Error","Kindly enter all fields");
+                                Get.snackbar("Error","Kindly enter all fields", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                               } else {
                                 setState(() {
                                   buyDataFields.setPhone = _billsController

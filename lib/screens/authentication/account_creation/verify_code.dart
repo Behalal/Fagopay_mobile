@@ -197,7 +197,7 @@ class _VerifyCodeSentState extends State<VerifyCodeSent> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          showExpiredsessionDialog(context, "Do you want to request that you receive another OTP", "Resend OTP", () async {
+                          showExpiredsessionDialog(context, "Do you want to receive another OTP code?", "Resend OTP", () async {
                             Get.back();
                             widget.isLogin == true ? resendTwoFactorAuthOtp(context: context) : setUserAccount(context);
                           });

@@ -26,7 +26,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _userUcontroller = Get.find<UserController>();
-  final _companyController = Get.find<CompanyController>();
   var number = "";
   int? transactionType;
   @override
