@@ -76,18 +76,18 @@ class LoginController extends GetxController {
     return fmcToken;
   }
   bool isLoading = false;
-  Future<LoginResponse?> loginUser()async{
+  Future<LoginResponse?> loginUser({required String userName, required String password})async{
     await getToken();
     try{
       var postBody = jsonEncode({
-        'username': emailController.text,
-        'password': passwordController.text
+        'username': userName,
+        'password': password
       });
       final response = await NetworkProvider().call(path: "/v1/user/login", method: RequestMethod.post, body: postBody);
       final payload = LoginResponse.fromJson(response!.data);
       Get.put<LocalCachedData>(await LocalCachedData.create());
       LocalCachedData.instance.cacheAuthToken(token: payload.token);
-      LocalCachedData.instance.cachePassword(password: passwordController.text);
+      LocalCachedData.instance.cachePassword(password: password);
       SecureStorage.setUserToken(payload.token);
       await postFcmToken();
       return payload;

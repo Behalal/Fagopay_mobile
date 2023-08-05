@@ -195,8 +195,8 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                           if(phone != "" || phone != null){
                             if(phone!.startsWith("+234")){
                               final phoneNumber = phone.replaceRange(0, 4, "0");
-                              _loginController.passwordController.text =  password ?? "";
-                              _loginController.emailController.text = phoneNumber;
+                              // _loginController.passwordController.text =  password ?? "";
+                              // _loginController.emailController.text = phoneNumber;
                               final LocalAuthentication auth = LocalAuthentication();
                               final bool didAuthenticate = await auth.authenticate(localizedReason: 'Please authenticate to sign in',
                                   authMessages: const <AuthMessages>[
@@ -205,11 +205,11 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                   ],
                                   options: const AuthenticationOptions(biometricOnly: true, stickyAuth: true, useErrorDialogs: false));
                               if (didAuthenticate) {
-                                await loginUser(context);
+                                await loginUser(userName: phoneNumber ?? "", password: password ?? "", context: context);
                               }
                             }else{
-                              _loginController.passwordController.text =  password ?? "";
-                              _loginController.emailController.text = phone;
+                              // _loginController.passwordController.text =  password ?? "";
+                              // _loginController.emailController.text = phone;
                               final LocalAuthentication auth = LocalAuthentication();
                               final bool didAuthenticate = await auth.authenticate(localizedReason: 'Please authenticate to sign in',
                                   authMessages: const <AuthMessages>[
@@ -218,7 +218,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                   ],
                                   options: const AuthenticationOptions(biometricOnly: true, stickyAuth: true, useErrorDialogs: false));
                               if (didAuthenticate) {
-                                await loginUser(context);
+                                await loginUser(userName: phone ?? "", password: password ?? "", context: context);
                               }
                             }
                           }else if(email != "" || email != null){
@@ -232,7 +232,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                                 ],
                                 options: const AuthenticationOptions(biometricOnly: true, stickyAuth: true, useErrorDialogs: false));
                             if (didAuthenticate) {
-                              await loginUser(context);
+                              await loginUser(userName: email ?? "", password: password ?? "", context: context);
                             }
                           }
                         },
@@ -268,7 +268,7 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
                           Get.snackbar("Error","Kindly insert all fields");
                           return;
                         }
-                        await loginUser(context);
+                        await loginUser(userName: _loginController.emailController.text, password: _loginController.passwordController.text, context: context);
                       }
                     },
                     child: AuthButtons(
@@ -351,10 +351,10 @@ class _MyAppState extends State<SignIn> with InputValidatorMixin {
     );
   }
 
-  Future<void> loginUser(BuildContext context) async {
+  Future<void> loginUser({required String userName, required String password, required BuildContext context}) async {
     progressIndicator(context);
     try{
-      await _loginController.loginUser().then((value) async {
+      await _loginController.loginUser(userName: userName, password: password).then((value) async {
         setState(() {
           _isLoading = true;
         });

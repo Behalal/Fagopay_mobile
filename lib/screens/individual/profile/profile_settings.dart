@@ -3,6 +3,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fagopay/controllers/company_controller.dart';
 import 'package:fagopay/controllers/user_controller.dart';
+import 'package:fagopay/screens/authentication/dispute_screen.dart';
 import 'package:fagopay/screens/authentication/sign_in.dart';
 import 'package:fagopay/screens/individual/profile/account_limit.dart';
 import 'package:fagopay/screens/individual/profile/change_passcode.dart';
@@ -475,6 +476,59 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                                 ),
                                                 const AutoSizeText(
                                                   'Be aware of your account\nthreshold',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const Spacer(),
+                                            SvgPicture.asset(
+                                                'assets/icons/arrow_front.svg')
+                                          ]),
+                                    ),
+                                    const Divider(),
+                                    InkWell(
+                                      onTap: () {
+                                        Get.to(()=> const DisputeScreen());
+                                      },
+                                      child: Row(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Container(height: 30, width: 30, decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(50)),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Image.asset(
+                                                    'assets/images/dispute_icon.png', height: 25, width: 25,),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 2.h,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                const AutoSizeText(
+                                                  'Submit a Dispute',
+                                                  style: TextStyle(
+                                                    fontFamily: "Work Sans",
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: welcomeText,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 0.5.h,
+                                                ),
+                                                const AutoSizeText(
+                                                  'Tell us about your challenges',
                                                   style: TextStyle(
                                                     fontFamily: "Work Sans",
                                                     fontSize: 12,
