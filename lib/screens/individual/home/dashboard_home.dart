@@ -9,6 +9,7 @@ import 'package:fagopay/screens/individual/bills/qr_code/my_qr_code.dart';
 import 'package:fagopay/screens/individual/requests/share_payment_link.dart';
 import 'package:fagopay/screens/widgets/navigation_bar.dart';
 import 'package:fagopay/screens/widgets/progress_indicator.dart';
+import 'package:fagopay/service/local/local_storage.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_client.dart';
 import 'package:dio/dio.dart';
 import 'package:fagopay/service/network_services/dio_service_config/dio_error.dart';
@@ -71,12 +72,9 @@ class _DashboardHomeState extends State<DashboardHome> {
   Timer interval(Duration duration, func) {
     Timer function() {
       Timer timer = Timer(duration, function);
-
       func(timer);
-
       return timer;
     }
-
     return Timer(duration, function);
   }
 
@@ -347,7 +345,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           Get.snackbar("Error", "Please enter a valid email address", colorText: Colors.white, backgroundColor: fagoSecondaryColor);
                         }else{
                           Get.back();
-                          verifyEmailOrPassword(emailOrPhoneNumber: emailController.text);
+                          verifyEmail(email: emailController.text);
                         }
                       },
                       child: Container(
@@ -441,7 +439,7 @@ class _DashboardHomeState extends State<DashboardHome> {
                           Get.snackbar("Error", "Please enter a valid phone number",backgroundColor: Colors.white, colorText: stepsColor);
                         }else{
                           Get.back();
-                          verifyEmailOrPassword(emailOrPhoneNumber: phoneNumber.text);
+                          verifyPassword(password: phoneNumber.text);
                         }
                       },
                       child: Container(
@@ -458,8 +456,19 @@ class _DashboardHomeState extends State<DashboardHome> {
         });
   }
 
+  cachePhoneNumber() async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    await LocalCachedData.instance.cachePhoneNumber(phoneNumber: _userController.user?.phoneNumber);
+  }
+  cacheEmail() async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    await LocalCachedData.instance.cachePhoneNumber(phoneNumber: _userController.user?.email);
+  }
+
   @override
   void initState() {
+    cacheEmail();
+    cachePhoneNumber();
     _notificationController.getNotification();
     checkEmailOrPassword();
     getUserDetails();
@@ -1836,16 +1845,39 @@ class _DashboardHomeState extends State<DashboardHome> {
     );
   }
 
-  Future<void> verifyEmailOrPassword({required String emailOrPhoneNumber}) async {
+  Future<void> verifyEmail({required String email}) async {
     progressIndicator(context);
     try {
       final body = jsonEncode({
-        "identifier": emailOrPhoneNumber
+        "identifier": email
       });
       final response = await NetworkProvider().call(path: "/v1/verify/email-phone-prompt", method: RequestMethod.post, body: body);
       if(response?.statusCode == 200 || response?.statusCode == 201){
         Get.back();
-        showOtpDialog(emailOrPhone: emailOrPhoneNumber);
+        showOtpDialog(emailOrPhone: email);
+      }
+    }on DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString());
+      throw errorMessage;
+    } catch (error) {
+      Get.back();
+      Get.snackbar('Error', error.toString());
+      throw error.toString();
+    }
+  }
+
+  Future<void> verifyPassword({required String password}) async {
+    progressIndicator(context);
+    try {
+      final body = jsonEncode({
+        "identifier": password
+      });
+      final response = await NetworkProvider().call(path: "/v1/verify/email-phone-prompt", method: RequestMethod.post, body: body);
+      if(response?.statusCode == 200 || response?.statusCode == 201){
+        Get.back();
+        showOtpDialog(emailOrPhone: password);
       }
     }on DioError catch (err) {
       Get.back();
@@ -1861,6 +1893,7 @@ class _DashboardHomeState extends State<DashboardHome> {
 
   Future<void> verifyOtp({required String phoneNumberOrPassword, required String otp}) async {
     progressIndicator(context);
+    Get.put<LocalCachedData>(await LocalCachedData.create());
     try {
       final body = jsonEncode({
         "identifier": phoneNumberOrPassword,
@@ -1868,6 +1901,11 @@ class _DashboardHomeState extends State<DashboardHome> {
       });
       final response = await NetworkProvider().call(path: "/v1/verify/validate-email-phone-otp", method: RequestMethod.post, body: body);
       if(response?.statusCode == 200 || response?.statusCode == 201){
+        if(phoneNumberOrPassword.startsWith("2") || phoneNumberOrPassword.startsWith("0") ||  phoneNumberOrPassword.startsWith("+2")){
+          await LocalCachedData.instance.cachePhoneNumber(phoneNumber: phoneNumberOrPassword);
+        }else{
+          await LocalCachedData.instance.cacheEmail(email: phoneNumberOrPassword);
+        }
         Get.back();
         Get.snackbar("Success", response?.data["data"]["message"] ?? "Verification was successful");
       }

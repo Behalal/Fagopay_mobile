@@ -19,6 +19,42 @@ class LocalCachedData{
     _prefs.setString("token", token!);
   }
 
+  Future<String?> getPassword() async {
+    String? password = _prefs.getString("password");
+    return password;
+  }
+
+  Future<void> cachePassword({required String? password}) async {
+    _prefs.setString("password", password!);
+  }
+
+  Future<bool?> getEnableBiometricStatus() async {
+    bool? status = _prefs.getBool("status");
+    return status ?? false;
+  }
+
+  Future<void> cacheEnableBiometricStatus({required bool? status}) async {
+    _prefs.setBool("status", status!);
+  }
+
+  Future<String?> getEmail() async {
+    String? email = _prefs.getString("email");
+    return email;
+  }
+
+  Future<void> cacheEmail({required String? email}) async {
+    _prefs.setString("email", email!);
+  }
+
+  Future<String?> getPhoneNumber() async {
+    String? phoneNumber = _prefs.getString("phoneNumber");
+    return phoneNumber;
+  }
+
+  Future<void> cachePhoneNumber({required String? phoneNumber}) async {
+    _prefs.setString("phoneNumber", phoneNumber!);
+  }
+
   Future<void> clearCache() async {
     _prefs.clear();
   }

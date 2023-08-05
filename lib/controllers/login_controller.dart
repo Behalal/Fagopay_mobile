@@ -7,6 +7,7 @@ import 'package:fagopay/models/auth_model/login_response.dart';
 import 'package:fagopay/models/auth_model/reset_passcode_response_model.dart';
 import 'package:fagopay/models/auth_model/reset_password_response.dart';
 import 'package:fagopay/models/auth_model/verify_reset_password_otp_response.dart';
+import 'package:fagopay/models/dispute_reason_response.dart';
 import 'package:fagopay/models/user_model/user.dart';
 import 'package:fagopay/screens/authentication/account_creation/setup_passcode.dart';
 import 'package:fagopay/screens/authentication/recover_password_otp_screen.dart';
@@ -21,6 +22,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:local_auth/local_auth.dart';
 
 import '../screens/authentication/reset_password_screen.dart';
 import '../service/constants/constants.dart';
@@ -85,6 +87,7 @@ class LoginController extends GetxController {
       final payload = LoginResponse.fromJson(response!.data);
       Get.put<LocalCachedData>(await LocalCachedData.create());
       LocalCachedData.instance.cacheAuthToken(token: payload.token);
+      LocalCachedData.instance.cachePassword(password: passwordController.text);
       SecureStorage.setUserToken(payload.token);
       await postFcmToken();
       return payload;
@@ -207,6 +210,7 @@ class LoginController extends GetxController {
 
   Future<void> createNewPassword({required String id, required String password,required String confirmedPassword, required BuildContext context})async{
     progressIndicator(context);
+    Get.put<LocalCachedData>(await LocalCachedData.create());
     try{
       var postBody = jsonEncode({
         'code': id,
@@ -215,6 +219,7 @@ class LoginController extends GetxController {
       });
       final response = await NetworkProvider().call(path: "/v1/user/create-new-password", method: RequestMethod.post, body: postBody);
       final payload = ResetPasswordResponse.fromJson(response?.data);
+      await LocalCachedData.instance.cachePassword(password: confirmedPassword);
       Get.back();
       Navigator.of(Get.context!).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -330,5 +335,83 @@ class LoginController extends GetxController {
       Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
       throw err.toString();
     }
+  }
+
+
+  bool? onGetDisputeReasonLoadingState;
+  bool? onGetDisputeResponseErrorState;
+  DisputeReasonResponse? disputeReasonResponse;
+  Future<void> getDisputeReason()async{
+    onGetDisputeReasonLoadingState = true;
+    onGetDisputeResponseErrorState = false;
+    disputeReasonResponse = null;
+    update();
+    try{
+      final response = await NetworkProvider().call(path: "/v1/disputereason", method: RequestMethod.get);
+      disputeReasonResponse = DisputeReasonResponse.fromJson(response!.data);
+      onGetDisputeReasonLoadingState = false;
+      onGetDisputeResponseErrorState = false;
+      update();
+    }on dio.DioError catch (err) {
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      onGetDisputeReasonLoadingState = false;
+      onGetDisputeResponseErrorState = true;
+      update();
+      throw errorMessage;
+    } catch (err) {
+      onGetDisputeReasonLoadingState = false;
+      onGetDisputeResponseErrorState = true;
+      update();
+      throw err.toString();
+    }
+  }
+
+
+  Future<void> createDispute({required String reasonId, required String email, required String description, String? referenceCode, required String documentUrl, required BuildContext context})async{
+    progressIndicator(context);
+    try{
+      var postBody = jsonEncode({
+        "reason_id": reasonId,
+        "email": email,
+        "reference_code": referenceCode ?? "",
+        "description": description,
+        "document_url": documentUrl
+      });
+      final response = await NetworkProvider().call(path: "/v1/dispute", method: RequestMethod.post, body: postBody);
+      Get.back();
+      Get.snackbar('Success', response?.data["message"] ?? 'Dispute created successful', colorText: Colors.white, backgroundColor: fagoGreenColor);
+    }on dio.DioError catch (err) {
+      Get.back();
+      final errorMessage = Future.error(ApiError.fromDio(err));
+      Get.snackbar('Error', err.response?.data['data']['error'] ?? errorMessage.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+      throw errorMessage;
+    } catch (err) {
+      Get.back();
+      Get.snackbar('Something Went Wrong',err.toString(), colorText: Colors.white, backgroundColor: fagoSecondaryColor);
+      throw err.toString();
+    }
+  }
+
+  Future<bool> checkBiometric() async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    final LocalAuthentication auth = LocalAuthentication();
+    final bool canAuthenticateWithBiometrics = await auth.canCheckBiometrics;
+    final bool canAuthenticate = canAuthenticateWithBiometrics || await auth.isDeviceSupported();
+    final String? password = await LocalCachedData.instance.getPassword();
+    final  status = await LocalCachedData.instance.getEnableBiometricStatus();
+    log("This is the status $status");
+    log("This can authenticate $canAuthenticate");
+    log("This is password $password");
+    final biometricStatus = canAuthenticate && status!  && password != null;
+    update();
+    return biometricStatus;
+  }
+
+
+
+  @override
+  void onInit() {
+    // getDisputeReason();
+    super.onInit();
   }
 }

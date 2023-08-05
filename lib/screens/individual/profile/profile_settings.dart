@@ -10,6 +10,7 @@ import 'package:fagopay/screens/individual/profile/change_password.dart';
 import 'package:fagopay/screens/individual/profile/edit_profile.dart';
 import 'package:fagopay/screens/individual/profile/next_of_kin.dart';
 import 'package:fagopay/screens/kyc/personal_verification_page.dart';
+import 'package:fagopay/service/local/local_storage.dart';
 import 'package:fagopay/service/secure_storage/secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -33,6 +34,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   bool isSwitched = false;
   var textValue = 'Switch is OFF';
 
+  checkBiometricsStatus() async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
+    isSwitched = await LocalCachedData.instance.getEnableBiometricStatus() ?? false;
+    setState(() {});
+  }
+
   void toggleSwitch(bool value) {
     if (isSwitched == false) {
       setState(() {
@@ -47,6 +54,13 @@ class _ProfileSettingsState extends State<ProfileSettings> {
       });
       print('Switch Button is OFF');
     }
+  }
+
+
+  @override
+  void initState() {
+    checkBiometricsStatus();
+    super.initState();
   }
 
   @override
@@ -207,7 +221,12 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                                       Transform.scale(
                                           scale: 1.5,
                                           child: Switch(
-                                            onChanged: toggleSwitch,
+                                            onChanged: (value) async {
+                                              Get.put<LocalCachedData>(await LocalCachedData.create());
+                                               await LocalCachedData.instance.cacheEnableBiometricStatus(status: value);
+                                              isSwitched = value;
+                                              setState(() {});
+                                            },
                                             value: isSwitched,
                                             activeColor: Colors.red,
                                             activeTrackColor: Colors.white,

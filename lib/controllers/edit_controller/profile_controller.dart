@@ -94,6 +94,7 @@ class ProfileController extends GetxController{
   }
 
   Future<ResetPasswordResponse> setUpPassword({required String code, required String password}) async {
+    Get.put<LocalCachedData>(await LocalCachedData.create());
     try{
       var postBody = jsonEncode({
         'code': code,
@@ -102,6 +103,7 @@ class ProfileController extends GetxController{
       });
       final response = await NetworkProvider().call(path: "/v1/user/create-new-password", method: RequestMethod.post, body: postBody);
       final payload = ResetPasswordResponse.fromJson(response?.data);
+      await LocalCachedData.instance.cachePassword(password: password);
       return payload;
     }on dio.DioError catch (err) {
       final errorMessage = Future.error(ApiError.fromDio(err));
