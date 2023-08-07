@@ -17,6 +17,7 @@ class NotificationDetails extends StatefulWidget {
 }
 
 class _NotificationDetailsState extends State<NotificationDetails> {
+  //https://github.com/FagoPay-Development/FagoMobile.git
   @override
   Widget build(BuildContext context) {
     return GetBuilder<NotificationController>(
